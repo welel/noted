@@ -1,0 +1,5 @@
+.env
+.idea
+frontend/media/*
+venv/
+__pycache__/
