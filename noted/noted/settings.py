@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
 
     'notes.apps.NotesConfig',
@@ -123,3 +122,18 @@ EMAIL_PORT = 465
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_PROVIDERS = {
+    'yandex': {
+        'APP': {
+            'client_id': os.getenv('YANDEX_CLIENT_ID'),
+            'secret': os.getenv('YANDEX_SECRET'),
+            'key': os.getenv('YANDEX_KEY')
+        },
+        'SCOPE': [
+            'info',
+            'email',
+            'avatar',
+            'birthday'
+        ],
+    }
+}
