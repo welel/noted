@@ -22,6 +22,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.yandex',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -56,6 +63,13 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'noted.wsgi.application'
 
@@ -98,3 +112,14 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = PROJECT_DIR.joinpath('frontend/media')
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+EMAIL_PORT = 465
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
