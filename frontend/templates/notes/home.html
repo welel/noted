@@ -1,0 +1,12 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ block.super }} - Notes{% endblock %}
+
+{% block main %}
+    {% for note in notes %}
+        <h2>{{ note.title }}</h2>
+        <a href="{{ note.source }}" target="_blank">Source</a>
+        <span> / Note author: {{ note.author.username }}</span>
+        <hr/>
+    {% endfor %}
+{% endblock %}
