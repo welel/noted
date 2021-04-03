@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ note.title }}{% endblock %}
+
+{% block main %}
+
+    <h2>{{ note.title }}</h2>
+    <a href="{{ note.source }}" target="_blank">Source</a>
+    <span> / Note author: {{ note.author.username }}</span>
+    <hr>
+    <p>{{ note.body }}</p>
+
+{% endblock %}
