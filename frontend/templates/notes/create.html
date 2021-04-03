@@ -1,0 +1,12 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ block.super }} - Create Note{% endblock %}
+
+{% block main %}
+
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock %}

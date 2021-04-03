@@ -4,6 +4,7 @@ from django.core.exceptions import FieldError
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from django.urls import reverse
 
 
 User = get_user_model()
@@ -23,6 +24,9 @@ class Note(models.Model):
         if not self.slug:
             self.slug = self._generate_unique_slug()
         return super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('note', args=[self.slug, ])
 
     def _generate_unique_slug(self) -> str:
         if not self.title:
