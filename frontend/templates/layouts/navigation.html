@@ -1,0 +1,17 @@
+<nav>
+    <p style="display: flex; justify-content: space-between;">
+        <span>
+            <a href="{% url 'notes:home' %}">Home</a>
+            <a href="{% url 'notes:add' %}">Add note</a>
+        </span>
+        <span>
+            {% if user.is_authenticated %}
+                <a href="{% url 'account_logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'account_login' %}">Sign In</a>
+                <a href="{% url 'account_signup' %}">Sign Up</a>
+            {% endif %}
+        </span>
+    </p>
+</nav>
+<hr/>
