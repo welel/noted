@@ -122,6 +122,7 @@ EMAIL_PORT = 465
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_ADAPTER = 'user.allauth.AccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'yandex': {
         'APP': {

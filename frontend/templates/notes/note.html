@@ -3,18 +3,28 @@
 {% block title %}{{ note.title }}{% endblock %}
 
 {% block main %}
-
+    <!-- Head of note -->
     <h2>{{ note.title }}</h2>
     <a href="{{ note.source }}" target="_blank">Source</a>
     <span> / Note author: {{ note.author.username }}</span>
+
+    <!-- Control buttons (update/delete) -->
+    {% if user == note.author %}
+        <hr>
+        <form action="{% url 'update' slug=note.slug %}" method="get">
+            {% csrf_token %}
+            <button type="submit">Edit Note</button>
+        </form>
+        <form action="{% url 'delete' slug=note.slug %}" method="post">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('Are you sure?');">
+                Delete Note
+            </button>
+        </form>
+    {% endif %}
     <hr>
-    <form action="{% url 'delete' slug=note.slug %}" method="post">
-        {% csrf_token %}
-        <button type="submit" onclick="return confirm('Are you sure?');">
-            Delete Note
-        </button>
-    </form>
-    <hr>
+
+    <!-- Body of note -->
     <p>{{ note.body }}</p>
 
 {% endblock %}
