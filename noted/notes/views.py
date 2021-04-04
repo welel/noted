@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic.edit import DeleteView
 from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
 
 from notes.models import Note
@@ -27,3 +29,16 @@ class NoteCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+@method_decorator(login_required, name='dispatch')
+class NoteUpdateView(UpdateView):
+    model = Note
+    fields = ['title', 'source', 'body']
+    template_name = 'notes/update.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class NoteDeleteView(DeleteView):
+    model = Note
+    success_url = reverse_lazy('home')
