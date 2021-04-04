@@ -4,13 +4,14 @@
 
 {% block main %}
     <!-- Head of note -->
-    <h2>{{ note.title }}</h2>
+    <h2 align="center">{{ note.title }}</h2>
     <a href="{{ note.source }}" target="_blank">Source</a>
     <span> / Note author: {{ note.author.username }}</span>
 
     <!-- Control buttons (update/delete) -->
     {% if user == note.author %}
         <hr>
+        <div style="display: flex;">
         <form action="{% url 'update' slug=note.slug %}" method="get">
             {% csrf_token %}
             <button type="submit">Edit Note</button>
@@ -21,10 +22,11 @@
                 Delete Note
             </button>
         </form>
+        </div>
     {% endif %}
     <hr>
 
     <!-- Body of note -->
-    <p>{{ note.body }}</p>
+    <p>{{ note.body|linebreaks }}</p>
 
 {% endblock %}
