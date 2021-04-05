@@ -5,10 +5,20 @@
 {% block main %}
 
     {% for note in notes %}
-        <h2><a href="{% url 'note' slug=note.slug %}">{{ note.title }}</a></h2>
-        <a href="{{ note.source }}" target="_blank">Source</a>
-        <span> / Note author: {{ note.author.username }}</span>
-        <hr/>
+    <div class="row mt-4">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h4 class="card-title">{{ note.title }}</h4>
+                <a href="{% url 'note' slug=note.slug %}" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h6 class="card-subtitle mb-2 text-muted">
+                <a href="{{ note.source }}" target="_blank">Source</a>
+                <span> | Note author: {{ note.author.username }}</span>
+            </h6>
+        </div>
+    </div>
     {% endfor %}
 
 {% endblock %}
