@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'simplemde',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -112,6 +113,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = PROJECT_DIR.joinpath('frontend/media')
 
+# Email (yandex smtp) configuration
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -136,5 +138,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'avatar',
             'birthday'
         ],
+    }
+}
+
+# Markdown input field (SimpleMDEField) configuration
+SIMPLEMDE_OPTIONS = {
+    'placeholder': 'Write your note here...',
+    'spellChecker': False,
+    'status': False,
+    'autosave': {
+        'enabled': True
     }
 }
