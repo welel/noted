@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}{{ note.title }}}{% endblock %}
+{% block title %}{{ note.title }}{% endblock %}
 
 {% block extrahead %}
     <script src="http://code.jquery.com/jquery-3.1.1.slim.min.js" charset="utf-8"></script>
@@ -11,7 +11,7 @@
 
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Update">
+        <input type="submit" value="Update Note">
     </form>
 
 {% endblock %}

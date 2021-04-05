@@ -8,7 +8,11 @@ class NoteTestCase(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='test_user', password='test')
-        self.note = Note.objects.create(title='New TestNote', author=self.user)
+        self.note = Note.objects.create(
+            title='New TestNote',
+            author=self.user,
+            body_raw='Test text'
+        )
 
     def test_slug(self):
         self.assertEqual(self.note.slug, 'new-testnote')
@@ -16,3 +20,6 @@ class NoteTestCase(TestCase):
     def test_unique_slug(self):
         note_2 = Note.objects.create(title='New Test Note', author=self.user)
         self.assertNotEqual(self.note.slug, note_2.slug)
+
+    def test_body_html(self):
+        self.assertEqual(self.note.body_html, '<p>Test text</p>\n')

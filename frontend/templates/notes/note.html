@@ -27,6 +27,6 @@
     <hr>
 
     <!-- Body of note -->
-    <p>{{ note.body_raw|linebreaks }}</p>
+    <p>{{ note.body_html | safe }}</p>
 
 {% endblock %}
