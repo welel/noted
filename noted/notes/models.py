@@ -65,7 +65,10 @@ class Note(models.Model):
         headers = {'Content-Type': 'text/plain'}
         data = self.body_raw.encode('utf-8', 'ignore')
         if isinstance(data, bytes):
-            response = requests.post(url, data=data, headers=headers)
+            try:
+                response = requests.post(url, data=data, headers=headers)
+            except requests.exceptions.ConnectionError:
+                return self.body_raw
             if response.status_code == 200:
                 return response.text
         return self.body_raw
