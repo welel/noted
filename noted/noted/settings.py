@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
     'simplemde',
+    'crispy_forms',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -150,3 +151,5 @@ SIMPLEMDE_OPTIONS = {
         'enabled': True
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

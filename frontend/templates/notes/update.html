@@ -1,5 +1,8 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}{{ note.title }}{% endblock %}
 
 {% block extrahead %}
@@ -8,10 +11,13 @@
 {% endblock %}
 
 {% block main %}
-
     <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update Note">
+        {{ form|crispy }}
+        <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success btn-lg" type="submit">
+                    Save Note
+                </button>
+            </div>
     </form>
-
+    <script src="{% static 'js/delete_mdefield_duplicate.js' %}"></script>
 {% endblock %}
