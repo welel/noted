@@ -2,6 +2,11 @@
 
 {% block title %}{{ block.super }} - Create Note{% endblock %}
 
+{% block extrahead %}
+    <script src="http://code.jquery.com/jquery-3.1.1.slim.min.js" charset="utf-8"></script>
+    {{ form.media }}
+{% endblock %}
+
 {% block main %}
 
     <form method="post">{% csrf_token %}
