@@ -11,7 +11,9 @@
         <!-- Source and Author -->
         <div class="d-flex bd-highlight mb-3">
           <div class="p-2 bd-highlight">
-              <a href="{{ note.source }}" target="_blank">Source</a>
+              {% if note.source %}
+                <a href="{{ note.source }}" target="_blank">Source</a>
+              {% endif %}
           </div>
           <div class="p-2 bd-highlight text-secondary">
               Note author: {{ note.author.username }}
