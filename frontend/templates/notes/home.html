@@ -24,8 +24,12 @@
     </div>
     {% endfor %}
 
+    {% if not notes %}
+        <h1 class="mt-5 text-center">Add First Note</h1>
+    {% endif %}
+
     <!--Pagination-->
-    <nav aria-label="Page navigation example">
+    <nav class="mt-3" aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
             <li class="page-item">

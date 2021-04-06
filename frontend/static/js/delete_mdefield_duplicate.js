@@ -1,3 +1,8 @@
+/*
+    Markdown editor (SimpleMDE) duplicates because of crispy filter.
+    This scripts removes duplicated editor.
+ */
+
 window.addEventListener("load", function(){
     var seen = {};
     $('.editor-toolbar').each(function() {
