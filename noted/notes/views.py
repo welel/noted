@@ -10,6 +10,7 @@ from notes.models import Note
 class NoteList(ListView):
     model = Note
     context_object_name = 'notes'
+    paginate_by = 18
     template_name = 'notes/home.html'
 
 

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
     'simplemde',
+    'crispy_forms',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -51,6 +52,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             PROJECT_DIR.joinpath('frontend/templates'),
+            PROJECT_DIR.joinpath('frontend/templates/user'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -122,6 +124,9 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_PORT = 465
 
+# allauth configuration
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'user.allauth.AccountAdapter'
@@ -150,3 +155,5 @@ SIMPLEMDE_OPTIONS = {
         'enabled': True
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
