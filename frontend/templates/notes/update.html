@@ -11,13 +11,15 @@
 {% endblock %}
 
 {% block main %}
-    <form method="post">{% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-success btn-lg" type="submit">
-                    Save Note
-                </button>
-            </div>
-    </form>
+    <div class="row mt-5">
+        <form method="post">{% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-success btn-lg" type="submit">
+                        Save Note
+                    </button>
+                </div>
+        </form>
+    </div>
     <script src="{% static 'js/delete_mdefield_duplicate.js' %}"></script>
 {% endblock %}

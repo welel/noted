@@ -1,0 +1,28 @@
+{% load static %}
+
+<footer class='footer'>
+    <div class='container'>
+        <div class='footer__headline'><a href="{% url 'notes:home' %}">NoteD.</a></div>
+        <nav class='nav__head'>
+            <ul>
+                <li><a href="{% url 'notes:home' %}" >Home</a></li>
+                <li><a href='https://github.com/pavel-loginov-dev/noted' target="_blank">About</a></li>
+                <li><a href='https://github.com/pavel-loginov-dev' target="_blank">Author</a></li>
+                <li><a href='https://spb.hh.ru/resume/73b791abff0891dc2c0039ed1f6d6842566337' target="_blank">Hire me (hh)</a></li>
+            </ul>
+        </nav>
+        <div class='horizontal__decoration__line'></div>
+        <nav class='social__media'>
+            <ul>
+                <li><a href='https://github.com/pavel-loginov-dev' target="_blank"><div><img src="{% static 'img/icons/github.svg' %}" alt='GitHub'/></div><span>GitHub</span></a></li>
+                <li><a href='https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSGLddCFCLPdhtNjmmbpwPtZdjmWklVXKNRbhQjrfgLkrqqMWgNZknplSwvkKxqkQdMGczdK' target="_blank"><div><img src="{% static 'img/icons/gmail.svg' %}" alt='twitter'/></div><span>Gmail</span></a></li>
+                <li><a href='https://t.me/pavel_loginov_dev' target="_blank"><div><img src="{% static 'img/icons/telegram.svg' %}" alt='telegram'/></div><span>Telegram</span></a></li>
+            </ul>
+        </nav>
+        <div class='horizontal__decoration__line'></div>
+        <div class='footer__rights'>
+            <p>Take notes, learn them — it called studying.<br/>
+                NoteD. 2020. MIT License</p>
+        </div>
+    </div>
+</footer>
