@@ -1,4 +1,4 @@
-<h2 align="center">note<a href="https://noted-v1.herokuapp.com/notes/"><img src="https://i.ibb.co/q96DFcq/D-noted.png" alt="D-noted" border="0" width="50"></a></h2>
+<h1 align="center">note<a href="https://noted-v1.herokuapp.com/notes/"><img src="https://i.ibb.co/q96DFcq/D-noted.png" alt="D-noted" border="0" width="50"></a></h1>
 
 <p align="center">This is a web service that helps to make, store and learn notes.</p>
 
