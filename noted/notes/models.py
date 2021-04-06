@@ -23,6 +23,9 @@ class Note(models.Model):
     body_raw = SimpleMDEField()
     body_html = models.TextField(max_length=40000, default='', blank=True)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.title
 
