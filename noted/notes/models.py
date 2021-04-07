@@ -13,6 +13,15 @@ from simplemde.fields import SimpleMDEField
 User = get_user_model()
 
 
+class NoteManager(models.Manager):
+
+    def new_order(self):
+        return self.earliest('date')
+
+    def old_order(self):
+        return self.latest('date')
+
+
 class Note(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(max_length=254, editable=False, unique=True)
@@ -22,22 +31,25 @@ class Note(models.Model):
     source = models.URLField(blank=True, default='')
     body_raw = SimpleMDEField()
     body_html = models.TextField(max_length=40000, default='', blank=True)
-
-    class Meta:
-        ordering = ['-id']
+    private = models.BooleanField(default=False)
+    anonymous = models.BooleanField(default=False)
+    data = models.DateTimeField(auto_now=True)
+    objects = NoteManager()
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = self._generate_unique_slug()[:254]
-
+        self.slug = self._generate_unique_slug()[:254]
         self.body_html = self._get_body_html()
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('note', args=[self.slug, ])
+
+    @classmethod
+    def get_personal_notes(cls, user):
+        return cls.objects.filter(author=user)
 
     def _generate_unique_slug(self) -> str:
         """Generates unique slug for ``Note`` instance.

@@ -13,6 +13,21 @@ class NoteList(ListView):
     paginate_by = 18
     template_name = 'notes/home.html'
 
+    def get_ordering(self):
+        order = self.request.GET.get('order', '-data')
+        if order.replace('-', '', 1) in ['id', 'data']:
+            return order
+        return '-data'
+
+
+class PersonalNoteList(NoteList):
+    template_name = 'notes/personal_notes.html'
+
+    def get_queryset(self):
+        queryset = Note.get_personal_notes(self.request.user)
+        order = self.get_ordering()
+        return queryset.order_by(order)
+
 
 class NoteDetailView(DetailView):
     model = Note
@@ -23,7 +38,7 @@ class NoteDetailView(DetailView):
 @method_decorator(login_required, name='dispatch')
 class NoteCreateView(CreateView):
     model = Note
-    fields = ['title', 'source', 'body_raw']
+    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
     template_name = 'notes/create.html'
 
     def form_valid(self, form):
@@ -34,7 +49,7 @@ class NoteCreateView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class NoteUpdateView(UpdateView):
     model = Note
-    fields = ['title', 'source', 'body_raw']
+    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
     template_name = 'notes/update.html'
 
 

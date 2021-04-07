@@ -12,6 +12,11 @@
         <li class="nav-item">
           <a class="btn btn-outline-success" href="{% url 'notes:add' %}" role="button">Add Note</a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'notes:personal' %}">Personal Notes</a>
+          </li>
+        {% endif %}
       </ul>
       <div class="d-flex">
         {% if user.is_authenticated %}
