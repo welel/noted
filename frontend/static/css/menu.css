@@ -1,0 +1,297 @@
+@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url('./github/open-sans-v17-latin-ext_latin-regular.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* open-sans-italic - latin-ext_latin */
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: normal;
+    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('./github/open-sans-v17-latin-ext_latin-italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* open-sans-700 - latin-ext_latin */
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('./github/open-sans-v17-latin-ext_latin-700.woff2') format('woff2'); 
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* open-sans-700italic - latin-ext_latin */
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url('./github/open-sans-v17-latin-ext_latin-700italic.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+/* MENU */
+
+/* bootstrap override */
+.header ul {
+    margin-top: 13px !important;
+}
+
+.header a {
+	color: #fff;
+}
+/* bootstrap override: end */
+
+
+.header__container {}
+.header {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 50;
+}
+.header:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+	background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+	box-shadow: 0px 7px 10px rgba(0,0,0,0.2);
+	z-index: 2;
+}
+@media (max-width: 767px) {
+	
+}
+.header__body {
+	position: relative;
+	display: flex;
+	height: 60px;
+	align-items: center;
+	/* background-color: rgba(30,30,30,1); */
+}
+.header__logo {
+	z-index: 3;
+}
+.header__logo img {
+	transition: all 0.3s ease 0s;
+}
+.header__logo img:hover {
+	filter: opacity(0.8);
+}
+
+/* lines in nav menu */
+.vertical_decoration_line {
+	width: 1px;
+	height: 30px;
+	background-color: rgba(140,140,140,1);
+	margin-left: 10px;
+}
+#second__line {
+	display: none;
+}
+
+.menu__headline {
+	display: none;
+}
+
+.header__burger {
+	display: none;
+}
+.header__menu {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+.header__menu:last-child {
+	padding-right: 20px;
+}
+
+.burger__logo__link {
+	display: none;
+}
+.burger__logo__link > img {
+	display: none;
+}
+.header__menu > .horizontal_decoration_line {
+	display: none;
+}
+
+.header__list {
+	display: flex;
+	position: relative;
+	z-index: 2;
+}
+.header__list li {
+	list-style: none;
+	margin: 0 0 0 20px;
+}
+.header__link {
+	font-family: "Formular", sans-serif;
+	font-size: 15px;
+	text-decoration: none;
+    font-weight: bold;
+    line-height: 18px;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+.header__link:hover {
+	border-bottom: 1px solid #fff;
+}
+
+
+@media (max-width: 767px) {
+	body.lock {
+		overflow: hidden;
+	}
+	.header__logo {
+		margin-right: 6px;
+	}
+	#first_line {
+		margin-right: -5px;
+	}
+	.headline {
+		display: none;
+	}
+	.menu__headline {
+		position: absolute;
+		display: block;
+		width: 100%;
+		top: 0px;
+		left: 0px;
+		text-align: center;
+		text-decoration: none;
+		font-family: font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 30px;
+		margin-top: 5px;
+		font-weight: bold;
+		color: white;
+		z-index: 2;
+	}
+	.header__body {
+		height: 50px;
+		justify-content: start-end;
+		flex-direction: row-reverse;
+	}
+	#second__line {
+		display: block;
+		position: absolute;
+		top: 10px;
+		left: 50px;
+	}
+	.header__burger {
+		display: block;
+		position: absolute;
+		top: 15px;
+		left: 15px;
+		width: 30px;
+		height: 20px;
+		z-index: 4;
+	}
+	.header__burger:before,
+	.header__burger:after {
+		content: '';
+		background-color: white;
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		left: 0;
+		transition: all 0.3s ease 0s;
+	}
+	.header__burger:before {
+		top: 0;
+	}
+	.header__burger span {
+		position: absolute;
+		background-color: white;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		top: 9px;
+		transition: all 0.3s ease 0s;
+	}
+	.header__burger:after {
+		bottom: 0;
+	}
+	
+	.header__burger.active span {
+		transform: scale(0);
+	}
+	.header__burger.active:before {
+		transform: rotate(45deg);
+		top: 9px;
+	}
+	.header__burger.active:after{
+		transform: rotate(-45deg);
+		bottom: 9px;
+	}
+	
+	.header__menu {
+		position: fixed;
+		top: -100%;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(30,30,30);
+		padding: 70px 10px 20px 10px;
+		transition: all 0.3s ease .0s;
+		z-index: 3;
+		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: start;
+	}
+	.header__menu.active {
+		top: 0;
+	}
+	.burger__logo__link {
+			display: block;
+	}
+	.burger__logo__link > img {
+		display: block;
+		width: 90px;
+		margin-top: -30px;
+	}
+	.header__menu > .horizontal_decoration_line {
+		display: block;
+		background-color: rgba(100,100,100,0.8);
+		padding-bottom: 1px;
+		width: 90vw;
+		margin-top: 20px;
+	}
+	.header__list {
+		display: block;
+		align-self: end;
+		margin-top: 30px;
+		margin-bottom: -20px;
+	}
+	.header__list li {
+		margin: 0 0 32px 0;
+		
+	}
+	.header__link {
+		font-size: 24px;
+	}
+	.header__list a {
+		font-size: 16px;
+		margin-left: 20px;
+	}
+	.header__list span {
+		display: inline-block;
+		width: 2px;
+		height: 2px;
+		border: 2px solid gray;
+		border-radius: 50%;
+		margin-bottom: 3.5px;
+		margin-left: 30px;
+	}
+}

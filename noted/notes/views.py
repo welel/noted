@@ -14,10 +14,10 @@ class NoteList(ListView):
     template_name = 'notes/home.html'
 
     def get_ordering(self):
-        order = self.request.GET.get('order', '-data')
-        if order.replace('-', '', 1) in ['id', 'data']:
+        order = self.request.GET.get('order', '-date')
+        if order.replace('-', '', 1) in ['id', 'date']:
             return order
-        return '-data'
+        return '-date'
 
 
 class PersonalNoteList(NoteList):

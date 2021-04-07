@@ -33,7 +33,7 @@ class Note(models.Model):
     body_html = models.TextField(max_length=40000, default='', blank=True)
     private = models.BooleanField(default=False)
     anonymous = models.BooleanField(default=False)
-    data = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=True)
     objects = NoteManager()
 
     def __str__(self):

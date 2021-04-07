@@ -1,36 +1,61 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
+
 {% block title %}{{ block.super }}{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+{% endblock %}
 
 {% block main %}
 
+{% include 'layouts/header.html' %}
+
+<!-- Notes List -->
+<div class="row ps-5" style="padding-top: 570px;">
+  <div class="col-9">
+    <h2 class="fw-bold mb-5">Latest Notes</h2>
     {% for note in notes %}
-    <div class="row mt-4">
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h4 class="card-title">{{ note.title }}</h4>
-                <a href="{% url 'note' slug=note.slug %}" class="stretched-link"></a>
+      {% if not note.private or note.author == request.user %}
+        <div class="row mt-5">
+            <style type="text/css">
+                .card {
+                    box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
+                    transition: 1s;
+                }
+                .card:hover {
+                    box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
+                }
+            </style>
+            <div class="card rounded border-0" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ note.title }}</h5>
+                    <a href="{% url 'note' slug=note.slug %}" class="stretched-link"></a>
+                    <hr/>
+                    <p class="fs-6 fw-light">
+                        <span>{{ note.date|date:"j M Y P" }}</span>
+                        {% if not note.anonymous %}
+                            <span>⠀|⠀Author: {{ note.author }}</span>
+                        {% endif %}
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="card-footer">
-            <h6 class="card-subtitle mb-2 text-muted">
-                {% if note.source %}
-                    <a href="{{ note.source }}" target="_blank">Source</a>
-                    <span>|</span>
-                {% endif %}
-                <span>Note author: {{ note.author.username }}</span>
-            </h6>
-        </div>
-    </div>
+      {% endif %}
     {% endfor %}
+  </div>
+</div>
 
-    {% if not notes %}
-        <h1 class="mt-5 text-center">Add First Note</h1>
-    {% endif %}
+{% if not notes %}
+    <h1 class="mt-6 text-center">Add First Note</h1>
+{% endif %}
 
-    <!--Pagination-->
-    <nav class="mt-3" aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
+<!--Pagination-->
+<div class="row mt-5">
+  <div class="col-9">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm justify-content-center">
         {% if page_obj.has_previous %}
             <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
@@ -72,6 +97,8 @@
         {% endif %}
       </ul>
     </nav>
-    <!--end of Pagination-->
+  </div>
+</div>
+<!--end of Pagination-->
 
 {% endblock %}
