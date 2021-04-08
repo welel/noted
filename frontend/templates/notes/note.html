@@ -3,21 +3,25 @@
 {% block title %}{{ note.title }}{% endblock %}
 
 {% block main %}
-    <div class="row mt-5">
+    <div class="row" style="margin-top: 120px;">
 
         <!-- Title -->
         <h2 class="fs-2 text-center">{{ note.title }}</h2>
 
-        <!-- Source and Author -->
-        <div class="d-flex bd-highlight mb-3">
-          <div class="p-2 bd-highlight">
-              {% if note.source %}
-                <a href="{{ note.source }}" target="_blank">Source</a>
-              {% endif %}
-          </div>
+        <!-- Note attributes -->
+        <div class="d-flex bd-highlight mb-3 fw-light">
           <div class="p-2 bd-highlight text-secondary">
-              Note author: {{ note.author.username }}
+              {{ note.date|date:"j M Y P" }}
           </div>
+          {% if note.source %}
+            <div class="p-2 bd-highlight">
+              <a href="{{ note.source }}" target="_blank">Source</a>
+            </div>
+          {% endif %}
+          <div class="p-2 bd-highlight text-secondary">
+              Author: {{ note.author.username }}
+          </div>
+
           <!-- Control buttons (update/delete) -->
           <div class="ms-auto p-2 bd-highlight">
               {% if user == note.author %}
@@ -42,7 +46,9 @@
     <hr class="mt-2">
     <!-- Body -->
     <div class="row m-auto" style="max-width: 95%;">
+      <div class="col-10 offset-1">
         <p>{{ note.body_html | safe }}</p>
+      </div>
     </div>
 
 {% endblock %}

@@ -13,6 +13,7 @@
 {% include 'layouts/header.html' %}
 
 <!-- Notes List -->
+{% if notes %}
 <div class="row ps-5" style="padding-top: 570px;">
   <div class="col-9">
     <h2 class="fw-bold mb-3">{{ order_label }} Notes</h2>
@@ -51,59 +52,15 @@
     {% endfor %}
   </div>
 </div>
-
-{% if not notes %}
-    <h1 class="mt-6 text-center">Add First Note</h1>
+{% else %}
+    <h1 class="mt-6 text-center" style="padding-top: 570px;">
+        <a href="{% url 'notes:add' %}" class="text-decoration-none">Add First Note</a>
+    </h1>
 {% endif %}
 
-<!--Pagination-->
-<div class="row mt-5">
-  <div class="col-9">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm justify-content-center">
-        {% if page_obj.has_previous %}
-            <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
-          </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
-          </li>
-        {% endif %}
+{% if notes %}
+    {% include 'layouts/paginator.html' %}
+{% endif %}
 
-        {% if page_obj.number|add:'-4' > 1 %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
-        {% endif %}
-
-        {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number == i %}
-                <li class="page-item active" aria-current="page">
-              <span class="page-link">
-                {{ i }}
-              </span>
-            </li>
-            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-                 <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-        {% endfor %}
-
-        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-           <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
-        {% endif %}
-
-        {% if page_obj.has_next %}
-            <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-          </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-  </div>
-</div>
-<!--end of Pagination-->
 
 {% endblock %}

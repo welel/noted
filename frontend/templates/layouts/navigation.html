@@ -27,9 +27,11 @@
             <span></span><a href="#" class='header__link'>Tags</a>
           </li>
           -->
-          <li>
-            <span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li>
+              <span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a>
+            </li>
+          {% endif %}
         </ul>
         <div class='horizontal_decoration_line'></div>
         <ul class='header__list'>

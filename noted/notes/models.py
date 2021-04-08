@@ -28,11 +28,18 @@ class Note(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, editable=False
     )
-    source = models.URLField(blank=True, default='')
+    source = models.URLField(
+        blank=True, default='',
+        help_text='Place a link to the source to which you are taking notes.'
+    )
     body_raw = SimpleMDEField()
     body_html = models.TextField(max_length=40000, default='', blank=True)
-    private = models.BooleanField(default=False)
-    anonymous = models.BooleanField(default=False)
+    private = models.BooleanField(
+        default=False, help_text='Only you can see the note.'
+    )
+    anonymous = models.BooleanField(
+        default=False, help_text='Others won\'t see that the note is yours.'
+    )
     date = models.DateTimeField(auto_now=True)
     objects = NoteManager()
 
