@@ -1,12 +1,16 @@
 {% extends 'layouts/base.html' %}
 
+
 {% load static %}
 
+
 {% block title %}{{ block.super }}{% endblock %}
+
 
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/header.css' %}" />
 {% endblock %}
+
 
 {% block main %}
 
@@ -16,34 +20,35 @@
 {% if notes %}
 <div class="row ps-5" style="padding-top: 570px;">
   <div class="col-9">
-    <h2 class="fw-bold mb-3">{{ order_label }} Notes</h2>
+    <h2 class="fw-bold mb-3">
+        {% block list_header %}{{ order_label }} Notes{% endblock %}
+    </h2>
     <p class="orders mb-5">
-        <a href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
-        <span>⠀</span>
-        <a  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
+       {% block order_links %} 
+            <a href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
+            <span>⠀</span>
+            <a  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
+        {% endblock %}
     </p>
     {% for note in notes %}
       {% if not note.private or note.author == request.user %}
         <div class="row mt-5">
-            <style type="text/css">
-                .card {
-                    box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
-                    transition: 1s;
-                }
-                .card:hover {
-                    box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
-                }
-            </style>
-            <div class="card rounded border-0" style="width: 100%;">
+            <div class="card note-card rounded border-0" style="width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ note.title }}</h5>
-                    <a href="{% url 'note' slug=note.slug %}" class="stretched-link"></a>
+                    <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">
+                        {{ note.title }}
+                    </a>
                     <hr/>
-                    <p class="fs-6 fw-light">
+                    <p class="fw-light d-flex" style="font-size: 14px;">
                         <span>{{ note.date|date:"j M Y P" }}</span>
                         {% if not note.anonymous %}
-                            <span>⠀|⠀Author: {{ note.author }}</span>
+                            <span>⠀|⠀Author: {{ note.author }}⠀</span>
                         {% endif %}
+                    </p>
+                    <p class="d-flex flex-nowrap">
+                        {% for tag in note.tags.all %}
+                            <a href="{% url 'tagged' tag_slug=tag.slug %}" class="badge tag-badge ms-1">{{ tag }}</a>
+                        {% endfor %}
                     </p>
                 </div>
             </div>

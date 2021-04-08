@@ -1,12 +1,15 @@
 {% extends 'layouts/base.html' %}
 
+
 {% load static %}
+
 
 {% block title %}Personal Notes{% endblock %}
 
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'css/header.css' %}" />
 {% endblock %}
+
 
 {% block main %}
 
@@ -24,23 +27,20 @@
     </p>
     {% for note in notes %}
         <div class="row mt-5">
-            <style type="text/css">
-                .card {
-                    box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
-                    transition: 1s;
-                }
-                .card:hover {
-                    box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
-                }
-            </style>
-            <div class="card rounded border-0" style="width: 100%;">
+            <div class="card note-card rounded border-0" style="width: 100%;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ note.title }}</h5>
-                    <a href="{% url 'note' slug=note.slug %}" class="stretched-link"></a>
+                    <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">
+                        {{ note.title }}
+                    </a>
                     <hr/>
                     <p class="fs-6 fw-light">
                         <span>{{ note.date|date:"j M Y P" }}</span>
                         <span>⠀|⠀Author: {{ note.author }}</span>
+                    </p>
+                    <p class="d-flex flex-nowrap">
+                        {% for tag in note.tags.all %}
+                            <a href="{% url 'tagged' tag_slug=tag.slug %}" class="badge tag-badge ms-1">{{ tag }}</a>
+                        {% endfor %}
                     </p>
                 </div>
             </div>
