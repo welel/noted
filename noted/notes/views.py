@@ -8,6 +8,10 @@ from notes.models import Note
 
 
 class NoteList(ListView):
+    ORDER_LABELS = {
+        'date': 'Oldest',
+        '-date': 'Latest',
+    }
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
@@ -15,9 +19,15 @@ class NoteList(ListView):
 
     def get_ordering(self):
         order = self.request.GET.get('order', '-date')
-        if order.replace('-', '', 1) in ['id', 'date']:
+        if order.replace('-', '', 1) == 'date':
             return order
         return '-date'
+
+    def get_context_data(self, *args, **kwargs):
+        order = self.get_ordering()
+        context = super().get_context_data(**kwargs)
+        context['order_label'] = self.ORDER_LABELS.get(order, '')
+        return context
 
 
 class PersonalNoteList(NoteList):
