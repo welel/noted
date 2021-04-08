@@ -1,14 +1,17 @@
-<h2 align="center">note<img src="https://i.ibb.co/q96DFcq/D-noted.png" alt="D-noted" border="0" width="40"></h1>
+<p align="center"><a href="https://noted-v1.herokuapp.com/notes/"><img src="https://i.ibb.co/r3M4k7w/header-logo-noted.png" alt="header-logo-noted" border="0"></a></p>
+
 
 <p align="center">This is a web service that helps to make, store and learn notes.</p>
 
 **Link on the website:** https://noted-v1.herokuapp.com/notes/
 
+<h3 align="center">Preview</h3>
 
+![](https://s4.gifyu.com/images/ezgif.com-gif-maker81b4ab4828f7ef6c.gif)
 
-| Main actions                                          | Features        |
-| ----------------------------------------------------- | --------------- |
-| 1. Create note.<br> 2. Edit note.<br> 3. Delete note. | Markdown editor |
+| Main actions                                          | Features                                                     |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| 1. Create note.<br> 2. Edit note.<br> 3. Delete note. | Markdown editor<br>Pretty design<br>Adaptive design (for mobile) |
 
 *The main idea is to create an algorithm that will send pieces of notes on mobile for repeating them (future functionality).*
 
