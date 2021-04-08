@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'simplemde',
     'crispy_forms',
+    'taggit',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -157,3 +158,6 @@ SIMPLEMDE_OPTIONS = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = 'notes.utils.custom_tag_string'

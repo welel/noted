@@ -4,6 +4,7 @@ from django.views.generic.edit import DeleteView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
+from notes.forms import NoteForm
 from notes.models import Note
 
 
@@ -48,7 +49,7 @@ class NoteDetailView(DetailView):
 @method_decorator(login_required, name='dispatch')
 class NoteCreateView(CreateView):
     model = Note
-    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
+    form_class = NoteForm
     template_name = 'notes/create.html'
 
     def form_valid(self, form):
@@ -59,7 +60,7 @@ class NoteCreateView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class NoteUpdateView(UpdateView):
     model = Note
-    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
+    form_class = NoteForm
     template_name = 'notes/update.html'
 
 
