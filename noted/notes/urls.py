@@ -7,6 +7,8 @@ from notes.views import (
     NoteCreateView,
     NoteUpdateView,
     NoteDeleteView,
+    TaggedNoteListView,
+    TagList,
 )
 
 
@@ -17,4 +19,6 @@ urlpatterns = [
     path('add/', NoteCreateView.as_view(), name='add'),
     path('update/<str:slug>/', NoteUpdateView.as_view(), name='update'),
     path('delete/<str:slug>/', NoteDeleteView.as_view(), name='delete'),
+    path('tags/', TagList.as_view(), name='tags'),
+    path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
 ]

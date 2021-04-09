@@ -1,0 +1,17 @@
+{% extends 'notes/list.html' %}
+
+
+{% load static %}
+
+
+{% block title %}{{ tag }}{% endblock %}
+
+
+{% block list_header %}Notes with tag "{{ tag }}"{% endblock %}
+
+
+{% block order_links %} 
+<a href="{% url 'notes:tagged' tag_slug=tag.slug %}?order=-data">Latest Notes</a>
+<span>⠀</span>
+<a  href="{% url 'notes:tagged' tag_slug=tag.slug %}?order=date">Oldest Notes</a>
+{% endblock %}

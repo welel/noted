@@ -1,26 +1,22 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/add_edit_note_base.html' %}
 
-{% load static %}
+
 {% load crispy_forms_tags %}
+
 
 {% block title %}{{ note.title }}{% endblock %}
 
-{% block extrahead %}
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" charset="utf-8"></script>
-    {{ form.media }}
-{% endblock %}
 
 {% block main %}
-    <div class="row" style="margin-top: 110px;">
-        <h2>Update Note</h2>
-        <form method="post">{% csrf_token %}
-            {{ form|crispy }}
-            <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-primary btn-lg" type="submit">
-                        Save Note
-                    </button>
-                </div>
-        </form>
-    </div>
-    <script src="{% static 'js/delete_mdefield_duplicate.js' %}"></script>
+<div class="row" style="margin-top: 110px;">
+    <h2>Update Note</h2>
+    <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <div class="d-grid gap-2 mt-3">
+            <button class="btn btn-primary btn-lg" type="submit">
+                Save Note
+            </button>
+        </div>
+    </form>
+</div>
 {% endblock %}

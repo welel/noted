@@ -1,14 +1,11 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/add_edit_note_base.html' %}
 
-{% load static %}
+
 {% load crispy_forms_tags %}
+
 
 {% block title %}Create Note{% endblock %}
 
-{% block extrahead %}
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" charset="utf-8"></script>
-    {{ form.media }}
-{% endblock %}
 
 {% block main %}
     <div class="row" style="margin-top: 110px;">
@@ -21,6 +18,5 @@
                 </button>
             </div>
         </form>
-    </div>
-    <script src="{% static 'js/delete_mdefield_duplicate.js' %}"></script>
+    </div> 
 {% endblock %}

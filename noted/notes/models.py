@@ -8,18 +8,10 @@ from django.utils.text import slugify
 from django.urls import reverse
 
 from simplemde.fields import SimpleMDEField
+from taggit.managers import TaggableManager
 
 
 User = get_user_model()
-
-
-class NoteManager(models.Manager):
-
-    def new_order(self):
-        return self.earliest('date')
-
-    def old_order(self):
-        return self.latest('date')
 
 
 class Note(models.Model):
@@ -41,7 +33,12 @@ class Note(models.Model):
         default=False, help_text='Others won\'t see that the note is yours.'
     )
     date = models.DateTimeField(auto_now=True)
-    objects = NoteManager()
+    tags = TaggableManager(
+        blank=True,
+        help_text='''Add tags. Separate tags by using "Enter" or comma.
+        You can add maximum 5 tags, and length of tags should be less than 25
+        symbols.'''
+    )
 
     def __str__(self):
         return self.title

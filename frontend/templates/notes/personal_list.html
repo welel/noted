@@ -1,0 +1,78 @@
+{% extends 'layouts/base.html' %}
+
+
+{% load static %}
+
+
+{% block title %}Personal Notes{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+{% endblock %}
+
+
+{% block main %}
+
+{% include 'layouts/header.html' %}
+
+<!-- Notes List -->
+{% if notes %}
+<div class="row ps-5" style="padding-top: 570px;">
+  <div class="col-9">
+    <h2 class="fw-bold">{{ order_label }} Personal Notes</h2>
+    <p class="orders mt-5 mb-2">
+        <a href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
+        <span>⠀</span>
+        <a  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
+    </p>
+    {% for note in notes %}
+        <div class="row mt-4">
+            <div class="card note-card rounded border-0" style="width: 100%;">
+                <div class="card-body">
+                    <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">
+                        {{ note.title }}
+                    </a>
+                    <hr/>
+                    <p class="fw-light d-flex" style="font-size: 14px;">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                                  <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                                  <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                            {{ note.date|date:"j M Y P" }}
+                        </span>
+                        <span>&nbsp;&nbsp;&nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                              <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                            </svg>
+                            {{ note.author }}⠀
+                        </span>
+                        {% if note.private %}
+                            <span class="badge badge-private ms-1 mb-1">Private</span>
+                        {% endif %}
+                        {% if note.anonymous %}
+                            <span class="badge badge-anon ms-1 mb-1">Anonymous</span>
+                        {% endif %}
+                    </p>
+                    <p class="d-flex flex-wrap">
+                        {% for tag in note.tags.all %}
+                            <a href="{% url 'tagged' tag_slug=tag.slug %}" class="badge tag-badge ms-1 mb-1">{{ tag }}</a>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+    <h1 class="mt-6 text-center" style="padding-top: 570px;">
+        <a href="{% url 'notes:add' %}" class="text-decoration-none">Add First Note</a>
+    </h1>
+{% endif %}
+
+{% if notes %}
+    {% include 'layouts/paginator.html' %}
+{% endif %}
+
+{% endblock %}

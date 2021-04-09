@@ -22,11 +22,9 @@
           <li>
             <span></span><a href="{% url 'notes:add' %}" class='header__link'>Add Note</a>
           </li>
-          <!--
           <li>
-            <span></span><a href="#" class='header__link'>Tags</a>
+            <span></span><a href="{% url 'notes:tags' %}" class='header__link'>Tags</a>
           </li>
-          -->
           {% if user.is_authenticated %}
             <li>
               <span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a>

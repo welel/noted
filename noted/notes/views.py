@@ -1,9 +1,16 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.decorators.http import require_GET
 from django.views.generic.edit import DeleteView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
+from taggit.models import Tag
+
+from notes.forms import NoteForm
 from notes.models import Note
 
 
@@ -15,7 +22,7 @@ class NoteList(ListView):
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
-    template_name = 'notes/home.html'
+    template_name = 'notes/list.html'
 
     def get_ordering(self):
         order = self.request.GET.get('order', '-date')
@@ -31,12 +38,32 @@ class NoteList(ListView):
 
 
 class PersonalNoteList(NoteList):
-    template_name = 'notes/personal_notes.html'
+    template_name = 'notes/personal_list.html'
 
     def get_queryset(self):
         queryset = Note.get_personal_notes(self.request.user)
         order = self.get_ordering()
         return queryset.order_by(order)
+
+
+class TaggedNoteListView(NoteList):
+    template_name = 'notes/tagged_list.html'
+
+    def get_queryset(self):
+        if 'tag_slug' in self.kwargs:
+            slug = self.kwargs['tag_slug']
+            tag = get_object_or_404(Tag, slug=slug)
+            setattr(self, 'tag', tag)
+        else:
+            raise Http404('The tag slug wasn\'t found.')
+        queryset = Note.objects.filter(tags=tag)
+        order = self.get_ordering()
+        return queryset.order_by(order)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
 
 
 class NoteDetailView(DetailView):
@@ -48,7 +75,7 @@ class NoteDetailView(DetailView):
 @method_decorator(login_required, name='dispatch')
 class NoteCreateView(CreateView):
     model = Note
-    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
+    form_class = NoteForm
     template_name = 'notes/create.html'
 
     def form_valid(self, form):
@@ -59,7 +86,7 @@ class NoteCreateView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class NoteUpdateView(UpdateView):
     model = Note
-    fields = ['title', 'source', 'private', 'anonymous', 'body_raw']
+    form_class = NoteForm
     template_name = 'notes/update.html'
 
 
@@ -67,3 +94,16 @@ class NoteUpdateView(UpdateView):
 class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy('home')
+
+
+class TagList(ListView):
+    model = Tag
+    context_object_name = 'tags'
+    template_name = 'notes/tags.html'
+
+    def get_queryset(self):
+        queryset = Tag.objects.all()
+        qs_counted = queryset.annotate(
+            num_times=Count('taggit_taggeditem_items')
+        )
+        return qs_counted.order_by('-num_times')
