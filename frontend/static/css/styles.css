@@ -47,3 +47,6 @@
 	background-color: gray;
 	font-size: 10px;
 }
+.btn-add-note:hover {
+	color: gray;
+}
