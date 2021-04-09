@@ -1,9 +1,9 @@
-<p align="center"><a href="https://noted-v1.herokuapp.com/notes/"><img src="https://i.ibb.co/r3M4k7w/header-logo-noted.png" alt="header-logo-noted" border="0"></a></p>
+<p align="center"><a href="https://notedot.herokuapp.com/notes/"><img src="https://i.ibb.co/r3M4k7w/header-logo-noted.png" alt="header-logo-noted" border="0"></a></p>
 
 
 <p align="center">This is a web service that helps to make, store and learn notes.</p>
 
-**Link on the website:** https://noted-v1.herokuapp.com/notes/
+**Link on the website:** https://notedot.herokuapp.com/notes/
 
 <h3 align="center">Preview</h3>
 
