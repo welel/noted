@@ -34,7 +34,7 @@
   }
 
 header#header-hero h1 {
-	color: #fff;
+	color: #e8e4eb;
 	font-size: 4rem;
 	margin: 0;
 	font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -42,7 +42,9 @@ header#header-hero h1 {
 	position: absolute;
 	top: 30vh;
 	left: 25vw;
-	letter-spacing: 10px;
+	letter-spacing: 4px;
+	line-height: 1.4;
+	z-index: 16;
 }
 
 header#header-hero .logoImg {
@@ -66,17 +68,19 @@ header#header-hero .logoImg {
 	}
 }
 
-header#header-hero h2 {
+header#header-hero h3 {
 	color: #e8e4eb;
 	font-weight: 400;
 	border: none;
 	position: absolute;
 	top: 42vh;
-	left: 36vw
+	left: 36vw;
+	z-index: 16;
+	opacity: 0.8;
 }
 
 @media (max-width:719px) {
-	header#header-hero h2 {
+	header#header-hero h3 {
 		font-size: 1rem;
 		left: 15vw
 	}
@@ -99,19 +103,7 @@ header#header-hero .waveWrapperInner {
 	overflow: hidden;
 	height: 100%;
 	bottom: -1px;
-	/*
-	background: #134E5E;
-	background: -webkit-linear-gradient(to right, #71B280, #134E5E);
-	background: linear-gradient(0deg, #71B280, #134E5E);
-	
-	background: #654ea3;
-	background: -webkit-linear-gradient(to right, #eaafc8, #654ea3); 
-	background: linear-gradient(20deg, #eaafc8, #654ea3);
-	*/
-
-	background: #0F2027;
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+	/* Colors in css/color_style.css */
 }
 
 header#header-hero .bgTop {

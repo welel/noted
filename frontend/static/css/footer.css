@@ -2,11 +2,10 @@
 .footer {
 	width: 100%;
 	background: #0F2027;
-	background: -webkit-linear-gradient(180deg, #2C5364, #203A43, #0F2027);
-	background: linear-gradient(180deg, #2C5364, #203A43, #0F2027);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	/*Colors in css/color_style.css*/
 }
 .footer .container {
 	max-width: 1000px;
