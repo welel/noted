@@ -10,6 +10,8 @@ from django.urls import reverse
 from simplemde.fields import SimpleMDEField
 from taggit.managers import TaggableManager
 
+from notes.utils import UnicodeTaggedItem
+
 
 User = get_user_model()
 
@@ -38,7 +40,7 @@ class Note(models.Model):
     )
     date = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
-        blank=True,
+        through=UnicodeTaggedItem, blank=True,
         help_text='''Add tags. Separate tags by using "Enter" or comma.
         You can add maximum 5 tags, and length of tags should be less than 25
         symbols.'''
