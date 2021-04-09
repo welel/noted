@@ -10,13 +10,17 @@
 	box-shadow: 0 0.75rem 0.75rem rgba(0,0,0, .12);
 }
 .note-card .card-title {
-	font-weight: 450;
+	font-weight: 400;
 }
 .note-card .card-title:hover {
 	border-bottom: .1rem solid rgb(45,45,45);
 }
+.note-card .card-body p {
+	font-size: 12px;
+}
 .note-card .tag-badge {
 	padding: 2px 6px 2px 6px;
+	font-size: 12px;
 	background-color: #009999;
 	text-decoration: none;
 	font-weight: bold;
@@ -36,8 +40,10 @@
 .badge-private {
 	margin-top: 2px;
 	background-color: red;
+	font-size: 10px;
 }
 .badge-anon {
 	margin-top: 2px;
 	background-color: gray;
+	font-size: 10px;
 }

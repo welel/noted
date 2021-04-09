@@ -10,7 +10,10 @@ class NoteForm(ModelForm):
 
     class Meta:
         model = Note
-        fields = ['title', 'source', 'private', 'anonymous', 'tags', 'body_raw']
+        fields = [
+            'title', 'source', 'private', 'anonymous',
+            'tags', 'body_raw', 'summary'
+        ]
         widgets = {
             'tags': TagWidget(attrs={'data-role': 'tagsinput'}),
         }
