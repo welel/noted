@@ -16,7 +16,7 @@ User = get_user_model()
 
 class Note(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
-    slug = models.SlugField(max_length=254, editable=False, unique=True)
+    slug = models.SlugField(max_length=255, editable=False, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, editable=False
     )
@@ -26,6 +26,10 @@ class Note(models.Model):
     )
     body_raw = SimpleMDEField()
     body_html = models.TextField(max_length=40000, default='', blank=True)
+    summary = models.CharField(
+        max_length=100, default='', blank=True,
+        help_text='Write summary on the note in 100 symbols.'
+    )
     private = models.BooleanField(
         default=False, help_text='Only you can see the note.'
     )
@@ -44,7 +48,7 @@ class Note(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = self._generate_unique_slug()[:254]
+        self.slug = self._generate_unique_slug()
         self.body_html = self._get_body_html()
         return super().save(*args, **kwargs)
 
@@ -69,7 +73,7 @@ class Note(models.Model):
         slug = slugify(self.title, allow_unicode=True)
         if Note.objects.filter(slug=slug).exists():
             slug += str(uuid.uuid1())[:8]
-        return slug
+        return slug[:255]
 
     def _get_body_html(self) -> str:
         """Makes POST request to GitHub API for html code.
