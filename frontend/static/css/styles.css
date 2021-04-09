@@ -6,19 +6,15 @@
 	box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
 	transition: 1s;
 }
-
 .note-card:hover {
 	box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
 }
-
 .note-card .card-title {
 	font-weight: 450;
 }
-
 .note-card .card-title:hover {
 	border-bottom: .1rem solid rgb(45,45,45);
 }
-
 .note-card .tag-badge {
 	padding: 2px 6px 2px 6px;
 	background-color: #009999;
@@ -27,19 +23,13 @@
 	color: white;
 	border-radius: 7px;
 }
-
 .note-card .tag-badge:hover {
 	background-color: #00cccc;
 }
-
-
 /* Tag badge on TagList */
 .tag-list .btn {
 	background-color: rgba(43,80,100, 0.9);
 	border: none;
 	color: white !important;
-}
-
-.tag-list .badge {
-	background-color: #397a60 !important;
+	border-radius: 25px;
 }

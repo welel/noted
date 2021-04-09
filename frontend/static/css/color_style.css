@@ -71,3 +71,9 @@ header#header-hero .waveWrapperInner {
 	background-color: #005bc9 !important;
 	opacity: 0.9;
 }
+.tag-list .btn {
+	background-color: #005bc9;
+}
+.tag-list .badge {
+	background-color: #60CD60 !important;
+}

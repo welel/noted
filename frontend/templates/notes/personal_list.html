@@ -19,14 +19,14 @@
 {% if notes %}
 <div class="row ps-5" style="padding-top: 570px;">
   <div class="col-9">
-    <h2 class="fw-bold mb-3">{{ order_label }} Personal Notes</h2>
-    <p class="orders mb-5">
+    <h2 class="fw-bold">{{ order_label }} Personal Notes</h2>
+    <p class="orders mt-5 mb-2">
         <a href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
         <span>⠀</span>
         <a  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
     </p>
     {% for note in notes %}
-        <div class="row mt-5">
+        <div class="row mt-4">
             <div class="card note-card rounded border-0" style="width: 100%;">
                 <div class="card-body">
                     <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">

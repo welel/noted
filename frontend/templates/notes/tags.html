@@ -13,30 +13,10 @@
 
 
 {% block main %}
-
-<style type="text/css">
-    header#header-hero h1 {
-        font-size: 3rem;
-        top: 20vh;
-        left: 25vw;
-        letter-spacing: 10px;
-    }
-    header#header-hero .logoImg {
-        width: 80px;
-    }
-    header#header-hero .waveWrapper {
-        height: 60vh;
-    }
-    header#header-hero h2 {
-        font-size: 1rem;
-        top: 30vh;
-        left: 40vw;
-    }
-</style>
 {% include 'layouts/header.html' %}
 
 <!-- Tag list -->
-<div class="row" style="padding-top: 400px;">
+<div class="row" style="padding-top: 500px;">
     <h1 class="mt-6 text-center" >Tags</h1>
     <div class="tag-list col-9 d-flex flex-wrap">
         {% for tag in tags %}
@@ -47,5 +27,4 @@
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}
