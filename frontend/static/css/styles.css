@@ -33,3 +33,11 @@
 	color: white !important;
 	border-radius: 25px;
 }
+.badge-private {
+	margin-top: 2px;
+	background-color: red;
+}
+.badge-anon {
+	margin-top: 2px;
+	background-color: gray;
+}

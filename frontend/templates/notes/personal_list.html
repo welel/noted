@@ -47,6 +47,12 @@
                             </svg>
                             {{ note.author }}⠀
                         </span>
+                        {% if note.private %}
+                            <span class="badge badge-private ms-1 mb-1">Private</span>
+                        {% endif %}
+                        {% if note.anonymous %}
+                            <span class="badge badge-anon ms-1 mb-1">Anonymous</span>
+                        {% endif %}
                     </p>
                     <p class="d-flex flex-wrap">
                         {% for tag in note.tags.all %}
