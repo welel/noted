@@ -11,6 +11,10 @@
 	box-shadow: 0 1rem 3rem rgba(0,0,0, .175);
 }
 
+.note-card .card-title {
+	font-weight: 450;
+}
+
 .note-card .card-title:hover {
 	border-bottom: .1rem solid rgb(45,45,45);
 }

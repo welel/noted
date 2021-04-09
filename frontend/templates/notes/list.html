@@ -20,19 +20,22 @@
 {% if notes %}
 <div class="row ps-5" style="padding-top: 570px;">
   <div class="col-9">
-    <h2 class="fw-bold mb-3">
+    <h2 class="fw-bold">
         {% block list_header %}{{ order_label }} Notes{% endblock %}
     </h2>
-    <p class="orders mb-5">
-       {% block order_links %} 
-            <a href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
+    <p class="orders mt-5">
+       {% block order_links %}
+            <svg style="margin-top: -1px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+  <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+</svg>&nbsp;
+            <a class="order-link" href="{% url 'notes:home' %}?order=-data">Latest Notes</a>
             <span>⠀</span>
-            <a  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
+            <a class="order-link"  href="{% url 'notes:home' %}?order=date">Oldest Notes</a>
         {% endblock %}
     </p>
     {% for note in notes %}
       {% if not note.private or note.author == request.user %}
-        <div class="row mt-5">
+        <div class="row mt-4">
             <div class="card note-card rounded border-0" style="width: 100%;">
                 <div class="card-body">
                     <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">
@@ -45,7 +48,7 @@
                                   <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
                                   <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                             </svg>
-                            {{ note.date|date:"j M Y P" }}
+                            {{ note.date|date:"j M Y h:m" }}
                         </span>
                         {% if not note.anonymous %}
                             <span>&nbsp;&nbsp;&nbsp;

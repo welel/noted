@@ -50,3 +50,21 @@ header#header-hero .waveWrapperInner {
 	background: -webkit-linear-gradient(to bottom, #3500D3, #05386B);
 	background: linear-gradient(to bottom, #3500D3, #05386B);
 }
+.footer .footer__rights p {
+	color: white !important;
+	opacity: .7 !important;
+}
+.note-card .tag-badge {
+	background-color: #05386B;
+	opacity: .8;
+}
+.note-card .tag-badge:hover {
+	background-color: #05386B;
+	opacity: 1;
+}
+.orders a {
+	color: #05386B;
+}
+.orders a:hover {
+	color: blue;
+}
