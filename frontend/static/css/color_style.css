@@ -43,7 +43,6 @@ header#header-hero .waveWrapperInner {
 	background: #05386B;
 	background: -webkit-linear-gradient(to right, #3500D3, #05386B);
 	background: linear-gradient(to right, #3500D3, #05386B);
-	opacity: 0.8;
 }
 .footer {
 	background: #05386B;
@@ -67,4 +66,8 @@ header#header-hero .waveWrapperInner {
 }
 .orders a:hover {
 	color: blue;
+}
+.badge-tag {
+	background-color: #005bc9 !important;
+	opacity: 0.9;
 }
