@@ -1,9 +1,11 @@
+{% load static %}
+
 <header class='header'>
   <div class='header__container'> <!-- Ограничивает ширину контентной части -->
     <div class='header__body'> <!-- flex контейнер -->
       <a class='menu__headline'>NoteD.</a>
       <a href="{% url 'notes:home' %}" class='header__logo'>
-        <img src='https://i.ibb.co/q96DFcq/D-noted.png' alt='logo' style='height: 43px; padding-left: 10px;'>
+        <img src="{% static 'img/logo.png' %}" alt='logo' style='height: 43px; padding-left: 10px;'>
       </a>
       <div id='first_line' class='vertical_decoration_line'></div>
       <div id='second__line' class='vertical_decoration_line'></div>
@@ -12,7 +14,7 @@
       </div>
       <nav class='header__menu'>
         <a class='burger__logo__link' href="{% url 'notes:home' %}">
-          <img src='https://i.ibb.co/q96DFcq/D-noted.png' alt='logo'>
+          <img src="{% static 'img/logo.png' %}" alt='logo'>
         </a>
         <div class='horizontal_decoration_line'></div>
         <ul class='header__list'>

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!-- Header -->
 <!-- Requires css/header.css, css/colot_style.css -->
 <header id="header-hero">
@@ -13,7 +15,7 @@
          <div class="wave waveBottom" style="background-image: url(&quot;https://front-end-noobs.com/jecko/img/wave-bot.png&quot;);"></div>
       </div>
       <h1>
-         note<img class="logoImg" src="https://i.ibb.co/q96DFcq/D-noted.png" alt="logo"/>
+         note<img class="logoImg" src="{% static 'img/logo.png' %}" alt="logo"/>
       </h1>
       <h3 class="mt-3">You learn more when you take notes</h3>
    </div>
