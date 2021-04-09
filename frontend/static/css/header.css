@@ -53,10 +53,6 @@ header#header-hero .logoImg {
 }
 
 @media (max-width:719px) {
-	header#header-hero h1 {
-		position: relative;
-		font-size: 0rem;
-	}
 	header#header-hero .waveTop {
 		display: flex;
 	}
@@ -94,7 +90,8 @@ header#header-hero .waveWrapper {
 	bottom: 0;
 	top: -1px;
 	height: 75vh;
-	margin: 0 auto
+	margin: 0 auto;
+	max-height: 540px;
 }
 
 header#header-hero .waveWrapperInner {
@@ -187,5 +184,60 @@ header#header-hero .waveAnimation .waveBottom {
 	to {
 		-webkit-transform: translateX(-50%) translateZ(0) scaleY(1);
 		transform: translateX(-50%) translateZ(0) scaleY(1)
+	}
+}
+
+
+@media (min-height:710px) {
+	header#header-hero h1 {
+		position: absolute;
+		top: 200px;
+		left: 30rem;
+	}
+	header#header-hero h3 {
+		position: absolute;
+		top: 280px;
+		left: 40rem;
+	}
+	header#header-hero .logoImg {
+		position: absolute;
+		top: 0px;
+		left: 162px;
+	}
+}
+
+@media (max-width:1240px) and (min-height:710px){
+	header#header-hero h1 {
+		position: absolute;
+		top: 200px;
+		left: 20rem;
+	}
+	header#header-hero h3 {
+		position: absolute;
+		top: 280px;
+		left: 20rem;
+	}
+	header#header-hero .logoImg {
+		position: absolute;
+		top: 0px;
+		left: 162px;
+	}
+}
+
+@media (max-width:1000px) and (min-height:710px){
+	header#header-hero h1 {
+		position: absolute;
+		top: 200px;
+		left: 8rem;
+	}
+	header#header-hero h3 {
+		position: absolute;
+		top: 280px;
+		left: 8rem;
+	}
+	header#header-hero .logoImg {
+		position: absolute;
+		top: 0px;
+		left: 162px;
 	}
 }
