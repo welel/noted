@@ -1,0 +1,51 @@
+{% extends 'layouts/base.html' %}
+
+
+{% load static %}
+
+
+{% block title %}{{ block.super }}{% endblock %}
+
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+{% endblock %}
+
+
+{% block main %}
+
+<style type="text/css">
+    header#header-hero h1 {
+        font-size: 3rem;
+        top: 20vh;
+        left: 25vw;
+        letter-spacing: 10px;
+    }
+    header#header-hero .logoImg {
+        width: 80px;
+    }
+    header#header-hero .waveWrapper {
+        height: 60vh;
+    }
+    header#header-hero h2 {
+        font-size: 1rem;
+        top: 30vh;
+        left: 40vw;
+    }
+</style>
+{% include 'layouts/header.html' %}
+
+<!-- Tag list -->
+<div class="row" style="padding-top: 400px;">
+    <h1 class="mt-6 text-center" >Tags</h1>
+    <div class="tag-list col-9 d-flex flex-wrap">
+        {% for tag in tags %}
+            <a href="{% url 'notes:tagged' tag_slug=tag.slug %}" class="btn btn-info text-col mt-3 ms-3">
+                {{ tag }}
+                <span class="badge bg-primary rounded-pill">{{ tag.num_times }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

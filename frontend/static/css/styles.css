@@ -27,3 +27,15 @@
 .note-card .tag-badge:hover {
 	background-color: #00cccc;
 }
+
+
+/* Tag badge on TagList */
+.tag-list .btn {
+	background-color: rgba(43,80,100, 0.9);
+	border: none;
+	color: white !important;
+}
+
+.tag-list .badge {
+	background-color: #397a60 !important;
+}
