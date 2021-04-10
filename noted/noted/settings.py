@@ -128,9 +128,12 @@ EMAIL_PORT = 465
 # allauth configuration
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'user.allauth.AccountAdapter'
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_USERNAME_MIN_LENGTH = 3
 SOCIALACCOUNT_PROVIDERS = {
     'yandex': {
         'APP': {
@@ -138,12 +141,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': os.getenv('YANDEX_SECRET'),
             'key': os.getenv('YANDEX_KEY')
         },
-        'SCOPE': [
-            'info',
-            'email',
-            'avatar',
-            'birthday'
-        ],
+        'SCOPE': ['info', 'email', 'avatar', 'birthday'],
     }
 }
 
