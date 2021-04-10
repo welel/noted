@@ -12,6 +12,7 @@ from taggit.models import Tag
 
 from notes.forms import NoteForm
 from notes.models import Note
+from user.models import User
 
 
 class NoteList(ListView):
@@ -64,6 +65,23 @@ class TaggedNoteListView(NoteList):
         context = super().get_context_data(**kwargs)
         context['tag'] = self.tag
         return context
+
+
+class UserNoteListView(NoteList):
+    template_name = 'notes/by_user_list.html'
+
+    def get_queryset(self):
+        if 'username' in self.kwargs:
+            username = self.kwargs['username']
+            user = get_object_or_404(User, username=username)
+        else:
+            raise Http404(
+                'The user with name "{}" wasn\'t found.'.format(username)
+            )
+        queryset = Note.get_personal_notes(user)
+        queryset = queryset.filter(private=False).filter(anonymous=False)
+        order = self.get_ordering()
+        return queryset.order_by(order)
 
 
 class NoteDetailView(DetailView):
