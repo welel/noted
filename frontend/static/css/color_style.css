@@ -53,11 +53,12 @@ header#header-hero .waveWrapperInner {
 	color: white !important;
 	opacity: .7 !important;
 }
-.note-card .tag-badge {
+.tag-badge {
 	background-color: #05386B;
 	opacity: .8;
 }
-.note-card .tag-badge:hover {
+.tag-badge:hover {
+	color: white;
 	background-color: #05386B;
 	opacity: 1;
 }

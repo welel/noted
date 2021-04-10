@@ -18,7 +18,7 @@
 .note-card .card-body p {
 	font-size: 12px;
 }
-.note-card .tag-badge {
+.tag-badge {
 	padding: 2px 6px 2px 6px;
 	font-size: 12px;
 	background-color: #009999;
@@ -27,7 +27,7 @@
 	color: white;
 	border-radius: 7px;
 }
-.note-card .tag-badge:hover {
+.tag-badge:hover {
 	background-color: #00cccc;
 }
 /* Tag badge on TagList */
