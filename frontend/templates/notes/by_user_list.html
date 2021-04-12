@@ -1,17 +1,7 @@
 {% extends 'notes/list.html' %}
 
 
-{% load static %}
-
-
 {% block title %}{{ notes.0.author }}{% endblock %}
 
 
 {% block list_header %}Notes of {{ notes.0.author }}{% endblock %}
-
-
-{% block order_links %} 
-<a href="{% url 'notes:by_user' username=notes.0.author %}?order=-data">Latest Notes</a>
-<span>⠀</span>
-<a  href="{% url 'notes:by_user' username=notes.0.author %}?order=date">Oldest Notes</a>
-{% endblock %}

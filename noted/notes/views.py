@@ -23,7 +23,6 @@ class NoteList(ListView):
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
-    template_name = 'notes/list.html'
 
     def get_ordering(self):
         order = self.request.GET.get('order', '-date')
@@ -36,6 +35,18 @@ class NoteList(ListView):
         context = super().get_context_data(**kwargs)
         context['order_label'] = self.ORDER_LABELS.get(order, '')
         return context
+
+
+class PublicNoteList(NoteList):
+    template_name = 'notes/public_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Note.objects.filter(private=False)
+        personal_queryset = Note.get_personal_notes(user)
+        queryset = queryset | personal_queryset
+        order = self.get_ordering()
+        return queryset.order_by(order)
 
 
 class PersonalNoteList(NoteList):

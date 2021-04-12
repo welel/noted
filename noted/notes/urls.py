@@ -1,7 +1,7 @@
 from django.urls import path
 
 from notes.views import (
-    NoteList,
+    PublicNoteList,
     PersonalNoteList,
     NoteDetailView,
     NoteCreateView,
@@ -14,7 +14,8 @@ from notes.views import (
 
 
 urlpatterns = [
-    path('', NoteList.as_view(), name='home'),
+    path('', PublicNoteList.as_view(), name='home'),
+    path('', PublicNoteList.as_view(), name='public_list'),
     path('personal/', PersonalNoteList.as_view(), name='personal'),
     path('view/<str:slug>/', NoteDetailView.as_view(), name='note'),
     path('add/', NoteCreateView.as_view(), name='add'),
