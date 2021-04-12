@@ -1,10 +1,27 @@
 /* General local styles of project */
 
 
+/* Header */
+.title__logo   {
+	opacity: 0;
+	transition: all 0.8s ease 0s;
+}
+.title__logo._active  {
+	opacity: 1;
+}
+.under__title {
+	opacity: 0;
+	transition: all 0.8s ease 0s;
+}
+.under__title._active {
+	opacity: 0.8;
+}
+
+
 /* Note card */
 .note-card {
 	box-shadow: 0 .5rem 0.5rem rgba(0,0,0, .15);
-	transition: 0.2s;
+	transition: 0.3s;
 }
 .note-card:hover {
 	box-shadow: 0 0.75rem 0.75rem rgba(0,0,0, .12);
@@ -30,6 +47,8 @@
 .tag-badge:hover {
 	background-color: #00cccc;
 }
+
+
 /* Tag badge on TagList */
 .tag-list .btn {
 	background-color: rgba(43,80,100, 0.9);
@@ -49,4 +68,17 @@
 }
 .btn-add-note:hover {
 	color: gray;
+}
+
+
+
+/* Anim effect */
+._anim-show {
+	transform: translate(0px, 120%);
+	opacity: 0;
+}
+._anim-show._active,
+._active ._anim-show {
+	transform: translate(0px, 0px);
+	opacity: 1;
 }

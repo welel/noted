@@ -5,7 +5,7 @@
 <header id="header-hero">
    <div class="waveWrapper waveAnimation">
       <div class="waveWrapperInner bgTop">
-         <div class="wave waveTop" style="background-image: url(&quot;https://front-end-noobs.com/jecko/img/wave-top.png&quot;);">
+         <div class="wave waveTop parallax" style="background-image: url(&quot;https://front-end-noobs.com/jecko/img/wave-top.png&quot;);">
          </div>
       </div>
       <div class="waveWrapperInner bgMiddle">
@@ -14,14 +14,30 @@
       <div class="waveWrapperInner bgBottom">
          <div class="wave waveBottom" style="background-image: url(&quot;https://front-end-noobs.com/jecko/img/wave-bot.png&quot;);"></div>
       </div>
-      <h1 class="title__logo">
+      <h1 class="title__logo parallax">
          note<img class="logoImg" src="{% static 'img/logo.png' %}" alt="logo"/>
       </h1>
-      <h3 class="mt-3 under__title">You learn more when you take notes</h3>
+      <h3 class="mt-3 under__title parallax">You learn more when you take notes</h3>
    </div>
 </header>
 
 <script type="text/javascript">
+   logo = document.querySelector('.title__logo')
+   under_logo = document.querySelector('.under__title')
+
+   /* Logo appearence effect */
+   setTimeout(() => {
+      logo.classList.add('_active');
+   }, 300);
+   setTimeout(() => {
+      under_logo.classList.add('_active');
+   }, 500);
+   setTimeout(() => {
+      logo.style.transition = 'all 0.01s ease 0s'
+      under_logo.style.transition = 'all 0.01s ease 0s'
+   }, 500);
+
+
    /* Parallax effect for title and logo in the header. */
    logo = document.querySelector('.title__logo');
    under = document.querySelector('.under__title');
@@ -31,8 +47,7 @@
       under.style.transform = 'translate(-' + event.clientX / 50 + 'px, -' + event.clientY / 70 + 'px)'
    };
 
-   header = document.querySelector('.header');
-   wave = document.querySelector('.waveTop');
-   wave.addEventListener('mousemove', parallax);
-   header.addEventListener('mousemove', parallax);
+   document.querySelectorAll('.parallax').forEach(item => {
+      item.addEventListener('mousemove', parallax);
+   });
 </script>

@@ -72,7 +72,6 @@ header#header-hero h3 {
 	top: 42vh;
 	left: 36vw;
 	z-index: 16;
-	opacity: 0.8;
 }
 
 @media (max-width:719px) {
