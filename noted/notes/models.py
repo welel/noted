@@ -10,10 +10,8 @@ from django.urls import reverse
 from simplemde.fields import SimpleMDEField
 from taggit.managers import TaggableManager
 
-from notes.utils import UnicodeTaggedItem
-
-
-User = get_user_model()
+from tags.models import UnicodeTaggedItem
+from user.models import User
 
 
 class Note(models.Model):

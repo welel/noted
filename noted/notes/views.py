@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -123,16 +122,3 @@ class NoteUpdateView(UpdateView):
 class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy('home')
-
-
-class TagList(ListView):
-    model = Tag
-    context_object_name = 'tags'
-    template_name = 'notes/tags.html'
-
-    def get_queryset(self):
-        queryset = Tag.objects.all()
-        qs_counted = queryset.annotate(
-            num_times=Count('taggit_taggeditem_items')
-        )
-        return qs_counted.order_by('-num_times')
