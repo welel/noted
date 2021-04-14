@@ -1,4 +1,3 @@
-import requests
 import uuid
 
 from django.core.exceptions import FieldError
@@ -7,9 +6,9 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.urls import reverse
 
-from simplemde.fields import SimpleMDEField
 from taggit.managers import TaggableManager
 
+from markdown.fields import MarkdownField, RenderedMarkdownField
 from tags.models import UnicodeTaggedItem
 from user.models import User
 
@@ -24,8 +23,8 @@ class Note(models.Model):
         blank=True, default='',
         help_text='Place a link to the source to which you are taking notes.'
     )
-    body_raw = SimpleMDEField()
-    body_html = models.TextField(max_length=40000, default='', blank=True)
+    body_raw = MarkdownField(rendered_field='body_html')
+    body_html = RenderedMarkdownField(max_length=40000, default='', blank=True)
     summary = models.CharField(
         max_length=100, default='', blank=True,
         help_text='Write summary on the note in 100 symbols.'
@@ -49,7 +48,6 @@ class Note(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = self._generate_unique_slug()
-        self.body_html = self._get_body_html()
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -57,6 +55,7 @@ class Note(models.Model):
 
     @classmethod
     def get_personal_notes(cls, user):
+        # TODO: create NoteManager maybe
         return cls.objects.filter(author=user)
 
     def _generate_unique_slug(self) -> str:
@@ -74,24 +73,3 @@ class Note(models.Model):
         if Note.objects.filter(slug=slug).exists():
             slug += str(uuid.uuid1())[:8]
         return slug[:255]
-
-    def _get_body_html(self) -> str:
-        """Makes POST request to GitHub API for html code.
-
-        API docs: https://docs.github.com/en/rest/reference/markdown
-        Sends `body_raw` in body of POST request to GitHub API.
-        Gets html code of markdown text (from `body_raw`) and
-        returns it.
-
-        """
-        url = 'https://api.github.com/markdown/raw'
-        headers = {'Content-Type': 'text/plain'}
-        data = self.body_raw.encode('utf-8', 'ignore')
-        if isinstance(data, bytes):
-            try:
-                response = requests.post(url, data=data, headers=headers)
-            except requests.exceptions.ConnectionError:
-                return self.body_raw
-            if response.status_code == 200:
-                return response.text
-        return self.body_raw
