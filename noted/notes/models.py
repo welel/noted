@@ -13,6 +13,12 @@ from tags.models import UnicodeTaggedItem
 from user.models import User
 
 
+class NoteManager(models.Manager):
+
+    def get_personal_notes(self, user):
+        return self.filter(author=user)
+
+
 class Note(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(max_length=255, editable=False, unique=True)
@@ -42,6 +48,7 @@ class Note(models.Model):
         You can add maximum 5 tags, and length of tags should be less than 25
         symbols.'''
     )
+    objects = NoteManager()
 
     def __str__(self):
         return self.title
@@ -52,11 +59,6 @@ class Note(models.Model):
 
     def get_absolute_url(self):
         return reverse('note', args=[self.slug, ])
-
-    @classmethod
-    def get_personal_notes(cls, user):
-        # TODO: create NoteManager maybe
-        return cls.objects.filter(author=user)
 
     def _generate_unique_slug(self) -> str:
         """Generates unique slug for ``Note`` instance.

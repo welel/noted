@@ -42,7 +42,7 @@ class PublicNoteList(NoteList):
     def get_queryset(self):
         user = self.request.user
         queryset = Note.objects.filter(private=False)
-        personal_queryset = Note.get_personal_notes(user)
+        personal_queryset = Note.objects.get_personal_notes(user)
         queryset = queryset | personal_queryset
         order = self.get_ordering()
         return queryset.order_by(order)
@@ -52,7 +52,7 @@ class PersonalNoteList(NoteList):
     template_name = 'notes/personal_list.html'
 
     def get_queryset(self):
-        queryset = Note.get_personal_notes(self.request.user)
+        queryset = Note.objects.get_personal_notes(self.request.user)
         order = self.get_ordering()
         return queryset.order_by(order)
 
@@ -88,7 +88,7 @@ class UserNoteListView(NoteList):
             raise Http404(
                 'The user with name "{}" wasn\'t found.'.format(username)
             )
-        queryset = Note.get_personal_notes(user)
+        queryset = Note.objects.get_personal_notes(user)
         queryset = queryset.filter(private=False).filter(anonymous=False)
         order = self.get_ordering()
         return queryset.order_by(order)
