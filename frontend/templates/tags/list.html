@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+
+
+{% load static %}
+
+
+{% block title %}{{ block.super }}{% endblock %}
+
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+{% endblock %}
+
+
+{% block main %}
+{% include 'layouts/header.html' %}
+
+<!-- Tag list -->
+<div class="row" style="padding-top: 570px;">
+  <h1 class="mt-6 text-center" >Tags</h1>
+  <div class="tag-list col-9 offset-1 d-flex flex-wrap">
+    {% for tag in tags %}
+      <a href="{% url 'notes:tagged' tag_slug=tag.slug %}" class="btn btn-info text-col mt-3 ms-3">
+        {{ tag }}
+        <span class="badge bg-primary rounded-pill">
+          {{ tag.num_times }}
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
+    'tags.apps.TagsConfig',
 ]
 
 MIDDLEWARE = [
@@ -158,4 +159,4 @@ SIMPLEMDE_OPTIONS = {
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TAGGIT_CASE_INSENSITIVE = True
-TAGGIT_TAGS_FROM_STRING = 'notes.utils.custom_tag_string'
+TAGGIT_TAGS_FROM_STRING = 'tags.utils.custom_tag_string'

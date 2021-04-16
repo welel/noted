@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -23,7 +22,6 @@ class NoteList(ListView):
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
-    template_name = 'notes/list.html'
 
     def get_ordering(self):
         order = self.request.GET.get('order', '-date')
@@ -38,11 +36,23 @@ class NoteList(ListView):
         return context
 
 
+class PublicNoteList(NoteList):
+    template_name = 'notes/public_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Note.objects.filter(private=False)
+        personal_queryset = Note.objects.get_personal_notes(user)
+        queryset = queryset | personal_queryset
+        order = self.get_ordering()
+        return queryset.order_by(order)
+
+
 class PersonalNoteList(NoteList):
     template_name = 'notes/personal_list.html'
 
     def get_queryset(self):
-        queryset = Note.get_personal_notes(self.request.user)
+        queryset = Note.objects.get_personal_notes(self.request.user)
         order = self.get_ordering()
         return queryset.order_by(order)
 
@@ -78,7 +88,7 @@ class UserNoteListView(NoteList):
             raise Http404(
                 'The user with name "{}" wasn\'t found.'.format(username)
             )
-        queryset = Note.get_personal_notes(user)
+        queryset = Note.objects.get_personal_notes(user)
         queryset = queryset.filter(private=False).filter(anonymous=False)
         order = self.get_ordering()
         return queryset.order_by(order)
@@ -112,16 +122,3 @@ class NoteUpdateView(UpdateView):
 class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy('home')
-
-
-class TagList(ListView):
-    model = Tag
-    context_object_name = 'tags'
-    template_name = 'notes/tags.html'
-
-    def get_queryset(self):
-        queryset = Tag.objects.all()
-        qs_counted = queryset.annotate(
-            num_times=Count('taggit_taggeditem_items')
-        )
-        return qs_counted.order_by('-num_times')
