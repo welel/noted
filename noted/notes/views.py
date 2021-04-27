@@ -40,14 +40,16 @@ class PublicNoteList(NoteList):
     template_name = 'notes/public_list.html'
 
     def get_queryset(self):
-        user = self.request.user
         queryset = Note.objects.filter(private=False)
-        personal_queryset = Note.objects.get_personal_notes(user)
-        queryset = queryset | personal_queryset
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            personal_queryset = Note.objects.get_personal_notes(user)
+            queryset = queryset | personal_queryset
         order = self.get_ordering()
         return queryset.order_by(order)
 
 
+@method_decorator(login_required, name='dispatch')
 class PersonalNoteList(NoteList):
     template_name = 'notes/personal_list.html'
 
