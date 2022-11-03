@@ -8,11 +8,11 @@
 <div class="container mt-5 d-flex justify-content-center">
 <div class="row" style="max-width: 80%;">
 
-<h1>{% trans "Sign Out" %}</h1>
+<h1 class="text-center">{% trans "Sign Out" %}</h1>
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+<p class="text-center">{% trans 'Are you sure you want to sign out?' %}</p>
 
-<form method="post" action="{% url 'account_logout' %}">
+<form class="text-center" method="post" action="{% url 'account_logout' %}">
   {% csrf_token %}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>

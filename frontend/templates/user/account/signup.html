@@ -6,8 +6,19 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+{% if messages %}
+      <div class="container-md mt-3">
+        <strong>Messages:</strong>
+        <ul>
+          {% for message in messages %}
+          <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+{% endif %}
+
 <div class="container mt-5 d-flex justify-content-center">
-<div class="row" style="max-width: 80%;">
+<div class="row" style="max-width: 400px;">
 
 <h1 class="text-center">{% trans "Sign Up" %}</h1>
 

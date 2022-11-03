@@ -1,5 +1,6 @@
 {% extends "account/base.html" %}
 
+{% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 {% load account socialaccount %}
@@ -8,33 +9,11 @@
 
 {% block content %}
 <div class="container mt-5 d-flex justify-content-center">
-<div class="row" style="max-width: 80%;">
+<div class="row" style="max-width: 400px;">
 
   <h1 class="text-center">{% trans "Sign In" %}</h1>
 
-{% get_providers as socialaccount_providers %}
 
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-  <div class="login-or">{% trans 'or' %}</div>
-
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
@@ -45,6 +24,20 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
   <br><button class="btn btn-primary mt-3 primaryAction" type="submit" style="min-width: 120px;">{% trans "Sign In" %}</button>
 </form>
+
+
+<p class="mt-3"><a href="{{ signup_url }}">
+  Sign up</a> is you don't have an account. Or login with <a href="{% provider_login_url 'yandex' %}">Yandex</a>,
+  <a href="{% provider_login_url 'github' %}">GitHub</a>, <a href="{% provider_login_url 'google' %}">Google</a>.
+</p>
+
+<nav class='social__media'>
+  <ul class="d-flex justify-content-center" style="list-style-type: none;">
+      <li style="margin-left: -50px;"><a href='{% provider_login_url 'github' %}' ><img style="height: 40px; width: auto;" src="{% static 'img/icons/github.svg' %}" alt='GitHub'></a></li>
+      <li><a href='{% provider_login_url 'google' %}' ><img style="height: 40px; width: auto;" src="{% static 'img/icons/google.png' %}" alt='google'></a></li>
+      <li><a href='{% provider_login_url 'yandex' %}' ><img style="height: 40px; width: auto;" src="{% static 'img/icons/yandex.png' %}" alt='yandex'/></a></li>
+  </ul>
+</nav>
 
 </div>
 </div>

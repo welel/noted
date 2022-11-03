@@ -21,16 +21,6 @@
     {% block body %}
     {% include 'layouts/navigation.html' %}
     <div style="margin-top: 100px;"></div>
-    {% if messages %}
-      <div class="container-md mt-3">
-        <strong>Messages:</strong>
-        <ul>
-          {% for message in messages %}
-          <li>{{message}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
     {% block content %}
     {% endblock %}
     {% endblock %}

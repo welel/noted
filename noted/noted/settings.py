@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
     'simplemde',
     'crispy_forms',
     'taggit',
@@ -142,8 +144,21 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': os.getenv('YANDEX_SECRET'),
             'key': os.getenv('YANDEX_KEY')
         },
-        'SCOPE': ['info', 'email', 'avatar', 'birthday'],
-    }
+    },
+    'github': {
+        'APP': {
+            'client_id': os.getenv('GITHUB_ID'),
+            'secret': os.getenv('GITHUB_SECRET'),
+            'key': ''
+        }
+    },
+    'google': {
+        'APP': {
+            'client_id': os.getenv('GOOGLE_ID'),
+            'secret': os.getenv('GOOGLE_SECRET'),
+            'key': ''
+        }
+    },
 }
 
 # Markdown input field (SimpleMDEField) configuration

@@ -25,6 +25,6 @@ class NoteForm(ModelForm):
         for i, tag in enumerate(tags):
             if len(tag) > 25:
                 raise ValidationError(
-                    'Length of a tag should be less than 25 symbols.'
+                    f'Length of {i+1} tag should be less than 25 symbols.'
                 )
         return tags
