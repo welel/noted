@@ -268,7 +268,7 @@
 	}
 	.header__list {
 		display: block;
-		align-self: end;
+		align-self: start;
 		margin-top: 30px;
 		margin-bottom: -20px;
 	}

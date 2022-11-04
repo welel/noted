@@ -69,7 +69,7 @@ class TaggedNoteListView(NoteList):
             setattr(self, 'tag', tag)
         else:
             raise Http404('The tag slug wasn\'t found.')
-        queryset = Note.objects.filter(tags=tag)
+        queryset = Note.objects.filter(tags=tag, private=False)
         order = self.get_ordering()
         return queryset.order_by(order)
 

@@ -21,8 +21,10 @@
     {% block body %}
     {% include 'layouts/navigation.html' %}
     <div style="margin-top: 100px;"></div>
-    {% block content %}
-    {% endblock %}
+    <div class="px-5">
+      {% block content %}
+      {% endblock %}
+    </div>
     {% endblock %}
     {% block extra_body %}
     {% endblock %}

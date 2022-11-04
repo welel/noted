@@ -1,9 +1,11 @@
 __pycache__/
 *.pyc
 .env
+env/
 dev/
 .idea
 frontend/media/*
 venv/
 migrations/
 !migrations/__init__.py
+todo.md
