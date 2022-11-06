@@ -3,9 +3,13 @@
 
 {% load static %}
 {% load mptt_tags %}
+{% load social_share %}
 
 {% block title %}{{ note.title }}{% endblock %}
 
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/social_icons.css' %}">
+{% endblock %}
 
 {% block main %}
 <div class="row" style="margin-top: 120px;">
@@ -97,10 +101,20 @@
   </div>
 </div>
 
+<!-- Share buttons
+--   Link: https://codepen.io/eskside_design/pen/RNemLB/
+-->
+{% include 'layouts/social_icons_svg.html' %}
+<div class="mt-3">
+  <h3>Share this note<hr></h3>
+{% post_to_facebook note '<svg role="presentation" class="svg--icon"><use xlink:href="#svg--facebook" /><span class="clip">FACEBOOK</span></svg>' 'share facebook' %}
+{% post_to_twitter "{{note.title}}. Check it out!" note '<svg role="presentation" class="svg--icon"><use xlink:href="#svg--twitter" /></svg><span class="clip">TWITTER</span>' 'share twitter' %}
+{% post_to_gplus note '<svg role="presentation" class="svg--icon"><use xlink:href="#svg--google" /><span class="clip">GOOGLE +</span></svg>' 'share google' %}
+</div>
+
 <!-- Comments -->
 {% if note.allow_comments %}
-<hr class="mt-2">
-
+<h3 style="margin-top: 100px;">Comments<hr></h3>
 <!-- General comment form -->
 <form id="commentGeneralForm" class="m-auto" method="post">
   {{ comment_form.as_p }}

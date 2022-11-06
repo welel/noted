@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'mptt',
+    'django_social_share',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',

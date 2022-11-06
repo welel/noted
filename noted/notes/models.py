@@ -23,7 +23,7 @@ from user.models import User
 
 class NoteManager(models.Manager):
 
-    def get_personal_notes(self, user: User) -> QuerySet:
+    def personal(self, user: User) -> QuerySet:
         """Query notes for a specific user.
         
         Args:
@@ -33,6 +33,10 @@ class NoteManager(models.Manager):
             Notes for a specific user.
         """
         return self.filter(author=user)
+
+    def public(self) -> QuerySet:
+        """Query notes available for everyone."""
+        return self.filter(private=False)
 
 
 class Note(models.Model):

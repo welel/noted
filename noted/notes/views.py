@@ -107,7 +107,7 @@ class PublicNoteList(NoteList):
     template_name = 'notes/public_list.html'
 
     def get_queryset(self):
-        queryset = Note.objects.filter(private=False)
+        queryset = Note.objects.public()
         return super().get_ordered_queryset(queryset)
 
 
@@ -128,7 +128,7 @@ class PersonalNoteList(NoteList):
     template_name = 'notes/personal_list.html'
 
     def get_queryset(self):
-        queryset = Note.objects.get_personal_notes(self.request.user)
+        queryset = Note.objects.personal(self.request.user)
         return super().get_ordered_queryset(queryset)
 
 
@@ -155,7 +155,7 @@ class TaggedNoteListView(NoteList):
             setattr(self, 'tag', tag)
         else:
             raise Http404('The tag slug wasn\'t found.')
-        queryset = Note.objects.filter(tags=tag, private=False)
+        queryset = Note.objects.public().filter(tags=tag)
         return super().get_ordered_queryset(queryset)
 
     def get_context_data(self, **kwargs):
@@ -187,7 +187,7 @@ class UserNoteListView(NoteList):
             raise Http404(
                 f'The user with name "{username}" wasn\'t found.'
             )
-        queryset = Note.objects.get_personal_notes(user)
+        queryset = Note.objects.personal(user)
         queryset = queryset.filter(private=False, anonymous=False)
         return super().get_ordered_queryset(queryset)
 
@@ -222,7 +222,7 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
         context['comment_form'] = comment_form_factory(root_comments)
         # Get similar notes and add to the context
         note_tags_ids = note.tags.values_list('id', flat=True)
-        similar_notes = Note.objects.filter(private=False).filter(
+        similar_notes = Note.objects.public().filter(
             tags__in=note_tags_ids).exclude(id=note.id)
         similar_notes = similar_notes.annotate(
             same_tags=Count('tags')).order_by('-same_tags', '-date')[:4]
@@ -328,7 +328,7 @@ def notes_search(request):
                             SearchVector('summary', weight='A') + \
                             SearchVector('body_raw', weight='B')
             search_query = SearchQuery(query)
-            results = Note.objects.filter(private=False).annotate(
+            results = Note.objects.public().annotate(
                     rank=SearchRank(search_vector, search_query),
                     similarity=TrigramSimilarity('title', query),
                 ).filter(

@@ -9,6 +9,8 @@ class TagList(ListView):
 
     It displays tags, each tag has a number of his notes.
 
+    TODO: exclude `private`=True notes from tag counting.
+
     **Context**
         tags: a queryset of all :model:`taggit.Tag` instances.
 
@@ -22,9 +24,11 @@ class TagList(ListView):
     template_name = 'tags/list.html'
 
     def get_queryset(self):
-        queryset = Tag.objects.all()
-        qs_counted = queryset.annotate(
+        queryset = Tag.objects.all().annotate(
             num_times=Count('taggit_taggeditem_items')
         )
-        print(qs_counted)
-        return qs_counted.order_by('-num_times')
+        # If a tag has no notes, we delete the tag.
+        for tag in reversed(queryset):
+            if tag.num_times == 0:
+                tag.delete()
+        return queryset.order_by('-num_times')
