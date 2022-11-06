@@ -1,6 +1,7 @@
 /*
  * bootstrap-tagsinput v0.8.0
- * 
+ * Easy tidy field style for tags input.
+ * Link: https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/
  */
 
 (function ($) {

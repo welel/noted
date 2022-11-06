@@ -1,3 +1,4 @@
+/* Main navigation menu style. Colors in ``css/color_style.css``. */
 @include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
 /* open-sans-regular - latin-ext_latin */
@@ -44,7 +45,6 @@
 	color: #fff;
 }
 /* bootstrap override: end */
-
 
 .header__container {}
 .header {
@@ -143,7 +143,6 @@
 .header__link:hover {
 	border-bottom: 1px solid #fff;
 }
-
 
 @media (max-width: 767px) {
 	body.lock {

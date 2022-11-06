@@ -1,4 +1,5 @@
-/* STYLE 03 */
+/* Color style of the website. */
+
 header#header-hero .waveWrapperInner {
 	background: #05386B;
 	background: -webkit-linear-gradient(30deg, #3500D3, #05386B);
@@ -44,37 +45,3 @@ header#header-hero .waveWrapperInner {
 .tag-list .badge {
 	background-color: #60CD60 !important;
 }
-
-
-/* STYLE ** */
-/*header#header-hero .waveWrapperInner {
-
-	background: #0F2027;
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
-
-}
-.header:before {
-	background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
-	background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
-}
-.footer {
-	background: -webkit-linear-gradient(180deg, #2C5364, #203A43, #0F2027);
-	background: linear-gradient(180deg, #2C5364, #203A43, #0F2027);
-}
-*/
-
-/* STYLE ** */
-/*header#header-hero .waveWrapperInner {
-	background: #43C6AC;
-	background: -webkit-linear-gradient(to right, #191654, #43C6AC);
-	background: linear-gradient(to right, #191654, #43C6AC);
-}
-.header:before {
-	background: -webkit-linear-gradient(to right, #191654, #43C6AC);
-	background: linear-gradient(to right, #191654, #43C6AC);
-}
-.footer {
-	background: -webkit-linear-gradient(to right, #191654, #43C6AC);
-	background: linear-gradient(to right, #191654, #43C6AC);
-}*/

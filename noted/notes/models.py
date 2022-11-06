@@ -64,7 +64,7 @@ class Note(models.Model):
         return reverse('note', args=[self.slug, ])
 
     def _generate_unique_slug(self) -> str:
-        """Generates unique slug for ``Note`` instance.
+        """Generate unique slug for ``Note`` instance and return it.
 
         The method slugifys `title` and adds random symbols
         at the end if `slug` isn't unique.

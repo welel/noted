@@ -1,3 +1,4 @@
+/* Header style. Colors in ``css/color_style.css``. */
 @include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
 /* open-sans-regular - latin-ext_latin */
@@ -185,7 +186,6 @@ header#header-hero .waveAnimation .waveBottom {
 		transform: translateX(-50%) translateZ(0) scaleY(1)
 	}
 }
-
 
 @media (min-height:710px) {
 	header#header-hero h1 {

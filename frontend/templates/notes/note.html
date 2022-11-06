@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
 {% load mptt_tags %}
 
 {% block title %}{{ note.title }}{% endblock %}
@@ -141,47 +142,6 @@
   {% endfor %}
 {% endwith %}
 
-   <script>
-
-    function expandChildren(children_div_id, arrow_id) {
-      var element = document.getElementById(children_div_id);
-      var arrow_span = document.getElementById(arrow_id);
-      if (element.hidden == true) {
-        element.hidden = false;
-        arrow_span.innerText = 	'\u25B4';
-      } else {
-        element.hidden = true;
-        arrow_span.innerText = '\u25BE';
-      }
-    }
-
-    function openCommentForm(parent_id, id) {
-      var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0]['defaultValue'];
-      
-      if (document.contains(document.getElementById('commentForm'))) {
-        document.getElementById('commentForm').remove();
-      }
-
-      var comment_last_element = document.getElementById(id);
-      comment_last_element.insertAdjacentHTML('afterend',
-        '<form id="commentForm" class="m-auto" method="post"> \
-          <p> \
-              <select name="parent" class="d-none" required="" id="id_parent"> \
-                <option value="' + parent_id + '" selected="' + parent_id + '"></option> \
-              </select> \
-          </p> \
-              <p> <lt-mirror contenteditable="false" style="display: none;"><lt-highlighter contenteditable="false" style="display: none;"><lt-div spellcheck="false" class="lt-highlighter__wrapper" style="width: 694px !important; height: 60px !important; transform: none !important; transform-origin: 348px 31px !important; zoom: 1 !important; margin-top: 1px !important; margin-left: 1px !important;"><lt-div class="lt-highlighter__scroll-element" style="top: 0px !important; left: 0px !important; width: 694px !important; height: 60px !important;"></lt-div></lt-div></lt-highlighter><lt-div spellcheck="false" class="lt-mirror__wrapper notranslate" data-lt-scroll-top="0" data-lt-scroll-left="0" data-lt-scroll-top-scaled="0" data-lt-scroll-left-scaled="0" data-lt-scroll-top-scaled-and-zoomed="0" data-lt-scroll-left-scaled-and-zoomed="0" style="border: 1px solid rgb(206, 212, 218) !important; border-radius: 4px !important; direction: ltr !important; font: 400 16px / 1.5 system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot; !important; font-feature-settings: normal !important; font-kerning: auto !important; font-synthesis: weight style small-caps !important; hyphens: manual !important; letter-spacing: normal !important; line-break: auto !important; margin: 0px !important; padding: 6px 12px !important; text-align: start !important; text-decoration: none solid rgb(33, 37, 41) !important; text-indent: 0px !important; text-rendering: auto !important; text-transform: none !important; transform: none !important; transform-origin: 348px 31px !important; unicode-bidi: normal !important; white-space: pre-wrap !important; word-spacing: 0px !important; overflow-wrap: break-word !important; writing-mode: horizontal-tb !important; zoom: 1 !important; -webkit-locale: &quot;en&quot; !important; -webkit-rtl-ordering: logical !important; width: 670px !important; height: 48px !important;"><lt-div class="lt-mirror__canvas" style="margin-top: 0px !important; margin-left: 0px !important; width: 670px !important; height: 48px !important;"></lt-div></lt-div></lt-mirror><textarea name="content" cols="40" rows="2" class="form-control shadow-none" placeholder="Add a public comment..." maxlength="2000" required="" id="id_content" data-lt-tmp-id="lt-883410" spellcheck="false" data-gramm="false"></textarea></p> \
-              <input type="hidden" name="csrfmiddlewaretoken" value="' + csrf_token + '"> \
-              <button type="submit" class="btn btn-primary btn-block float-end px-4 shadow-none">Post</button> \
-              <button type="button" class="btn btn-secondary btn-block float-end px-4 mx-2 shadow-none" onclick="closeCommentForm()">Cancel</button> \
-        </form>');
-    }
-
-    function closeCommentForm() {
-      document.getElementById('commentForm').remove();
-    }
-   </script>
-
   <!-- comments pagination -->
 <div class="py-4">
   <nav aria-label="Page navigation example">
@@ -213,3 +173,5 @@
 {% endif %}
 
 {% endblock %}
+
+{% block extrascripts %}<script src="{% static 'js/comments.js' %}"></script>{% endblock %}
