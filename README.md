@@ -18,6 +18,9 @@
 * Twitter Bootstrap integration
 * Tree comments
 * Search
+* Recommendations
+* Sharing content
+* Likes
 
 
 

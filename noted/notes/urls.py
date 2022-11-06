@@ -10,6 +10,7 @@ from notes.views import (
     TaggedNoteListView,
     UserNoteListView,
     notes_search,
+    note_like,
 )
 
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
     path('user/<str:username>/', UserNoteListView.as_view(), name='by_user'),
     path('search/', notes_search, name='search'),
+    path('like/', note_like, name='like'),
 ]

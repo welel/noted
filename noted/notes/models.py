@@ -50,7 +50,7 @@ class Note(models.Model):
         title: a title of a note.
         slug: a slug of a note for URL.
         author: a user foreign key, author of a note.
-        source: a link to a source of a note. 
+        source: a link to a source of a note.
         body_raw: a raw Markdown text from a form.
         body_html: HTML representation of `body_raw`, it is generated
                    based on `body_raw` via GitHub API.
@@ -61,6 +61,7 @@ class Note(models.Model):
                         to a note.
         date: published/updated datetime of a note.
         tags: tags of a note (max tags - 5, max length - 24 symbols).
+        users_like: a m2m field for note likes. 
     
     """
 
@@ -95,6 +96,8 @@ class Note(models.Model):
         You can add maximum 5 tags, and length of tags should be less than 25
         symbols.'''
     )
+    users_like = models.ManyToManyField(User, related_name='notes_liked',
+                                        blank=True)
     objects = NoteManager()
 
     def __str__(self):

@@ -12,10 +12,10 @@ u""""Views for the `notes` app.
     NoteCreateView: handles creating of a note.
     NoteUpdateView: handles editing of a note.
     NoteDeleteView: handles deletion of a note.
+    notes_search: search notes instances by a GET request query.
+    note_like: like/unlike a note.
 
 """
-
-from itertools import chain
 
 from taggit.models import Tag
 
@@ -24,7 +24,7 @@ from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (SearchVector, SearchQuery,
     SearchRank, TrigramSimilarity)
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView,
     FormView)                       
@@ -32,6 +32,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_POST
 from django.urls import reverse, reverse_lazy
 
 from notes.forms import NoteForm, CommentForm, SearchForm, comment_form_factory
@@ -336,3 +337,22 @@ def notes_search(request):
             ).order_by('-rank')
     return render(request, 'notes/search.html',
                   {'form': form,  'query': query, 'notes': results})
+
+
+@login_required()
+@require_POST
+def note_like(request):
+    """Like/unlike a note via a ajax request."""
+    note_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if note_id and action:
+        try:
+            note = Note.objects.get(id=note_id)
+            if action == 'like':
+                note.users_like.add(request.user)
+            else:
+                note.users_like.remove(request.user)
+            return JsonResponse({'status': 'ok'})
+        except:
+            pass
+    return JsonResponse({'status': 'error'})
