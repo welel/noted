@@ -15,13 +15,17 @@ u""""Views for the `notes` app.
 
 """
 
+from itertools import chain
+
 from taggit.models import Tag
 
 from django.views import View
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.contrib.postgres.search import (SearchVector, SearchQuery,
+    SearchRank, TrigramSimilarity)
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView,
     FormView)                       
 from django.views.generic.edit import DeleteView
@@ -30,7 +34,7 @@ from django.views.generic.list import MultipleObjectMixin
 from django.utils.decorators import method_decorator
 from django.urls import reverse, reverse_lazy
 
-from notes.forms import NoteForm, CommentForm, comment_form_factory
+from notes.forms import NoteForm, CommentForm, SearchForm, comment_form_factory
 from notes.models import Note
 from user.models import User
 
@@ -70,14 +74,25 @@ class NoteList(ListView):
         context['order_label'] = self.ORDER_LABELS.get(order, '')
         return context
 
+    def get_ordered_queryset(self, queryset):
+        """Order a queryset by GET param `order`"""
+        if not queryset:
+            queryset = super().get_queryset()
+        order = self.get_ordering()
+        if order == 'comments':
+            queryset = queryset.annotate(
+                count=Count('comments')
+            ).order_by('-count')
+        else:
+            queryset = queryset.order_by(order)
+        return queryset
+
 
 class PublicNoteList(NoteList):
     """Display a list of :model:`notes.Note` available for every one.
 
     It displays the home page of the website. A list consists of all notes
     except private notes.
-
-    TODO: Now handles ordering (put ordering in the supercalss).
 
     **Context**
         notes: a queryset of :model:`notes.Note` instances.
@@ -93,14 +108,7 @@ class PublicNoteList(NoteList):
 
     def get_queryset(self):
         queryset = Note.objects.filter(private=False)
-        order = self.get_ordering()
-        if order == 'comments':
-            queryset = queryset.annotate(
-                count=Count('comments')
-            ).order_by('-count')
-        else:
-            queryset = queryset.order_by(order)
-        return queryset
+        return super().get_ordered_queryset(queryset)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -121,8 +129,7 @@ class PersonalNoteList(NoteList):
 
     def get_queryset(self):
         queryset = Note.objects.get_personal_notes(self.request.user)
-        order = self.get_ordering()
-        return queryset.order_by(order)
+        return super().get_ordered_queryset(queryset)
 
 
 class TaggedNoteListView(NoteList):
@@ -149,8 +156,7 @@ class TaggedNoteListView(NoteList):
         else:
             raise Http404('The tag slug wasn\'t found.')
         queryset = Note.objects.filter(tags=tag, private=False)
-        order = self.get_ordering()
-        return queryset.order_by(order)
+        return super().get_ordered_queryset(queryset)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -183,8 +189,7 @@ class UserNoteListView(NoteList):
             )
         queryset = Note.objects.get_personal_notes(user)
         queryset = queryset.filter(private=False, anonymous=False)
-        order = self.get_ordering()
-        return queryset.order_by(order)
+        return super().get_ordered_queryset(queryset)
 
 
 class NoteDetailView(DetailView, MultipleObjectMixin):
@@ -195,6 +200,7 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
         paginator: a paginator for comments list.
         page_obj: a pagination navigator.
         comment_form: a form for creating a comment.
+        notes: notes with common tags to a current note.
 
     **Template**
         :template:`frontend/templates/notes/note.html`
@@ -207,11 +213,20 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
 
     def get_context_data(self, **kwargs):
         note = self.get_object()
-        object_list = note.comments.filter(parent=None)
+        # Get root comments and add to the context
+        root_comments = note.comments.filter(parent=None)
         context = super(
             NoteDetailView, self
-        ).get_context_data(object_list=object_list, **kwargs)
-        context['comment_form'] = comment_form_factory(object_list)
+        ).get_context_data(object_list=root_comments, **kwargs)
+        # Create a comment form for current comments and add to the context
+        context['comment_form'] = comment_form_factory(root_comments)
+        # Get similar notes and add to the context
+        note_tags_ids = note.tags.values_list('id', flat=True)
+        similar_notes = Note.objects.filter(private=False).filter(
+            tags__in=note_tags_ids).exclude(id=note.id)
+        similar_notes = similar_notes.annotate(
+            same_tags=Count('tags')).order_by('-same_tags', '-date')[:4]
+        context['notes'] = similar_notes
         return context
 
 
@@ -229,7 +244,7 @@ class CommentFormView(SingleObjectMixin, FormView):
     form_class = CommentForm
     model = Note
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
@@ -250,7 +265,7 @@ class CommentFormView(SingleObjectMixin, FormView):
 class NoteView(View):
     """Chose a view based on a request method (GET/POST).
 
-    It uses two different class based views from the same URL. We have
+    It uses two different class based views with the same URL. We have
     a division here: GET requests should get the ``NoteDetailView`` (with
     a form added to the context data), and POST requests should get
     the ``CommentFormView``.
@@ -288,3 +303,36 @@ class NoteUpdateView(UpdateView):
 class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy('home')
+
+
+def notes_search(request):
+    """Search :model:`notes.Note` instances by a GET request query.
+        
+    **Context**
+        form: a form for a search query.
+        query: a search query.
+        notes: a search result.
+
+    **Template**
+        :template:`frontend/templates/notes/search.html`
+        
+    """
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_vector = SearchVector('title', weight='A') + \
+                            SearchVector('summary', weight='A') + \
+                            SearchVector('body_raw', weight='B')
+            search_query = SearchQuery(query)
+            results = Note.objects.filter(private=False).annotate(
+                    rank=SearchRank(search_vector, search_query),
+                    similarity=TrigramSimilarity('title', query),
+                ).filter(
+                    Q(rank__gte=0.2) | Q(similarity__gt=0.1)
+            ).order_by('-rank')
+    return render(request, 'notes/search.html',
+                  {'form': form,  'query': query, 'notes': results})

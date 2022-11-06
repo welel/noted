@@ -1,19 +1,23 @@
 <p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="https://i.ibb.co/r3M4k7w/header-logo-noted.png" alt="header-logo-noted" border="0"></a></p>
 
 
-<p align="center">This is a web service that helps to make, store and learn notes.</p>
+<p align="center">This is a web service that helps to make and store notes.</p>
 
 **Link on the website:** https://noted-eu.herokuapp.com/notes/
 
-<h3 align="center">Preview</h3>
 
-![](https://s4.gifyu.com/images/ezgif.com-gif-maker81b4ab4828f7ef6c.gif?style=centerme)
 
-| Main actions                                          | Features                                                     |
-| ----------------------------------------------------- | ------------------------------------------------------------ |
-| 1. Create note.<br> 2. Edit note.<br> 3. Delete note. | Markdown editor<br>Pretty design<br>Adaptive design (for mobile) |
+# Features
 
-*The main idea is to create an algorithm that will send pieces of notes on mobile for repeating them (future functionality).*
+* Markdown editor
+* Adaptive design (for mobile)
+* Registration via django-allauth (github, google, yandex)
+* Send emails
+* WYSIWYG editing
+* Tagging
+* Twitter Bootstrap integration
+* Tree comments
+* Search
 
 
 
@@ -37,7 +41,14 @@
 
 ## Installation
 
-1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database (or change database on SQLite in settings).
+1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
+
+    To use trigrams in PostgreSQL, you will need to install the `pg_trgm`
+    extension first. Execute the following command from the shell to connect to your
+    database:
+    `psql [db_name]`
+    Then, execute the following command to install the `pg_trgm` extension:
+    `CREATE EXTENSION pg_trgm;`
 
 2. Clone repository.
    
@@ -52,18 +63,3 @@
 7. Make migrations.
 
 8. Run the server `python3 manage.py runserver`.
-
-
-
-# Features
-
-* Markdown editor
-* Adaptive design (for mobile)
-* Registration via django-allauth (github, google, yandex)
-* Send emails
-* WYSIWYG editing
-* Tagging
-* Twitter Bootstrap integration
-* Tree comments
--User accounts and profiles with email verification
--Search engine

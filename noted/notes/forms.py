@@ -86,3 +86,13 @@ def comment_form_factory(comments: TreeQuerySet) -> CommentForm:
     class CommentFormModified(CommentForm):
         parent = TreeNodeChoiceField(queryset=comments)
     return CommentFormModified
+
+
+class SearchForm(forms.Form):
+    """A form for searching."""
+    query = forms.CharField()
+    query.widget.attrs.update({'placeholder': 'Search'})
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['query'].label = ''

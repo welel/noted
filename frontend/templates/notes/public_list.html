@@ -1,4 +1,6 @@
 <!-- General list of notes on home page -->
-{% extends 'layouts/list.html' %}
+{% extends 'layouts/list_base.html' %}
 
 {% block list_header %}Public Notes{% endblock %}
+
+{% block no_notes %}{% include 'add_note_button.html' %}{% endblock %}

@@ -1,0 +1,24 @@
+<!-- Search notes form and answers -->
+{% extends 'layouts/list_base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block search %}
+<h2>Search</h2>
+<form method="get" class="d-flex mb-5">
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-outline-primary">search</button>
+</form>
+{% endblock %}
+
+{% if request.GET.query %}
+    {% block list_header %}
+        {% with notes_total=notes.count %}
+            <h3 class="mb-3">
+                {{ notes_total }} answer{{ notes_total|pluralize }} 
+                {% if notes_total > 1 %}were{% else %}was{% endif %} found for your query:
+            </h3>
+        {% endwith %}
+    {% endblock %}
+{% endif %}

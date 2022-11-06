@@ -9,3 +9,4 @@ venv/
 migrations/
 !migrations/__init__.py
 todo.md
+.vscode/

@@ -108,9 +108,28 @@
   <button type="submit" class="btn btn-primary btn-block float-end px-4">Post</button>
 </form>
 
+<!-- Similar notes -->
+{% if notes %}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed shadow-none border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onclick="animOnScroll()">
+        <h3>Similar public notes</h3>
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse border-0" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        {% include 'layouts/list.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <!-- Comments list -->
 {% with comments=page_obj total_comments=note.comments.count %}
-  <h4>{{ total_comments }} comment{{ total_comments|pluralize }}</h4>
+  {% if total_comments %}
+  <h4 class="mt-4">{{ total_comments }} comment{{ total_comments|pluralize }}</h4>
   {% for root_comment in comments %}
     {% with children=root_comment.get_children total_children=root_comment.get_children.count %}
       <div>
@@ -141,6 +160,7 @@
         {% endwith %}
       </div>
   {% endfor %}
+{% endif %}
 {% endwith %}
 
 <!-- Comments pagination -->
@@ -150,4 +170,8 @@
 
 {% endblock %} <!-- main block -->
 
-{% block extrascripts %}<script src="{% static 'js/comments.js' %}"></script>{% endblock %}
+{% block extrascripts %}
+<script src="{% static 'js/comments.js' %}"></script>
+<!-- Flow effects for notes cards -->
+<script src="{% static 'js/list.js' %}"></script>
+{% endblock %}

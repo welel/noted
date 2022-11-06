@@ -1,6 +1,8 @@
 <!-- List of notes of a current user -->
-{% extends 'layouts/list.html' %}
+{% extends 'layouts/list_base.html' %}
 
 {% block title %}Personal Notes{% endblock %}
 
 {% block list_header %}Personal Notes{% endblock %}
+
+{% block no_notes %}{% include 'add_note_button.html' %}{% endblock %}

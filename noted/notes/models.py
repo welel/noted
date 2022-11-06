@@ -38,7 +38,9 @@ class NoteManager(models.Manager):
 class Note(models.Model):
     """Markdown text with a list of attributes.
 
-    TODO: split `date` on `published`, `updated`.
+    TODO:
+        * split `date` on `published`, `updated`;
+        * create NoteManager method `public_note`.
     
     **Fields**
         title: a title of a note.
@@ -84,7 +86,7 @@ class Note(models.Model):
     )
     date = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
-        through=UnicodeTaggedItem, blank=True,
+        through=UnicodeTaggedItem, blank=True, related_name='tags',
         help_text='''Add tags. Separate tags by using "Enter" or comma.
         You can add maximum 5 tags, and length of tags should be less than 25
         symbols.'''
