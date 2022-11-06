@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'simplemde',
     'crispy_forms',
     'taggit',
+    'mptt',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',

@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from notes.models import Note
+from mptt.admin import MPTTModelAdmin
+
+from notes.models import Note, Comment
 
 
 @admin.register(Note)
@@ -10,3 +12,6 @@ class NoteAdmin(admin.ModelAdmin):
     list_editable = ('private', 'anonymous')
     ordering = ('-date',)
     date_hierarchy = 'date'
+
+
+admin.site.register(Comment, MPTTModelAdmin)

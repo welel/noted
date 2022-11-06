@@ -2,11 +2,11 @@ import uuid
 
 from django.core.exceptions import FieldError
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.urls import reverse
 
 from taggit.managers import TaggableManager
+from mptt.models import MPTTModel, TreeForeignKey
 
 from markdown.fields import MarkdownField, RenderedMarkdownField
 from tags.models import UnicodeTaggedItem
@@ -40,6 +40,9 @@ class Note(models.Model):
     )
     anonymous = models.BooleanField(
         default=False, help_text='Others won\'t see that the note is yours.'
+    )
+    allow_comments = models.BooleanField(
+        default=True, help_text='Allow users to leave comments.'
     )
     date = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
@@ -75,3 +78,22 @@ class Note(models.Model):
         if Note.objects.filter(slug=slug).exists():
             slug += str(uuid.uuid1())[:8]
         return slug[:255]
+
+
+class Comment(MPTTModel):
+    note = models.ForeignKey(Note, on_delete=models.CASCADE,
+                             related_name='comments')
+    parent = TreeForeignKey('self', on_delete=models.CASCADE,
+                            null=True, blank=True,
+                            related_name='children',
+                            db_index=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               related_name='comments')
+    content = models.TextField(max_length=2000)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['date']
+
+    def __str__(self):
+        return f'Comment by {self.author}'

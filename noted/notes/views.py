@@ -1,16 +1,20 @@
+from django.views import View
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.views.decorators.http import require_GET
+from django.http import Http404, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, FormView
+)                       
 from django.views.generic.edit import DeleteView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.list import MultipleObjectMixin
 from django.utils.decorators import method_decorator
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from taggit.models import Tag
 
-from notes.forms import NoteForm
-from notes.models import Note
+from notes.forms import NoteForm, CommentForm
+from notes.models import Note, Comment
 from user.models import User
 
 
@@ -96,10 +100,56 @@ class UserNoteListView(NoteList):
         return queryset.order_by(order)
 
 
-class NoteDetailView(DetailView):
+class NoteDetailView(DetailView, MultipleObjectMixin):
     model = Note
     context_object_name = 'note'
     template_name = 'notes/note.html'
+    paginate_by = 2
+
+    def get_context_data(self, *args, **kwargs):
+        object_list = Comment.objects.filter(
+            note=self.get_object(), parent=None
+        )
+        context = super(NoteDetailView, self).get_context_data(object_list=object_list, **kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
+
+class CommentFormView(SingleObjectMixin, FormView):
+    template_name = 'notes/note.html'
+    form_class = CommentForm
+    model = Note
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            author = get_object_or_404(User, id=request.user.id)
+            form.instance.author = author
+            form.instance.note = self.object
+            form.instance.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self):
+        return "%s?page=%s" % (
+            reverse('note', kwargs={'slug': self.object.slug}),
+            self.request.GET.get('page', default='1')
+        )
+
+
+class NoteView(View):
+
+    def get(self, request, *args, **kwargs):
+        view = NoteDetailView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = CommentFormView.as_view()
+        return view(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')

@@ -1,17 +1,18 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, TextInput, CheckboxInput
+from django import forms
 
 from taggit.forms import TagWidget
+from mptt.forms import TreeNodeChoiceField
 
-from notes.models import Note
+from notes.models import Note, Comment
 
 
-class NoteForm(ModelForm):
+class NoteForm(forms.ModelForm):
 
     class Meta:
         model = Note
         fields = [
-            'title', 'source', 'private', 'anonymous',
+            'title', 'source', 'private', 'anonymous', 'allow_comments',
             'tags', 'body_raw', 'summary'
         ]
         widgets = {
@@ -28,3 +29,24 @@ class NoteForm(ModelForm):
                     f'Length of {i+1} tag should be less than 25 symbols.'
                 )
         return tags
+
+
+class CommentForm(forms.ModelForm):
+    parent = TreeNodeChoiceField(queryset=Comment.objects.root_nodes())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['parent'].widget.attrs.update({'class': 'd-none'})
+        self.fields['parent'].label = ''
+        self.fields['parent'].required = False
+        self.fields['content'].label = ''
+
+    class Meta:
+        model = Comment
+        fields = ('parent', 'content',)
+        widgets = {
+            'content': forms.Textarea(
+                attrs={'class': 'form-control shadow-none',
+                       'placeholder': 'Add a public comment...',
+                       'rows': '2',}),
+        }

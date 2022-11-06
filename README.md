@@ -55,3 +55,14 @@
 
 
 
+# Features
+
+* Markdown editor
+* Adaptive design (for mobile)
+* Registration via django-allauth (github, google, yandex)
+* Send emails
+* WYSIWYG editing
+* Tagging
+User accounts and profiles with email verification
+* Twitter Bootstrap integration
+Search engine
