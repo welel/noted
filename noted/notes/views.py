@@ -1,4 +1,5 @@
 from django.views import View
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
@@ -22,16 +23,14 @@ class NoteList(ListView):
     ORDER_LABELS = {
         'date': 'Oldest',
         '-date': 'Latest',
+        'comment': 'Most Commented'
     }
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
 
     def get_ordering(self):
-        order = self.request.GET.get('order', '-date')
-        if order.replace('-', '', 1) == 'date':
-            return order
-        return '-date'
+        return self.request.GET.get('order', default='-date')
 
     def get_context_data(self, *args, **kwargs):
         order = self.get_ordering()
@@ -49,8 +48,16 @@ class PublicNoteList(NoteList):
             user = self.request.user
             personal_queryset = Note.objects.get_personal_notes(user)
             queryset = queryset | personal_queryset
+        
         order = self.get_ordering()
-        return queryset.order_by(order)
+        if order == 'comments':
+            queryset = queryset.annotate(
+                count=Count('comments')
+            ).order_by('-count')
+        else:
+            queryset = queryset.order_by(order)
+        
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')

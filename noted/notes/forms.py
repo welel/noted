@@ -9,6 +9,10 @@ from notes.models import Note, Comment
 
 class NoteForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['body_raw'].label = ''
+
     class Meta:
         model = Note
         fields = [
