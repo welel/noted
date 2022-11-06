@@ -104,7 +104,7 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
     model = Note
     context_object_name = 'note'
     template_name = 'notes/note.html'
-    paginate_by = 2
+    paginate_by = 7
 
     def get_context_data(self, *args, **kwargs):
         object_list = Comment.objects.filter(

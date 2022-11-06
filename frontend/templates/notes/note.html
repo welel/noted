@@ -94,10 +94,11 @@
   </div>
 </div>
 
-<hr class="mt-2">
 
 <!-- Comments -->
 {% if note.allow_comments %}
+<hr class="mt-2">
+
   <!-- general comment section -->
 <form id="commentGeneralForm" class="m-auto" method="post">
   {{ comment_form.as_p }}
@@ -107,32 +108,56 @@
 
   <!-- comments list -->
 {% with comments=page_obj total_comments=note.comments.count %}
-<h4>{{ total_comments }} comment{{ total_comments|pluralize }}</h4>
-{% for root_comment in comments %}
-  <div>
-    <p class="small m-auto pt-3"><b>{{ root_comment.author }}</b>&nbsp;<spam class="text-secondary">{{ root_comment.date|date:'d M Y' }}</spam></p>
-    <p class="m-auto">{{ root_comment.content }}</p>
-    <button id="{{ root_comment.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
-      onclick="openCommentForm({{ root_comment.id }}, {{ root_comment.id }})">
-      <b>REPLY</b>
-    </button>
-  </div>
-    {% for child in root_comment.get_children %}
-    <div class="children" style="margin-left: 40px;">
-      <p class="small m-auto pt-3"><b>{{ child.author }}</b>&nbsp;<spam class="text-secondary">{{ child.date|date:'d M Y' }}</spam></p>
-      <p class="m-auto">{{ child.content }}</p>
-      <button id="{{ child.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
-        onclick="openCommentForm({{ child.parent.id }}, {{ child.id }})">
-        <b>REPLY</b>
-      </button>
-    </div>
-    {% endfor %}
-{% endfor %}
+  <h4>{{ total_comments }} comment{{ total_comments|pluralize }}</h4>
+  {% for root_comment in comments %}
+    {% with children=root_comment.get_children total_children=root_comment.get_children.count %}
+      <div>
+        <p class="small m-auto pt-3"><a class="text-decoration-none text-dark" href="{% url 'notes:by_user' username=root_comment.author %}"><b>{{ root_comment.author }}</b></a>&nbsp;<spam class="text-secondary">{{ root_comment.date|date:'d M Y' }}</spam></p>
+        <p class="m-auto">{{ root_comment.content }}</p>
+        <button id="{{ root_comment.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
+          onclick="openCommentForm({{ root_comment.id }}, {{ root_comment.id }})">
+          <b>REPLY</b>
+        </button>
+        {% if total_children %}
+          <button type="button" class="btn btn-link text-decoration-none text-uppercase shadow-none" style="font-size: 15px;"
+            onclick="expandChildren('childrenComments{{ root_comment.id }}', 'arrow{{ root_comment.id }}')">
+            <span id="arrow{{ root_comment.id }}">&#9662;</span><b>&nbsp;&nbsp;{{ total_children }} ANSWER{{ total_children|pluralize }}</b>
+          </button>
+        {% endif %}
+      </div>
+      <div id="childrenComments{{ root_comment.id }}" hidden>
+          {% for child in children %}
+          <div class="children" style="margin-left: 40px;">
+            <p class="small m-auto pt-3"><a class="text-decoration-none text-dark" href="{% url 'notes:by_user' username=child.author %}"><b>{{ child.author }}</b></a>&nbsp;<spam class="text-secondary">{{ child.date|date:'d M Y' }}</spam></p>
+            <p class="m-auto">{{ child.content }}</p>
+            <button id="{{ child.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
+              onclick="openCommentForm({{ child.parent.id }}, {{ child.id }})">
+              <b>REPLY</b>
+            </button>
+          </div>
+          {% endfor %}
+        {% endwith %}
+      </div>
+  {% endfor %}
 {% endwith %}
 
    <script>
 
+    function expandChildren(children_div_id, arrow_id) {
+      var element = document.getElementById(children_div_id);
+      var arrow_span = document.getElementById(arrow_id);
+      if (element.hidden == true) {
+        element.hidden = false;
+        arrow_span.innerText = 	'\u25B4';
+      } else {
+        element.hidden = true;
+        arrow_span.innerText = '\u25BE';
+      }
+    }
+
     function openCommentForm(parent_id, id) {
+      var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0]['defaultValue'];
+      
       if (document.contains(document.getElementById('commentForm'))) {
         document.getElementById('commentForm').remove();
       }
@@ -146,7 +171,7 @@
               </select> \
           </p> \
               <p> <lt-mirror contenteditable="false" style="display: none;"><lt-highlighter contenteditable="false" style="display: none;"><lt-div spellcheck="false" class="lt-highlighter__wrapper" style="width: 694px !important; height: 60px !important; transform: none !important; transform-origin: 348px 31px !important; zoom: 1 !important; margin-top: 1px !important; margin-left: 1px !important;"><lt-div class="lt-highlighter__scroll-element" style="top: 0px !important; left: 0px !important; width: 694px !important; height: 60px !important;"></lt-div></lt-div></lt-highlighter><lt-div spellcheck="false" class="lt-mirror__wrapper notranslate" data-lt-scroll-top="0" data-lt-scroll-left="0" data-lt-scroll-top-scaled="0" data-lt-scroll-left-scaled="0" data-lt-scroll-top-scaled-and-zoomed="0" data-lt-scroll-left-scaled-and-zoomed="0" style="border: 1px solid rgb(206, 212, 218) !important; border-radius: 4px !important; direction: ltr !important; font: 400 16px / 1.5 system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot; !important; font-feature-settings: normal !important; font-kerning: auto !important; font-synthesis: weight style small-caps !important; hyphens: manual !important; letter-spacing: normal !important; line-break: auto !important; margin: 0px !important; padding: 6px 12px !important; text-align: start !important; text-decoration: none solid rgb(33, 37, 41) !important; text-indent: 0px !important; text-rendering: auto !important; text-transform: none !important; transform: none !important; transform-origin: 348px 31px !important; unicode-bidi: normal !important; white-space: pre-wrap !important; word-spacing: 0px !important; overflow-wrap: break-word !important; writing-mode: horizontal-tb !important; zoom: 1 !important; -webkit-locale: &quot;en&quot; !important; -webkit-rtl-ordering: logical !important; width: 670px !important; height: 48px !important;"><lt-div class="lt-mirror__canvas" style="margin-top: 0px !important; margin-left: 0px !important; width: 670px !important; height: 48px !important;"></lt-div></lt-div></lt-mirror><textarea name="content" cols="40" rows="2" class="form-control shadow-none" placeholder="Add a public comment..." maxlength="2000" required="" id="id_content" data-lt-tmp-id="lt-883410" spellcheck="false" data-gramm="false"></textarea></p> \
-              <input type="hidden" name="csrfmiddlewaretoken" value="68I4p2iLwGq6zjJDJBp4A7RRnnjrwNK5buPqAKys88os9AVMFRMKhyLOw8WcyUMx"> \
+              <input type="hidden" name="csrfmiddlewaretoken" value="' + csrf_token + '"> \
               <button type="submit" class="btn btn-primary btn-block float-end px-4 shadow-none">Post</button> \
               <button type="button" class="btn btn-secondary btn-block float-end px-4 mx-2 shadow-none" onclick="closeCommentForm()">Cancel</button> \
         </form>');

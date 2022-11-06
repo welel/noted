@@ -63,6 +63,7 @@
 * Send emails
 * WYSIWYG editing
 * Tagging
-User accounts and profiles with email verification
 * Twitter Bootstrap integration
+* Tree comments
+User accounts and profiles with email verification
 Search engine
