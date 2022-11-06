@@ -11,6 +11,8 @@ PROJECT_DIR = BASE_DIR.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
