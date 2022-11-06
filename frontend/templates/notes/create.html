@@ -1,8 +1,8 @@
+<!-- Create new note -->
 {% extends 'layouts/add_edit_note_base.html' %}
 
-
+<!-- https://github.com/django-crispy-forms/django-crispy-forms -->
 {% load crispy_forms_tags %}
-
 
 {% block title %}Create Note{% endblock %}
 
@@ -10,7 +10,8 @@
 {% block main %}
 <div class="row" style="margin-top: 110px;">
   <h2>New Note</h2>
-  <form method="post" id="add" novalidate>{% csrf_token %}
+  <form method="post" id="add" novalidate>
+    {% csrf_token %}
     {{ form|crispy }}
     <div class="d-grid gap-2 mt-3">
       <button class="btn btn-primary btn-lg" type="submit">

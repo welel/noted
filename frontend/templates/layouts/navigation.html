@@ -1,8 +1,9 @@
+<!-- Main navigation bar on the top of the website -->
 {% load static %}
 
 <header class='header parallax'>
-  <div class='header__container'> <!-- Ограничивает ширину контентной части -->
-    <div class='header__body'> <!-- flex контейнер -->
+  <div class='header__container'> <!-- Limits width of the container -->
+    <div class='header__body'> <!-- flex container -->
       <a class='menu__headline'>NoteD.</a>
       <a href="{% url 'notes:home' %}" class='header__logo'>
         <img src="{% static 'img/logo.png' %}" alt='logo' style='height: 43px; padding-left: 10px;'>

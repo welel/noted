@@ -1,5 +1,5 @@
+<!--Base template for create/update note templates -->
 {% extends 'layouts/base.html' %}
-
 
 {% load static %}
 
@@ -9,13 +9,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     {{ form.media }}
 
-    <!-- Tags styles -->
+    <!-- Tags form input styles -->
     <link rel="stylesheet" href="/static/css/tagsinput.css" />
 {% endblock %}
 
 
 {% block extrascripts %}
-    <script src="{% static 'js/helper.js' %}"></script>
+    <!-- Require for markdown editor (SimpleMDE) -->
+    <script src="{% static 'js/markdown.js' %}"></script>
 
     <!-- Tags scripts -->
     <script src="/static/js/tagsinput.js"></script>

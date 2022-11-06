@@ -1,31 +1,30 @@
 {% extends "account/base.html" %}
 
 {% load static %}
-{% load i18n %}
 {% load crispy_forms_tags %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}Sign In{% endblock %}
 
 {% block content %}
 <div class="container mt-5 d-flex justify-content-center">
 <div class="row" style="max-width: 400px;">
 
-  <h1 class="text-center">{% trans "Sign In" %}</h1>
+<!-- Header -->
+<h1 class="text-center">Sign In</h1>
 
-
-
+<!-- Sign in form -->
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
   {{ form|crispy }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <br><button class="btn btn-primary mt-3 primaryAction" type="submit" style="min-width: 120px;">{% trans "Sign In" %}</button>
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+  <br><button class="btn btn-primary mt-3 primaryAction" type="submit" style="min-width: 120px;">Sign In</button>
 </form>
 
-
+<!-- Sign up and allauth -->
 <p class="mt-3"><a href="{{ signup_url }}">
   Sign up</a> is you don't have an account. Or login with <a href="{% provider_login_url 'yandex' %}">Yandex</a>,
   <a href="{% provider_login_url 'github' %}">GitHub</a>, <a href="{% provider_login_url 'google' %}">Google</a>.

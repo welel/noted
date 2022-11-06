@@ -23,7 +23,7 @@ class NoteList(ListView):
     ORDER_LABELS = {
         'date': 'Oldest',
         '-date': 'Latest',
-        'comment': 'Most Commented'
+        'comments': 'Most Commented'
     }
     model = Note
     context_object_name = 'notes'

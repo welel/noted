@@ -1,8 +1,11 @@
+<!-- Requires css/footer.css, css/colot_style.css -->
 {% load static %}
 
 <footer class='footer'>
     <div class='container'>
+        <!-- Header -->
         <div class='footer__headline'><a href="{% url 'notes:home' %}">NoteD.</a></div>
+        <!-- Navigation -->
         <nav class='nav__head'>
             <ul>
                 <li><a href="{% url 'notes:home' %}">Home</a></li>
@@ -12,10 +15,11 @@
             </ul>
         </nav>
         <div class='horizontal__decoration__line'></div>
+        <!-- Contact data -->
         <nav class='social__media'>
             <ul>
                 <li><a href='https://github.com/pavel-loginov-dev' target="_blank"><div><img src="{% static 'img/icons/github.svg' %}" alt='GitHub'/></div><span>GitHub</span></a></li>
-                <li><a href='https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSGLddCFCLPdhtNjmmbpwPtZdjmWklVXKNRbhQjrfgLkrqqMWgNZknplSwvkKxqkQdMGczdK' target="_blank"><div><img src="{% static 'img/icons/gmail.svg' %}" alt='twitter'/></div><span>Gmail</span></a></li>
+                <li><a href='https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSGLddCFCLPdhtNjmmbpwPtZdjmWklVXKNRbhQjrfgLkrqqMWgNZknplSwvkKxqkQdMGczdK' target="_blank"><div><img src="{% static 'img/icons/gmail.svg' %}" alt='gmail'/></div><span>Gmail</span></a></li>
                 <li><a href='https://t.me/pavel_loginov_dev' target="_blank"><div><img src="{% static 'img/icons/telegram.svg' %}" alt='telegram'/></div><span>Telegram</span></a></li>
             </ul>
         </nav>

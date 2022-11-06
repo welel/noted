@@ -1,20 +1,16 @@
-<!--Pagination-->
+<!--Pagination for notes list -->
 <div class="row mt-5">
   <div class="col-9">
     <nav aria-label="Page navigation example">
         <ul class="pagination pagination-sm justify-content-center">
         {% if page_obj.has_previous %}
             <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
-          </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+            <a class="page-link px-3" href="?page={{ page_obj.previous_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">&#9666;</a>
           </li>
         {% endif %}
 
         {% if page_obj.number|add:'-4' > 1 %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+            <li class="page-item"><a class="page-link" href="?page=1{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">&hellip;</a></li>
         {% endif %}
 
         {% for i in page_obj.paginator.page_range %}
@@ -25,21 +21,17 @@
               </span>
             </li>
             {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-                 <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                 <li class="page-item"><a class="page-link" href="?page={{ i }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">{{ i }}</a></li>
             {% endif %}
         {% endfor %}
 
         {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-           <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+           <li class="page-item"><a class="page-link" href="?page={{ paginator.num_pages }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">&hellip;</a></li>
         {% endif %}
 
         {% if page_obj.has_next %}
             <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-          </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+            <a class="page-link px-3" href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}">&#9656;</a>
           </li>
         {% endif %}
       </ul>
