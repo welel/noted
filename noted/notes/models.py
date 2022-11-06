@@ -1,12 +1,20 @@
-import uuid
+"""Models of the the `notes` app.
 
-from django.core.exceptions import FieldError
-from django.db import models
-from django.utils.text import slugify
-from django.urls import reverse
+**Models**
+    Note (Model): a Markdown text with a list of attributes.
+    Comment (MPTTModel): a comment for a note.
+
+"""
+import uuid
 
 from taggit.managers import TaggableManager
 from mptt.models import MPTTModel, TreeForeignKey
+
+from django.core.exceptions import FieldError
+from django.db import models
+from django.db.models import QuerySet
+from django.utils.text import slugify
+from django.urls import reverse
 
 from markdown.fields import MarkdownField, RenderedMarkdownField
 from tags.models import UnicodeTaggedItem
@@ -15,11 +23,41 @@ from user.models import User
 
 class NoteManager(models.Manager):
 
-    def get_personal_notes(self, user):
+    def get_personal_notes(self, user: User) -> QuerySet:
+        """Query notes for a specific user.
+        
+        Args:
+            user: an author of notes.
+
+        Returns:
+            Notes for a specific user.
+        """
         return self.filter(author=user)
 
 
 class Note(models.Model):
+    """Markdown text with a list of attributes.
+
+    TODO: split `date` on `published`, `updated`.
+    
+    **Fields**
+        title: a title of a note.
+        slug: a slug of a note for URL.
+        author: a user foreign key, author of a note.
+        source: a link to a source of a note. 
+        body_raw: a raw Markdown text from a form.
+        body_html: HTML representation of `body_raw`, it is generated
+                   based on `body_raw` via GitHub API.
+        summary: a short summary on a text of a note.
+        private: a boolean flag makes a notes private (hides from other users). 
+        anonymous: a boolean flag hides an author of a note.
+        allow_comments: a boolean flag allows to users leave comments
+                        to a note.
+        date: published/updated datetime of a note.
+        tags: tags of a note (max tags - 5, max length - 24 symbols).
+    
+    """
+
     title = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(max_length=255, editable=False, unique=True)
     author = models.ForeignKey(
@@ -74,18 +112,37 @@ class Note(models.Model):
             raise FieldError(
                 'Cannot generate `slug`, because `title` is empty.'
             )
-        slug = slugify(self.title, allow_unicode=True)
+        slug = slugify(self.title, allow_unicode=True)[:247]
         if Note.objects.filter(slug=slug).exists():
             slug += str(uuid.uuid1())[:8]
         return slug[:255]
 
 
 class Comment(MPTTModel):
+    """Comment of ``Note`` instance.
+
+    TODO: add ability to delete. 
+
+    Comments have a tree system with 2 levels: root and child. A comment
+    is root if it was written directly to a note. And a comment is a child,
+    if it replies to another comment. If a comment reply on a root comment,
+    first one becomes a child of second one. If a comment replies to a child
+    comment, first one becomes a child of parent of second one. Therefore
+    there are only 2 levels.
+    
+    **Fields**
+        note: a foreign key to a commented note.
+        parent: tree foreign key to a parent comment.
+        author: a user foreign key, author of a comment.
+        content: a text of a comment.
+        date: a publish datetime.
+    
+    """
+
     note = models.ForeignKey(Note, on_delete=models.CASCADE,
                              related_name='comments')
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
-                            null=True, blank=True,
-                            related_name='children',
+                            null=True, blank=True, related_name='children',
                             db_index=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='comments')

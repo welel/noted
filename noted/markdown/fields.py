@@ -1,9 +1,8 @@
+from simplemde.fields import SimpleMDEField
+
 from django.db.models import TextField
 
-from simplemde.fields import SimpleMDEField
-from markdown2 import markdown
-
-from markdown.github_api import get_markdown_html
+from .markdown import pick_markdown_to_html
 
 
 class RenderedMarkdownField(TextField):
@@ -24,7 +23,7 @@ class RenderedMarkdownField(TextField):
 
 class MarkdownField(SimpleMDEField):
 
-    def __init__(self, *args, rendered_field: str = None, **kwargs):
+    def __init__(self, *args, rendered_field: str=None, **kwargs):
         self.rendered_field = rendered_field
         super().__init__(*args, **kwargs)
 
@@ -40,12 +39,7 @@ class MarkdownField(SimpleMDEField):
         if not self.rendered_field:
             return value
 
-        dirty = markdown(text=value)
-        clean, ok = get_markdown_html(value)
-
-        if ok:
-            setattr(model_instance, self.rendered_field, clean)
-        else:
-            setattr(model_instance, self.rendered_field, dirty)
+        html = pick_markdown_to_html(value)
+        setattr(model_instance, self.rendered_field, html)
 
         return value

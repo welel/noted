@@ -1,6 +1,6 @@
-from django.contrib import admin
-
 from mptt.admin import MPTTModelAdmin
+
+from django.contrib import admin
 
 from notes.models import Note, Comment
 

@@ -1,9 +1,10 @@
-from django.utils.text import slugify
-
 from taggit.models import Tag, TaggedItem
+
+from django.utils.text import slugify
 
 
 class UnicodeTag(Tag):
+    
     class Meta:
         proxy = True
 
@@ -12,6 +13,7 @@ class UnicodeTag(Tag):
 
 
 class UnicodeTaggedItem(TaggedItem):
+    
     class Meta:
         proxy = True
 

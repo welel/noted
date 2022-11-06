@@ -65,5 +65,5 @@
 * Tagging
 * Twitter Bootstrap integration
 * Tree comments
-User accounts and profiles with email verification
-Search engine
+-User accounts and profiles with email verification
+-Search engine

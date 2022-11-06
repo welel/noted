@@ -4,6 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+# Parse a `.env` file and load the variables inside into environment variables
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +15,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEBUG = True
+
+SITE_ID = 1
 
 ALLOWED_HOSTS = []
 
@@ -78,10 +81,9 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1
-
 WSGI_APPLICATION = 'noted.wsgi.application'
 
+# The project uses PostgreSQL database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -122,7 +124,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = PROJECT_DIR.joinpath('frontend/media')
 
-# Email (yandex smtp) configuration
+# Simple Mail Transfer Protocol (SMTP) configuration.
+# The project uses yandex SMTP.
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.yandex.ru'

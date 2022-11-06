@@ -1,4 +1,5 @@
 <!--Pagination for notes list -->
+{% if paginator.num_pages > 1 %}
 <div class="row mt-5">
   <div class="col-9">
     <nav aria-label="Page navigation example">
@@ -38,3 +39,4 @@
     </nav>
   </div>
 </div>
+{% endif %}
