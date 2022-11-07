@@ -144,6 +144,13 @@
 	border-bottom: 1px solid #fff;
 }
 
+.dropdown-menu {
+	background-color: rgba(148, 134, 220, 0.65);
+}
+.dropdown-menu li a:hover {
+	background-color: rgba(148, 134, 220, 0);
+}
+
 @media (max-width: 767px) {
 	body.lock {
 		overflow: hidden;

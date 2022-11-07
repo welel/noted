@@ -45,12 +45,22 @@
               Search
             </a>
           </li>
-          <li>
+          <li class="dropdown">
             {% if user.is_authenticated %}
-              <span></span><a href="{% url 'account_logout' %}" class='header__link'>Logout</a>
+              <a class="dropdown-toggle text-decoration-none header__link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% with user=request.user %}
+                  {% firstof user.username user.first_name user.last_name user.email %}
+                {% endwith %}
+              </a>          
             {% else %}
               <span></span><a href="{% url 'account_login' %}" class='header__link'>Sign In</a>
             {% endif %}
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">FUTURE</a></li>
+              <li><a class="dropdown-item" href="#">FUTURE</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+            </ul>
           </li>
         </ul>
       </nav>
