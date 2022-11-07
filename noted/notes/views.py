@@ -340,7 +340,7 @@ def notes_search(request):
                   {'form': form,  'query': query, 'notes': results})
 
 
-@login_required()
+@login_required(login_url=reverse_lazy('account_login'))
 @require_POST
 def note_like(request):
     """Like/unlike a note via a ajax request."""

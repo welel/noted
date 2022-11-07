@@ -160,13 +160,6 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': ''
         }
     },
-    'google': {
-        'APP': {
-            'client_id': os.getenv('GOOGLE_ID'),
-            'secret': os.getenv('GOOGLE_SECRET'),
-            'key': ''
-        }
-    },
 }
 
 # Markdown input field (SimpleMDEField) configuration
