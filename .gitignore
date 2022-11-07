@@ -10,3 +10,5 @@ migrations/
 !migrations/__init__.py
 todo.md
 .vscode/
+bugs/
+booting.md

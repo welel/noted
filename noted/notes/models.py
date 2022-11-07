@@ -41,10 +41,6 @@ class NoteManager(models.Manager):
 
 class Note(models.Model):
     """Markdown text with a list of attributes.
-
-    TODO:
-        * split `date` on `published`, `updated`;
-        * create NoteManager method `public_note`.
     
     **Fields**
         title: a title of a note.
@@ -59,7 +55,8 @@ class Note(models.Model):
         anonymous: a boolean flag hides an author of a note.
         allow_comments: a boolean flag allows to users leave comments
                         to a note.
-        date: published/updated datetime of a note.
+        datetime_created: publish datetime of a note.
+        datetime_modified: update datetime of a note.
         tags: tags of a note (max tags - 5, max length - 24 symbols).
         users_like: a m2m field for note likes. 
     
@@ -89,7 +86,8 @@ class Note(models.Model):
     allow_comments = models.BooleanField(
         default=True, help_text='Allow users to leave comments.'
     )
-    date = models.DateTimeField(auto_now=True)
+    datetime_created = models.DateTimeField(auto_now_add=True)
+    datetime_modified = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
         through=UnicodeTaggedItem, blank=True, related_name='tags',
         help_text='''Add tags. Separate tags by using "Enter" or comma.

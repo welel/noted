@@ -46,8 +46,8 @@ class NoteList(ListView):
     Uses as a superclass for other specific notes listings.
 
     Notes order options (provides through a GET param `order`):
-        `date`: from oldest to newest by publish/update date.
-        `-date`: from newest to oldest by publish/update date.
+        `datetime_created`: from oldest to newest by publish date.
+        `-datetime_created`: from newest to oldest by publish date.
         `comments`: from the most commented to the least commented notes. 
 
     **Context**
@@ -58,8 +58,8 @@ class NoteList(ListView):
 
     """
     ORDER_LABELS = {
-        'date': 'Oldest',
-        '-date': 'Latest',
+        'datetime_created': 'Oldest',
+        '-datetime_created': 'Latest',
         'comments': 'Most Commented'
     }
     model = Note
@@ -67,7 +67,7 @@ class NoteList(ListView):
     paginate_by = 18
 
     def get_ordering(self):
-        return self.request.GET.get('order', default='-date')
+        return self.request.GET.get('order', default='-datetime_created')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -226,7 +226,8 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
         similar_notes = Note.objects.public().filter(
             tags__in=note_tags_ids).exclude(id=note.id)
         similar_notes = similar_notes.annotate(
-            same_tags=Count('tags')).order_by('-same_tags', '-date')[:4]
+            same_tags=Count('tags')).order_by('-same_tags',
+                                              '-datetime_created')[:4]
         context['notes'] = similar_notes
         return context
 
