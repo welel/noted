@@ -180,7 +180,7 @@
 		z-index: 2;
 	}
 	.header__body {
-		height: 50px;
+		height: 60px;
 		justify-content: start-end;
 		flex-direction: row-reverse;
 	}

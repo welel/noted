@@ -7,9 +7,9 @@ header#header-hero .waveWrapperInner {
 }
 .header:before {
 	background: #05386B;
-	background: -webkit-linear-gradient(to right, #3500D3, #05386B);
-	background: linear-gradient(to right, #3500D3, #05386B);
-	opacity: 0.8;
+	background: -webkit-linear-gradient(to right, #30C, #09356F);
+	background: linear-gradient(to right, #30C, #09356F);
+	opacity: 1;
 }
 .footer {
 	background: #05386B;
@@ -21,13 +21,12 @@ header#header-hero .waveWrapperInner {
 	opacity: .7 !important;
 }
 .tag-badge {
-	background-color: #05386B;
-	opacity: .8;
+	color: white !important;
+	background-color: #0dcaf0;
 }
 .tag-badge:hover {
-	color: white;
-	background-color: #05386B;
-	opacity: 1;
+	color: white !important;
+	background-color: #7bc35a;
 }
 .link-color {
 	color: #05386B;

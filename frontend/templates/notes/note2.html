@@ -12,174 +12,90 @@
 {% endblock %}
 
 {% block main %}
-
 <div class="container-fluid" style="margin-top: 60px;">
 <div class="row">
-  <style>
-    #background_note_header {
-      height: 330px;
-      background: #05386B;
-      background: -webkit-linear-gradient(30deg, #3500D3, #05386B);
-      background: linear-gradient(0deg, #3500D3, #05386B);
-      position: absolute;
-      left: 0;
-    }
-    #background_note_header a {
-      color: #0dcaf0;
-    }
-    #background_note_header .container-fluid {
-      max-width: 1300px;
-    }
-    #note_header_wave {
-      position: absolute;
-      left: 0;
-      top: 310px;
-      width: 100vw;
-      padding: 0px;
-    }
-    
-    .body-margin {
-      margin-top: 350px;
-    }
 
-    @media screen and (min-width: 2300px) {
-      #note_header_wave {
-        display: none;
-      }
-    }
-    @media screen and (min-width: 2230px) {
-      #background_note_header {
-        height: 380px;
-      }
-    }
-    @media screen and (min-width: 1800px) {
-      #background_note_header {
-        height: 350px;
-      }
-    }
-    @media screen and (max-width: 1300px) {
-      #background_note_header {
-        height: 310px;
-      }
-    }
-    @media screen and (max-width: 1000px) {
-      #background_note_header {
-        height: 300px;
-      }
-    }
-    @media screen and (max-width: 800px) {
-      #background_note_header {
-        height: 290px;
-      }
-      #background_note_header .title {
-        font-size: 20px !important;
-      }
-      #background_note_header .summary {
-        font-size: 12px !important;
-      }
-    }
-    @media screen and (max-width: 700px) {
-      #note_header_wave {
-        display: none;
-      }
-      #background_note_header {
-        height: 370px;
-      }
-      #background_note_header .lowflex {
-        display: flex;
-        flex-direction: column;
-      }
-      .body-margin {
-        margin-top: 390px;
-      }
-    }
-  </style>
-  <div id="background_note_header">
-    <div class="container-fluid lowflex">
-        <!-- Title -->
-      <p class="fs-3 text-center mt-5 text-white fw-bold title">{{ note.title }}</p>
+  <!-- Title -->
+  <p class="fs-3 text-center mt-5">{{ note.title }}</p>
 
-      <!-- Summary -->
-      <p class="text-white text-center summary">{{ note.summary }}</p>
+  <!-- Summary -->
+  <p class="text-secondary text-center">{{ note.summary }}</p>
 
-      <!-- Note attributes -->
-      <div class="d-flex bd-highlight mt-3 fw-light lowflex">
-        <div class="p-2 bd-highlight text-white">
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
-              <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-              <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-            </svg>
-            {{ note.datetime_created }}
-          </span>
-        </div>
-        {% if not note.anonymous %}
-          <div class="p-2 bd-highlight text-secondary">
-            <a href="{% url 'notes:by_user' username=note.author %}" class="text-decoration-none">&nbsp;&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
-              </svg>
-              {{ note.author }}⠀
-            </a>
-          </div>
-        {% endif %}
-
-        <!-- Source -->
-        {% if note.source %}
-          <div class="p-2 bd-highlight">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-              <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-              <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-            </svg>
-            <a href="{{ note.source }}" target="_blank">Source</a>
-          </div>
-        {% endif %}
-
-        <!-- Anon/Private Badges -->
-        {% if request.user == user %}
-          {% if note.private %}
-            <span class="badge badge-private ms-1 mb-1" style="max-height: 20px; margin-top: 10px;">Private</span>
-          {% endif %}
-          {% if note.anonymous %}
-            <span class="badge badge-anon ms-1 mb-1" style="max-height: 20px; margin-top: 10px;">Anonymous</span>
-          {% endif %}
-        {% endif %}
-
-        <!-- Control buttons (update/delete) -->
-        <div class="ms-auto p-2 bd-highlight">
-          {% if user == note.author %}
-            <div class="d-flex justify-content-end">
-              <form action="{% url 'update' slug=note.slug %}" method="get">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-info btn-sm">
-                  Edit
-                </button>
-              </form>
-              <form action="{% url 'delete' slug=note.slug %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger btn-sm ms-2" onclick="return confirm('Are you sure you want to delete the note?');">
-                  Delete
-                </button>
-              </form>
-            </div>
-          {% endif %}
-        </div>
+  <!-- Note attributes -->
+  <div class="d-flex bd-highlight mt-3 mb-3 fw-light">
+    <div class="p-2 bd-highlight text-secondary">
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+          <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+          <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+        {{ note.datetime_created }}
+      </span>
+    </div>
+    {% if not note.anonymous %}
+      <div class="p-2 bd-highlight text-secondary">
+        <a href="{% url 'notes:by_user' username=note.author %}" class="text-decoration-none">&nbsp;&nbsp;&nbsp;
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+          </svg>
+          {{ note.author }}⠀
+        </a>
       </div>
+    {% endif %}
 
-      <!-- Tags -->
-      <p class="d-flex flex-wrap">
-        {% for tag in note.tags.all %}
-          <a href="{% url 'tagged' tag_slug=tag.slug %}" class="badge tag-badge ms-1 mb-1">{{ tag }}</a>
-        {% endfor %}
-      </p>
+    <!-- Source -->
+    {% if note.source %}
+      <div class="p-2 bd-highlight">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+          <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+          <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+        </svg>
+        <a href="{{ note.source }}" target="_blank">Source</a>
+      </div>
+    {% endif %}
+
+    <!-- Anon/Private Badges -->
+    {% if request.user == user %}
+      {% if note.private %}
+        <span class="badge badge-private ms-1 mb-1" style="max-height: 20px; margin-top: 10px;">Private</span>
+      {% endif %}
+      {% if note.anonymous %}
+        <span class="badge badge-anon ms-1 mb-1" style="max-height: 20px; margin-top: 10px;">Anonymous</span>
+      {% endif %}
+    {% endif %}
+
+    <!-- Control buttons (update/delete) -->
+    <div class="ms-auto p-2 bd-highlight">
+      {% if user == note.author %}
+        <div class="d-flex justify-content-end">
+          <form action="{% url 'update' slug=note.slug %}" method="get">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-info btn-sm">
+              Edit Note
+            </button>
+          </form>
+          <form action="{% url 'delete' slug=note.slug %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm ms-2" onclick="return confirm('Are you sure you want to delete the note?');">
+              Delete Note
+            </button>
+          </form>
+        </div>
+      {% endif %}
     </div>
   </div>
+
+  <!-- Tags -->
+  <p class="d-flex flex-wrap" style="margin-top: 2px;">
+    {% for tag in note.tags.all %}
+      <a href="{% url 'tagged' tag_slug=tag.slug %}" class="badge tag-badge ms-1 mb-1">{{ tag }}</a>
+    {% endfor %}
+  </p>
 </div>
-  
-  <img id="note_header_wave" src="https://front-end-noobs.com/jecko/img/wave-top.png"/>
+
+<hr class="mt-2">
 
 <!-- Body -->
-<div class="body-margin"></div>
 <div class="row m-auto" style="max-width: 95%;">
   <div class="col-10 offset-1">
     <p>{{ note.body_html | safe }}</p>
