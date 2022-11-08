@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="container mt-5 d-flex justify-content-center">
-<div class="row" style="max-width: 400px;">
+<div id="login_row" class="row">
 
 <!-- Header -->
 <h1 class="text-center">Sign In</h1>
@@ -21,7 +21,7 @@
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
-  <br><button class="btn btn-primary mt-3 primaryAction" type="submit" style="min-width: 120px;">Sign In</button>
+  <br><button id="login_btn" class="btn btn-primary mt-3 primaryAction" type="submit">Sign In</button>
 </form>
 
 <!-- Sign up and allauth -->
@@ -31,9 +31,9 @@
 </p>
 
 <nav class='social__media'>
-  <ul class="d-flex justify-content-center" style="list-style-type: none;">
-      <li style="margin-left: -50px;"><a href='{% provider_login_url 'github' %}' ><img style="height: 40px; width: auto;" src="{% static 'img/icons/github.svg' %}" alt='GitHub'></a></li>
-      <li><a href='{% provider_login_url 'yandex' %}' ><img style="height: 40px; width: auto;" src="{% static 'img/icons/yandex.png' %}" alt='yandex'/></a></li>
+  <ul class="d-flex justify-content-center">
+      <li style="margin-left: -50px;"><a href='{% provider_login_url 'github' %}' ><img class="login_img" src="{% static 'img/icons/github.svg' %}" alt='GitHub'></a></li>
+      <li><a href='{% provider_login_url 'yandex' %}' ><img class="login_img" src="{% static 'img/icons/yandex.png' %}" alt='Yandex'/></a></li>
   </ul>
 </nav>
 

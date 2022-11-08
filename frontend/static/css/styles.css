@@ -16,6 +16,15 @@
 .under__title._active {
 	opacity: 0.8;
 }
+.skip_header {
+	padding-top: 570px;
+}
+
+
+/* List notes */
+#add_first_note_btn {
+	padding-top: 40px;
+}
 
 
 /* Note card */
@@ -46,6 +55,85 @@
 }
 .tag-badge:hover {
 	background-color: #00cccc;
+}
+#background_note_header {
+	height: 330px;
+	background: #05386B;
+	background: -webkit-linear-gradient(30deg, #3500D3, #05386B);
+	background: linear-gradient(0deg, #3500D3, #05386B);
+	position: absolute;
+	left: 0;
+  }
+  #background_note_header a {
+	color: #0dcaf0;
+  }
+  #background_note_header .container-fluid {
+	max-width: 1300px;
+  }
+#note_header_wave {
+	position: absolute;
+	left: 0;
+	top: 310px;
+	width: 100vw;
+	padding: 0px;
+}
+.badge-note {
+	max-height: 20px;
+	margin-top: 10px;
+}
+.body-margin {
+	margin-top: 350px;
+}
+@media screen and (min-width: 2300px) {
+	#note_header_wave {
+	display: none;
+	}
+}
+@media screen and (min-width: 2230px) {
+	#background_note_header {
+	height: 380px;
+	}
+}
+@media screen and (min-width: 1800px) {
+	#background_note_header {
+	height: 350px;
+	}
+}
+@media screen and (max-width: 1300px) {
+	#background_note_header {
+	height: 310px;
+	}
+}
+@media screen and (max-width: 1000px) {
+	#background_note_header {
+	height: 300px;
+	}
+}
+@media screen and (max-width: 800px) {
+	#background_note_header {
+	height: 290px;
+	}
+	#background_note_header .title {
+	font-size: 20px !important;
+	}
+	#background_note_header .summary {
+	font-size: 12px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	#note_header_wave {
+	display: none;
+	}
+	#background_note_header {
+	height: 370px;
+	}
+	#background_note_header .lowflex {
+	display: flex;
+	flex-direction: column;
+	}
+	.body-margin {
+	margin-top: 390px;
+	}
 }
 
 
@@ -80,4 +168,24 @@
 ._active ._anim-show {
 	transform: translate(0px, 0px);
 	opacity: 1;
+}
+
+
+/* Login */
+#login_row {
+	max-width: 400px;
+}
+#login_btn {
+	min-width: 120px;
+}
+.social__media ul {
+	list-style-type: none;
+}
+.social__media .login_img {
+	width: auto;
+	height: 40px;
+	transition: 0.5s ease;
+}
+.social__media .login_img:hover {
+	height: 45px !important;
 }

@@ -78,6 +78,8 @@
 	z-index: 3;
 }
 .header__logo img {
+	height: 43px;
+	padding-left: 10px;
 	transition: all 0.3s ease 0s;
 }
 .header__logo img:hover {
