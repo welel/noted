@@ -12,7 +12,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 from django.core.exceptions import FieldError
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count
 from django.utils.text import slugify
 from django.urls import reverse
 
@@ -37,6 +37,14 @@ class NoteManager(models.Manager):
     def public(self) -> QuerySet:
         """Query notes available for everyone."""
         return self.filter(private=False)
+
+    def most_liked(self) -> QuerySet:
+        return self.public().annotate(
+            count=Count('users_like')).filter(count__gt=0).order_by('-count')
+
+    def most_commented(self) -> QuerySet:
+        return self.public().annotate(
+            count=Count('comments')).filter(count__gt=0).order_by('-count')
 
 
 class Note(models.Model):

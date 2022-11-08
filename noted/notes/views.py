@@ -100,6 +100,8 @@ class PublicNoteList(NoteList):
         paginator: a paginator for notes list.
         page_obj: a pagination navigator.
         order_label: a human readable label of a notes order option.
+        most_liked: 5 most liked notes.
+        most_commented: 5 most commented notes.
 
     **Template**
         :template:`frontend/templates/notes/public_list.html`
@@ -110,6 +112,12 @@ class PublicNoteList(NoteList):
     def get_queryset(self):
         queryset = Note.objects.public()
         return super().get_ordered_queryset(queryset)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['most_liked'] = Note.objects.most_liked()[:5]
+        context['most_commented'] = Note.objects.most_commented()[:5]
+        return context
 
 
 @method_decorator(login_required, name='dispatch')

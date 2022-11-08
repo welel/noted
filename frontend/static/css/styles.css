@@ -25,7 +25,12 @@
 #add_first_note_btn {
 	padding-top: 40px;
 }
-
+#sidebar_container {
+	margin-top: 100px;
+}
+.sidebar_item_title {
+	background-color: aliceblue;
+}
 
 /* Note card */
 .note-card {
