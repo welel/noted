@@ -39,10 +39,18 @@ class NoteManager(models.Manager):
         return self.filter(private=False)
 
     def most_liked(self) -> QuerySet:
+        """Query notes sorted by number of likes from the most to least.
+        
+        Include public notes that have at least one like.
+        """
         return self.public().annotate(
             count=Count('users_like')).filter(count__gt=0).order_by('-count')
 
     def most_commented(self) -> QuerySet:
+        """Query notes sorted by number of comments from the most to least.
+        
+        Include public notes that have at least one comment.
+        """
         return self.public().annotate(
             count=Count('comments')).filter(count__gt=0).order_by('-count')
 

@@ -49,6 +49,7 @@ class NoteList(ListView):
         `datetime_created`: from oldest to newest by publish date.
         `-datetime_created`: from newest to oldest by publish date.
         `comments`: from the most commented to the least commented notes. 
+        `users_like`: from the most number of likes to the least.
 
     **Context**
         notes: a queryset of :model:`notes.Note` instances.
@@ -60,7 +61,8 @@ class NoteList(ListView):
     ORDER_LABELS = {
         'datetime_created': 'Oldest',
         '-datetime_created': 'Latest',
-        'comments': 'Most Commented'
+        'comments': 'Most Commented',
+        'users_like': 'Most Liked',
     }
     model = Note
     context_object_name = 'notes'
