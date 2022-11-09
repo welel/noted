@@ -24,7 +24,7 @@ from django.views import View
 from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (SearchVector, SearchQuery,
-    SearchRank, TrigramSimilarity)
+    SearchRank, TrigramSimilarity, SearchHeadline)
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView,
@@ -335,9 +335,12 @@ def notes_search(request):
                             SearchVector('summary', weight='A') + \
                             SearchVector('body_raw', weight='B')
             search_query = SearchQuery(query)
+            headline = SearchHeadline('title', search_query,
+                                      start_sel=u'<mark>', stop_sel=u'</mark>')
             results = Note.objects.public().annotate(
                     rank=SearchRank(search_vector, search_query),
                     similarity=TrigramSimilarity('title', query),
+                    headline=headline
                 ).filter(
                     Q(rank__gte=0.2) | Q(similarity__gt=0.1)
             ).order_by('-rank')

@@ -11,18 +11,17 @@
 
 * Markdown editor
 * Adaptive design (for mobile)
-* Registration via django-allauth (github, google, yandex)
-* Send emails
+* Registration via django-allauth (github, yandex)
+* Send emails (confirm registration)
 * WYSIWYG editing
 * Tagging
-* Twitter Bootstrap integration
+* Bootstrap integration
 * Tree comments
 * Search
 * Recommendations
-* Sharing content
+* Sharing content (facebook, twitter)
 * Likes
-* GitHub API Integration 
-
+* GitHub API Integration (markdown)
 
 
 ## Tech stack
