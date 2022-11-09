@@ -158,23 +158,13 @@
 </div>
 
 
-<!-- Comments -->
-{% if note.allow_comments %}
-<h3 class="mt-4">Comments<hr></h3>
-<!-- General comment form -->
-<form id="commentGeneralForm" class="m-auto" method="post">
-  {{ comment_form.as_p }}
-  {% csrf_token %}
-  <button type="submit" class="btn btn-primary btn-block float-end px-4">Post</button>
-</form>
-
 <!-- Similar notes -->
 {% if notes %}
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button collapsed shadow-none border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onclick="animOnScroll()">
-        <h3>Similar public notes</h3>
+        <h6>Show similar public notes</h6>
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse border-0" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -185,6 +175,18 @@
   </div>
 </div>
 {% endif %}
+
+
+<!-- Comments -->
+{% if note.allow_comments %}
+<h3 class="mt-4">Comments<hr></h3>
+<!-- General comment form -->
+<form id="commentGeneralForm" class="m-auto" method="post">
+  {{ comment_form.as_p }}
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary btn-block float-end px-4">Post</button>
+</form>
+
 
 <!-- Comments list -->
 {% with comments=page_obj total_comments=note.comments.count %}

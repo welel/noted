@@ -53,7 +53,7 @@ class NoteManager(models.Manager):
         """
         return self.public().annotate(
             count=Count('comments')).filter(count__gt=0).order_by('-count')
-
+            
 
 class Note(models.Model):
     """Markdown text with a list of attributes.
@@ -139,6 +139,20 @@ class Note(models.Model):
         if Note.objects.filter(slug=slug).exists():
             slug += str(uuid.uuid1())[:8]
         return slug[:255]
+
+    def get_similar_by_tags(self) -> QuerySet:
+        """Get notes with similar tag.
+        
+        Returns QuerySet of notes with similar tags for a note ordered by
+        number of common tags and creation datetime. 
+        """
+        note_tags_ids = self.tags.values_list('id', flat=True)
+        similar_notes = Note.objects.public().filter(
+            tags__in=note_tags_ids).exclude(id=self.id)
+        similar_notes = similar_notes.annotate(
+            same_tags=Count('tags')).order_by('-same_tags',
+                                              '-datetime_created')
+        return similar_notes
 
 
 class Comment(MPTTModel):

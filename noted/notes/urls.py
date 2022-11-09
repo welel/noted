@@ -27,3 +27,5 @@ urlpatterns = [
     path('search/', notes_search, name='search'),
     path('like/', note_like, name='like'),
 ]
+
+handler404 = 'notes.views.handler404'

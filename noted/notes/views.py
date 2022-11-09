@@ -14,6 +14,7 @@ u""""Views for the `notes` app.
     NoteDeleteView: handles deletion of a note.
     notes_search: search notes instances by a GET request query.
     note_like: like/unlike a note.
+    handler404: handels error 404 code.
 
 """
 
@@ -231,14 +232,8 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
         ).get_context_data(object_list=root_comments, **kwargs)
         # Create a comment form for current comments and add to the context
         context['comment_form'] = comment_form_factory(root_comments)
-        # Get similar notes and add to the context
-        note_tags_ids = note.tags.values_list('id', flat=True)
-        similar_notes = Note.objects.public().filter(
-            tags__in=note_tags_ids).exclude(id=note.id)
-        similar_notes = similar_notes.annotate(
-            same_tags=Count('tags')).order_by('-same_tags',
-                                              '-datetime_created')[:4]
-        context['notes'] = similar_notes
+        # Сontext name `notes` is vulnerable
+        context['notes'] = note.get_similar_by_tags()[:4]
         return context
 
 
@@ -367,3 +362,7 @@ def note_like(request):
         except:
             pass
     return JsonResponse({'status': 'error'})
+
+
+def handler404(request, *args, **kwargs):
+    return render(request, '404.html', {}, status=404)
