@@ -4,7 +4,7 @@
   <div class="card note-card rounded border-0 _anim-show" style="width: 100%;">
     <div class="card-body">
       <a href="{% url 'note' slug=note.slug %}" class="card-title text-decoration-none link-dark fs-5">
-          {% firstof note.headline|safe note.title %}
+          {% if note.headline %}{{ note.headline|safe }}{% else %}{{ note.title }}{% endif %}
       </a>
       <p class="mt-1 text-secondary">{{ note.summary }}</p>
       <hr style="opacity: 0.1;"/>

@@ -1,0 +1,8 @@
+<!-- List of favourite notes of a user -->
+{% extends 'layouts/list_base.html' %}
+
+{% block title %}Favourite Notes{% endblock %}
+
+{% block list_header %}Favourite Notes{% endblock %}
+
+{% block no_notes %}<h2>You don't have favourite notes yet. Go to <a href="{% url 'home' %}">home page.</a></h2>{% endblock %}

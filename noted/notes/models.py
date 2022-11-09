@@ -74,11 +74,13 @@ class Note(models.Model):
         datetime_created: publish datetime of a note.
         datetime_modified: update datetime of a note.
         tags: tags of a note (max tags - 5, max length - 24 symbols).
-        users_like: a m2m field for note likes. 
+        users_like: a m2m field for note likes.
+        favourites: a m2m field for bookmarks for user.
     
     """
 
-    title = models.CharField(max_length=100, null=False, blank=False)
+    title = models.CharField(max_length=100, null=False, blank=False,
+        db_index=True)
     slug = models.SlugField(max_length=255, editable=False, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, editable=False
@@ -112,6 +114,8 @@ class Note(models.Model):
     )
     users_like = models.ManyToManyField(User, related_name='notes_liked',
                                         blank=True)
+    favourites = models.ManyToManyField(User, related_name='favourites',
+        default=None, blank=True)
     objects = NoteManager()
 
     def __str__(self):

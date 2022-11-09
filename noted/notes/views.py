@@ -5,7 +5,8 @@ u""""Views for the `notes` app.
         ├── PublicNoteList: displays a list of public notes.
         ├── PersonalNoteList: displays a list of a logged-in user notes.
         ├── TaggedNoteListView: displays a list of notes with a common tag.
-        └── UserNoteListView: displays a list of selected user notes.
+        ├── UserNoteListView: displays a list of selected user notes.
+        └── FavouriteNoteListView: a list of bookmarked notes of a user.
     NoteView: a selector of a view between 2 views below.
         ├── NoteDetailView: displays note details.
         └── CommentFormView: handles a comment form on a note details page.
@@ -15,6 +16,7 @@ u""""Views for the `notes` app.
     notes_search: search notes instances by a GET request query.
     note_like: like/unlike a note.
     handler404: handels error 404 code.
+    add_favourite: add a note to user's bookmarks.
 
 """
 
@@ -25,7 +27,7 @@ from django.db.models import Count, Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (SearchVector, SearchQuery,
     SearchRank, TrigramSimilarity, SearchHeadline)
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView,
     FormView)                       
@@ -80,8 +82,9 @@ class NoteList(ListView):
 
     def get_ordered_queryset(self, queryset):
         """Order a queryset by GET param `order`"""
-        if not queryset:
-            queryset = super().get_queryset()
+        # Temp comments (maybe block is useless)
+        # if not queryset:
+        #     queryset = super().get_queryset()
         order = self.get_ordering()
         if order == 'comments':
             queryset = queryset.annotate(
@@ -202,6 +205,27 @@ class UserNoteListView(NoteList):
         queryset = Note.objects.personal(user)
         queryset = queryset.filter(private=False, anonymous=False)
         return super().get_ordered_queryset(queryset)
+
+
+@method_decorator(login_required, name='dispatch')
+class FavouriteNoteListView(NoteList):
+    """Display a list of bookmarked :model:`notes.Note` of a user.
+
+    **Context**
+        notes: a queryset of :model:`notes.Note` instances.
+        paginator: a paginator for notes list.
+        page_obj: a pagination navigator.
+        order_label: a human readable label of a notes order option.
+
+    **Template**
+        :template:`frontend/templates/notes/personal_list.html`
+
+    """
+    template_name = 'notes/favourites.html'
+
+    def get_queryset(self):
+        queryset = self.request.user.favourites.all()
+        return self.get_ordered_queryset(queryset)
 
 
 class NoteDetailView(DetailView, MultipleObjectMixin):
@@ -369,3 +393,13 @@ def note_like(request):
 
 def handler404(request, *args, **kwargs):
     return render(request, '404.html', {}, status=404)
+
+
+@login_required(login_url=reverse_lazy('account_login'))
+def add_favourite(request, id):
+    note = get_object_or_404(Note, id=id)
+    if note.favourites.filter(id=request.user.id).exists():
+        note.favourites.remove(request.user)
+    else:
+        note.favourites.add(request.user)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])

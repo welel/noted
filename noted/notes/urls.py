@@ -9,8 +9,10 @@ from notes.views import (
     NoteDeleteView,
     TaggedNoteListView,
     UserNoteListView,
+    FavouriteNoteListView,
     notes_search,
     note_like,
+    add_favourite,
 )
 
 
@@ -26,6 +28,8 @@ urlpatterns = [
     path('user/<str:username>/', UserNoteListView.as_view(), name='by_user'),
     path('search/', notes_search, name='search'),
     path('like/', note_like, name='like'),
+    path('fav/<int:id>/', add_favourite, name='add_favourite'),
+    path('favourites/', FavouriteNoteListView.as_view(), name='favourites'),
 ]
 
 handler404 = 'notes.views.handler404'
