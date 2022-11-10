@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
 from user.forms import UserForm, ProfileForm
@@ -34,9 +34,18 @@ def edit_user(request):
 
 
 def profile(request, username):
+    """Display user fields, profile and notes of a user."""
     user = get_object_or_404(User, username=username)
     profile = user.profile
     notes = Note.objects.public().filter(author=user)
     return render(request, 'user/account/profile.html', {'user': user,
                                                          'profile': profile,
                                                          'notes': notes})
+
+
+@login_required(login_url=reverse_lazy('account_login'))
+def delete(request):
+    """Delete a user."""
+    if request.method == 'POST':
+        request.user.delete()
+    return redirect('account_signup')

@@ -49,15 +49,36 @@
                         <label for="form-bio" class="form-label">Bio</label>
                         {{ profile_form.bio }}
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button type="submit" class="btn btn-primary">Save Profile</button>
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="col-md-2">
-            
+            <button type="submit" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete account</button>
         </div>
     </div>
 </div>
+
+<!-- User delete modal -->
+<div id="deleteUser" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want to delete your account?</b> All your public notes will become anonymous and available to users. Remove them if you don't want them to be available.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <form method="POST" action="{% url 'user:delete_user' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
