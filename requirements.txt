@@ -18,6 +18,7 @@ Markdown==3.3.4
 markdown2==2.4.0
 oauthlib==3.1.0
 packaging==20.9
+Pillow==9.3.0
 psycopg2==2.8.6
 pycparser==2.20
 PyJWT==2.0.1

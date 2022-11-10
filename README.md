@@ -22,6 +22,8 @@
 * Sharing content (facebook, twitter)
 * Likes
 * GitHub API Integration (markdown)
+* Bookmarks
+* User profile 
 
 
 ## Tech stack

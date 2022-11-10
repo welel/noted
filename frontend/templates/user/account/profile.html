@@ -1,0 +1,70 @@
+{% extends 'user/account/base.html' %}
+
+
+{% load static %}
+
+{% block head_title %}{% firstof user.first_name user.username %}{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <h2 class="fw-bold text-center">
+        User Profile
+    </h2>
+    <div class='row mt-4 d-flex justify-content-center'>
+        <div class="col-md-2">
+            <!---->
+        </div>
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px" src="{{ request.user.profile.avatar.url }}">
+                <span class="font-weight-bold">{% firstof request.user.first_name request.user.username %}</span>
+                <span class="text-black-50">{{ request.user.email }}</span>
+                <span> </span>
+                <button type="button" class="btn btn-primary btn-sm mt-2" disabled>Follow</button>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <label for="form-username" class="form-label">Username</label>
+                    <input type="text" class="form-control bg-white" value="{{ user.username }}" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label for="form-name" class="form-label">Name</label>
+                    <input type="text" class="form-control bg-white" value="{{ user.first_name }}" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label for="form-bio" class="form-label">Bio</label>
+                    <textarea type="text" class="form-control bg-white" rows="7" disabled>
+                        {{ profile.bio|safe }}
+                    </textarea>
+                </div>
+                {% if request.user == user %}
+                    <div class="col-md-12">
+                        <a class="btn btn-primary px-3" href="{% url 'user:edit_user' %}" role="button">Edit</a>
+                    </div>
+                {% endif %}
+                {% if notes %}
+                    <div class="col-md-12">
+                        <h2 class="fw-bold text-center mt-3">
+                            Notes
+                        </h2>
+                        {% include 'layouts/list.html' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <!---->
+        </div>
+    </div>
+</div>
+<script>
+    // Show notes without scrolling
+    const animItems = document.querySelectorAll('._anim-items');
+    for (let index = 0; index < animItems.length; index++) {
+        const animItem = animItems[index];
+        animItem.classList.add('_active');
+     }
+</script>
+{% endblock %}
