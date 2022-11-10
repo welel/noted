@@ -38,6 +38,8 @@
                     <textarea type="text" class="form-control bg-white" rows="7" disabled>
                         {{ profile.bio|safe }}
                     </textarea>
+                    <p>Total user likes <span class="badge bg-danger mt-2">{{ num_likes }}</span></p>
+                    <p>Joined <b>Note</b><img src="{% static 'img/logo.png' %}" alt='logo' weight="20" height="20"> {{ user.date_joined|date }}</p>
                 </div>
                 {% if request.user == user %}
                     <div class="col-md-12">
@@ -45,7 +47,7 @@
                     </div>
                 {% endif %}
                 {% if notes %}
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-5">
                         <h2 class="fw-bold text-center mt-3">
                             Notes
                         </h2>

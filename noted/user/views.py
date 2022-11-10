@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -38,9 +39,12 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
     profile = user.profile
     notes = Note.objects.public().filter(author=user)
-    return render(request, 'user/account/profile.html', {'user': user,
-                                                         'profile': profile,
-                                                         'notes': notes})
+    notes = notes.annotate(num_likes=Count('users_like'))
+    total_user_likes = sum([note.num_likes for note in notes])
+    return render(request, 'user/account/profile.html',
+                    {'user': user, 'profile': profile,
+                     'notes': notes, 'num_likes': total_user_likes}
+    )
 
 
 @login_required(login_url=reverse_lazy('account_login'))

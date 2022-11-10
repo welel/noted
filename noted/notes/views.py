@@ -256,7 +256,7 @@ class NoteDetailView(DetailView, MultipleObjectMixin):
         ).get_context_data(object_list=root_comments, **kwargs)
         # Create a comment form for current comments and add to the context
         context['comment_form'] = comment_form_factory(root_comments)
-        # Сontext name `notes` is vulnerable
+        # Сontext name `notes` is vulnerable (don't change it)
         context['notes'] = note.get_similar_by_tags()[:4]
         return context
 
