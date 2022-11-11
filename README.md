@@ -23,7 +23,8 @@
 * Likes
 * GitHub API Integration (markdown)
 * Bookmarks
-* User profile 
+* User profile
+* Following system
 
 
 ## Tech stack

@@ -194,3 +194,9 @@
 .social__media .login_img:hover {
 	height: 45px !important;
 }
+
+
+/* Profile */
+.follow-link:hover {
+	color: #0051ff;
+}

@@ -44,8 +44,8 @@ def profile(request, username):
     notes = Note.objects.public().filter(author=user)
     notes = notes.annotate(num_likes=Count('users_like'))
     total_user_likes = sum([note.num_likes for note in notes])
-    followers = map(lambda contact: contact.follower,
-                    Contact.objects.filter(followed=user))
+    followers = [contact.follower 
+                    for contact in Contact.objects.filter(followed=user)]
     return render(request, 'user/account/profile.html',
                     {'user': user, 'profile': profile,
                      'notes': notes, 'num_likes': total_user_likes,
@@ -65,6 +65,12 @@ def delete(request):
 @require_POST
 @login_required(login_url=reverse_lazy('account_login'))
 def user_follow(request):
+    """Handle ajax request - follow/unfollow a user.
+    
+    **Post params**
+        id: id of a user is going to be followed.
+        action: follow/unfollow.
+    """
     user_id = request.POST.get('id')
     action = request.POST.get('action')
     if user_id and action:
@@ -78,5 +84,5 @@ def user_follow(request):
                     follower=request.user).delete()
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
-            return JJsonResponse({'status': 'error'})
-    return JJsonResponse({'status': 'error'})
+            return JsonResponse({'status': 'error'})
+    return JsonResponse({'status': 'error'})
