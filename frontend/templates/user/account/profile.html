@@ -20,7 +20,17 @@
                 <span class="font-weight-bold">{% firstof request.user.first_name request.user.username %}</span>
                 <span class="text-black-50">{{ request.user.email }}</span>
                 <span> </span>
-                <button type="button" class="btn btn-primary btn-sm mt-2" disabled>Follow</button>
+                {% if request.user != user %}
+                    <a href="#" class="btn btn-primary btn-sm mt-2 follow"
+                            data-id="{{ user.id }}"
+                            data-action="{% if request.user in followers %}un{% endif %}follow">
+                        {% if request.user in followers %}
+                            Unsubscribe
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </a>
+                {% endif %}
             </div>
         </div>
         <div class="col-5">
@@ -62,6 +72,12 @@
     </div>
 </div>
 
+<!-- For handling Cookie with js -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+{% endblock %}
+
+
+{% block extra_js %}
 <script>
     // Show notes without scrolling
     const animItems = document.querySelectorAll('._anim-items');
@@ -69,5 +85,54 @@
         const animItem = animItems[index];
         animItem.classList.add('_active');
      }
+
+  // Set CSRF token to "X-CSRFToken" header
+  var csrftoken = Cookies.get('csrftoken');
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    }
+  });
+
+$(document).ready(function () {
+     // Ajax request -follow/unfollow a user-
+     $('a.follow').click(function(e) {
+        e.preventDefault();
+        console.log('yes!')
+        $.post('{% url "user:user_follow" %}', 
+            {
+                id: $(this).data('id'),
+                action: $(this).data('action')
+            },
+            function(data) {
+                if (data['status'] == 'ok') {
+                    let previous_action = $('a.follow').data('action');
+
+                    // toggle data-action
+                    $('a.follow').data('action',
+                        previous_action == 'follow' ? 'unfollow': 'follow');
+                    // toggle link text
+                    $('a.follow').text(
+                        previous_action == 'follow' ? 'Unfollow' : 'Follow'
+                    );
+
+                    // update total followers
+                    //let previous_followers = parseInt(
+                    //    $('span.count .total').text()
+                    //);
+                    //$('span.count .total').text(
+                    //    previous_action == 'follow' ? previous_followers + 1 : previous_followers - 1
+                    //);
+                }
+            }
+        );
+    });
+});
 </script>
 {% endblock %}

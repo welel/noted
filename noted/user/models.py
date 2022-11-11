@@ -27,3 +27,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'Profile: {self.user}'
+
+
+class Contact(models.Model):
+    follower = models.ForeignKey(User, related_name='from_set',
+        on_delete=models.CASCADE)
+    followed = models.ForeignKey(User, related_name='to_set',
+        on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.follower} follows {self.followed}'

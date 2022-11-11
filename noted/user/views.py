@@ -2,9 +2,12 @@ from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
 
 from user.forms import UserForm, ProfileForm
-from user.models import User
+from user.models import User, Contact
 from notes.models import Note
 
 
@@ -41,9 +44,12 @@ def profile(request, username):
     notes = Note.objects.public().filter(author=user)
     notes = notes.annotate(num_likes=Count('users_like'))
     total_user_likes = sum([note.num_likes for note in notes])
+    followers = map(lambda contact: contact.follower,
+                    Contact.objects.filter(followed=user))
     return render(request, 'user/account/profile.html',
                     {'user': user, 'profile': profile,
-                     'notes': notes, 'num_likes': total_user_likes}
+                     'notes': notes, 'num_likes': total_user_likes,
+                     'followers': followers}
     )
 
 
@@ -53,3 +59,24 @@ def delete(request):
     if request.method == 'POST':
         request.user.delete()
     return redirect('account_signup')
+
+
+@ajax_required
+@require_POST
+@login_required(login_url=reverse_lazy('account_login'))
+def user_follow(request):
+    user_id = request.POST.get('id')
+    action = request.POST.get('action')
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == 'follow':
+                Contact.objects.get_or_create(followed=user,
+                                              follower=request.user)
+            else:
+                Contact.objects.filter(followed=user,
+                    follower=request.user).delete()
+            return JsonResponse({'status': 'ok'})
+        except User.DoesNotExist:
+            return JJsonResponse({'status': 'error'})
+    return JJsonResponse({'status': 'error'})
