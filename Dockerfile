@@ -7,6 +7,7 @@ WORKDIR /noted
 
 COPY . .
 
+RUN python -m venv env
 RUN pip install --upgrade pip && pip install -r requirements.txt  
 
 
