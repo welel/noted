@@ -38,7 +38,19 @@ def edit_user(request):
 
 
 def profile(request, username):
-    """Display user fields, profile and notes of a user."""
+    """Display user profile page.
+    
+    **Context**
+        user: a user instance :model:`user.User`.
+        profile: a user profile instance :model:`user.Profile`.
+        notes: user's notes.
+        num_likes: like number for all user's notes.
+        followers: followers of a user.
+        following: user's subscriptions.
+
+    **Template**
+        :template:`frontend/templates/user/account/profile.html`
+    """
     user = get_object_or_404(User, username=username)
     profile = user.profile
     notes = Note.objects.public().filter(author=user)
@@ -46,10 +58,12 @@ def profile(request, username):
     total_user_likes = sum([note.num_likes for note in notes])
     followers = [contact.follower 
                     for contact in Contact.objects.filter(followed=user)]
+    following = [contact.following 
+                    for contact in Contact.objects.filter(followed=user)]
     return render(request, 'user/account/profile.html',
                     {'user': user, 'profile': profile,
                      'notes': notes, 'num_likes': total_user_likes,
-                     'followers': followers}
+                     'followers': followers, 'following': following}
     )
 
 
