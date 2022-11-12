@@ -1,6 +1,7 @@
 #!/bin/sh
  
 sleep 5
+source env/bin/activate
 python noted/manage.py makemigrations
 python noted/manage.py makemigrations tags
 python noted/manage.py makemigrations notes
