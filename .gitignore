@@ -5,6 +5,10 @@ env/
 dev/
 .idea
 frontend/media/*
+!frontend/media/user
+frontend/media/user/*
+!frontend/media/user/default_avatar.jpg
+!frontend/media/user/readme.txt
 venv/
 migrations/
 !migrations/__init__.py
