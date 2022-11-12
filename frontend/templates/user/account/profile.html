@@ -16,9 +16,9 @@
         </div>
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px" src="{{ request.user.profile.avatar.url }}">
-                <span class="font-weight-bold">{% firstof request.user.first_name request.user.username %}</span>
-                <span class="text-black-50">{{ request.user.email }}</span>
+                <img class="rounded-circle mt-5" width="150px" src="{{ user.profile.avatar.url }}">
+                <span class="font-weight-bold">{% firstof user.first_name user.username %}</span>
+                <span class="text-black-50">{{ user.email }}</span>
                 <span> </span>
                 <span class="mt-2">
                     <!-- Followers button trigger modal -->
