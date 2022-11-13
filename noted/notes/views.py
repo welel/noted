@@ -38,6 +38,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
 from django.urls import reverse, reverse_lazy
 
+from actions.models import Action
+from actions.utils import create_action
 from notes.forms import NoteForm, CommentForm, SearchForm, comment_form_factory
 from notes.models import Note
 from user.models import User
@@ -383,6 +385,7 @@ def note_like(request):
             note = Note.objects.get(id=note_id)
             if action == 'like':
                 note.users_like.add(request.user)
+                create_action(request.user, Action.LIKE, target=note)
             else:
                 note.users_like.remove(request.user)
             return JsonResponse({'status': 'ok'})
@@ -402,4 +405,5 @@ def add_favourite(request, id):
         note.favourites.remove(request.user)
     else:
         note.favourites.add(request.user)
+        create_action(request.user, Action.BOOKMARK, target=note)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

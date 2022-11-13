@@ -1,0 +1,10 @@
+<!-- List of notes of following users -->
+{% extends 'layouts/list_base.html' %}
+
+{% block title %}Feed{% endblock %}
+
+{% block list_header %}Feed{% endblock %}
+
+{% block no_notes %}
+    <h2>There is no notes. Go to <a href="{% url 'home' %}">public notes.</a>
+{% endblock %}

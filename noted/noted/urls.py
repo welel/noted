@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('tags/', include(('tags.urls', 'tags'), namespace='tags')),
     path('user/', include(('user.urls', 'user'), namespace='user')),
+    path('actions/', include(('actions.urls', 'actions'), namespace='actions')),
 ]
 
 if settings.DEBUG:

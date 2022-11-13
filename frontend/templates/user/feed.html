@@ -1,0 +1,7 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    {% for action in actions %}
+        <p class="mt-5">{{ action.user }} | {{ action.verb }} | {{ action.target }}</p>
+    {% endfor %}    
+{% endblock %}

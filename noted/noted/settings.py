@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
     'tags.apps.TagsConfig',
+    'actions.apps.ActionsConfig',
 ]
 
 MIDDLEWARE = [

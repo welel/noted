@@ -30,9 +30,9 @@ class Profile(models.Model):
 
 
 class Contact(models.Model):
-    follower = models.ForeignKey(User, related_name='from_set',
+    follower = models.ForeignKey(User, related_name='from_set', db_index=True,
         on_delete=models.CASCADE)
-    followed = models.ForeignKey(User, related_name='to_set',
+    followed = models.ForeignKey(User, related_name='to_set', db_index=True,
         on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 

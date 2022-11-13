@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 
+from actions.models import Action
+from actions.utils import create_action
 from user.forms import UserForm, ProfileForm
 from user.models import User, Contact
 from notes.models import Note
@@ -56,10 +58,10 @@ def profile(request, username):
     notes = Note.objects.public().filter(author=user)
     notes = notes.annotate(num_likes=Count('users_like'))
     total_user_likes = sum([note.num_likes for note in notes])
-    followers = [contact.follower 
+    followers = [contact.follower
                     for contact in Contact.objects.filter(followed=user)]
-    following = [contact.following 
-                    for contact in Contact.objects.filter(followed=user)]
+    following = [contact.followed
+                    for contact in Contact.objects.filter(follower=user)]
     return render(request, 'user/account/profile.html',
                     {'user': user, 'profile': profile,
                      'notes': notes, 'num_likes': total_user_likes,
@@ -93,6 +95,7 @@ def user_follow(request):
             if action == 'follow':
                 Contact.objects.get_or_create(followed=user,
                                               follower=request.user)
+                create_action(request.user, Action.FOLLOW, target=user)
             else:
                 Contact.objects.filter(followed=user,
                     follower=request.user).delete()
