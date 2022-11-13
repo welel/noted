@@ -133,7 +133,7 @@
                 </div>
                 {% if request.user == user %}
                     <div class="col-md-12">
-                        <a class="btn btn-primary px-3">Edit</a>
+                        <a href="{% url 'user:edit_user' %}" class="btn btn-primary px-3">Edit</a>
                     </div>
                 {% endif %}
                 {% if notes %}

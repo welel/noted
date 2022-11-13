@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 SITE_ID = 1
 
@@ -119,6 +119,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+STATIC_ROOT = PROJECT_DIR.joinpath('frontend/collected_static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     PROJECT_DIR.joinpath('frontend/static'),

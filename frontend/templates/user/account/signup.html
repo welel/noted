@@ -7,14 +7,14 @@
 {% block content %}
 
 {% if messages %}
-      <div class="container-md mt-3">
+      {% comment %} <div class="container-md mt-3">
         <strong>Messages:</strong>
         <ul>
           {% for message in messages %}
           <li>{{ message }}</li>
           {% endfor %}
         </ul>
-      </div>
+      </div> {% endcomment %}
 {% endif %}
 
 <div class="container mt-5 d-flex justify-content-center">

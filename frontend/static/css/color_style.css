@@ -11,6 +11,9 @@ header#header-hero .waveWrapperInner {
 	background: linear-gradient(to right, #30C, #09356F);
 	opacity: 1;
 }
+.add_note_link {
+	color: #7bc35b !important;
+}
 .footer {
 	background: #05386B;
 	background: -webkit-linear-gradient(to bottom, #3500D3, #05386B);
