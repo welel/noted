@@ -1,15 +1,17 @@
 FROM python:3.8.10
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1 
-
-WORKDIR /noted 
-
+WORKDIR /noted
 COPY . .
 
-RUN python -m venv env
-RUN pip install --upgrade pip && pip install -r requirements.txt  
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1 
+ENV VIRTUAL_ENV "/noted/env"
 
+RUN python -m venv $VIRTUAL_ENV
+
+ENV PATH "VIRTUAL_ENV/bin:$PATH"
+
+RUN pip install -r requirements.txt
 
  
 
