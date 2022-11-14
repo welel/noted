@@ -3,9 +3,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from noted import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('privacy-policy/', views.privacy_policy, name='privacy-policy'),
     path('', include('notes.urls')),
     path('notes/', include(('notes.urls', 'notes'), namespace='notes')),
     path('accounts/', include('allauth.urls')),

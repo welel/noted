@@ -4,14 +4,14 @@
 <footer class='footer'>
     <div class='container'>
         <!-- Header -->
-        <div class='footer__headline'><a href="{% url 'notes:home' %}">NoteD.</a></div>
+        <div class='footer__headline'><a href="{% url 'notes:home' %}">Note<img class="logoImg mb-2" src="{% static 'img/logo.png' %}" width="52" alt="logo"/></a></div>
         <!-- Navigation -->
         <nav class='nav__head'>
             <ul>
                 <li><a href="{% url 'notes:home' %}">Home</a></li>
                 <li><a href='https://github.com/welel/noted' target="_blank">About</a></li>
-                <li><a href='https://github.com/welel' target="_blank">Author</a></li>
-                <li><a href='#' target="_blank">Hire me</a></li>
+                <li><a href='https://github.com/welel' target="_blank">Contacts</a></li>
+                <li><a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
             </ul>
         </nav>
         <div class='horizontal__decoration__line'></div>
@@ -19,14 +19,14 @@
         <nav class='social__media'>
             <ul>
                 <li><a href='https://github.com/welel' target="_blank"><div><img src="{% static 'img/icons/github.svg' %}" alt='GitHub'/></div><span>GitHub</span></a></li>
-                <li><a href='https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSGLddCFCLPdhtNjmmbpwPtZdjmWklVXKNRbhQjrfgLkrqqMWgNZknplSwvkKxqkQdMGczdK' target="_blank"><div><img src="{% static 'img/icons/gmail.svg' %}" alt='gmail'/></div><span>Gmail</span></a></li>
+                <li><a href='mailto:pavel.loginov.dev@gmail.com' target="_blank"><div><img src="{% static 'img/icons/gmail.svg' %}" alt='gmail'/></div><span>Gmail</span></a></li>
                 <li><a href='https://t.me/pavel_loginov_dev' target="_blank"><div><img src="{% static 'img/icons/telegram.svg' %}" alt='telegram'/></div><span>Telegram</span></a></li>
             </ul>
         </nav>
         <div class='horizontal__decoration__line'></div>
         <div class='footer__rights'>
-            <p>Take notes, learn them — it called studying.<br/>
-                NoteD. 2020-2022</p>
+            <p>The website is developing for educational purposes of developers.<br/>
+                NoteD. 2022-2023</p>
         </div>
     </div>
 </footer>
