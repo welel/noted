@@ -25,6 +25,7 @@
 * Bookmarks
 * User profile
 * Following system
+* Code documentation
 
 
 ## Tech stack
