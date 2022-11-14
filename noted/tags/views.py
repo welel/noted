@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.views.generic import ListView
 
 from taggit.models import Tag
@@ -7,9 +7,9 @@ from taggit.models import Tag
 class TagList(ListView):
     """Display a annotated list of :model:`taggit.Tag`.
 
-    It displays tags, each tag has a number of his notes.
+    It displays tags, each tag has a number of its' notes.
 
-    TODO: exclude `private`=True notes from tag counting.
+    TODO: Cache results.
 
     **Context**
         tags: a queryset of all :model:`taggit.Tag` instances.
@@ -24,11 +24,7 @@ class TagList(ListView):
     template_name = 'tags/list.html'
 
     def get_queryset(self):
-        queryset = Tag.objects.all().annotate(
-            num_times=Count('taggit_taggeditem_items')
-        )
-        # If a tag has no notes, we delete the tag.
-        for tag in reversed(queryset):
-            if tag.num_times == 0:
-                tag.delete()
-        return queryset.order_by('-num_times')
+        queryset = Tag.objects.annotate(
+            num_times=Count('notes', filter=Q(notes__private=False))
+        ).filter(num_times__gt=0)
+        return queryset

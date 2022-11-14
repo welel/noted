@@ -69,6 +69,13 @@ class NoteList(ListView):
         'comments': 'Most Commented',
         'users_like': 'Most Liked',
     }
+    SORTING_FUNCS_MAPPING = {
+        'datetime_created': Note.objects.datetime_created,
+        '-datetime_created': Note.objects.datetime_created_dec,
+        'comments': Note.objects.most_commented,
+        'users_like': Note.objects.most_liked,
+    }
+    
     model = Note
     context_object_name = 'notes'
     paginate_by = 18
@@ -76,25 +83,16 @@ class NoteList(ListView):
     def get_ordering(self):
         return self.request.GET.get('order', default='-datetime_created')
 
+    def get_ordered_queryset(self):
+        """Order a queryset by GET param `order`."""
+        order = self.get_ordering()
+        return self.SORTING_FUNCS_MAPPING[order]()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         order = self.get_ordering()
         context['order_label'] = self.ORDER_LABELS.get(order, '')
         return context
-
-    def get_ordered_queryset(self, queryset):
-        """Order a queryset by GET param `order`"""
-        # Temp comments (maybe block is useless)
-        # if not queryset:
-        #     queryset = super().get_queryset()
-        order = self.get_ordering()
-        if order == 'comments':
-            queryset = queryset.annotate(
-                count=Count('comments')
-            ).order_by('-count')
-        else:
-            queryset = queryset.order_by(order)
-        return queryset
 
 
 class PublicNoteList(NoteList):
@@ -118,13 +116,14 @@ class PublicNoteList(NoteList):
     template_name = 'notes/public_list.html'
 
     def get_queryset(self):
-        queryset = Note.objects.public()
-        return super().get_ordered_queryset(queryset)
+        return super().get_ordered_queryset().filter(private=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['most_liked'] = Note.objects.most_liked()[:5]
-        context['most_commented'] = Note.objects.most_commented()[:5]
+        context['most_liked'] = Note.objects.most_liked(
+            all=False, public=True)[:5]
+        context['most_commented'] = Note.objects.most_commented(
+            all=False, public=True)[:5]
         return context
 
 
@@ -145,8 +144,7 @@ class PersonalNoteList(NoteList):
     template_name = 'notes/personal_list.html'
 
     def get_queryset(self):
-        queryset = Note.objects.personal(self.request.user)
-        return super().get_ordered_queryset(queryset)
+        return super().get_ordered_queryset().filter(author=self.request.user)
 
 
 class TaggedNoteListView(NoteList):
@@ -172,8 +170,7 @@ class TaggedNoteListView(NoteList):
             setattr(self, 'tag', tag)
         else:
             raise Http404('The tag slug wasn\'t found.')
-        queryset = Note.objects.public().filter(tags=tag)
-        return super().get_ordered_queryset(queryset)
+        return super().get_ordered_queryset().filter(private=False, tags=tag)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,13 +197,8 @@ class UserNoteListView(NoteList):
         if 'username' in self.kwargs:
             username = self.kwargs['username']
             user = get_object_or_404(User, username=username)
-        else:
-            raise Http404(
-                f'The user with name "{username}" wasn\'t found.'
-            )
-        queryset = Note.objects.personal(user)
-        queryset = queryset.filter(private=False, anonymous=False)
-        return super().get_ordered_queryset(queryset)
+        return super().get_ordered_queryset().filter(author=user,
+            private=False, anonymous=False)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -227,7 +219,7 @@ class FavouriteNoteListView(NoteList):
 
     def get_queryset(self):
         queryset = self.request.user.favourites.all()
-        return self.get_ordered_queryset(queryset)
+        return self.get_ordered_queryset().filter(id__in=queryset)
 
 
 class NoteDetailView(DetailView, MultipleObjectMixin):

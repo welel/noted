@@ -38,22 +38,40 @@ class NoteManager(models.Manager):
         """Query notes available for everyone."""
         return self.filter(private=False)
 
-    def most_liked(self) -> QuerySet:
+    def most_liked(self, all: bool=True, public: bool=False) -> QuerySet:
         """Query notes sorted by number of likes from the most to least.
         
-        Include public notes that have at least one like.
+        Params:
+            all: if false includes only notes that have at least one like.
+            public: if true excludes private notes. 
         """
-        return self.public().annotate(
-            count=Count('users_like')).filter(count__gt=0).order_by('-count')
+        queryset = self.annotate(count=Count('users_like')).order_by('-count')
+        if public:
+            queryset = queryset.filter(private=False)
+        if not all:
+            return queryset.filter(count__gt=0)
+        return queryset
 
-    def most_commented(self) -> QuerySet:
+    def most_commented(self, all : bool=True, public: bool=False) -> QuerySet:
         """Query notes sorted by number of comments from the most to least.
         
-        Include public notes that have at least one comment.
+        Params:
+            all: if false includes only notes that have at least one comment.
+            public: if true exclude private notes. 
         """
-        return self.public().annotate(
-            count=Count('comments')).filter(count__gt=0).order_by('-count')
-            
+        queryset = self.annotate(count=Count('comments')).order_by('-count')
+        if public:
+            queryset = queryset.filter(private=False)
+        if not all:
+            return queryset.filter(count__gt=0)
+        return queryset
+
+    def datetime_created(self):
+        return self.order_by('datetime_created')
+
+    def datetime_created_dec(self):
+        return self.order_by('-datetime_created')
+
 
 class Note(models.Model):
     """Markdown text with a list of attributes.
@@ -107,7 +125,7 @@ class Note(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
-        through=UnicodeTaggedItem, blank=True, related_name='tags',
+        through=UnicodeTaggedItem, blank=True, related_name='notes',
         help_text='''Add tags. Separate tags by using "Enter" or comma.
         You can add maximum 5 tags, and length of tags should be less than 25
         symbols.'''
