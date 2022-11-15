@@ -152,14 +152,12 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': os.getenv('YANDEX_CLIENT_ID'),
             'secret': os.getenv('YANDEX_SECRET'),
-            'key': os.getenv('YANDEX_KEY')
         },
     },
     'github': {
         'APP': {
             'client_id': os.getenv('GITHUB_ID'),
             'secret': os.getenv('GITHUB_SECRET'),
-            'key': ''
         }
     },
 }
