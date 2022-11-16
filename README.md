@@ -1,4 +1,4 @@
-<p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="400" border="0"></a></p>
+<p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="350" border="0"></a></p>
 
 <hr>
 <p>
@@ -6,16 +6,16 @@
   <img src="https://img.shields.io/badge/django-v3.2-blue">
 </p>
 
-<h4 align="center">This is a web service that helps to make, store and share notes.</h4>
+<h3 align="center">This is a web service that helps to make, store and share notes.</h3>
 
-This website helps to create personal notes, share them public, search notes for intresting topics and save them, follow users and be followed by others. The project was created for my educational purposes. 
+This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes. 
 
 <p align="center"><a href="https://noted-eu.herokuapp.com/"><img src="https://s4.gifyu.com/images/ezgif.com-gif-makerd1278193c866c2fa.gif" alt="ezgif.com-gif-makerd1278193c866c2fa.gif"  border="0" /></a></p>
 
 **Link on the website:** https://noted-eu.herokuapp.com/notes/
 
 
-
+</br>
 ## 🔥 Features
 
 * Markdown editor
@@ -36,7 +36,7 @@ This website helps to create personal notes, share them public, search notes for
 * Code documentation
 * Adaptive design (for mobile)
 
-
+</br>
 ## 🛠️ Tech stack
 
 <p>
@@ -51,7 +51,7 @@ This website helps to create personal notes, share them public, search notes for
 </p>
 
 
-
+</br>
 ## 🏗️ Installation
 
 1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
@@ -73,6 +73,8 @@ This website helps to create personal notes, share them public, search notes for
 
 6. Run the server `python manage.py runserver`.
 
+
+</br>
 ### 👨‍💻 Team
 
 - [Pavel Loginov](https://github.com/welel) (Backend/Frontend)
