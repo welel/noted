@@ -1,4 +1,4 @@
-<p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="350" border="0"></a></p>
+<p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="210" border="0"></a></p>
 
 <hr>
 <p>
@@ -14,8 +14,8 @@ This website helps to create personal notes, share them public, search notes for
 
 **Link on the website:** https://noted-eu.herokuapp.com/notes/
 
-
 </br>
+
 ## 🔥 Features
 
 * Markdown editor
@@ -37,6 +37,7 @@ This website helps to create personal notes, share them public, search notes for
 * Adaptive design (for mobile)
 
 </br>
+
 ## 🛠️ Tech stack
 
 <p>
@@ -52,6 +53,7 @@ This website helps to create personal notes, share them public, search notes for
 
 
 </br>
+
 ## 🏗️ Installation
 
 1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
@@ -75,6 +77,7 @@ This website helps to create personal notes, share them public, search notes for
 
 
 </br>
+
 ### 👨‍💻 Team
 
 - [Pavel Loginov](https://github.com/welel) (Backend/Frontend)

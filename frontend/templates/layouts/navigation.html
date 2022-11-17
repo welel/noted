@@ -19,22 +19,12 @@
         </a>
         <div class='horizontal_decoration_line'></div>
         <ul class='header__list'>
-          <li>
-            <span></span><a href="{% url 'notes:home' %}" class='header__link'>Home</a>
-          </li>
-          <li>
-            <span></span><a href="{% url 'notes:add' %}" class='header__link add_note_link'>Add Note</a>
-          </li>
-          <li>
-            <span></span><a href="{% url 'tags:tags' %}" class='header__link'>Tags</a>
-          </li>
-          <li>
-            <span></span><a href="{% url 'actions:note_feed' %}" class='header__link'>Feed</a>
-          </li>
+          <li><span></span><a href="{% url 'notes:home' %}" class='header__link'>Home</a></li>
+          <li><span></span><a href="{% url 'notes:add' %}" class='header__link add_note_link'>Add Note</a></li>
+          <li><span></span><a href="{% url 'tags:tags' %}" class='header__link'>Tags</a></li>
+          <li><span></span><a href="{% url 'actions:note_feed' %}" class='header__link'>Feed</a></li>
           {% if user.is_authenticated %}
-            <li>
-              <span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a>
-            </li>
+            <li><span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a></li>
           {% endif %}
         </ul>
         <div class='horizontal_decoration_line'></div>
@@ -42,9 +32,7 @@
           <li>
             <span></span>
             <a href="{% url 'notes:search' %}" class='header__link'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
+              <i class="bi bi-search"></i>
               Search
             </a>
           </li>
@@ -60,7 +48,6 @@
               <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url 'user:edit_user' %}">Account settings</a></li>
               <li><a class="dropdown-item" href="{% url 'favourites' %}">Bookmarks</a></li>
-              
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
             </ul>
@@ -70,8 +57,6 @@
     </div>
   </div>
 </header>
-
-
 
   <div class="collapse navbar-collapse" id="navbar-list-4">
     <ul class="navbar-nav">

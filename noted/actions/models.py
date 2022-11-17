@@ -6,7 +6,17 @@ from user.models import User
 
 
 class Action(models.Model):
+    """Store users actions on the site.
 
+    **Fields**
+        user: a user that do an aciton.
+        verb: an action name.
+        created: datetime of an action.
+        target_ct: an object model on which an action is directed.
+        target_id: an object id on which an action is directed.
+        target: an object on which an action is directed.
+    
+    """
     NEW_NOTE = 'new_note'
     NEW_COMMENT = 'new_comment'
     NEW_USER = 'new_user'
