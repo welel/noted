@@ -17,6 +17,8 @@ urlpatterns = [
     path('actions/', include(('actions.urls', 'actions'), namespace='actions')),
 ]
 
+handler404 = 'noted.views.handler404'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, 
                           document_root=settings.STATIC_ROOT)

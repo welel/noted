@@ -158,9 +158,15 @@ class Note(models.Model):
                 'Cannot generate `slug`, because `title` is empty.'
             )
         slug = slugify(self.title, allow_unicode=True)[:247]
-        if Note.objects.filter(slug=slug).exists():
+        try:
+            note = Note.objects.get(slug=slug)
+        except Note.DoesNotExist:
+            return slug
+        if note.id == self.id:
+            return note.slug
+        else:
             slug += str(uuid.uuid1())[:8]
-        return slug[:255]
+            return slug[:255]
 
     def get_similar_by_tags(self) -> QuerySet:
         """Get notes with similar tag.

@@ -23,7 +23,7 @@
           <li><span></span><a href="{% url 'notes:add' %}" class='header__link add_note_link'>Add Note</a></li>
           <li><span></span><a href="{% url 'tags:tags' %}" class='header__link'>Tags</a></li>
           <li><span></span><a href="{% url 'actions:note_feed' %}" class='header__link'>Feed</a></li>
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
             <li><span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a></li>
           {% endif %}
         </ul>
@@ -37,7 +37,7 @@
             </a>
           </li>
           <li class="dropdown">
-            {% if not user.is_authenticated %}
+            {% if not request.user.is_authenticated %}
               <span></span><a href="{% url 'account_login' %}" class='header__link'>Sign In</a>
             {% else %}
               <a class="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,11 +45,11 @@
               </a>
             {% endif %}
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}">Profile</a></li>
-              <li><a class="dropdown-item" href="{% url 'user:edit_user' %}">Account settings</a></li>
-              <li><a class="dropdown-item" href="{% url 'favourites' %}">Bookmarks</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}"><i class="bi bi-person-circle"></i> Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:edit_user' %}"><i class="bi bi-gear"></i> Account settings</a></li>
+              <li><a class="dropdown-item" href="{% url 'favourites' %}"><i class="bi bi-bookmark-heart-fill"></i> Bookmarks</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-in-left"></i> Logout</a></li>
             </ul>
           </li>
         </ul>

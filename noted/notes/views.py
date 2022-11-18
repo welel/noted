@@ -15,7 +15,6 @@ u""""Views for the `notes` app.
     NoteDeleteView: handles deletion of a note.
     notes_search: search notes instances by a GET request query.
     note_like: like/unlike a note.
-    handler404: handels error 404 code.
     add_favourite: add a note to user's bookmarks.
 
 """
@@ -384,10 +383,6 @@ def note_like(request):
         except:
             pass
     return JsonResponse({'status': 'error'})
-
-
-def handler404(request, *args, **kwargs):
-    return render(request, '404.html', {}, status=404)
 
 
 @login_required(login_url=reverse_lazy('account_login'))

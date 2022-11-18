@@ -27,9 +27,9 @@ body {
 
 .cont_error>h1 {
     font-family: 'Lato', sans-serif;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 50px;
-    color: #fff;
+    color: #82B54F;
     position: relative;
     left: -100%;
     transition: all 0.5s;
@@ -41,7 +41,7 @@ body {
     font-weight: 300;
     font-size: 20px;
     letter-spacing: 5px;
-    color: #585fc5;
+    color: #2533f0;
     position: relative;
     left: 100%;
     transition: all 0.5s;

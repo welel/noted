@@ -1,4 +1,4 @@
-<p align="center"><a href="https://noted-eu.herokuapp.com/notes/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="210" border="0"></a></p>
+<p align="center"><a href="https://welel-noted.site/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="210" border="0"></a></p>
 
 <hr>
 <p>
@@ -10,9 +10,9 @@
 
 This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes. 
 
-<p align="center"><a href="https://noted-eu.herokuapp.com/"><img src="https://s4.gifyu.com/images/ezgif.com-gif-makerd1278193c866c2fa.gif" alt="ezgif.com-gif-makerd1278193c866c2fa.gif"  border="0" /></a></p>
+<p align="center"><a href="https://welel-noted.site/"><img src="https://s4.gifyu.com/images/ezgif.com-gif-makerd1278193c866c2fa.gif" alt="ezgif.com-gif-makerd1278193c866c2fa.gif"  border="0" /></a></p>
 
-**Link on the website:** https://noted-eu.herokuapp.com/notes/
+**Link on the website:** https://welel-noted.site/
 
 </br>
 
@@ -46,12 +46,14 @@ This website helps to create personal notes, share them public, search notes for
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-ar21.svg"></code><br/>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/netlifyapp_watercss/netlifyapp_watercss-ar21.svg"></code>
-<code><img width="10%" src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg"></code>
-      <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/linux/linux-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/linux/linux-ar21.svg"></code></br>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/nginx/nginx-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/gunicorn/gunicorn-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/docker/docker-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-ar21.svg"></code><br/>
 </p>
-
-
 </br>
 
 ## 🏗️ Installation

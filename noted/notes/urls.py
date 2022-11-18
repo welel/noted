@@ -32,5 +32,3 @@ urlpatterns = [
     path('fav/<int:id>/', add_favourite, name='add_favourite'),
     path('favourites/', FavouriteNoteListView.as_view(), name='favourites'),
 ]
-
-handler404 = 'notes.views.handler404'
