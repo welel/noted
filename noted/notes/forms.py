@@ -3,6 +3,7 @@ from mptt.forms import TreeNodeChoiceField
 from mptt.querysets import TreeQuerySet
 
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django import forms
 
 from notes.models import Note, Comment
@@ -19,6 +20,12 @@ class NoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['body_raw'].label = ''
+        self.fields['title'].label = _('Title')
+        self.fields['source'].label = _('Source')
+        self.fields['private'].label = _('Private')
+        self.fields['anonymous'].label = _('Anonymous')
+        self.fields['allow_comments'].label = _('Allow comments')
+        self.fields['summary'].label = _('Summary')
 
     def clean_tags(self):
         """Validates the `tags` field.
@@ -28,7 +35,7 @@ class NoteForm(forms.ModelForm):
         """
         tags = self.cleaned_data['tags']
         if len(tags) > 5:
-            raise ValidationError('You can add only 5 tags.')
+            raise ValidationError(_('You can add only 5 tags.'))
         for i, tag in enumerate(tags):
             if len(tag) > 25:
                 raise ValidationError(
@@ -56,7 +63,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(
                 attrs={'class': 'form-control shadow-none',
-                    'placeholder': 'Add a public comment...',
+                    'placeholder': _('Add a public comment...'),
                     'rows': '2',}),
         }
     
@@ -91,7 +98,7 @@ def comment_form_factory(comments: TreeQuerySet) -> CommentForm:
 class SearchForm(forms.Form):
     """A form for searching."""
     query = forms.CharField()
-    query.widget.attrs.update({'placeholder': 'Search'})
+    query.widget.attrs.update({'placeholder': _('Search')})
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

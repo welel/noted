@@ -1,12 +1,13 @@
 {% extends 'user/account/base.html' %}
 
+{% load i18n %}
 
-{% block head_title %}Edit user{% endblock %}
+{% block head_title %}{% trans 'Edit user' %}{% endblock %}
 
 {% block content %}
 <div class='container'>
     <h2 class="fw-bold text-center">
-        User details
+        {% trans 'User details' %}
     </h2>
     <div class='row mt-4 d-flex justify-content-center'>
         <div class="col-md-3 border-right">
@@ -24,7 +25,7 @@
                     <div class="col-md-12">
                         {% if user_form.is_valid and profile_form.is_valid %}
                             <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                                Details successfully updated.
+                                {% trans 'Details successfully updated.' %}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                               </div>
                         {% endif %}
@@ -42,19 +43,19 @@
                         {{ user_form.first_name }}
                     </div>
                     <div class="col-md-6">
-                        <label for="form-avatar" class="form-label">Profile picture</label>
+                        <label for="form-avatar" class="form-label">{% trans 'Profile picture' %}</label>
                         {{ profile_form.avatar }}
                     </div>
                     <div class="col-md-12">
-                        <label for="form-bio" class="form-label">Bio</label>
+                        <label for="form-bio" class="form-label">{% trans 'Bio' %}</label>
                         {{ profile_form.bio }}
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                        <button type="submit" class="btn btn-primary">{% trans 'Save Profile' %}</button>
                     </div>
                 </div>
             </form>
-            <button type="submit" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete account</button>
+            <button type="submit" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#deleteUser">{% trans 'Delete account' %}</button>
         </div>
     </div>
 </div>
@@ -68,13 +69,13 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><b>Are you sure you want to delete your account?</b> All your public notes will become anonymous and available to users. Remove them if you don't want them to be available.</p>
+          <p><b>{% trans 'Are you sure you want to delete your account?' %}</b> {% trans "All your public notes will become anonymous and available to users. Remove them if you don't want them to be available." %}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
           <form method="POST" action="{% url 'user:delete_user' %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete account</button>
+            <button type="submit" class="btn btn-danger">{% trans 'Delete account' %}</button>
           </form>
         </div>
       </div>

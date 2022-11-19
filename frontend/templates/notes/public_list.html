@@ -1,8 +1,9 @@
 <!-- General list of notes on home page -->
 {% extends 'layouts/list_base.html' %}
 
+{% load i18n %}
 
-{% block list_header %}Public Notes{% endblock %}
+{% block list_header %}{% trans 'Public Notes' %}{% endblock %}
 
 {% block no_notes %}{% include 'layouts/add_note_button.html' %}{% endblock %}
 
@@ -12,7 +13,7 @@
         <ol class="list-group list-group-numbered">
             <li class="sidebar_item_title list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">Most liked</div>
+                <div class="fw-bold">{% trans 'Most liked' %}</div>
             </div>
             </li>
             {% for note in most_liked %}
@@ -46,7 +47,7 @@
         <ol class="list-group list-group-numbered mt-4">
             <li class="sidebar_item_title list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold">Most commented</div>
+                <div class="fw-bold">{% trans 'Most commented' %}</div>
             </div>
             </li>
             {% for note in most_commented %}

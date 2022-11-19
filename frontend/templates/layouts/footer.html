@@ -1,5 +1,6 @@
 <!-- Requires css/footer.css, css/colot_style.css -->
 {% load static %}
+{% load i18n %}
 
 <footer class='footer'>
     <div class='container'>
@@ -8,10 +9,10 @@
         <!-- Navigation -->
         <nav class='nav__head'>
             <ul>
-                <li><a href="{% url 'notes:home' %}">Home</a></li>
-                <li><a href='https://github.com/welel/noted' target="_blank">About</a></li>
-                <li><a href='https://github.com/welel' target="_blank">Contacts</a></li>
-                <li><a href="{% url 'privacy-policy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'notes:home' %}">{% trans 'Home' %}</a></li>
+                <li><a href='https://github.com/welel/noted' target="_blank">{% trans 'About' %}</a></li>
+                <li><a href='https://github.com/welel' target="_blank">{% trans 'Contacts' %}</a></li>
+                <li><a href="{% url 'privacy-policy' %}">{% trans 'Privacy Policy' %}</a></li>
             </ul>
         </nav>
         <div class='horizontal__decoration__line'></div>
@@ -25,7 +26,7 @@
         </nav>
         <div class='horizontal__decoration__line'></div>
         <div class='footer__rights'>
-            <p>The website is developing for educational purposes of developers.<br/>
+            <p>{% trans 'The website is developing for educational purposes of developers.' %}<br/>
                 NoteD. 2022-2023</p>
         </div>
     </div>

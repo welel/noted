@@ -2,6 +2,7 @@
 {% extends 'layouts/base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ block.super }}{% endblock %}
 
@@ -16,7 +17,7 @@
 
 <!-- Tags list -->
 <div class="row skip_header">
-  <h1 class="mt-6 text-center" >Tags</h1>
+  <h1 class="mt-6 text-center" >{% trans 'Tags' %}</h1>
   <div class="tag-list col-9 offset-1 d-flex flex-wrap">
     {% for tag in tags %}
       <a href="{% url 'notes:tagged' tag_slug=tag.slug %}" class="btn btn-info text-col mt-3 ms-3">

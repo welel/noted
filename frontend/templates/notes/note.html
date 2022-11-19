@@ -2,6 +2,7 @@
 {% extends 'layouts/base.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load mptt_tags %}
 {% load social_share %}
 
@@ -28,7 +29,7 @@
         <div class="p-2 bd-highlight text-white">
           <span>
             <i class="bi bi-calendar3"></i>
-            {{ note.datetime_created }} {% if note.datetime_created.date != note.datetime_modified.date %}/ Modified: {{ note.datetime_modified }}{% else %}{% endif %}
+            {{ note.datetime_created }} {% if note.datetime_created.date != note.datetime_modified.date %}/ {% trans 'Modified:' %} {{ note.datetime_modified }}{% else %}{% endif %}
           </span>
         </div>
         {% if not note.anonymous %}
@@ -44,17 +45,17 @@
         {% if note.source %}
           <div class="p-2 bd-highlight">
             <i class="bi bi-link-45deg"></i>
-            <a href="{{ note.source }}" target="_blank">Source</a>
+            <a href="{{ note.source }}" target="_blank">{% trans 'Source' %}</a>
           </div>
         {% endif %}
 
         <!-- Anon/Private Badges -->
         {% if request.user == user %}
           {% if note.private %}
-            <span class="badge badge-note badge-private ms-1 mb-1">Private</span>
+            <span class="badge badge-note badge-private ms-1 mb-1">{% trans 'Private' %}</span>
           {% endif %}
           {% if note.anonymous %}
-            <span class="badge badge-note badge-anon ms-1 mb-1">Anonymous</span>
+            <span class="badge badge-note badge-anon ms-1 mb-1">{% trans 'Anonymous' %}</span>
           {% endif %}
         {% endif %}
 
@@ -65,13 +66,13 @@
               <form action="{% url 'update' slug=note.slug %}" method="get">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-info btn-sm">
-                  Edit
+                  {% trans 'Edit' %}
                 </button>
               </form>
               <form action="{% url 'delete' slug=note.slug %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger btn-sm ms-2" onclick="return confirm('Are you sure you want to delete the note?');">
-                  Delete
+                  {% trans 'Delete' %}
                 </button>
               </form>
             </div>
@@ -113,7 +114,14 @@
           <i class="bi bi-heart"></i>
         {% endif %}
       </span>
-      &#8226; <span class="total_likes pt-1">{{ total_likes }}</span><span> like{{ total_likes|pluralize }}</span>
+      &#8226; <span class="total_likes pt-1">{{ total_likes }}</span>
+      <span>
+        {% blocktranslate count total_likes=total_likes %}
+          like
+        {% plural %}
+          likes
+        {% endblocktranslate %}
+      </span>
     </a>
     
   </div>
@@ -133,14 +141,14 @@
   <!-- Share note -->
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary ms-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Share this note
+    {% trans 'Share this note' %}
   </button>
   <!-- Share buttons Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Share this note</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans 'Share this note' %}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -152,7 +160,7 @@
             {% post_to_twitter "{{note.title}}. Check it out!" note '<svg role="presentation" class="svg--icon"><use xlink:href="#svg--twitter" /></svg><span class="clip">TWITTER</span>' 'share twitter' %}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
         </div>
       </div>
     </div>
@@ -166,7 +174,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button collapsed shadow-none border-0 bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onclick="animOnScroll()">
-        <h6>Show similar public notes</h6>
+        <h6>{% trans 'Show similar public notes' %}</h6>
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse border-0" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -181,19 +189,25 @@
 
 <!-- Comments -->
 {% if note.allow_comments %}
-<h3 class="mt-4">Comments<hr></h3>
+<h3 class="mt-4">{% trans 'Comments' %}<hr></h3>
 <!-- General comment form -->
 <form id="commentGeneralForm" class="m-auto" method="post">
   {{ comment_form.as_p }}
   {% csrf_token %}
-  <button type="submit" class="btn btn-primary btn-block float-end px-4">Post</button>
+  <button type="submit" class="btn btn-primary btn-block float-end px-4">{% trans 'Post' %}</button>
 </form>
 
 
 <!-- Comments list -->
 {% with comments=page_obj total_comments=note.comments.count %}
   {% if total_comments %}
-  <h4 class="mt-4">{{ total_comments }} comment{{ total_comments|pluralize }}</h4>
+  <h4 class="mt-4">{{ total_comments }}
+    {% blocktranslate count total_comments=total_comments %}
+      comment
+    {% plural %}
+      comments
+  {% endblocktranslate %}
+  </h4>
   {% for root_comment in comments %}
     {% with children=root_comment.get_children total_children=root_comment.get_children.count %}
       <div>
@@ -201,12 +215,20 @@
         <p class="m-auto">{{ root_comment.content }}</p>
         <button id="{{ root_comment.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
           onclick="openCommentForm({{ root_comment.id }}, {{ root_comment.id }})">
-          <b>REPLY</b>
+          <b>{% trans 'REPLY' %}</b>
         </button>
         {% if total_children %}
           <button type="button" class="btn btn-link text-decoration-none text-uppercase shadow-none" style="font-size: 15px;"
             onclick="expandChildren('childrenComments{{ root_comment.id }}', 'arrow{{ root_comment.id }}')">
-            <span id="arrow{{ root_comment.id }}">&#9662;</span><b>&nbsp;&nbsp;{{ total_children }} ANSWER{{ total_children|pluralize }}</b>
+            <span id="arrow{{ root_comment.id }}">&#9662;</span>
+            <b>
+              &nbsp;&nbsp;{{ total_children }} 
+              {% blocktranslate count total_children=total_children %}
+                ANSWER
+              {% plural %}
+                ANSWERS
+              {% endblocktranslate %}
+            </b>
           </button>
         {% endif %}
       </div>
@@ -217,7 +239,7 @@
             <p class="m-auto">{{ child.content }}</p>
             <button id="{{ child.id }}" type="button" class="btn btn-link btn-sm text-decoration-none shadow-none"
               onclick="openCommentForm({{ child.parent.id }}, {{ child.id }})">
-              <b>REPLY</b>
+              <b>{% trans 'REPLY' %}</b>
             </button>
           </div>
           {% endfor %}

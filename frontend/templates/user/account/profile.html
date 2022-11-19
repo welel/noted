@@ -2,13 +2,14 @@
 
 
 {% load static %}
+{% load i18n %}
 
 {% block head_title %}{% firstof user.first_name user.username %}{% endblock %}
 
 {% block content %}
 <div class='container'>
     <h2 class="fw-bold text-center">
-        User Profile
+        {% trans 'User Profile' %}
     </h2>
     <div class='row mt-4 d-flex justify-content-center'>
         <div class="col-md-2">
@@ -24,7 +25,12 @@
                     <!-- Followers button trigger modal -->
                     <a href="#" class="link-secondary text-decoration-none follow-link" data-bs-toggle="modal" data-bs-target="#followersModal">
                         <i class="bi bi-person-hearts"></i>
-                        <b class="text-dark followers-count">{{ followers|length }}</b> follower{{ followers.count|pluralize }}
+                        <b class="text-dark followers-count">{{ followers|length }}</b> 
+                        {% blocktranslate count total_followers=followers|length %}
+                            follower
+                        {% plural %}
+                            followers
+                      {% endblocktranslate %}
                     </a>
                     
                     <!-- Modal -->
@@ -32,7 +38,7 @@
                         <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ user.username }}'s followers</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">{% blocktranslate %}{{ user.username }}'s followers{% endblocktranslate %}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -52,7 +58,7 @@
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
                             </div>
                         </div>
                         </div>
@@ -61,7 +67,7 @@
                     <!-- Following button trigger modal -->
                     <a href="#" class="link-secondary text-decoration-none follow-link ps-2" data-bs-toggle="modal" data-bs-target="#followingModal">
                         <i class="bi bi-person-hearts"></i>
-                        <b class="text-dark">{{ following|length }}</b> following{{ following.count|pluralize }}
+                        <b class="text-dark">{{ following|length }}</b> {% trans 'following' %}
                     </a>
                     
                     <!-- Modal -->
@@ -69,7 +75,7 @@
                         <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ user.username }}'s followers</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">{% blocktranslate %}{{ user.username }}'s followers{% endblocktranslate %}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -89,7 +95,7 @@
                                 {% endfor %}
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
                             </div>
                         </div>
                         </div>
@@ -102,9 +108,9 @@
                             data-id="{{ user.id }}"
                             data-action="{% if request.user in followers %}un{% endif %}follow">
                         {% if request.user in followers %}
-                            Unsubscribe
+                            {% trans 'Unsubscribe' %}
                         {% else %}
-                            Follow
+                        {% trans 'Follow' %}
                         {% endif %}
                     </a>
                 {% endif %}
@@ -113,30 +119,30 @@
         <div class="col-5">
             <div class="row g-3">
                 <div class="col-md-12">
-                    <label for="form-username" class="form-label">Username</label>
+                    <label for="form-username" class="form-label">{% trans 'Username' %}</label>
                     <input type="text" class="form-control bg-white" value="{{ user.username }}" disabled>
                 </div>
                 <div class="col-md-12">
-                    <label for="form-name" class="form-label">Name</label>
+                    <label for="form-name" class="form-label">{% trans 'Name' %}</label>
                     <input type="text" class="form-control bg-white" value="{{ user.first_name }}" disabled>
                 </div>
                 <div class="col-md-12">
-                    <label for="form-bio" class="form-label">Bio</label>
+                    <label for="form-bio" class="form-label">{% trans 'Bio' %}</label>
                     <textarea type="text" class="form-control bg-white" rows="7" disabled>
                         {{ profile.bio|safe }}
                     </textarea>
-                    <p>Total user likes <span class="badge bg-danger mt-2">{{ num_likes }}</span></p>
-                    <p>Joined <b>Note</b><img src="{% static 'img/logo.png' %}" alt='logo' weight="20" height="20"> {{ user.date_joined|date }}</p>
+                    <p>{% trans 'Total user likes' %} <span class="badge bg-danger mt-2">{{ num_likes }}</span></p>
+                    <p>{% trans 'Joined' %} <b>Note</b><img src="{% static 'img/logo.png' %}" alt='logo' weight="20" height="20"> {{ user.date_joined|date }}</p>
                 </div>
                 {% if request.user == user %}
                     <div class="col-md-12">
-                        <a href="{% url 'user:edit_user' %}" class="btn btn-primary px-3">Edit</a>
+                        <a href="{% url 'user:edit_user' %}" class="btn btn-primary px-3">{% trans 'Edit' %}</a>
                     </div>
                 {% endif %}
                 {% if notes %}
                     <div class="col-md-12 mb-5">
                         <h2 class="fw-bold text-center mt-3">
-                            Notes
+                            {% trans 'Notes' %}
                         </h2>
                         {% include 'layouts/list.html' %}
                     </div>

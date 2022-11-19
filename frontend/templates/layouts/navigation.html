@@ -1,5 +1,6 @@
 <!-- Main navigation bar on the top of the website -->
 {% load static %}
+{% load i18n %}
 
 <header class='header parallax'>
   <div class='header__container'> <!-- Limits width of the container -->
@@ -19,12 +20,12 @@
         </a>
         <div class='horizontal_decoration_line'></div>
         <ul class='header__list'>
-          <li><span></span><a href="{% url 'notes:home' %}" class='header__link'>Home</a></li>
-          <li><span></span><a href="{% url 'notes:add' %}" class='header__link add_note_link'>Add Note</a></li>
-          <li><span></span><a href="{% url 'tags:tags' %}" class='header__link'>Tags</a></li>
-          <li><span></span><a href="{% url 'actions:note_feed' %}" class='header__link'>Feed</a></li>
+          <li><span></span><a href="{% url 'notes:home' %}" class='header__link'>{% trans 'Home' %}</a></li>
+          <li><span></span><a href="{% url 'notes:add' %}" class='header__link add_note_link'>{% trans 'Add Note' %}</a></li>
+          <li><span></span><a href="{% url 'tags:tags' %}" class='header__link'>{% trans 'Tags' %}</a></li>
+          <li><span></span><a href="{% url 'actions:note_feed' %}" class='header__link'>{% trans 'Feed' %}</a></li>
           {% if request.user.is_authenticated %}
-            <li><span></span><a href="{% url 'notes:personal' %}" class='header__link'>Personal Notes</a></li>
+            <li><span></span><a href="{% url 'notes:personal' %}" class='header__link'>{% trans 'Personal Notes' %}</a></li>
           {% endif %}
         </ul>
         <div class='horizontal_decoration_line'></div>
@@ -33,23 +34,23 @@
             <span></span>
             <a href="{% url 'notes:search' %}" class='header__link'>
               <i class="bi bi-search"></i>
-              Search
+              {% trans 'Search' %}
             </a>
           </li>
           <li class="dropdown">
             {% if not request.user.is_authenticated %}
-              <span></span><a href="{% url 'account_login' %}" class='header__link'>Sign In</a>
+              <span></span><a href="{% url 'account_login' %}" class='header__link'>{% trans 'Sign In' %}</a>
             {% else %}
               <a class="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ request.user.profile.avatar.url }}" width="27" height="27" class="rounded-circle">
               </a>
             {% endif %}
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}"><i class="bi bi-person-circle"></i> Profile</a></li>
-              <li><a class="dropdown-item" href="{% url 'user:edit_user' %}"><i class="bi bi-gear"></i> Account settings</a></li>
-              <li><a class="dropdown-item" href="{% url 'favourites' %}"><i class="bi bi-bookmark-heart-fill"></i> Bookmarks</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}"><i class="bi bi-person-circle"></i> {% trans 'Profile' %}</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:edit_user' %}"><i class="bi bi-gear"></i> {% trans 'Account settings' %}</a></li>
+              <li><a class="dropdown-item" href="{% url 'favourites' %}"><i class="bi bi-bookmark-heart-fill"></i> {% trans 'Bookmarks' %}</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-in-left"></i> Logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-in-left"></i> {% trans 'Logout' %}</a></li>
             </ul>
           </li>
         </ul>

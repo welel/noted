@@ -3,7 +3,7 @@
 {% extends 'layouts/base.html' %}
 
 {% load static %}
-
+{% load i18n %}
 
 {% block title %}{{ block.super }}{% endblock %}
 
@@ -25,17 +25,17 @@
 
       <!-- Notes ordering title -->
       <h2 class="fw-bold">
-        {{ order_label }} {% block list_header %}Notes List{% endblock %}
+        {{ order_label }} {% block list_header %}{% trans 'Notes List' %}{% endblock %}
       </h2>
 
       <!-- Order notes selector -->
       <p class="orders mt-5">
         {% block order_links %}
           <i style="margin-top: -1px;" class="bi bi-sort-down"></i>
-          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=-datetime_created">Latest Notes</a>
-          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=datetime_created">Oldest Notes</a>
-          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=comments">Most Commented</a>
-          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=users_like">Most Liked</a>
+          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=-datetime_created">{% trans 'Latest Notes' %}</a>
+          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=datetime_created">{% trans 'Oldest Notes' %}</a>
+          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=comments">{% trans 'Most Commented' %}</a>
+          <a class="order-link ms-1 link-color" href="{{ request.path }}?order=users_like">{% trans 'Most Liked' %}</a>
         {% endblock %}
       </p>
 
@@ -46,7 +46,7 @@
         <div class="row mt-4 d-flex justify-content-center">
           <a class="btn btn-add-note icon-btn" href="{% url 'notes:add' %}" style="width: 150px;">
             <i style="margin-top: -1px;" class="bi bi-plus-circle-dotted"></i>
-            Add Note
+            {% trans 'Add Note' %}
           </a>
         </div>
       {% endif %}

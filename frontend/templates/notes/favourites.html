@@ -1,8 +1,10 @@
 <!-- List of favourite notes of a user -->
 {% extends 'layouts/list_base.html' %}
 
-{% block title %}Favourite Notes{% endblock %}
+{% load i18n %}
 
-{% block list_header %}Favourite Notes{% endblock %}
+{% block title %}{% trans 'Favourite Notes' %}{% endblock %}
 
-{% block no_notes %}<h2>You don't have favourite notes yet. Go to <a href="{% url 'home' %}">home page.</a></h2>{% endblock %}
+{% block list_header %}{% trans 'Favourite Notes' %}{% endblock %}
+
+{% block no_notes %}<h2>{% trans 'You don't have favourite notes yet. Go to' %} <a href="{% url 'home' %}">home page.</a></h2>{% endblock %}
