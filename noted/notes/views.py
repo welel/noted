@@ -34,6 +34,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.urls import reverse, reverse_lazy
 
@@ -63,10 +64,10 @@ class NoteList(ListView):
 
     """
     ORDER_LABELS = {
-        'datetime_created': 'Oldest',
-        '-datetime_created': 'Latest',
-        'comments': 'Most Commented',
-        'users_like': 'Most Liked',
+        'datetime_created': _('Oldest'),
+        '-datetime_created': _('Latest'),
+        'comments': _('Most Commented'),
+        'users_like': _('Most Liked'),
     }
     SORTING_FUNCS_MAPPING = {
         'datetime_created': Note.objects.datetime_created,

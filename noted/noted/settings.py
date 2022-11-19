@@ -3,6 +3,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from django.utils.translation import ugettext_lazy as _
+
 
 # Parse a `.env` file and load the variables inside into environment variables
 load_dotenv()
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'taggit',
     'mptt',
     'django_social_share',
+    'rosetta',
 
     'notes.apps.NotesConfig',
     'user.apps.UserConfig',
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -113,11 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'Etc/GMT-3'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+LOCALE_PATHS = (
+    PROJECT_DIR.joinpath('frontend/locale/'),
+)
+LANGUAGES = (
+    ('en', _('English')),
+    ('ru', _('Russian')),
+)
 
 STATIC_ROOT = PROJECT_DIR.joinpath('frontend/collected_static')
 STATIC_URL = '/static/'
@@ -165,7 +176,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Markdown input field (SimpleMDEField) configuration
 SIMPLEMDE_OPTIONS = {
-    'placeholder': 'Write your note here...',
+    'placeholder': _('Write your note here...'),
     'spellChecker': False,
     'status': False,
     'autosave': {

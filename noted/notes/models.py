@@ -15,6 +15,7 @@ from django.db import models
 from django.db.models import QuerySet, Count
 from django.utils.text import slugify
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from markdown.fields import MarkdownField, RenderedMarkdownField
 from tags.models import UnicodeTaggedItem
@@ -105,30 +106,30 @@ class Note(models.Model):
     )
     source = models.URLField(
         blank=True, default='',
-        help_text='Place a link to the source to which you are taking notes.'
+        help_text=_('Place a link to the source to which you are taking notes.')
     )
     body_raw = MarkdownField(rendered_field='body_html')
     body_html = RenderedMarkdownField(max_length=40000, default='', blank=True)
     summary = models.CharField(
         max_length=100, default='', blank=True,
-        help_text='Write summary on the note in 100 symbols.'
+        help_text=_('Write summary on the note in 100 symbols.')
     )
     private = models.BooleanField(
-        default=False, help_text='Only you can see the note.'
+        default=False, help_text=_('Only you can see the note.')
     )
     anonymous = models.BooleanField(
-        default=False, help_text='Others won\'t see that the note is yours.'
+        default=False, help_text=_('Others won\'t see that the note is yours.')
     )
     allow_comments = models.BooleanField(
-        default=True, help_text='Allow users to leave comments.'
+        default=True, help_text=_('Allow users to leave comments.')
     )
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
     tags = TaggableManager(
         through=UnicodeTaggedItem, blank=True, related_name='notes',
-        help_text='''Add tags. Separate tags by using "Enter" or comma.
+        help_text=_('''Add tags. Separate tags by using "Enter" or comma.
         You can add maximum 5 tags, and length of tags should be less than 25
-        symbols.'''
+        symbols.''')
     )
     users_like = models.ManyToManyField(User, related_name='notes_liked',
                                         blank=True)

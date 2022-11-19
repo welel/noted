@@ -1,4 +1,6 @@
 <!-- Notes list -->
+{% load i18n %}
+
 {% for note in notes %}
 <div class="row mt-4 _anim-items _amin-no-hide">
   <div class="card note-card rounded border-0 _anim-show" style="width: 100%;">
@@ -23,33 +25,41 @@
           <span class="ms-2">
             {% if note.body_raw|length > 2200 %}
               <i class="bi bi-file-earmark-richtext"></i>
-              Long
+              {% trans 'Long' %}
             {% else %}
               <i class="bi bi-receipt"></i>
-              Short
+              {% trans 'Short' %}
             {% endif %}
           </span>
           {% if request.user == user %}
             {% if note.private %}
-              <span class="badge badge-private ms-1 mb-1">Private</span>
+              <span class="badge badge-private ms-1 mb-1">{% trans 'Private' %}</span>
             {% endif %}
             {% if note.anonymous %}
-              <span class="badge badge-anon ms-1 mb-1">Anonymous</span>
+              <span class="badge badge-anon ms-1 mb-1">{% trans 'Anonymous' %}</span>
             {% endif %}
           {% endif %}
           {% with total_comments=note.comments.count %}
             {% if total_comments %}
               <span class="ms-2">
-                <i class="bi bi-chat-right-text"></i>
-                {{ total_comments }} comment{{ total_comments|pluralize }}
+                <i class="bi bi-chat-right-text"></i> {{ total_comments }}
+                {% blocktranslate count total_comments=total_comments %}
+                  comment
+                  {% plural %}
+                  comments
+                {% endblocktranslate %}
               </span>
             {% endif %}
           {% endwith %}
           {% with total_likes=note.users_like.count %}
             {% if total_likes %}
               <span class="ms-2">
-                <i class="bi bi-heart"></i>
-                {{ total_likes }} like{{ total_likes|pluralize }}
+                <i class="bi bi-heart"></i> {{ total_likes }}
+                {% blocktranslate count total_likes=total_likes %}
+                  like
+                {% plural %}
+                  likes
+                {% endblocktranslate %}
               </span>
             {% endif %}
           {% endwith %}

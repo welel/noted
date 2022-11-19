@@ -1,6 +1,7 @@
 {% extends "account/base.html" %}
 
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load account socialaccount %}
 
@@ -20,14 +21,14 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans 'Forgot Password?' %}</a>
   <br><button id="login_btn" class="btn btn-primary mt-3 primaryAction" type="submit">Sign In</button>
 </form>
 
 <!-- Sign up and allauth -->
 <p class="mt-3"><a href="{{ signup_url }}">
-  Sign up</a> is you don't have an account. Or login with <a href="{% provider_login_url 'yandex' %}">Yandex</a>,
-  <a href="{% provider_login_url 'github' %}">GitHub</a>, <a href="{% provider_login_url 'google' %}">Google</a>.
+  {% trans 'Sign up' %}</a> {% trans "if you don't have an account. Or login with" %} <a href="{% provider_login_url 'yandex' %}">Yandex</a> or 
+  <a href="{% provider_login_url 'github' %}">GitHub</a>.
 </p>
 
 <nav class='social__media'>

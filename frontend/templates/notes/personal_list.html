@@ -1,8 +1,10 @@
 <!-- List of notes of a current user -->
 {% extends 'layouts/list_base.html' %}
 
-{% block title %}Personal Notes{% endblock %}
+{% load i18n %}
 
-{% block list_header %}Personal Notes{% endblock %}
+{% block title %}{% trans 'Personal Notes' %}{% endblock %}
+
+{% block list_header %}{% trans 'Personal Notes' %}{% endblock %}
 
 {% block no_notes %}{% include 'layouts/add_note_button.html' %}{% endblock %}

@@ -2,10 +2,11 @@
 {% extends 'layouts/list_base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ tag }}{% endblock %}
 
 
 {% block list_header %}
-	Notes with tag #{{ tag }}
+	{% trans 'Notes with tag' %} #{{ tag }}
 {% endblock %}

@@ -1,29 +1,29 @@
 from django import forms
-
+from django.utils.translation import gettext_lazy as _
 
 from user.models import User, Profile
 
 
 class UserForm(forms.ModelForm):
 
-    username = forms.CharField(label='Username', min_length=4, max_length=50,
+    username = forms.CharField(label=_('Username'), min_length=4, max_length=50,
         widget=forms.TextInput(
                 attrs={'class': 'form-control mb-3',
-                    'placeholder': 'Username',
+                    'placeholder': _('Username'),
                     'id': 'form-username'}
                 )
     )
 
-    first_name = forms.CharField(label='Name', min_length=4,
+    first_name = forms.CharField(label=_('Name'), min_length=4,
         max_length=50, widget=forms.TextInput(
                             attrs={'class': 'form-control mb-3',
-                                   'placeholder': 'Name',
+                                   'placeholder': _('Name'),
                                    'id': 'form-name'}
                         )
     )
     email = forms.EmailField(max_length=200,
         widget=forms.TextInput(attrs={'class': 'form-control mb-3',
-                                      'placeholder': 'Email',
+                                      'placeholder': _('Email'),
                                       'id': 'form-email'}
         )
     )
