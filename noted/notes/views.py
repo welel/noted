@@ -42,6 +42,7 @@ from actions.models import Action
 from actions.utils import create_action
 from notes.forms import NoteForm, CommentForm, SearchForm, comment_form_factory
 from notes.models import Note
+from tags.models import Tag
 from user.models import User
 
 
@@ -124,6 +125,9 @@ class PublicNoteList(NoteList):
             all=False, public=True)[:5]
         context['most_commented'] = Note.objects.most_commented(
             all=False, public=True)[:5]
+        context['most_tags'] = Tag.objects.annotate(
+            num_times=Count('notes', filter=Q(notes__private=False))
+        ).filter(num_times__gt=0)[:10]
         return context
 
 

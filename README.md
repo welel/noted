@@ -24,6 +24,7 @@ This website helps to create personal notes, share them public, search notes for
 * Registration via django-allauth (github, yandex)
 * User profile
 * Following system
+* Internationalization (2 languages: en, ru)
 * Sharing content (facebook, twitter)
 * Tagging
 * Search

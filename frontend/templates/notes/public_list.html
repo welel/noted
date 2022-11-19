@@ -76,5 +76,22 @@
             {% endfor %}
         </ol>
     {% endif %}
+
+    {% if most_tags %}
+        <ol class="list-group list-group-numbered mt-4">
+            <li class="sidebar_item_title list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{% trans 'Popular tags' %}</div>
+            </div>
+            </li>
+            <li class="list-group-item d-flex flex-wrap">
+                {% for tag in most_tags %}
+                    <a class="text-white text-decoration-none tag-badge m-2" href="{% url 'notes:tagged' tag_slug=tag.slug %}">
+                        #{{ tag }}
+                    </a>
+                {% endfor %}
+             </li>
+        </ol>
+    {% endif %}
 </div>
 {% endblock %}
