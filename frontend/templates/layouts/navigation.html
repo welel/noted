@@ -49,6 +49,16 @@
               <li><a class="dropdown-item" href="{% url 'user:user_profile' request.user %}"><i class="bi bi-person-circle"></i> {% trans 'Profile' %}</a></li>
               <li><a class="dropdown-item" href="{% url 'user:edit_user' %}"><i class="bi bi-gear"></i> {% trans 'Account settings' %}</a></li>
               <li><a class="dropdown-item" href="{% url 'favourites' %}"><i class="bi bi-bookmark-heart-fill"></i> {% trans 'Bookmarks' %}</a></li>
+              <li>
+                {% get_current_language as CURRENT_LANGUAGE %}
+                <a class="dropdown-item" href="{% if CURRENT_LANGUAGE == 'ru' %}/en/{{request.get_full_path|slice:"4:"}}{% else %}/ru/{{request.get_full_path|slice:"4:"}}{% endif %}">
+                  {% if CURRENT_LANGUAGE == 'ru' %}
+                    🇬🇧 English
+                  {% else %}
+                    🇷🇺 Русский
+                  {% endif %}
+                </a>
+              </li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-in-left"></i> {% trans 'Logout' %}</a></li>
             </ul>

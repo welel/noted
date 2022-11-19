@@ -25,11 +25,11 @@
                         </a>
                         {% if note.summary %}
                             <p>
-                                <a class="text-decoration-none link-dark" data-bs-toggle="collapse" href="#collapseExample{{ note.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="text-decoration-none link-dark" data-bs-toggle="collapse" href="#collapseLiked{{ note.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     &#9662;
                                 </a>
                             </p>
-                            <div class="collapse" id="collapseExample{{ note.id }}">
+                            <div class="collapse" id="collapseLiked{{ note.id }}">
                                 <div class="card card-body border-0">
                                     {{ note.summary }}
                                 </div>
@@ -59,11 +59,11 @@
                         </a>
                         {% if note.summary %}
                             <p>
-                                <a class="text-decoration-none link-dark" data-bs-toggle="collapse" href="#collapseExample{{ note.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="text-decoration-none link-dark" data-bs-toggle="collapse" href="#collapseCommented{{ note.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                     &#9662;
                                 </a>
                             </p>
-                            <div class="collapse" id="collapseExample{{ note.id }}">
+                            <div class="collapse" id="collapseCommented{{ note.id }}">
                                 <div class="card card-body border-0">
                                     {{ note.summary }}
                                 </div>

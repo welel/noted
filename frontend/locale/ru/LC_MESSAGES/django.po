@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 19:31+0300\n"
-"PO-Revision-Date: 2022-11-19 19:42+0300\n"
+"POT-Creation-Date: 2022-11-19 22:30+0300\n"
+"PO-Revision-Date: 2022-11-19 22:32+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -114,6 +114,20 @@ msgstr "Самые комментируемые"
 #: noted/notes/views.py:70 templates/layouts/list_base.html:38
 msgid "Most Liked"
 msgstr "Самые популярные"
+
+#: noted/user/forms.py:9 noted/user/forms.py:12
+#: templates/user/account/profile.html:122
+msgid "Username"
+msgstr "Никнейм"
+
+#: noted/user/forms.py:17 noted/user/forms.py:20
+#: templates/user/account/profile.html:126
+msgid "Name"
+msgstr "Имя"
+
+#: noted/user/forms.py:26
+msgid "Email"
+msgstr "Email"
 
 #: templates/404.html:10
 msgid "Page not found"
@@ -258,7 +272,7 @@ msgstr "Настройки профиля"
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: templates/layouts/navigation.html:53
+#: templates/layouts/navigation.html:63
 msgid "Logout"
 msgstr "Выйти"
 
@@ -279,8 +293,8 @@ msgid "Favourite Notes"
 msgstr "Закладки"
 
 #: templates/notes/favourites.html:10
-msgid "You don"
-msgstr "Вы не"
+msgid "You don't have favourite notes yet. Go to"
+msgstr "У вас нет записей в закладках. Перейти на "
 
 #: templates/notes/feed_list.html:11
 msgid "There is no notes. Go to"
@@ -294,7 +308,7 @@ msgstr "публичные записи"
 msgid "Modified:"
 msgstr "Изменено:"
 
-#: templates/notes/note.html:69 templates/user/account/profile.html:138
+#: templates/notes/note.html:69 templates/user/account/profile.html:139
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -303,14 +317,6 @@ msgid "Delete"
 msgstr "Удалить"
 
 #: templates/notes/note.html:119
-#| msgid ""
-#| "\n"
-#| "                  like\n"
-#| "                "
-#| msgid_plural ""
-#| "\n"
-#| "                  likes\n"
-#| "                "
 msgid ""
 "\n"
 "          like\n"
@@ -336,8 +342,9 @@ msgstr[3] ""
 msgid "Share this note"
 msgstr "Поделиться"
 
-#: templates/notes/note.html:163 templates/user/account/edit.html:74
-#: templates/user/account/profile.html:97
+#: templates/notes/note.html:163 templates/user/account/edit.html:75
+#: templates/user/account/profile.html:61
+#: templates/user/account/profile.html:98
 msgid "Close"
 msgstr "Закрыть"
 
@@ -380,14 +387,6 @@ msgid "REPLY"
 msgstr "ОТВЕТИТЬ"
 
 #: templates/notes/note.html:226
-#| msgid ""
-#| "\n"
-#| "                  like\n"
-#| "                "
-#| msgid_plural ""
-#| "\n"
-#| "                  likes\n"
-#| "                "
 msgid ""
 "\n"
 "                ANSWER\n"
@@ -426,14 +425,6 @@ msgid "search"
 msgstr "поиск"
 
 #: templates/notes/search.html:19
-#| msgid ""
-#| "\n"
-#| "                  comment\n"
-#| "                  "
-#| msgid_plural ""
-#| "\n"
-#| "                  comments\n"
-#| "                "
 msgid ""
 "\n"
 "                answer was found for your query:\n"
@@ -463,43 +454,39 @@ msgstr "Записи с тэгом "
 msgid "Save Note"
 msgstr "Сохранить запись"
 
-#: templates/user/account/edit.html:4
-#| msgid "Edit"
+#: templates/user/account/edit.html:5
 msgid "Edit user"
 msgstr "Редактировать"
 
-#: templates/user/account/edit.html:9
+#: templates/user/account/edit.html:10
 msgid "User details"
 msgstr "Данные пользователя"
 
-#: templates/user/account/edit.html:27
+#: templates/user/account/edit.html:28
 msgid "Details successfully updated."
 msgstr "Данные успешно обновлены."
 
-#: templates/user/account/edit.html:45
-#| msgid "Profile"
+#: templates/user/account/edit.html:46
 msgid "Profile picture"
 msgstr "Аватар пользователя"
 
-#: templates/user/account/edit.html:49 templates/user/account/profile.html:129
+#: templates/user/account/edit.html:50 templates/user/account/profile.html:130
 msgid "Bio"
 msgstr "Подробности"
 
-#: templates/user/account/edit.html:53
-#| msgid "Profile"
+#: templates/user/account/edit.html:54
 msgid "Save Profile"
 msgstr "Сохранить"
 
-#: templates/user/account/edit.html:57 templates/user/account/edit.html:77
-#| msgid "Delete"
+#: templates/user/account/edit.html:58 templates/user/account/edit.html:78
 msgid "Delete account"
 msgstr "Удалить аккаунт"
 
-#: templates/user/account/edit.html:71
+#: templates/user/account/edit.html:72
 msgid "Are you sure you want to delete your account?"
 msgstr "Вы уверены, что хотите удалить аккаунт?"
 
-#: templates/user/account/edit.html:71
+#: templates/user/account/edit.html:72
 msgid ""
 "All your public notes will become anonymous and available to users. Remove "
 "them if you don't want them to be available."
@@ -508,43 +495,32 @@ msgstr ""
 "пользователей. Удалите свои публичные записи, если не хотите, чтобы они были"
 " доступны другим пользователям."
 
-#: templates/user/account/login.html:23
+#: templates/user/account/login.html:24
 msgid "Forgot Password?"
 msgstr "Забыли пароль?"
 
-#: templates/user/account/login.html:29
-#| msgid "Sign In"
+#: templates/user/account/login.html:30
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: templates/user/account/login.html:29
+#: templates/user/account/login.html:30
 msgid "if you don't have an account. Or login with"
 msgstr "если у вас нет аккаунта. Или войдите в помощью "
 
-#: templates/user/account/logout.html:3 templates/user/account/logout.html:9
-#: templates/user/account/logout.html:18
-#| msgid "Sign In"
+#: templates/user/account/logout.html:5 templates/user/account/logout.html:11
+#: templates/user/account/logout.html:20
 msgid "Sign Out"
 msgstr "Выход"
 
-#: templates/user/account/logout.html:11
+#: templates/user/account/logout.html:13
 msgid "Are you sure you want to sign out?"
 msgstr "Вы уверены, что хотите выйти?"
 
-#: templates/user/account/profile.html:11
-#| msgid "Profile"
+#: templates/user/account/profile.html:12
 msgid "User Profile"
 msgstr "Профиль"
 
-#: templates/user/account/profile.html:28
-#| msgid ""
-#| "\n"
-#| "                  comment\n"
-#| "                  "
-#| msgid_plural ""
-#| "\n"
-#| "                  comments\n"
-#| "                "
+#: templates/user/account/profile.html:29
 msgid ""
 "\n"
 "                            follower\n"
@@ -566,58 +542,50 @@ msgstr[3] ""
 "\n"
 "подписчика"
 
-#: templates/user/account/profile.html:40
-#: templates/user/account/profile.html:77
+#: templates/user/account/profile.html:41
+#: templates/user/account/profile.html:78
 #, python-format
 msgid "%(user.username)s's followers"
 msgstr "Подписчики %(user.username)s"
 
-#: templates/user/account/profile.html:69
+#: templates/user/account/profile.html:70
 msgid "following"
 msgstr "Подписан"
 
-#: templates/user/account/profile.html:110
+#: templates/user/account/profile.html:111
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: templates/user/account/profile.html:112
+#: templates/user/account/profile.html:113
 msgid "Follow"
 msgstr "Подписаться"
 
-#: templates/user/account/profile.html:121
-msgid "Username"
-msgstr "Никнейм"
-
-#: templates/user/account/profile.html:125
-msgid "Name"
-msgstr "Имя"
-
-#: templates/user/account/profile.html:133
+#: templates/user/account/profile.html:134
 msgid "Total user likes"
 msgstr "Общее количество лайков"
 
-#: templates/user/account/profile.html:134
+#: templates/user/account/profile.html:135
 msgid "Joined"
 msgstr "Присоединился"
 
-#: templates/user/account/profile.html:144
-#| msgid "Notes of"
+#: templates/user/account/profile.html:145
 msgid "Notes"
 msgstr "Записи"
 
-#: templates/user/account/signup.html:24 templates/user/account/signup.html:34
-#| msgid "Sign In"
+#: templates/user/account/signup.html:25 templates/user/account/signup.html:35
 msgid "Sign Up"
 msgstr "Регистрация"
 
-#: templates/user/account/signup.html:26
+#: templates/user/account/signup.html:27
 msgid "Already have an account? Then please"
 msgstr "Уже есть аккаунт? Тогда, пожалуйста, "
 
-#: templates/user/account/signup.html:26
-#| msgid "Sign In"
+#: templates/user/account/signup.html:27
 msgid "sign in"
 msgstr "Вход"
+
+#~ msgid "You don"
+#~ msgstr "Вы не"
 
 #, fuzzy
 #~ msgid "Date (with time)"

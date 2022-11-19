@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'Etc/GMT-3'
 USE_I18N = True
 USE_L10N = True
@@ -126,7 +126,7 @@ LOCALE_PATHS = (
     PROJECT_DIR.joinpath('frontend/locale/'),
 )
 LANGUAGES = (
-    ('en-us', _('English')),
+    ('en', _('English')),
     ('ru', _('Russian')),
 )
 
