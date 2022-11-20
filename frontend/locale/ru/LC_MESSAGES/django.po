@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-19 22:30+0300\n"
-"PO-Revision-Date: 2022-11-19 22:32+0300\n"
+"POT-Creation-Date: 2022-11-20 16:58+0300\n"
+"PO-Revision-Date: 2022-11-20 16:59+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -99,19 +99,19 @@ msgstr ""
 "Добавьте метки. Разделяйте метки кнопкой \"Enter\" или запятой. Вы можете "
 "добавить максимум 5 меток длинной не более 25 символов."
 
-#: noted/notes/views.py:67
+#: noted/notes/views.py:68
 msgid "Oldest"
 msgstr "Старые"
 
-#: noted/notes/views.py:68
+#: noted/notes/views.py:69
 msgid "Latest"
 msgstr "Последние"
 
-#: noted/notes/views.py:69 templates/layouts/list_base.html:37
+#: noted/notes/views.py:70 templates/layouts/list_base.html:37
 msgid "Most Commented"
 msgstr "Самые комментируемые"
 
-#: noted/notes/views.py:70 templates/layouts/list_base.html:38
+#: noted/notes/views.py:71 templates/layouts/list_base.html:38
 msgid "Most Liked"
 msgstr "Самые популярные"
 
@@ -172,7 +172,7 @@ msgstr ""
 
 #: templates/layouts/header.html:20
 msgid "Improve your learning writing things down"
-msgstr "Прокачай своё обучения ведя записи"
+msgstr "Прокачай своё обучение ведя записи"
 
 #: templates/layouts/list.html:28
 msgid "Long"
@@ -295,6 +295,10 @@ msgstr "Закладки"
 #: templates/notes/favourites.html:10
 msgid "You don't have favourite notes yet. Go to"
 msgstr "У вас нет записей в закладках. Перейти на "
+
+#: templates/notes/favourites.html:10
+msgid "home page."
+msgstr "домашнюю страницу."
 
 #: templates/notes/feed_list.html:11
 msgid "There is no notes. Go to"
@@ -419,6 +423,10 @@ msgstr "Популярные"
 #: templates/notes/public_list.html:50
 msgid "Most commented"
 msgstr "Самые комментируемые"
+
+#: templates/notes/public_list.html:84
+msgid "Popular tags"
+msgstr "Популярные метки"
 
 #: templates/notes/search.html:11
 msgid "search"
@@ -550,7 +558,7 @@ msgstr "Подписчики %(user.username)s"
 
 #: templates/user/account/profile.html:70
 msgid "following"
-msgstr "Подписан"
+msgstr "подписан"
 
 #: templates/user/account/profile.html:111
 msgid "Unsubscribe"

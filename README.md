@@ -76,6 +76,26 @@ This website helps to create personal notes, share them public, search notes for
 
 5. Make migrations and migrate.
 
+    > `python manage.py makemigrations`
+
+    > `python manage.py makemigrations tags`
+
+    > `python manage.py makemigrations notes`
+
+    > `python manage.py makemigrations user`
+
+    > `python manage.py makemigrations actions`
+
+    > `python manage.py migrate tags`
+
+    > `python manage.py migrate notes`
+
+    > `python manage.py migrate user`
+
+    > `python manage.py migrate actions`
+
+    > `python manage.py migrate`
+
 6. Run the server `python manage.py runserver`.
 
 
