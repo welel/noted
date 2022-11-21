@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NoteD.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/style.css">
+  </head>
+  <body class="pb-5">
+
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid container-xxl">
+        <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" alt="NoteD." width="34" height="34">
+        </a>      
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-house" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#" type="button"><i class="bi bi-bell" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-journals" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i></a>
+            </li>
+        </ul>
+        <li class="nav-item dropdown" style="list-style-type: none;">
+            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="34" height="34">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle px-2"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill px-2"></i>Profile settings</a></li>
+              <li><a class="dropdown-item" href="#"> 🇷🇺 &nbsp; Русский</a></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-moon-stars-fill px-2"></i>Dark</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left px-2"></i>Sign Out</a></li>
+            </ul>
+        </li>
+    </div>
+    </nav>
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-1 d-lg-block d-none">
+
+            </div>
+            <div class="col-lg-8 col-12">
+                <div class="container-fluid" style="max-width: 700px;">
+                    <div class="row">
+                        <input class="form-control form-control-lg" type="text" placeholder="Title">
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-3 px-0 form-floating">
+                            <select id="source-type" class="form-select">
+                                <option selected>Lecture</option>
+                                <option value="1">Book</option>
+                                <option value="2">Course</option>
+                                <option value="3">Video</option>
+                                <option value="4">Article</option>
+                                <option value="5">Other</option>
+                            </select>
+                            <label for="source-type">Source type</label>
+                        </div>
+                        <div class="col-9 pe-0 form-floating">
+                            <input id="source-name" type="text" class="form-control" placeholder="Source name">
+                            <label class="ms-3" for="source-name">Source name</label>
+                        </div>                      
+                    </div> 
+                    <div class="row mt-4">
+                        <textarea type="textarea" class="form-control" rows="22" placeholder="Write your note content here..."></textarea>
+                    </div>
+                    <div class="row mt-4 form-floating">  
+                        <input id="tags" class="form-control" type="text" placeholder="Tags">
+                        <label for="tags" class="form-label">Tags</label>
+                    </div>
+                    <div class="row mt-4 form-floating">  
+                        <input id="summary" class="form-control" type="text" placeholder="Summary">
+                        <label for="summary" class="form-label">Summary in 140 symbols...</label>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col px-0 d-flex align-items-center">
+                            <button type="button" class="btn btn-success rounded-pill">Publish</button>
+                            <button type="button" class="btn btn-light rounded-pill ms-2">Save draft</button>
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="allow-comments" checked>
+                                <label class="form-check-label" for="allow-comments">Allow comments</label>
+                            </div>
+                            <div class="form-check form-switch ms-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="anonymous-note">
+                                <label class="form-check-label" for="anonymous-note">Post anonymous</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 px-4">
+                <summary class="cursor-pointer">Commonly used syntax</summary><table class="crayons-card crayons-card--secondary crayons-table crayons-table--compact w-100 mt-2 mb-4 lh-tight"><tbody><tr><td class="ff-monospace"># Header<br>...<br>###### Header</td><td>H1 Header<br>...<br>H6 Header</td></tr><tr><td class="ff-monospace">*italics* or _italics_</td><td><em>italics</em></td></tr><tr><td class="ff-monospace">**bold**</td><td><strong>bold</strong></td></tr><tr><td class="ff-monospace">[Link](https://...)</td><td><a href="https://forem.com">Link</a></td></tr><tr><td class="ff-monospace">* item 1<br>* item 2</td><td><ul class="list-disc ml-5"><li>item 1</li><li>item 2</li></ul></td></tr><tr><td class="ff-monospace">1. item 1<br>2. item 2</td><td><ul class="list-decimal ml-5"><li>item 1</li><li>item 2</li></ul></td></tr><tr><td class="ff-monospace">&gt; quoted text</td><td><span class="pl-2 border-0 border-solid border-l-2 border-base-50">quoted text</span></td></tr><tr><td class="ff-monospace">`inline code`</td><td><code>inline code</code></td></tr><tr><td class="ff-monospace"><span class="fs-xs">```</span><br>code block<br><span class="fs-xs">```</span></td><td><div class="highlight p-2 overflow-hidden"><code>code block</code></div></td></tr></tbody></table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+</body>
+</html>

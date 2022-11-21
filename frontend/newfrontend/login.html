@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NoteD.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/style.css">
+  </head>
+  <body class="pb-5">
+
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid container-xxl">
+        <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" alt="NoteD." width="34" height="34">
+        </a>      
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-house" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#" type="button"><i class="bi bi-bell" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-journals" style="font-size: 1.5rem;"></i></a>
+            </li>
+            <li class="nav-item px-2">
+            <a class="nav-link" href="#"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i></a>
+            </li>
+        </ul>
+        <li style="list-style-type: none;">
+            <a class="nav-link color-grey" href="#"><i class="bi bi-person-add" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></a>
+        </li>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="row mt-3" style="max-width: 250px;">
+                    <h3 class="text-center mb-5">Welcome!</h3>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with Google</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with GitHub</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with Yandex</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with VK</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with Email</button>
+                    <p class="text-center mt-5">No account? <a href="#" class="fw-bold text-success text-decoration-none" >Create one.</a></p>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">Forgot email? <a href="#">Get help.</a></p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </nav>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+</body>
+</html>

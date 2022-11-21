@@ -36,3 +36,15 @@
 .link-h:hover {
     color:black;
 }
+
+
+
+/* LOGIN */
+.social-sign {
+    border-color:rgb(145, 144, 144);
+}
+.social-sign:hover {
+    color: black;
+    background-color: white;
+    border-color: black;
+}
