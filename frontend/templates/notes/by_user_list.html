@@ -1,8 +1,0 @@
-<!-- List of notes of another user -->
-{% extends 'layouts/list_base.html' %}
-
-{% load i18n %}
-
-{% block title %}{{ notes.0.author }}{% endblock %}
-
-{% block list_header %}{% trans 'Notes of' %} {{ notes.0.author }}{% endblock %}
