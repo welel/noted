@@ -1,0 +1,58 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: system-ui, sans-serif;
+        }
+        .ps-2{padding-left:.5rem !important}
+        .fs-5{font-size:1.25rem !important}
+        .mt-4{margin-top:1.5rem !important}
+        .btn {
+            display: inline-block;
+            background-color: #04a65b;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 50px;
+          }
+          .btn:hover {
+            color: white;
+            background-color: black;
+          }
+        .px-3{padding-right:1rem !important; padding-left:1rem !important}
+        .mt-5 {
+            margin-top: 3rem !important
+        }
+        .text-secondary{color:grey}
+        .text-dark{color:black}
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <div class="wrapper">
+        <div style="max-width: 650px;">
+            <h1 class="logo"><img src="https://i.ibb.co/yQxRv8b/logo.png" width="70" atl=""><span class="ps-2">NoteD.</span></h1>
+            <h2 style="margin-top: 70px;">You’re almost there.</h2>
+            <p class="fs-5 mt-4">Click the link below to confirm your email and finish creating your NoteD account.</p>
+            <p class="fs-5">This link will expire in 2 hours and can only be used once.</p>
+            <a href="{{ host }}{% url 'account:signup' %}" class="btn px-3 mt-5" target="_blank">Create your account</a>
+            <p class="mt-5">
+                If the button above doesn’t work, paste this link into your web browser:<br>
+                <a href="{{ host }}{% url 'account:signup' %}" target="_blank">{{ host }}{% url 'account:signup' %}</a>
+            </p>
+            <p class="text-secondary mt-5">If you did not make this request, you can safely ignore this email.</p>
+            <hr>
+            <p>Sent by <a class="text-dark" href="{{ host }}" target="_blank">NoteD.</a></p>
+        </div>
+    <div>
+</body>
+</html>

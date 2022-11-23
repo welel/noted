@@ -37,213 +37,95 @@
             <a class="nav-link" href="#"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i></a>
             </li>
         </ul>
-        <li class="nav-item dropdown" style="list-style-type: none;">
-            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="34" height="34">
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle px-2"></i>Profile</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill px-2"></i>Profile settings</a></li>
-              <li><a class="dropdown-item" href="#"> 🇷🇺 &nbsp; Русский</a></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-moon-stars-fill px-2"></i>Dark</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left px-2"></i>Sign Out</a></li>
-            </ul>
+        <li style="list-style-type: none;">
+            <a class="nav-link color-grey" href="#"><i class="bi bi-person-add" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#signin"></i></a>
         </li>
     </div>
-    </nav>
 
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <div class="col-1 d-lg-block d-none">
-
-            </div>
-            <div class="col-lg-8 col-12">
-
-
-                <ul class="nav nav-tabs mb-3">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Public</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Following</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">My tags</a>
-                    </li>
-                  </ul>
-
-
-                  <div class="container py-3" style="max-width: 700px;">
-                    <div class="row">
-                        <div class="col">
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
-                            <span class="col">Pavel Loginov</span>
-                            </a>
-                            <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
-                            <span class="text-secondary">Nov 3</span>
-                        </div>
-                    </div>
-                    <div class="row mt-2 mb-0">
-                        <a href="#" class="text-decoration-none text-dark fs-4 fs-5 fw-bold">
-                        Lorem ipsum dolor sit amet consectetur adipisicing.
-                        </a>
-                    </div>
-                    <div class="row">
-                        <div class="col d-flex align-items-center">
-                            <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Save">
-                            <span><i class="bi bi-bookmark-plus" style="font-size: 1.5rem;"></i></span>
-                            </a>
-                            <span>&nbsp;|&nbsp;</span>
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="badge rounded-pill text-bg-success mx-1">Success</span>
-                            </a>
-                            <a  href="#" class="text-decoration-none text-dark">
-                            <span class="fw-bold text-secondary source-title" >Lorem ipsum dolor sit amet.</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row ps-1 d-md-inline d-none">
-                        <a href="#" class="text-decoration-none text-dark">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur nostrum quidem nulla, veniam ab labore accusamus veritatis corrupti porro repellat molestiae, illo soluta officia magnam alias nam. Perspiciatis, ab quos!</div>
-                        </a>
-                    <div class="row row-cols-auto d-flex justify-content-between mt-2">
-                        <div class="col">
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                            </a>
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                            </a>
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                            </a>
-                        </div>
-                        <div class="col d-md-block d-none">
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 66 Reputation</span>
-                            </a>
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 5 Comments</span>
-                            </a>
-                        </div>
-                    </div>
-                  </div> 
-                  <hr>
-
-                  
-
-            </div>
-            <div class="col-lg-3 col-12 px-4">
-                <div class="input-group rounded mt-5">
-                    <span class="input-group-text border-0 bg-white" id="search-addon">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="search" class="form-control rounded form-control-sm" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                </div>
-                <div class="mt-4">
-                    <h6>Source types</h6>
-                    <span>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">Book</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Course</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-primary p-2 m-1 fs-6 fw-normal">Video</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-danger p-2 m-1 fs-6 fw-normal">Article</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-info p-2 m-1 fs-6 fw-normal">Success</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-dark p-2 m-1 fs-6 fw-normal">Succes</span>
-                        </a>
-                    </span>
-                </div>
-                <div class="mt-5">
-                    <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
-                    <div class="mt-4">
-                        <div class="d-flex align-items-center" style="font-size: 13px;">
-                            <a href="#" class="text-decoration-none text-dark">
-                            <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                            <span>Pavel Loginov</span>
-                            </a>
-                            <span>&nbsp;&#8226;&nbsp;</span>
-                            <span class="text-secondary">Nov 3</span>
-                        </div>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                        </a>
-                    </div>
-                    <div class="mt-4">
-                        <div class="d-flex align-items-center" style="font-size: 13px;">
-                            <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                            <span>Pavel Loginov</span>
-                            <span>&nbsp;&#8226;&nbsp;</span>
-                            <span class="text-secondary">Nov 3</span>
-                        </div>
-                        <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="d-flex align-items-center" style="font-size: 13px;">
-                            <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                            <span>Pavel Loginov</span>
-                            <span>&nbsp;&#8226;&nbsp;</span>
-                            <span class="text-secondary">Nov 3</span>
-                        </div>
-                        <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                    </div>
-                </div>
-                <div class="mt-5">
-                    <h6>Recommended topics</h6>
-                    <span>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>
-                        </a>
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-                    </span>
-                </div>
-                <hr>
-                <div class="text-center" style="font-size: 13px;">
-                    <span><img src="assets/logo.png" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
-                    <a href="#" class="link-secondary text-decoration-none ps-2">About</a>
-                    <a href="#" class="link-secondary text-decoration-none ps-2">Contacts</a>
-                    <a href="#" class="link-secondary text-decoration-none ps-2">Privacy Policy</a>
-                </div>
-                <div class="text-center mt-1" style="font-size: 1.2rem;">
-                    <a href="#" class="text-decoration-none">
-                    <i class="bi bi-github px-1 color-grey github-h"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none">
-                    <i class="bi bi-google px-1 color-grey google-h"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none">
-                    <i class="bi bi-telegram px-1 color-grey telegram-h"></i>
-                    </a>
+    <!-- Modal sign-in -->
+    <div class="modal fade" id="signin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="float: right;"></button>
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="row mt-3" style="max-width: 250px;">
+                    <h3 class="text-center mb-5">Welcome!</h3>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with Google</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with GitHub</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with Yandex</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">Sign in with VK</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">Sign in with Email</button>                   
+                    <p class="text-center mt-5">No account? <a href="#" class="fw-bold text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#signup" data-bs-dismiss="modal">Create one.</a></p>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">Forgot email? <a href="#">Get help.</a></p>
                 </div>
             </div>
         </div>
+        </div>
     </div>
+    </div>
+    <!-- Modal sign-im via email -->
+    <div class="modal fade" id="signin-email" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" style="float: right;"></button>
+                <div class="container-fluid mb-5" style="max-width: 300px;">
+                    <div class="row">
+                        <p class="text-center fs-3 mt-5">Sign in with email</p>
+                        <p class="text-center mt-5">Enter the email address associated with your account and your password.</p>
+                        <input class="form-control form-control-sm mt-5" type="text" placeholder="Email">
+                        <input class="form-control form-control-sm mt-2" type="text" placeholder="Password">
+                        <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Modal sign-up -->
+    <div class="modal fade" id="signup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+                <div class="container-fluid mb-5" style="max-width: 300px;">
+                    <div class="row">
+                        <p class="text-center fs-3 mt-5">Sign up with email</p>
+                        <p class="text-center mt-4">Enter your email address to create an account.</p>
+                        <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="Email">
+                        <div id="user_email_feedback" class="invalid-feedback">
+                            Enter a valid email.
+                        </div>                      
+                        <button id="submit_email" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">Continue</button>
+                        <!-- data-bs-toggle="modal" data-bs-target="#signup-end" data-bs-dismiss="modal" -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Modal sign-up email message -->
+    <div class="modal fade" id="signup-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+                <div class="container-fluid mb-5" style="max-width: 300px;">
+                    <div class="row">
+                        <p class="text-center fs-3 mt-5">Check your inbox.</p>
+                        <p class="text-center mt-4">Click the link we sent to [EMAIL] to complete your account set-up.</p>
+                        <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </nav>
 
-
-
-
-
-
-
-
-
-
-
+    
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
@@ -251,6 +133,122 @@
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+    <!-- Context for scripts -->
+        <span id="validate_email_url" class="js-context" hidden>{% url 'account:validate_email' %}</span>
+        <span id="signup_email_url" class="js-context" hidden>{% url 'account:signup_request' %}</span>
+    <!-- endcontext -->
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+              const cookies = document.cookie.split(";");
+              for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+                }
+              }
+            }
+            return cookieValue;
+          }
+
+        // Validate email
+        const validateEmail = (email) => {
+            return email.match(
+              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+        };
+
+
+        function sendSignupEmail(email) {
+            const singup_email_url = document.getElementById('signup_email_url').innerHTML;
+            const emailInputField = document.getElementById('user_email');
+            const feedbackMessageElement = document.getElementById('user_email_feedback');
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({'email': email}),
+                url: singup_email_url,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                success: function(data) {
+                    switch(data.msg) {
+                        case 'invalid':
+                            emailInputField.classList.add('is-invalid');
+                            feedbackMessageElement.innerHTML = 'Enter a valid email.';
+                            break;
+                        case 'sent':
+                            console.log('SENT')
+                            break;
+                        default:
+                            emailInputField.classList.add('is-invalid');
+                            feedbackMessageElement.innerHTML = 'Something went wrong, try later.';
+                    }
+                },
+                error: function (response) {
+                    console.log('`sendSignupEmail` faild.');
+                    emailInputField.classList.add('is-invalid');
+                    feedbackMessageElement.innerHTML = 'Something went wrong, try later.';
+                },
+                timeout: 3500
+            });
+        }
+
+
+        function isEmailAvailable(email) {
+            const validate_url = document.getElementById('validate_email_url').innerHTML;
+            const emailInputField = document.getElementById('user_email');
+            const feedbackMessageElement = document.getElementById('user_email_feedback');
+            $.ajax({
+                type: 'GET',
+                data: {'email': email},
+                url: validate_url,
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                success: function(response) {
+                    if (response.is_taken == true) {
+                        // taken
+                        feedbackMessageElement.innerHTML = 'This email is already taken.';
+                        emailInputField.classList.add('is-invalid');
+                    } else {
+                        // free
+                        feedbackMessageElement.innerHTML = ''
+                        emailInputField.classList.remove('is-invalid');
+                        sendSignupEmail(email);
+                    }
+                },
+                error: function (response) {
+                    console.log(response.responseJSON.errors);
+                    feedbackMessageElement.innerHTML = 'Something went wrong, try later.';
+                    emailInputField.classList.add('is-invalid');
+                },
+                timeout: 2400
+            });
+        }
+
+        // On click validate email and either send post or show error messages
+        document.getElementById('submit_email').onclick = function() {
+            const emailInputField = document.getElementById('user_email');
+            const email = emailInputField.value;
+            const feedbackMessageElement = document.getElementById('user_email_feedback');
+            
+            if (validateEmail(email)) {
+                // valid
+                feedbackMessageElement.innerHTML = '';
+                emailInputField.classList.remove('is-invalid');
+                // check email availability
+                isEmailAvailable(email)
+            } else {
+                // invalid
+                feedbackMessageElement.innerHTML = 'Enter a valid email.';
+                emailInputField.classList.add('is-invalid');
+            }
+        }
+
+
     </script>
 </body>
 </html>

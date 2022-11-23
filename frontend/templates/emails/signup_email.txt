@@ -1,0 +1,15 @@
+NoteD.
+
+You’re almost there.
+
+Click the link below to confirm your email and finish creating your NoteD account.
+This link will expire in 2 hours and can only be used once.
+        
+Paste this link into your web browser:
+{{ host }}{% url 'account:signup' %}
+
+
+If you did not make this request, you can safely ignore this email.</p>
+
+Check our website:
+{{ host }}
