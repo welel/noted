@@ -1,17 +1,17 @@
 #!/bin/sh
  
 sleep 5
-
-python noted/manage.py makemigrations
-python noted/manage.py makemigrations tags
-python noted/manage.py makemigrations notes
-python noted/manage.py makemigrations user
-python noted/manage.py makemigrations actions
-python noted/manage.py migrate actions
-python noted/manage.py migrate user
-python noted/manage.py migrate tags
-python noted/manage.py migrate notes
-python noted/manage.py migrate
-python noted/manage.py collectstatic --noinput
-gunicorn noted/noted.wsgi:application --bind 172.18.1.3:8000
+cd noted 
+python manage.py makemigrations
+python manage.py makemigrations tags
+python manage.py makemigrations notes
+python manage.py makemigrations user
+python manage.py makemigrations actions
+python manage.py migrate actions
+python manage.py migrate user
+python manage.py migrate tags
+python manage.py migrate notes
+python manage.py migrate
+python manage.py collectstatic --noinput
+gunicorn noted.wsgi:application --bind 172.18.1.3:8000
 
