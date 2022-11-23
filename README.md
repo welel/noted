@@ -35,7 +35,7 @@ This website helps to create personal notes, share them public, search notes for
 * Send emails (confirm registration)
 * Bootstrap integration
 * Code documentation
-* Adaptive design (for mobile)
+* Adaptive design (for mobile) 
 
 </br>
 
