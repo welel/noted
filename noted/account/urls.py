@@ -9,4 +9,5 @@ urlpatterns = [
     path("validate-email/", views.validate_email, name="validate_email"),
     path("signup/<str:token>/", views.signup, name="signup"),
     path("signin/", views.signin, name="signin"),
+    path("signout/", views.signout, name="signout"),
 ]

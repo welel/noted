@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 00:29+0300\n"
-"PO-Revision-Date: 2022-11-25 21:32+0000\n"
+"POT-Creation-Date: 2022-11-26 01:26+0300\n"
+"PO-Revision-Date: 2022-11-25 22:30+0000\n"
 "Last-Translator:   <pavel@ya.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
-#: noted/account/forms.py:17
+#: noted/account/forms.py:19
 msgid ""
 "Full Name should contain only latin letters, and                    should "
 "include no more than 3 words"
@@ -31,11 +31,11 @@ msgstr ""
 "Полное имя должно содержать только латинские буквы и состоять не более чем "
 "из 3 слов."
 
-#: noted/account/forms.py:43
+#: noted/account/forms.py:45
 msgid "Full Name should contain only latin letters."
 msgstr "Полное имя должно содержать только латинские буквы."
 
-#: noted/account/forms.py:47
+#: noted/account/forms.py:49
 msgid "Full Name should include no more than 3 words."
 msgstr "Полное имя должно состоять не более чем из 3 слов."
 
@@ -111,8 +111,8 @@ msgstr "Пароль"
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/account/signup.html:55 templates/layouts/navigation.html:147
-#: templates/layouts/navigation.html:168
+#: templates/account/signup.html:55 templates/layouts/navigation.html:158
+#: templates/layouts/navigation.html:179 templates/layouts/navigation.html:212
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -163,95 +163,124 @@ msgstr "Вставьте эту ссылку в ваш браузер:"
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
-#: templates/layouts/navigation.html:45 templates/layouts/navigation.html:96
+#: templates/layouts/navigation.html:17
+msgid "Home"
+msgstr "Главная"
+
+#: templates/layouts/navigation.html:22
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: templates/layouts/navigation.html:28
+msgid "Bookmarks"
+msgstr "Закладки"
+
+#: templates/layouts/navigation.html:32
+msgid "Notes"
+msgstr "Записи"
+
+#: templates/layouts/navigation.html:38
+msgid "Write note"
+msgstr "Создать запись"
+
+#: templates/layouts/navigation.html:46
+#| msgid "Sign Up"
+msgid "Sign In"
+msgstr "Вход"
+
+#: templates/layouts/navigation.html:57 templates/layouts/navigation.html:108
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/layouts/navigation.html:46 templates/layouts/navigation.html:97
+#: templates/layouts/navigation.html:58 templates/layouts/navigation.html:109
 msgid "Profile settings"
 msgstr "Настройки профиля"
 
-#: templates/layouts/navigation.html:48 templates/layouts/navigation.html:99
+#: templates/layouts/navigation.html:60 templates/layouts/navigation.html:111
 msgid "Dark"
 msgstr "Тёмная"
 
-#: templates/layouts/navigation.html:50 templates/layouts/navigation.html:101
+#: templates/layouts/navigation.html:62 templates/layouts/navigation.html:113
 msgid "Sign Out"
 msgstr "Выйти"
 
-#: templates/layouts/navigation.html:117
+#: templates/layouts/navigation.html:129
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
-#: templates/layouts/navigation.html:118
+#: templates/layouts/navigation.html:130
 msgid "Sign in with Google"
 msgstr "Вход через Google"
 
-#: templates/layouts/navigation.html:119
+#: templates/layouts/navigation.html:131
 msgid "Sign in with GitHub"
 msgstr "Вход через GitHub"
 
-#: templates/layouts/navigation.html:120
+#: templates/layouts/navigation.html:132
 msgid "Sign in with Yandex"
 msgstr "Вход через Yandex"
 
-#: templates/layouts/navigation.html:121
+#: templates/layouts/navigation.html:133
 msgid "Sign in with VK"
 msgstr "Вход через Вконтакте"
 
-#: templates/layouts/navigation.html:123
+#: templates/layouts/navigation.html:134
 msgid "Sign in with Email"
 msgstr "Вход по email"
 
-#: templates/layouts/navigation.html:124
+#: templates/layouts/navigation.html:135
 msgid "No account?"
 msgstr "Нет аккаунта?"
 
-#: templates/layouts/navigation.html:124
+#: templates/layouts/navigation.html:135
 msgid "Create one."
 msgstr "Тогда создайте."
 
-#: templates/layouts/navigation.html:125
+#: templates/layouts/navigation.html:136
 msgid "Forgot email or password?"
 msgstr "Забыли email или пароль?"
 
-#: templates/layouts/navigation.html:125
+#: templates/layouts/navigation.html:136
 msgid "Get help."
 msgstr "Вспомнить."
 
-#: templates/layouts/navigation.html:140
+#: templates/layouts/navigation.html:151
 msgid "Sign in with email"
 msgstr "Вход через email"
 
-#: templates/layouts/navigation.html:141
+#: templates/layouts/navigation.html:152
 msgid ""
 "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
-#: templates/layouts/navigation.html:162
+#: templates/layouts/navigation.html:173
 msgid "Sign up with email"
 msgstr "Регистрация по email"
 
-#: templates/layouts/navigation.html:163
+#: templates/layouts/navigation.html:174
 msgid "Enter your email address to create an account."
 msgstr "Введите ваш email адрес и создайте аккаунт."
 
-#: templates/layouts/navigation.html:166
+#: templates/layouts/navigation.html:177
 msgid "Enter a valid email."
 msgstr "Введите корректный email адрес."
 
-#: templates/layouts/navigation.html:183
+#: templates/layouts/navigation.html:194
 msgid "Check your inbox."
 msgstr "Проверьте ваш почтовый ящик."
 
-#: templates/layouts/navigation.html:184
+#: templates/layouts/navigation.html:195
 msgid "Click the link we sent to"
 msgstr "Перейдите по ссылке, которую мы вам прислали на "
 
-#: templates/layouts/navigation.html:184
+#: templates/layouts/navigation.html:195
 msgid "to complete your account set-up."
 msgstr "для завершения регистрации."
 
-#: templates/layouts/navigation.html:185
+#: templates/layouts/navigation.html:196
 msgid "OK"
 msgstr "ОК"
+
+#: templates/layouts/navigation.html:211
+msgid "Are you sure you want to sign out?"
+msgstr "Вы уверены, что хотите выйти из аккаунта?"

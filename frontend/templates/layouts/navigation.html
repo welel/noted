@@ -12,29 +12,41 @@ Require script `js/auth.js`
         </a>
     </div>
     <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
         <li class="nav-item px-2">
-        <a class="nav-link" href="{% url 'content:home' %}"><i class="bi bi-house" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="{% url 'content:home' %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Home" %}">
+                <i class="bi bi-house" style="font-size: 1.5rem;"></i>
+            </a>
         </li>
         <li class="nav-item px-2">
-        <a class="nav-link" href="#" type="button"><i class="bi bi-bell" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notifications" %}">
+                <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+            </a>
         </li>
         <li class="nav-item px-2">
-        <a class="nav-link" href="#"><i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="#">
+                <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Bookmarks" %}"></i>
+            </a>
         </li>
         <li class="nav-item px-2">
-        <a class="nav-link" href="#"><i class="bi bi-journals" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notes" %}">
+                <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
+            </a>
         </li>
         <li class="nav-item my-2"><div style="height: 1px; width: 40px; background-color: #e6e6e6;"></div></li>
         <li class="nav-item px-2">
-        <a class="nav-link" href="#"><i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i></a>
+            <a class="nav-link" href="#"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Write note" %}">
+                <i class="bi bi-pencil-square" style="font-size: 1.5rem;"></i>
+            </a>
         </li>
     </ul>
     </div>
     <div class="mb-4">
     {% if not request.user.is_authenticated %}
-        <li style="list-style-type: none;">
-            <a class="nav-link color-grey" href="#"><i class="bi bi-person-add" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#signin"></i></a>
+        <li style="list-style-type: none;"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Sign In" %}">
+            <a class="nav-link color-grey" href="#">
+                <i class="bi bi-person-add" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#signin"></i>
+            </a>
         </li>
     {% else %}
         <li class="nav-item dropdown" style="list-style-type: none;">
@@ -47,7 +59,7 @@ Require script `js/auth.js`
             <li><a class="dropdown-item" href="#"> 🇷🇺 &nbsp; Русский</a></li>
             <li><a class="dropdown-item" href="#"><i class="bi bi-moon-stars-fill px-2"></i>{% trans "Dark" %}</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
+            <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>
         </li>
     {% endif %}
@@ -98,7 +110,7 @@ Require script `js/auth.js`
                 <li><a class="dropdown-item" href="#"> 🇷🇺 &nbsp; Русский</a></li>
                 <li><a class="dropdown-item" href="#"><i class="bi bi-moon-stars-fill px-2"></i>{% trans "Dark" %}</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
+                <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
                 </ul>
             </li>
             </div>
@@ -119,7 +131,6 @@ Require script `js/auth.js`
                     <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with GitHub" %}</button>
                     <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with Yandex" %}</button>
                     <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with VK" %}</button>
-                    <!-- Button trigger modal -->
                     <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">{% trans "Sign in with Email" %}</button>                   
                     <p class="text-center mt-5">{% trans "No account?" %} <a href="#" class="fw-bold text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#signup" data-bs-dismiss="modal">{% trans "Create one." %}</a></p>
                     <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot email or password?" %} <a href="#">{% trans "Get help." %}</a></p>
@@ -139,7 +150,7 @@ Require script `js/auth.js`
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign in with email" %}</p>
                     <p class="text-center mt-5">{% trans "Enter the email address associated with your account and your password." %}</p>
-                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="Email">
+                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="Email" autocomplete="email">
                     <div id="signin_email_feedback" class="invalid-feedback"></div> 
                     <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="Password">
                     <div id="signin_password_feedback" class="invalid-feedback"></div> 
@@ -161,7 +172,7 @@ Require script `js/auth.js`
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign up with email" %}</p>
                     <p class="text-center mt-4">{% trans "Enter your email address to create an account." %}</p>
-                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="Email">
+                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="Email" autocomplete="email">
                     <div id="user_email_feedback" class="invalid-feedback">
                         {% trans "Enter a valid email." %}
                     </div>                      
@@ -183,6 +194,22 @@ Require script `js/auth.js`
                     <p class="text-center fs-3 mt-5">{% trans "Check your inbox." %}</p>
                     <p class="text-center mt-4">{% trans "Click the link we sent to" %} <b id="signup-sent-to"></b> {% trans "to complete your account set-up." %}</p>
                     <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center" data-bs-dismiss="modal">{% trans "OK" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Modal sign out -->
+<div class="modal fade" id="signout-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Are you sure you want to sign out?" %}</p>
+                    <a href="{% url 'account:signout' %}" type="button" class="btn btn-danger rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</a>
                 </div>
             </div>
         </div>

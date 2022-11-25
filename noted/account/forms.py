@@ -11,7 +11,9 @@ class SignupForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=50,
         min_length=3,
-        widget=forms.TextInput(attrs={"class": "form-control"}),
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "autocomplete": "given-name"}
+        ),
         strip=True,
         help_text=_(
             "Full Name should contain only latin letters, and \

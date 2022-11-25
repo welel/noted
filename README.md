@@ -3,7 +3,8 @@
 <hr>
 <p>
   <img src="https://img.shields.io/badge/python-v3.8-blue" >
-  <img src="https://img.shields.io/badge/django-v3.2-blue">
+  <img src="https://img.shields.io/badge/django-v4.1-blue">
+  <img src="https://img.shields.io/badge/code%20style-black-black">
 </p>
 
 <h3 align="center">This is a web service that helps to make, store and share notes.</h3>
@@ -18,13 +19,22 @@ This website helps to create personal notes, share them public, search notes for
 
 ## 🔥 Features
 
+Now:
+
+* Registration, authentication, authorization
+* Internationalization (2 languages: en, ru)
+* Twitter Bootstrap integration
+* Responsive (modile) design
+* Code documentation
+
+In future:
+
 * Markdown editor
 * WYSIWYG editing
 * GitHub API Integration (markdown)
 * Registration via django-allauth (github, yandex)
 * User profile
 * Following system
-* Internationalization (2 languages: en, ru)
 * Sharing content (facebook, twitter)
 * Tagging
 * Search
@@ -32,10 +42,6 @@ This website helps to create personal notes, share them public, search notes for
 * Likes
 * Recommendations
 * Tree comments
-* Send emails (confirm registration)
-* Bootstrap integration
-* Code documentation
-* Adaptive design (for mobile)
 
 </br>
 
@@ -76,25 +82,12 @@ This website helps to create personal notes, share them public, search notes for
 
 5. Make migrations and migrate.
 
-    > `python manage.py makemigrations`
-
-    > `python manage.py makemigrations tags`
-
-    > `python manage.py makemigrations notes`
-
-    > `python manage.py makemigrations user`
-
-    > `python manage.py makemigrations actions`
-
-    > `python manage.py migrate tags`
-
-    > `python manage.py migrate notes`
-
-    > `python manage.py migrate user`
-
-    > `python manage.py migrate actions`
-
-    > `python manage.py migrate`
+```
+python manage.py makemigrations
+python manage.py makemigrations account
+python manage.py migrate
+python manage.py migrate account
+```
 
 6. Run the server `python manage.py runserver`.
 

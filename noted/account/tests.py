@@ -56,11 +56,12 @@ class URLTests(TestCase):
             username="@some.name",
             first_name="Some Name",
             email="some@email.qq",
-            password="easypass123",
         )
+        user.set_password("easypass123")
+        user.save()
         response = self.ajax_client.post(
             "/en/account/signin/",
-            {"email": user.email, "password": user.password},
+            {"email": user.email, "password": "easypass123"},
             content_type="application/json",
         )
         code = json.loads(response.content)["code"]
@@ -93,6 +94,10 @@ class URLTests(TestCase):
     def test_signin_bad_request(self):
         response = self.client.get("/en/account/signin/")
         self.assertEqual(response.status_code, 400)
+
+    def test_signout(self):
+        response = self.client.get("/en/account/signout/")
+        self.assertEqual(response.status_code, 302)
 
 
 class AuthUtilsTests(TestCase):
