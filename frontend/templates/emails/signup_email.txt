@@ -1,15 +1,17 @@
+{% load i18n %}
+
 NoteD.
 
-You’re almost there.
+{% trans "You’re almost there." %}
 
-Click the link below to confirm your email and finish creating your NoteD account.
-This link will expire in 2 hours and can only be used once.
+{% trans "Click the link below to confirm your email and finish creating your NoteD account." %}
+{% trans "This link will expire in 2 hours and can only be used once." %}
         
-Paste this link into your web browser:
-{{ host }}{% url 'account:signup' %}
+{% trans "Paste this link into your web browser:" %}
+{{ host }}{% url 'account:signup' token=token %}
 
 
-If you did not make this request, you can safely ignore this email.</p>
+{% trans "If you did not make this request, you can safely ignore this email." %}
 
-Check our website:
+{% trans "Check our website:" %}
 {{ host }}

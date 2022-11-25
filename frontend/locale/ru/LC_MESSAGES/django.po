@@ -1,0 +1,247 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-25 13:37+0300\n"
+"PO-Revision-Date: 2022-11-25 11:29+0000\n"
+"Last-Translator:   <pavel@ya.ru>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: noted/account/auth.py:23
+msgid "Finish creating your account on NoteD."
+msgstr "Закончи регистрацию на NoteD."
+
+#: noted/account/forms.py:14
+msgid ""
+"Full Name should contain only latin letters, and                    should "
+"include no more than 3 words"
+msgstr ""
+"Полное имя должно содержать только латинские буквы и состоять не более чем "
+"из 3 слов."
+
+#: noted/account/forms.py:37
+msgid "Full Name should contain only latin letters."
+msgstr "Полное имя должно содержать только латинские буквы."
+
+#: noted/account/forms.py:40
+msgid "Full Name should include no more than 3 words."
+msgstr "Полное имя должно состоять не более чем из 3 слов."
+
+#: noted/account/models.py:7
+msgid "Email address"
+msgstr "Email адрес"
+
+#: noted/account/views.py:50
+msgid ""
+"You already registered. If you didn't register, request              for "
+"another link!"
+msgstr ""
+"Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
+"регистрации."
+
+#: noted/core/settings.py:123
+msgid "English"
+msgstr "Английский"
+
+#: noted/core/settings.py:124
+msgid "Russian"
+msgstr "Русский"
+
+#: templates/account/signup.html:6
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: templates/account/signup.html:27
+msgid "The Link You Followed Has Expired"
+msgstr "Ссылка, по которой вы перешли, устарела."
+
+#: templates/account/signup.html:28
+msgid "Go to the "
+msgstr "Перейти на"
+
+#: templates/account/signup.html:28 templates/account/signup.html:31
+msgid "homepage"
+msgstr "домашнюю страницу"
+
+#: templates/account/signup.html:28 templates/account/signup.html:31
+msgid "and start Sing Up process again."
+msgstr "и начать регистрацию заново."
+
+#: templates/account/signup.html:30
+msgid "The Link You Followed Has Bad Signature"
+msgstr "Ссылка, по которой вы перешли, неверна."
+
+#: templates/account/signup.html:31
+msgid "Try to follow the link from the email different way or go to the"
+msgstr ""
+"Попробуйте перейти по ссылке из email сообщения другим способом или "
+"перейдите на"
+
+#: templates/account/signup.html:38
+msgid "Full Name"
+msgstr "Полное имя"
+
+#: templates/account/signup.html:44
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/account/signup.html:49
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+#: templates/account/signup.html:55 templates/layouts/navigation.html:144
+#: templates/layouts/navigation.html:165
+msgid "Continue"
+msgstr "Продолжить"
+
+#: templates/emails/signup_email.html:40 templates/emails/signup_email.txt:5
+msgid "You’re almost there."
+msgstr "Регистрация почти закончена."
+
+#: templates/emails/signup_email.html:41 templates/emails/signup_email.txt:7
+msgid ""
+"Click the link below to confirm your email and finish creating your NoteD "
+"account."
+msgstr ""
+"Перейдите по ссылке внизу, чтобы подтвердить ваш email и закончить "
+"регистрацию на NoteD."
+
+#: templates/emails/signup_email.html:42 templates/emails/signup_email.txt:8
+msgid "This link will expire in 2 hours and can only be used once."
+msgstr ""
+"Ссылка устареет через 2 часа и может быть использована для регистрации "
+"только один раз."
+
+#: templates/emails/signup_email.html:43
+msgid "Create your account"
+msgstr "Создать аккаунт"
+
+#: templates/emails/signup_email.html:45
+msgid ""
+"If the button above doesn’t work, paste this link into your web browser:"
+msgstr ""
+"Если ссылка сверху не работает, скопируйте эту ссылку и вставьте её в свой "
+"браузер:"
+
+#: templates/emails/signup_email.html:48 templates/emails/signup_email.txt:14
+msgid "If you did not make this request, you can safely ignore this email."
+msgstr ""
+"Если вы не делали запроса на регистрацию, вы можете спокойно игнорировать "
+"это сообщение."
+
+#: templates/emails/signup_email.html:50
+msgid "Sent by"
+msgstr "Отправлено от "
+
+#: templates/emails/signup_email.txt:10
+msgid "Paste this link into your web browser:"
+msgstr "Вставьте эту ссылку в ваш браузер:"
+
+#: templates/emails/signup_email.txt:16
+msgid "Check our website:"
+msgstr "Заглядывайте к нам:"
+
+#: templates/layouts/navigation.html:45 templates/layouts/navigation.html:96
+msgid "Profile"
+msgstr "Профиль"
+
+#: templates/layouts/navigation.html:46 templates/layouts/navigation.html:97
+msgid "Profile settings"
+msgstr "Настройки профиля"
+
+#: templates/layouts/navigation.html:48 templates/layouts/navigation.html:99
+msgid "Dark"
+msgstr "Тёмная"
+
+#: templates/layouts/navigation.html:50 templates/layouts/navigation.html:101
+msgid "Sign Out"
+msgstr "Выйти"
+
+#: templates/layouts/navigation.html:117
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+#: templates/layouts/navigation.html:118
+msgid "Sign in with Google"
+msgstr "Вход через Google"
+
+#: templates/layouts/navigation.html:119
+msgid "Sign in with GitHub"
+msgstr "Вход через GitHub"
+
+#: templates/layouts/navigation.html:120
+msgid "Sign in with Yandex"
+msgstr "Вход через Yandex"
+
+#: templates/layouts/navigation.html:121
+msgid "Sign in with VK"
+msgstr "Вход через Вконтакте"
+
+#: templates/layouts/navigation.html:123
+msgid "Sign in with Email"
+msgstr "Вход по email"
+
+#: templates/layouts/navigation.html:124
+msgid "No account?"
+msgstr "Нет аккаунта?"
+
+#: templates/layouts/navigation.html:124
+msgid "Create one."
+msgstr "Тогда создайте."
+
+#: templates/layouts/navigation.html:125
+msgid "Forgot email or password?"
+msgstr "Забыли email или пароль?"
+
+#: templates/layouts/navigation.html:125
+msgid "Get help."
+msgstr "Вспомнить."
+
+#: templates/layouts/navigation.html:140
+msgid "Sign in with email"
+msgstr "Вход через email"
+
+#: templates/layouts/navigation.html:141
+msgid ""
+"Enter the email address associated with your account and your password."
+msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
+
+#: templates/layouts/navigation.html:159
+msgid "Sign up with email"
+msgstr "Регистрация по email"
+
+#: templates/layouts/navigation.html:160
+msgid "Enter your email address to create an account."
+msgstr "Введите ваш email адрес и создайте аккаунт."
+
+#: templates/layouts/navigation.html:163
+msgid "Enter a valid email."
+msgstr "Введите корректный email адрес."
+
+#: templates/layouts/navigation.html:180
+msgid "Check your inbox."
+msgstr "Проверьте ваш почтовый ящик."
+
+#: templates/layouts/navigation.html:181
+msgid "Click the link we sent to"
+msgstr "Перейдите по ссылке, которую мы вам прислали на "
+
+#: templates/layouts/navigation.html:181
+msgid "to complete your account set-up."
+msgstr "для завершения регистрации."
+
+#: templates/layouts/navigation.html:182
+msgid "OK"
+msgstr "ОК"

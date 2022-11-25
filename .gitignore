@@ -19,3 +19,5 @@ bugs/
 booting.md
 privacy_policy.md
 frontend/noted
+noted/htmlcov/
+noted/.coverage

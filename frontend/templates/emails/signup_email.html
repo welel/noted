@@ -1,5 +1,5 @@
 <!doctype html>
-{% load static %}
+{% load i18n %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,10 +23,6 @@
             text-decoration: none;
             border-radius: 50px;
           }
-          .btn:hover {
-            color: white;
-            background-color: black;
-          }
         .px-3{padding-right:1rem !important; padding-left:1rem !important}
         .mt-5 {
             margin-top: 3rem !important
@@ -41,17 +37,17 @@
     <div class="wrapper">
         <div style="max-width: 650px;">
             <h1 class="logo"><img src="https://i.ibb.co/yQxRv8b/logo.png" width="70" atl=""><span class="ps-2">NoteD.</span></h1>
-            <h2 style="margin-top: 70px;">You’re almost there.</h2>
-            <p class="fs-5 mt-4">Click the link below to confirm your email and finish creating your NoteD account.</p>
-            <p class="fs-5">This link will expire in 2 hours and can only be used once.</p>
-            <a href="{{ host }}{% url 'account:signup' %}" class="btn px-3 mt-5" target="_blank">Create your account</a>
+            <h2 style="margin-top: 70px;">{% trans "You’re almost there." %}</h2>
+            <p class="fs-5 mt-4">{% trans "Click the link below to confirm your email and finish creating your NoteD account." %}</p>
+            <p class="fs-5">{% trans "This link will expire in 2 hours and can only be used once." %}</p>
+            <a href="{{ host }}{% url 'account:signup' token=token %}" class="btn px-3 mt-5" target="_blank">{% trans "Create your account" %}</a>
             <p class="mt-5">
-                If the button above doesn’t work, paste this link into your web browser:<br>
-                <a href="{{ host }}{% url 'account:signup' %}" target="_blank">{{ host }}{% url 'account:signup' %}</a>
+                {% trans "If the button above doesn’t work, paste this link into your web browser:" %}<br>
+                <a href="{{ host }}{% url 'account:signup' token=token %}" target="_blank">{{ host }}{% url 'account:signup' token=token %}</a>
             </p>
-            <p class="text-secondary mt-5">If you did not make this request, you can safely ignore this email.</p>
+            <p class="text-secondary mt-5">{% trans "If you did not make this request, you can safely ignore this email." %}</p>
             <hr>
-            <p>Sent by <a class="text-dark" href="{{ host }}" target="_blank">NoteD.</a></p>
+            <p>{% trans "Sent by" %} <a class="text-dark" href="{{ host }}" target="_blank">NoteD.</a></p>
         </div>
     <div>
 </body>

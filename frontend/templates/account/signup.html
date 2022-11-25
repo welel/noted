@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block nav %}
+<!-- Top navigation -->
+<nav class="navbar bg-light" style="border: 1px solid #c6c7c8;">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'content:home' %}">
+        <img src="{% static 'img/logo.png' %}" alt="NoteD." width="34" height="34" class="d-inline-block align-text-top">
+        NoteD.
+      </a>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-lg-3 col-1"></div>
+        <div class="col-lg-5 col 10">
+            {% if error == 'Signature Expired' %}
+                <h2>{% trans "The Link You Followed Has Expired" %}</h2>
+                <p class="fs-5 mt-3">{% trans "Go to the " %}<a href="{% url 'content:home' %}" class="text-dark">{% trans "homepage" %}</a> {% trans "and start Sing Up process again." %}</p>
+            {% elif error == 'Bad Signature' %}
+                <h2>{% trans "The Link You Followed Has Bad Signature" %}</h2>
+                <p class="fs-5 mt-3">{% trans "Try to follow the link from the email different way or go to the" %} <a href="{% url 'content:home' %}" class="text-dark">{% trans "homepage" %}</a> {% trans "and start Sing Up process again." %}</p>
+            {% else %}
+                <form action="{% url 'account:signup' token=token %}" method="POST" class="needs-validation">
+                    <div class="validation-errors">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% csrf_token %}
+                    <label for="id_first_name" class="form-label">{% trans "Full Name" %}</label>
+                    {{ form.first_name }}
+                    <p class="fs-6 text-secondary">{{ form.first_name.help_text }}</p>
+                    <div class="validation-errors">
+                        {{ form.first_name.errors }}
+                    </div>                  
+                    <label for="id_password1" class="form-label mt-2">{% trans "Password" %}</label>
+                    {{ form.password1 }}
+                    <div class="validation-errors">
+                        {{ form.password1.errors }}
+                    </div> 
+                    <label for="id_password2" class="form-label mt-2">{% trans "Confirm Password" %}</label>
+                    {{ form.password2 }}
+                    <div class="validation-errors">
+                        {{ form.password2.errors }}
+                    </div>
+                    <div class="fs-6 text-secondary">{{ form.password1.help_text }}</div>
+                    <button class="btn btn-success mt-3 rounded-pill px-4" type="sumbit">{% trans "Continue" %}</button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-lg-3 col-1"></div>
+    </div>
+</div>
+{% endblock %}
