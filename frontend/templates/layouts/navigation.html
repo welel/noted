@@ -129,7 +129,7 @@ Require script `js/auth.js`
         </div>
     </div>
 </div>
-<!-- Modal sign-im via email -->
+<!-- Modal sign-in via email -->
 <div class="modal fade" id="signin-email" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -139,9 +139,12 @@ Require script `js/auth.js`
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign in with email" %}</p>
                     <p class="text-center mt-5">{% trans "Enter the email address associated with your account and your password." %}</p>
-                    <input class="form-control form-control-sm mt-5" type="text" placeholder="Email">
-                    <input class="form-control form-control-sm mt-2" type="text" placeholder="Password">
-                    <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
+                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="Email">
+                    <div id="signin_email_feedback" class="invalid-feedback"></div> 
+                    <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="Password">
+                    <div id="signin_password_feedback" class="invalid-feedback"></div> 
+                    <div id="signin_feedback" class="mt-2 text-danger"></div>
+                    <button id="signin_submit" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
                 </div>
             </div>
         </div>
@@ -190,4 +193,5 @@ Require script `js/auth.js`
 <!-- Context for scripts -->
     <span id="validate_email_url" class="js-context" hidden>{% url 'account:validate_email' %}</span>
     <span id="signup_email_url" class="js-context" hidden>{% url 'account:signup_request' %}</span>
+    <span id="signin_url" class="js-context" hidden>{% url 'account:signin' %}</span>
 <!-- endcontext -->

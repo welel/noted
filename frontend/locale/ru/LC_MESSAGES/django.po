@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 13:37+0300\n"
-"PO-Revision-Date: 2022-11-25 11:29+0000\n"
+"POT-Creation-Date: 2022-11-26 00:29+0300\n"
+"PO-Revision-Date: 2022-11-25 21:32+0000\n"
 "Last-Translator:   <pavel@ya.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: noted/account/auth.py:23
+#: noted/account/auth.py:36
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
-#: noted/account/forms.py:14
+#: noted/account/forms.py:17
 msgid ""
 "Full Name should contain only latin letters, and                    should "
 "include no more than 3 words"
@@ -31,19 +31,19 @@ msgstr ""
 "Полное имя должно содержать только латинские буквы и состоять не более чем "
 "из 3 слов."
 
-#: noted/account/forms.py:37
+#: noted/account/forms.py:43
 msgid "Full Name should contain only latin letters."
 msgstr "Полное имя должно содержать только латинские буквы."
 
-#: noted/account/forms.py:40
+#: noted/account/forms.py:47
 msgid "Full Name should include no more than 3 words."
 msgstr "Полное имя должно состоять не более чем из 3 слов."
 
-#: noted/account/models.py:7
+#: noted/account/models.py:16
 msgid "Email address"
 msgstr "Email адрес"
 
-#: noted/account/views.py:50
+#: noted/account/views.py:65
 msgid ""
 "You already registered. If you didn't register, request              for "
 "another link!"
@@ -51,11 +51,21 @@ msgstr ""
 "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 "регистрации."
 
-#: noted/core/settings.py:123
+#: noted/account/views.py:114
+msgid ""
+"Sorry, but we could not find a user account with"
+"                             that email."
+msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
+
+#: noted/account/views.py:124
+msgid "You have entered the wrong password."
+msgstr "Вы ввели неправильный пароль."
+
+#: noted/core/settings.py:119
 msgid "English"
 msgstr "Английский"
 
-#: noted/core/settings.py:124
+#: noted/core/settings.py:120
 msgid "Russian"
 msgstr "Русский"
 
@@ -101,8 +111,8 @@ msgstr "Пароль"
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/account/signup.html:55 templates/layouts/navigation.html:144
-#: templates/layouts/navigation.html:165
+#: templates/account/signup.html:55 templates/layouts/navigation.html:147
+#: templates/layouts/navigation.html:168
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -218,30 +228,30 @@ msgid ""
 "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
-#: templates/layouts/navigation.html:159
+#: templates/layouts/navigation.html:162
 msgid "Sign up with email"
 msgstr "Регистрация по email"
 
-#: templates/layouts/navigation.html:160
+#: templates/layouts/navigation.html:163
 msgid "Enter your email address to create an account."
 msgstr "Введите ваш email адрес и создайте аккаунт."
 
-#: templates/layouts/navigation.html:163
+#: templates/layouts/navigation.html:166
 msgid "Enter a valid email."
 msgstr "Введите корректный email адрес."
 
-#: templates/layouts/navigation.html:180
+#: templates/layouts/navigation.html:183
 msgid "Check your inbox."
 msgstr "Проверьте ваш почтовый ящик."
 
-#: templates/layouts/navigation.html:181
+#: templates/layouts/navigation.html:184
 msgid "Click the link we sent to"
 msgstr "Перейдите по ссылке, которую мы вам прислали на "
 
-#: templates/layouts/navigation.html:181
+#: templates/layouts/navigation.html:184
 msgid "to complete your account set-up."
 msgstr "для завершения регистрации."
 
-#: templates/layouts/navigation.html:182
+#: templates/layouts/navigation.html:185
 msgid "OK"
 msgstr "ОК"

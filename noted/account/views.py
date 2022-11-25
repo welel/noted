@@ -1,11 +1,11 @@
 import json
 
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, SignatureExpired
 from django.core.validators import validate_email as _validate_email
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -95,3 +95,41 @@ def signup(request, token):
         else:
             context["form"] = form
             return render(request, template_name, context)
+
+
+@ajax_required
+def signin(request):
+    """Sign in a user via ajax request."""
+    if request.method == "POST":
+        data = json.load(request)
+        email = data.get("email")
+        password = data.get("password")
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return JsonResponse(
+                {
+                    "code": "noemail",
+                    "error_message": _(
+                        "Sorry, but we could not find a user account with \
+                            that email."
+                    ),
+                }
+            )
+        user = authenticate(username=user.username, password=password)
+        if not user:
+            return JsonResponse(
+                {
+                    "code": "badpass",
+                    "error_message": _("You have entered the wrong password."),
+                }
+            )
+        login(request, user)
+        # TODO: redirect on referer
+        return JsonResponse(
+            {
+                "code": "success",
+                "redirect_url": reverse("content:home"),
+            }
+        )
+    return HttpResponseBadRequest()

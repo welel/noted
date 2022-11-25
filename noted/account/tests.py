@@ -51,8 +51,51 @@ class URLTests(TestCase):
         self.assertEqual(response.context.get("error"), None)
         self.assertEqual(response.status_code, 200)
 
+    def test_signin_success(self):
+        user = User.objects.create(
+            username="@some.name",
+            first_name="Some Name",
+            email="some@email.qq",
+            password="easypass123",
+        )
+        response = self.ajax_client.post(
+            "/en/account/signin/",
+            {"email": user.email, "password": user.password},
+            content_type="application/json",
+        )
+        code = json.loads(response.content)["code"]
+        self.assertEqual(code, "success")
 
-class AuthTests(TestCase):
+    def test_signin_noemail_error(self):
+        response = self.ajax_client.post(
+            "/en/account/signin/",
+            {"email": "non@existing.email", "password": "easypass123"},
+            content_type="application/json",
+        )
+        code = json.loads(response.content)["code"]
+        self.assertEqual(code, "noemail")
+
+    def test_signin_bad_password_error(self):
+        user = User.objects.create(
+            username="@some.name",
+            first_name="Some Name",
+            email="some@email.qq",
+            password="one_pass",
+        )
+        response = self.ajax_client.post(
+            "/en/account/signin/",
+            {"email": user.email, "password": "wrong_pass"},
+            content_type="application/json",
+        )
+        code = json.loads(response.content)["code"]
+        self.assertEqual(code, "badpass")
+
+    def test_signin_bad_request(self):
+        response = self.client.get("/en/account/signin/")
+        self.assertEqual(response.status_code, 400)
+
+
+class AuthUtilsTests(TestCase):
     def test_username_generator_unique(self):
         user = User.objects.create(first_name="Some Name")
         username = generate_username(user)

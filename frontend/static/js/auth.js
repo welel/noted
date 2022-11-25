@@ -6,6 +6,7 @@
 const SERVER_ERROR_MESSAGE = gettext('Something went wrong, try later.');
 const EMAIL_INVALID_MESSAGE = gettext('Enter a valid email.');
 const EMAIL_TAKEN_MESSAGE = gettext('This email is already taken.');
+const EMPTY_PASSWORD_INVALID_MESSAGE = gettext('Enter password.');
 
 
 /**
@@ -139,4 +140,86 @@ document.getElementById('submit_email').onclick = function() {
         feedbackMessageElement.innerHTML = EMAIL_INVALID_MESSAGE;
         emailInputField.classList.add('is-invalid');
     }
+}
+
+
+/**
+ *  An sign-in ajax request.
+ * 
+ *  @param {string} email: user's email from the form. 
+ *  @param {string} password: user's password from the form.
+ */
+ function signin(email, password) {
+    const signinUrl = document.getElementById('signin_url').innerHTML;
+    const emailInputField = document.getElementById('signin_email');
+    const emailFeedbackMessageElement = document.getElementById('signin_email_feedback');
+    const passwordInputField = document.getElementById('signin_password');
+    const passwordFeedbackMessageElement = document.getElementById('signin_password_feedback');
+    const signinFeedbackMessageElement = document.getElementById('signin_feedback');
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify({'email': email, 'password': password}),
+        url: signinUrl,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        success: function(response) {
+            console.log('success', response)
+            switch(response.code) {
+                case 'noemail':
+                    emailFeedbackMessageElement.innerHTML = response.error_message;
+                    emailInputField.classList.add('is-invalid');
+                    break;
+                case 'badpass':
+                    passwordFeedbackMessageElement.innerHTML = response.error_message;
+                    passwordInputField.classList.add('is-invalid');
+                    break;
+                case 'success':
+                    window.location.href = response.redirect_url;
+            }
+        },
+        error: function (response) {
+            console.log(response)
+            signinFeedbackMessageElement.innerHTML = SERVER_ERROR_MESSAGE;
+        },
+        timeout: 3500
+    });
+}
+
+// TODO: CHECK MULTIPLE CLICKS ON SUBMIT BUTTON, MAY BE SHOULD BLOCK IT
+
+/**
+ *  On click validate signin form, then either call next function or show error messages.
+ */
+ document.getElementById('signin_submit').onclick = function() {
+    const emailInputField = document.getElementById('signin_email');
+    const email = emailInputField.value;
+    const emailFeedbackMessageElement = document.getElementById('signin_email_feedback');
+    const passwordInputField = document.getElementById('signin_password');
+    const password = passwordInputField.value;
+    const passwordFeedbackMessageElement = document.getElementById('signin_password_feedback');
+    
+    if (validateEmail(email)) {
+        // valid
+        emailFeedbackMessageElement.innerHTML = '';
+        emailInputField.classList.remove('is-invalid');
+    } else {
+        // invalid
+        emailFeedbackMessageElement.innerHTML = EMAIL_INVALID_MESSAGE;
+        emailInputField.classList.add('is-invalid');
+        return
+    }
+
+    if (password != '') {
+        // valid
+        passwordFeedbackMessageElement.innerHTML = '';
+        passwordInputField.classList.remove('is-invalid');
+    } else {
+        // invalid
+        passwordFeedbackMessageElement.innerHTML = EMPTY_PASSWORD_INVALID_MESSAGE;
+        passwordInputField.classList.add('is-invalid');
+        return
+    }
+    signin(email, password)
 }

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 13:48+0300\n"
-"PO-Revision-Date: 2022-11-25 10:57+0000\n"
+"POT-Creation-Date: 2022-11-26 00:30+0300\n"
+"PO-Revision-Date: 2022-11-25 21:32+0000\n"
 "Last-Translator:   <pavel@ya.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -30,3 +30,7 @@ msgstr "Введите корректный email адрес."
 #: static/js/auth.js:8
 msgid "This email is already taken."
 msgstr "Этот email адрес уже занят."
+
+#: static/js/auth.js:9
+msgid "Enter password."
+msgstr "Введите пароль."
