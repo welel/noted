@@ -9,8 +9,7 @@ from django.core.signing import TimestampSigner
 from django.utils.translation import gettext as _
 
 from core import settings
-from users.models import User, SignupToken
-from users.exceptions import FirstNameDoesNotSetError
+from users.models import SignupToken
 
 signer = TimestampSigner()
 
@@ -43,12 +42,8 @@ def send_signup_link(email_to: str) -> bool:
             subject=subject,
             body=text_content,
             from_email=email_from,
-            to=[
-                email_to,
-            ],
-            reply_to=[
-                email_from,
-            ],
+            to=[email_to],
+            reply_to=[email_from],
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send(fail_silently=False)
@@ -57,28 +52,3 @@ def send_signup_link(email_to: str) -> bool:
     except smtplib.SMTPException as e:
         print("There was an error sending an email: ", e)
         return False
-
-
-def generate_username(user: User) -> str:
-    """Generate username based on `first_name` field.
-
-    Generate unique username for the database based on `user.first_name` field.
-
-    Args:
-        user: a :model:`User` instance.
-    Returns:
-        The generated username.
-    Raises:
-        FirstNameDoesNotSetError: if `user.first_name` is empty string or None.
-    """
-    username = ""
-    if user.first_name:
-        username = "@" + user.first_name.replace(" ", ".").lower()
-    else:
-        raise FirstNameDoesNotSetError
-    if not User.objects.filter(username=username).exists():
-        return username
-    salt = 2
-    while User.objects.filter(username=username + str(salt)).exists():
-        salt += 1
-    return username + str(salt)

@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from users.auth import generate_username, send_signup_link, signer
+from users.auth import send_signup_link, signer
 from users.forms import SignupForm
 from users.models import SignupToken, User
 from common.decorators import ajax_required
@@ -86,7 +86,6 @@ def signup(request, token):
         if form.is_valid():
             user = form.save(commit=False)
             user.email = email
-            user.username = generate_username(user)
             user.save()
             token.delete()
             if user:
@@ -104,9 +103,7 @@ def signin(request):
         data = json.load(request)
         email = data.get("email")
         password = data.get("password")
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
+        if not User.objects.filter(email=email).exists():
             return JsonResponse(
                 {
                     "code": "noemail",
@@ -116,7 +113,7 @@ def signin(request):
                     ),
                 }
             )
-        user = authenticate(username=user.username, password=password)
+        user = authenticate(email=email, password=password)
         if not user:
             return JsonResponse(
                 {

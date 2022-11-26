@@ -36,10 +36,10 @@
                     </div>
                     {% csrf_token %}
                     <label for="id_first_name" class="form-label">{% trans "Full Name" %}</label>
-                    {{ form.first_name }}
-                    <p class="fs-6 text-secondary">{{ form.first_name.help_text }}</p>
+                    {{ form.full_name }}
+                    <p class="fs-6 text-secondary">{{ form.full_name.help_text }}</p>
                     <div class="validation-errors">
-                        {{ form.first_name.errors }}
+                        {{ form.full_name.errors }}
                     </div>                  
                     <label for="id_password1" class="form-label mt-2">{% trans "Password" %}</label>
                     {{ form.password1 }}

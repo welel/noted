@@ -1,11 +1,10 @@
 import json
 
+import django
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
 
-from users.auth import generate_username
-from users.models import User, SignupToken
-from users.exceptions import FirstNameDoesNotSetError
+from users.models import User, SignupToken, UserManager
 
 
 class URLTests(TestCase):
@@ -54,7 +53,7 @@ class URLTests(TestCase):
     def test_signin_success(self):
         user = User.objects.create(
             username="@some.name",
-            first_name="Some Name",
+            full_name="Some Name",
             email="some@email.qq",
         )
         user.set_password("easypass123")
@@ -79,7 +78,7 @@ class URLTests(TestCase):
     def test_signin_bad_password_error(self):
         user = User.objects.create(
             username="@some.name",
-            first_name="Some Name",
+            full_name="Some Name",
             email="some@email.qq",
             password="one_pass",
         )
@@ -100,22 +99,46 @@ class URLTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
-class AuthUtilsTests(TestCase):
+class ModelsTests(TestCase):
     def test_username_generator_unique(self):
-        user = User.objects.create(first_name="Some Name")
-        username = generate_username(user)
+        username = User.objects._generate_username("Some Name")
         self.assertEqual(username, "@some.name")
 
     def test_username_generator_taken(self):
-        user = User.objects.create(first_name="Some Name")
-        user.username = generate_username(user)
+        user = User.objects.create(email="one_email", full_name="Some Name")
         user.save()
-        user2 = User(first_name="Some Name")
-        username = generate_username(user2)
-        self.assertEqual(username, "@some.name2")
-
-    def test_username_generator_first_name_empy(self):
-        user = User.objects.create()
-        self.assertRaises(
-            FirstNameDoesNotSetError, generate_username, user=user
+        user2 = User.objects.create(
+            email="another_email", full_name="Some Name"
         )
+        user2.save()
+        self.assertEqual(user2.username, "@some.name2")
+
+    def test_username_generator_full_name_empty(self):
+        user = User.objects.create()
+        self.assertRaises(ValueError, User.objects._generate_username, "")
+
+    def test_email_exists(self):
+        User.objects.create(email="email")
+        self.assertRaises(
+            django.db.utils.IntegrityError, User.objects.create, email="email"
+        )
+
+    def test_user_str(self):
+        user = User.objects.create(email="email", full_name="some name")
+        self.assertEqual(str(user), "@some.name / email")
+
+    def test_user_url(self):
+        user = User.objects.create(email="email", full_name="some name")
+        self.assertEqual(user.get_absolute_url(), "/users/some-name/")
+
+    def test_signup_token_creates(self):
+        pass
+
+    def test_signup_token_deletes(self):
+        pass
+
+    def test_signup_token_expires(self):
+        pass
+
+    def test_signup_token_doesnt_exists(self):
+        pass

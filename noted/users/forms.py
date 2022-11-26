@@ -8,7 +8,7 @@ from users.models import User
 
 class SignupForm(UserCreationForm):
 
-    first_name = forms.CharField(
+    full_name = forms.CharField(
         max_length=50,
         min_length=3,
         widget=forms.TextInput(
@@ -36,10 +36,10 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("first_name",)
+        fields = ("full_name",)
 
-    def clean_first_name(self):
-        data = self.cleaned_data["first_name"]
+    def clean_full_name(self):
+        data = self.cleaned_data["full_name"]
         if not data.replace(" ", "").isalpha():
             raise forms.ValidationError(
                 _("Full Name should contain only latin letters.")
