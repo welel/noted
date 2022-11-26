@@ -8,6 +8,7 @@ from django.urls import path, include
 
 urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
     path("users/", include(("users.urls", "users"), namespace="users")),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", include(("content.urls", "content"), namespace="content")),

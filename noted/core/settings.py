@@ -39,6 +39,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.yandex",
+    "allauth.socialaccount.providers.vk",
     "rosetta",
     "users.apps.UsersConfig",
     "content.apps.ContentConfig",
@@ -145,4 +153,47 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 EMAIL_PORT = 465
 
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.getenv("HTTP_PROTOCOL")
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+SOCIALACCOUNT_PROVIDERS = {
+    "yandex": {
+        "APP": {
+            "client_id": os.getenv("YANDEX_ID"),
+            "secret": os.getenv("YANDEX_SECRET"),
+            "SCOPE": ["email"],
+        }
+    },
+    "github": {
+        "APP": {
+            "client_id": os.getenv("GITHUB_ID"),
+            "secret": os.getenv("GITHUB_SECRET"),
+            "SCOPE": ["email"],
+        }
+    },
+    "google": {
+        # CLIENT_ID and SECRET provieds via admin site.
+        "SCOPE": [
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "OAUTH_PKCE_ENABLED": True,
+    },
+}

@@ -81,13 +81,20 @@ body {
 
 
 /* LOGIN */
-.social-sign {
-    border-color:rgb(145, 144, 144);
+#signin .social-sign-red:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(255, 72, 72) !important;
+    border-color: black !important;
 }
-.social-sign:hover {
-    color: black;
-    background-color: white;
-    border-color: black;
+#signin .social-sign-black:hover {
+    color: white !important;
+    background-color: black !important;
+    border-color: black !important;
+}
+#signin .social-sign-blue:hover {
+    color: white !important;
+    background-color: rgb(21, 130, 255) !important;
+    border-color: black !important;
 }
 
 /* SIGNUP */

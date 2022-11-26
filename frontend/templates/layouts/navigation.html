@@ -4,6 +4,7 @@ Require script `js/auth.js`
 -->
 {% load static %}
 {% load i18n %}
+{% load socialaccount %}
 <!-- Left navigation -->
 <div id="left-nav" class="d-lg-flex d-none">
     <div class="mt-4">
@@ -127,11 +128,11 @@ Require script `js/auth.js`
             <div class="container-fluid d-flex justify-content-center">
                 <div class="row mt-3" style="max-width: 250px;">
                     <h3 class="text-center mb-5">{% trans "Welcome!" %}</h3>
-                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with Google" %}</button>
-                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with GitHub" %}</button>
-                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with Yandex" %}</button>
-                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign">{% trans "Sign in with VK" %}</button>
-                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">{% trans "Sign in with Email" %}</button>                   
+                    <a href="{% provider_login_url 'google' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-red">{% trans "Sign in with Google" %}</a>
+                    <a href="{% provider_login_url 'github' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black">{% trans "Sign in with GitHub" %}</a>
+                    <a href="{% provider_login_url 'yandex' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-red">{% trans "Sign in with Yandex" %}</a>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign-blue">{% trans "Sign in with VK" %}</button>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign-black" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">{% trans "Sign in with Email" %}</button>                   
                     <p class="text-center mt-5">{% trans "No account?" %} <a href="#" class="fw-bold text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#signup" data-bs-dismiss="modal">{% trans "Create one." %}</a></p>
                     <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot email or password?" %} <a href="#">{% trans "Get help." %}</a></p>
                 </div>
