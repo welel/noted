@@ -10,9 +10,9 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from account.auth import generate_username, send_signup_link, signer
-from account.forms import SignupForm
-from account.models import SignupToken, User
+from users.auth import generate_username, send_signup_link, signer
+from users.forms import SignupForm
+from users.models import SignupToken, User
 from common.decorators import ajax_required
 
 
@@ -52,7 +52,7 @@ def signup(request, token):
     GET: provides the registration form.
     POST: validates data, creates new user, deletes the token.
     """
-    template_name = "account/signup.html"
+    template_name = "users/signup.html"
     context = {"token": token}
 
     try:

@@ -40,10 +40,10 @@
             <h2 style="margin-top: 70px;">{% trans "You’re almost there." %}</h2>
             <p class="fs-5 mt-4">{% trans "Click the link below to confirm your email and finish creating your NoteD account." %}</p>
             <p class="fs-5">{% trans "This link will expire in 2 hours and can only be used once." %}</p>
-            <a href="{{ host }}{% url 'account:signup' token=token %}" class="btn px-3 mt-5" target="_blank">{% trans "Create your account" %}</a>
+            <a href="{{ host }}{% url 'users:signup' token=token %}" class="btn px-3 mt-5" target="_blank">{% trans "Create your account" %}</a>
             <p class="mt-5">
                 {% trans "If the button above doesn’t work, paste this link into your web browser:" %}<br>
-                <a href="{{ host }}{% url 'account:signup' token=token %}" target="_blank">{{ host }}{% url 'account:signup' token=token %}</a>
+                <a href="{{ host }}{% url 'users:signup' token=token %}" target="_blank">{{ host }}{% url 'users:signup' token=token %}</a>
             </p>
             <p class="text-secondary mt-5">{% trans "If you did not make this request, you can safely ignore this email." %}</p>
             <hr>

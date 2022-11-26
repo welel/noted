@@ -3,9 +3,9 @@ import json
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
 
-from account.auth import generate_username
-from account.models import User, SignupToken
-from account.exceptions import FirstNameDoesNotSetError
+from users.auth import generate_username
+from users.models import User, SignupToken
+from users.exceptions import FirstNameDoesNotSetError
 
 
 class URLTests(TestCase):
@@ -15,7 +15,7 @@ class URLTests(TestCase):
 
     def test_signup_request(self):
         response = self.ajax_client.post(
-            "/en/account/signup-request/",
+            "/en/users/signup-request/",
             {"email": "non@existing.email"},
             content_type="application/json",
         )
@@ -24,7 +24,7 @@ class URLTests(TestCase):
 
     def test_email_validation_free(self):
         response = self.ajax_client.get(
-            "/en/account/validate-email/",
+            "/en/users/validate-email/",
             {"email": "free@email.qq"},
         )
         answer = json.loads(response.content)["is_taken"]
@@ -33,21 +33,21 @@ class URLTests(TestCase):
     def test_email_validation_taken(self):
         User.objects.create(email="taken@email.qq")
         response = self.ajax_client.get(
-            "/en/account/validate-email/",
+            "/en/users/validate-email/",
             {"email": "taken@email.qq"},
         )
         answer = json.loads(response.content)["is_taken"]
         self.assertEqual(answer, True)
 
     def test_signup_bad_token(self):
-        response = self.ajax_client.get("/en/account/signup/asjdk21d/")
+        response = self.ajax_client.get("/en/users/signup/asjdk21d/")
         self.assertEqual(response.status_code, 302)
 
     def test_signup_good_token(self):
         signer = TimestampSigner()
         stoken = signer.sign("some@email.qq")
         token = SignupToken.objects.create(token=stoken)
-        response = self.ajax_client.get(f"/en/account/signup/{token.token}/")
+        response = self.ajax_client.get(f"/en/users/signup/{token.token}/")
         self.assertEqual(response.context.get("error"), None)
         self.assertEqual(response.status_code, 200)
 
@@ -60,7 +60,7 @@ class URLTests(TestCase):
         user.set_password("easypass123")
         user.save()
         response = self.ajax_client.post(
-            "/en/account/signin/",
+            "/en/users/signin/",
             {"email": user.email, "password": "easypass123"},
             content_type="application/json",
         )
@@ -69,7 +69,7 @@ class URLTests(TestCase):
 
     def test_signin_noemail_error(self):
         response = self.ajax_client.post(
-            "/en/account/signin/",
+            "/en/users/signin/",
             {"email": "non@existing.email", "password": "easypass123"},
             content_type="application/json",
         )
@@ -84,7 +84,7 @@ class URLTests(TestCase):
             password="one_pass",
         )
         response = self.ajax_client.post(
-            "/en/account/signin/",
+            "/en/users/signin/",
             {"email": user.email, "password": "wrong_pass"},
             content_type="application/json",
         )
@@ -92,11 +92,11 @@ class URLTests(TestCase):
         self.assertEqual(code, "badpass")
 
     def test_signin_bad_request(self):
-        response = self.client.get("/en/account/signin/")
+        response = self.client.get("/en/users/signin/")
         self.assertEqual(response.status_code, 400)
 
     def test_signout(self):
-        response = self.client.get("/en/account/signout/")
+        response = self.client.get("/en/users/signout/")
         self.assertEqual(response.status_code, 302)
 
 
@@ -116,4 +116,6 @@ class AuthUtilsTests(TestCase):
 
     def test_username_generator_first_name_empy(self):
         user = User.objects.create()
-        self.assertRaises(FirstNameDoesNotSetError, generate_username, user=user)
+        self.assertRaises(
+            FirstNameDoesNotSetError, generate_username, user=user
+        )

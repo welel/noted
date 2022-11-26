@@ -30,7 +30,7 @@
                 <h2>{% trans "The Link You Followed Has Bad Signature" %}</h2>
                 <p class="fs-5 mt-3">{% trans "Try to follow the link from the email different way or go to the" %} <a href="{% url 'content:home' %}" class="text-dark">{% trans "homepage" %}</a> {% trans "and start Sing Up process again." %}</p>
             {% else %}
-                <form action="{% url 'account:signup' token=token %}" method="POST" class="needs-validation">
+                <form action="{% url 'users:signup' token=token %}" method="POST" class="needs-validation">
                     <div class="validation-errors">
                         {{ form.non_field_errors }}
                     </div>

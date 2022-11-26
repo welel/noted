@@ -1,4 +1,4 @@
-"""Exceptions for the `account` application."""
+"""Exceptions for the `users` application."""
 
 
 class FirstNameDoesNotSetError(Exception):

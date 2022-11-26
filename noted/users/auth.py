@@ -9,8 +9,8 @@ from django.core.signing import TimestampSigner
 from django.utils.translation import gettext as _
 
 from core import settings
-from account.models import User, SignupToken
-from account.exceptions import FirstNameDoesNotSetError
+from users.models import User, SignupToken
+from users.exceptions import FirstNameDoesNotSetError
 
 signer = TimestampSigner()
 

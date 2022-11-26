@@ -209,7 +209,7 @@ Require script `js/auth.js`
             <div class="container-fluid mb-5" style="max-width: 300px;">
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Are you sure you want to sign out?" %}</p>
-                    <a href="{% url 'account:signout' %}" type="button" class="btn btn-danger rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</a>
+                    <a href="{% url 'users:signout' %}" type="button" class="btn btn-danger rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</a>
                 </div>
             </div>
         </div>
@@ -218,7 +218,7 @@ Require script `js/auth.js`
 </div>
 
 <!-- Context for scripts -->
-    <span id="validate_email_url" class="js-context" hidden>{% url 'account:validate_email' %}</span>
-    <span id="signup_email_url" class="js-context" hidden>{% url 'account:signup_request' %}</span>
-    <span id="signin_url" class="js-context" hidden>{% url 'account:signin' %}</span>
+    <span id="validate_email_url" class="js-context" hidden>{% url 'users:validate_email' %}</span>
+    <span id="signup_email_url" class="js-context" hidden>{% url 'users:signup_request' %}</span>
+    <span id="signin_url" class="js-context" hidden>{% url 'users:signin' %}</span>
 <!-- endcontext -->

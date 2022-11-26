@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: noted/account/auth.py:36
+#: noted/users/auth.py:36
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
-#: noted/account/forms.py:19
+#: noted/users/forms.py:19
 msgid ""
 "Full Name should contain only latin letters, and                    should "
 "include no more than 3 words"
@@ -31,19 +31,19 @@ msgstr ""
 "Полное имя должно содержать только латинские буквы и состоять не более чем "
 "из 3 слов."
 
-#: noted/account/forms.py:45
+#: noted/users/forms.py:45
 msgid "Full Name should contain only latin letters."
 msgstr "Полное имя должно содержать только латинские буквы."
 
-#: noted/account/forms.py:49
+#: noted/users/forms.py:49
 msgid "Full Name should include no more than 3 words."
 msgstr "Полное имя должно состоять не более чем из 3 слов."
 
-#: noted/account/models.py:16
+#: noted/users/models.py:16
 msgid "Email address"
 msgstr "Email адрес"
 
-#: noted/account/views.py:65
+#: noted/users/views.py:65
 msgid ""
 "You already registered. If you didn't register, request              for "
 "another link!"
@@ -51,13 +51,13 @@ msgstr ""
 "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 "регистрации."
 
-#: noted/account/views.py:114
+#: noted/users/views.py:114
 msgid ""
 "Sorry, but we could not find a user account with"
 "                             that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
-#: noted/account/views.py:124
+#: noted/users/views.py:124
 msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
 
@@ -69,49 +69,49 @@ msgstr "Английский"
 msgid "Russian"
 msgstr "Русский"
 
-#: templates/account/signup.html:6
+#: templates/users/signup.html:6
 msgid "Sign Up"
 msgstr "Регистрация"
 
-#: templates/account/signup.html:27
+#: templates/users/signup.html:27
 msgid "The Link You Followed Has Expired"
 msgstr "Ссылка, по которой вы перешли, устарела."
 
-#: templates/account/signup.html:28
+#: templates/users/signup.html:28
 msgid "Go to the "
 msgstr "Перейти на"
 
-#: templates/account/signup.html:28 templates/account/signup.html:31
+#: templates/users/signup.html:28 templates/users/signup.html:31
 msgid "homepage"
 msgstr "домашнюю страницу"
 
-#: templates/account/signup.html:28 templates/account/signup.html:31
+#: templates/users/signup.html:28 templates/users/signup.html:31
 msgid "and start Sing Up process again."
 msgstr "и начать регистрацию заново."
 
-#: templates/account/signup.html:30
+#: templates/users/signup.html:30
 msgid "The Link You Followed Has Bad Signature"
 msgstr "Ссылка, по которой вы перешли, неверна."
 
-#: templates/account/signup.html:31
+#: templates/users/signup.html:31
 msgid "Try to follow the link from the email different way or go to the"
 msgstr ""
 "Попробуйте перейти по ссылке из email сообщения другим способом или "
 "перейдите на"
 
-#: templates/account/signup.html:38
+#: templates/users/signup.html:38
 msgid "Full Name"
 msgstr "Полное имя"
 
-#: templates/account/signup.html:44
+#: templates/users/signup.html:44
 msgid "Password"
 msgstr "Пароль"
 
-#: templates/account/signup.html:49
+#: templates/users/signup.html:49
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/account/signup.html:55 templates/layouts/navigation.html:158
+#: templates/users/signup.html:55 templates/layouts/navigation.html:158
 #: templates/layouts/navigation.html:179 templates/layouts/navigation.html:212
 msgid "Continue"
 msgstr "Продолжить"

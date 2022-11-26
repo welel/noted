@@ -137,8 +137,8 @@
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
     <!-- Context for scripts -->
-        <span id="validate_email_url" class="js-context" hidden>{% url 'account:validate_email' %}</span>
-        <span id="signup_email_url" class="js-context" hidden>{% url 'account:signup_request' %}</span>
+        <span id="validate_email_url" class="js-context" hidden>{% url 'users:validate_email' %}</span>
+        <span id="signup_email_url" class="js-context" hidden>{% url 'users:signup_request' %}</span>
     <!-- endcontext -->
     <script>
         function getCookie(name) {

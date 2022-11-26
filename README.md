@@ -84,9 +84,9 @@ In future:
 
 ```
 python manage.py makemigrations
-python manage.py makemigrations account
+python manage.py makemigrations users
 python manage.py migrate
-python manage.py migrate account
+python manage.py migrate users
 ```
 
 6. Run the server `python manage.py runserver`.
