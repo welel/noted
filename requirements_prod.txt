@@ -9,3 +9,5 @@ python-dotenv==0.21.0
 requests==2.28.1
 sqlparse==0.4.3
 urllib3==1.26.13
+django-simplemde==0.1.4
+markdown2==2.4.6
