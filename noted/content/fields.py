@@ -22,6 +22,12 @@ class RenderedMarkdownField(TextField):
 
 
 class MarkdownField(SimpleMDEField):
+    """A field that put generated HTML code in another model's field.
+
+    HTML code generates by custom functions based on the value of this field,
+    and then puts HTML code to another specified model's field.
+    """
+
     def __init__(self, *args, rendered_field: str = None, **kwargs):
         self.rendered_field = rendered_field
         super().__init__(*args, **kwargs)

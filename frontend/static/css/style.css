@@ -126,3 +126,17 @@ body {
         font-size: 0.8rem !important;
     }
 }
+
+
+/* NOTE CREATE */
+#md-syntax-table {
+    border-collapse: unset;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 7px;
+    padding: 5px;
+}
+#md-syntax-table tr {
+    border-bottom-width: 1px;
+    border-bottom: 1px solid rgb(206, 206, 206) !important;
+}
+

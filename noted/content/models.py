@@ -6,7 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from content.fields import MarkdownField, RenderedMarkdownField
+from content.fields import MarkdownField, RenderedMarkdownField, SimpleMDEField
 from common import generate_unique_slug
 from users.models import User
 
@@ -95,7 +95,7 @@ class Note(models.Model):
     source = models.ForeignKey(
         Source, null=True, on_delete=models.SET_NULL, related_name="notes"
     )
-    body_raw = MarkdownField(rendered_field="body_html")
+    body_raw = MarkdownField(rendered_field="body_html", blank=True)
     body_html = RenderedMarkdownField(max_length=70000, default="", blank=True)
     summary = models.CharField(
         max_length=100,
@@ -124,5 +124,5 @@ class Note(models.Model):
             self.slug = generate_unique_slug(self)
         return super().save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse("note", args=[self.slug])
+    def get_absolute_url(self):
+        return reverse("content:note", args=[self.slug])

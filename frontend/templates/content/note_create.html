@@ -1,0 +1,128 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid mt-5">
+<form action="{% url 'content:create_note' %}" method="POST">
+{% csrf_token %}
+    <div class="row">
+        <div class="col-1 d-lg-block d-none">
+
+        </div>
+        <div class="col-lg-8 col-12">
+            <div class="container-fluid" style="max-width: 700px;">
+                <div class="row">
+                    {{ form.title }}
+                </div>
+                <div class="row mt-4">
+                    <div class="col-3 px-0 form-floating">
+                        <select id="source-type" class="form-select" disabled>
+                            <option selected>Other</option>
+                            <option value="1">Book</option>
+                            <option value="2">Course</option>
+                            <option value="3">Video</option>
+                            <option value="4">Article</option>
+                            <option value="5">Lecture</option>
+                        </select>
+                        <label for="source-type">{% trans "Source type" %}</label>
+                    </div>
+                    <div class="col-9 pe-0 form-floating">
+                        <input id="source-name" type="text" class="form-control" placeholder="{% trans "Source name" %}" disabled>
+                        <label class="ms-3" for="source-name">{% trans "Source name" %}</label>
+                    </div>                      
+                </div> 
+                <div class="row mt-4">
+                    {{ form.body_raw }}
+                </div>
+                <div class="row mt-4 form-floating">  
+                    <input id="tags" class="form-control" type="text" placeholder="{% trans "Tags" %}" disabled>
+                    <label for="tags" class="form-label">{% trans "Tags" %}</label>
+                </div>
+                <div class="row mt-4 form-floating">  
+                    {{ form.summary }}
+                    <label for="id_summary" class="form-label">{% trans "Summary in 140 symbols..." %}</label>
+                </div>
+                <div class="row mt-4">
+                    <div class="col px-0 d-flex align-items-center">
+                        <button type="submit" class="btn btn-success rounded-pill">{% trans "Publish" %}</button>
+                        <button type="button" class="btn btn-light rounded-pill ms-2" disabled>{% trans "Save draft" %}</button>
+                        <div class="form-check form-switch ms-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="allow-comments" checked disabled>
+                            <label class="form-check-label" for="allow-comments">{% trans "Allow comments" %}</label>
+                        </div>
+                        <div class="form-check form-switch ms-3">
+                            {{ form.anonymous }}
+                            <label class="form-check-label" for="id_anonymous">{% trans "Post anonymous" %}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-12 px-4">
+            <summary class="text-secondary">{% trans "Commonly used syntax" %}</summary>
+            <table id="md-syntax-table" class="text-secondary w-100 mt-2 mb-4">
+                <tbody>
+                    <tr>
+                        <td ># {% trans "Header" %}<br>...<br>###### {% trans "Header" %}</td>
+                        <td>H1 {% trans "Header" %}<br>...<br>H6 {% trans "Header" %}</td>
+                    </tr>
+                    <tr>
+                        <td >*{% trans "italics" %}* or _{% trans "italics" %}_</td>
+                        <td><em>{% trans "italics" %}</em></td>
+                    </tr>
+                    <tr>
+                        <td >**{% trans "bold" %}**</td>
+                        <td><strong>{% trans "bold" %}</strong></td>
+                    </tr>
+                    <tr>
+                        <td >[{% trans "Link" %}](https://...)</td>
+                        <td><a href="#" class="text-secondary">{% trans "Link" %}</a></td>
+                    </tr>
+                    <tr>
+                        <td >* {% trans "item" %} 1<br>* {% trans "item" %} 2</td>
+                        <td>
+                            <ul class="list-disc ml-5">
+                                <li>{% trans "item" %} 1</li>
+                                <li>{% trans "item" %} 2</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >1. {% trans "item" %} 1<br>2. {% trans "item" %} 2</td>
+                        <td>
+                            <ol class="list-decimal ml-5">
+                                <li>{% trans "item" %} 1</li>
+                                <li>{% trans "item" %} 2</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >&gt; {% trans "quoted text" %}</td>
+                        <td><span class="pl-2 border-0 border-solid border-l-2 border-base-50">{% trans "quoted text" %}</span></td>
+                    </tr>
+                    <tr>
+                        <td >`{% trans "inline code" %}`</td>
+                        <td><code>{% trans "inline code" %}</code></td>
+                    </tr>
+                    <tr>
+                        <td ><span class="fs-xs">```</span><br>{% trans "code block" %}<br><span class="fs-xs">```</span></td>
+                        <td><div class="highlight p-2 overflow-hidden"><code>{% trans "code block" %}</code></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/simplemde.js' %}"></script>
+{% endblock %}

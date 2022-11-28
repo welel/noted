@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.yandex",
     "allauth.socialaccount.providers.vk",
+    "simplemde",
     "rosetta",
     "users.apps.UsersConfig",
     "content.apps.ContentConfig",

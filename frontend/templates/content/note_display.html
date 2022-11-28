@@ -1,0 +1,209 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-1">
+
+        </div>
+        <div class="col-8">
+            <div class="container-fluid" style="max-width: 700px;">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-auto me-auto">
+                        <table>
+                            <tbody>
+                                <tr>
+                                <td class="pe-3" rowspan="2">
+                                    <a class="text-decoration-none text-dark">
+                                    <img src="#" class="bi bi-person-circle" alt="A" width="45" height="45">
+                                    </a>
+                                </td>
+                                <td class="fw-bold">
+                                    <a class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {{ note.created|date:"M j" }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-auto d-flex align-items-center text-secondary">
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-twitter twitter-h px-2 color-grey" style="font-size: 1.1rem;"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-whatsapp whatsapp-h px-2 color-grey" style="font-size: 1.1rem;"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-telegram telegram-h px-2 color-grey" style="font-size: 1.1rem;"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-link-45deg link-h px-2 color-grey" style="font-size: 1.1rem;"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-bookmark-plus link-h ps-4 color-grey" style="font-size: 1.2rem;"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
+                            <ul class="dropdown-menu">
+                                {% if request.user == note.author %}
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash3"></i> {% trans "Delete" %}</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <h2>{{ note.title }}</h2>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span class="badge rounded-pill text-bg-success mx-1">Success</span>
+                        </a>
+                        <a  href="#" class="text-decoration-none text-dark">
+                        <span class="fw-bold text-secondary source-title" >Lorem ipsum dolor sit amet.</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row mt-4" style="font-size: 19px; line-height: 33px;">
+                    {{ note.body_html|safe }}
+                </div>
+                <div class="row row-cols-auto d-flex justify-content-between mt-5">
+                    <div class="col">
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 66</span>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark pe-3">
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 5</span>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+                        </a>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+                        </a>
+                    </div>
+                    <div class="col d-md-flex d-none text-secondary">
+                        <div class="dropdown">
+                            <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-link-45deg"></i> Copy link</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="text-decoration-none text-dark">
+                        <i class="bi bi-bookmark-plus ps-4 color-grey link-h" style="font-size: 1.2rem;"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
+                            <ul class="dropdown-menu">
+                                {% if request.user == note.author %}
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash3"></i> {% trans "Delete" %}</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-5">
+            </div>
+        </div>
+        <div class="col-lg-3 col-12 px-4">
+            <div class="input-group rounded mt">
+                <span class="input-group-text border-0 bg-white" id="search-addon">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="search" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" disabled />
+            </div>
+            <div class="row mt-5">
+                <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="#" class="bi bi-person-circle" alt="A" width="80" height="80">
+                </a>
+            </div>
+            <div class="row mt-3">
+                <h5>{{ note.author.full_name }}</h5>
+            </div>
+            <div class="row">
+                <a class="text-decoration-none fs-6 link-h color-grey">312 {% trans "Followers" %}</a>
+            </div>
+            <div class="row mt-3">
+                <p class="color-grey" style="font-size: 0.9rem;">Backend Developer ~ Software Developer</p>
+            </div>
+            <div class="row">
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
+                    <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
+                </div>
+            </div>
+            <div class="mt-5">
+                <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
+                <div class="mt-4">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        <a href="#" class="text-decoration-none text-dark">
+                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
+                        <span>Pavel Loginov</span>
+                        </a>
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        <span class="text-secondary">Nov 3</span>
+                    </div>
+                    <a href="#" class="text-decoration-none text-dark">
+                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
+                        <span>Pavel Loginov</span>
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        <span class="text-secondary">Nov 3</span>
+                    </div>
+                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
+                </div>
+                <div class="mt-4">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
+                        <span>Pavel Loginov</span>
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        <span class="text-secondary">Nov 3</span>
+                    </div>
+                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center" style="font-size: 13px;">
+                <span><img src="{% static 'img/logo.png' %}" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
+                <a href="#" class="link-secondary text-decoration-none ps-2">About</a>
+                <a href="#" class="link-secondary text-decoration-none ps-2">Contacts</a>
+                <a href="#" class="link-secondary text-decoration-none ps-2">Privacy Policy</a>
+            </div>
+            <div class="text-center mt-1" style="font-size: 1.2rem;">
+                <a href="#" class="text-decoration-none">
+                <i class="bi bi-github px-1 color-grey github-h"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                <i class="bi bi-google px-1 color-grey google-h"></i>
+                </a>
+                <a href="#" class="text-decoration-none">
+                <i class="bi bi-telegram px-1 color-grey telegram-h"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

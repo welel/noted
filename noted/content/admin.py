@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from content.models import SourceType, Source, Note
+
+
+admin.site.register(SourceType, admin.ModelAdmin)
+admin.site.register(Source, admin.ModelAdmin)
+admin.site.register(Note, admin.ModelAdmin)
