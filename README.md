@@ -80,34 +80,12 @@ In future:
 
 4. Fill `env_sample` file with required data and rename it to `.env`.
 
-5. Make migrations.
+5. Make migrations and migrate.
 
 ```
-python manage.py makemigrations
 python manage.py makemigrations users
 python manage.py makemigrations content
-```
-  Prepopulate `SourceType` with initial data. Add following code lines in created migarations (`noted/content/migrations/0001_initial.py`)
-
-```python
-# before class Migrations
-def populate_types(apps, schema_editor):
-    default_source_types = ["Book", "Course", "Video", "Article", "Other"]
-    SourceType = apps.get_model("content", "SourceType")
-    for type in default_source_types:
-        obj = SourceType(title=type, slug=type.lower())
-        obj.save()
-
-class Migrations(...):
-  ...
-  # add operation
-  operations += migrations.RunPython(populate_types)
-```
-  Migrate.
-
-```
 python manage.py migrate
-python manage.py migrate users
 ```
 
 6. Run the server `python manage.py runserver`.

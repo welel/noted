@@ -18,7 +18,7 @@
                                 <tr>
                                 <td class="pe-3" rowspan="2">
                                     <a class="text-decoration-none text-dark">
-                                    <img src="#" class="bi bi-person-circle" alt="A" width="45" height="45">
+                                    <img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="45" height="45">
                                     </a>
                                 </td>
                                 <td class="fw-bold">
@@ -51,8 +51,15 @@
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash3"></i> {% trans "Delete" %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
+                                    <li>
+                                        <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dropdown-item" type="sumbit" href="#" onclick="return confirm('Are you sure you want to delete the note?');">
+                                            <i class="bi bi-trash3"></i> {% trans "Delete" %}
+                                        </button>
+                                        </form>
+                                    </li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
@@ -64,27 +71,30 @@
                     <h2>{{ note.title }}</h2>
                 </div>
                 <hr>
+                {% if note.source %}
                 <div class="row">
                     <div class="col">
                         <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-success mx-1">Success</span>
+                        <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.type }}</span>
                         </a>
                         <a  href="#" class="text-decoration-none text-dark">
-                        <span class="fw-bold text-secondary source-title" >Lorem ipsum dolor sit amet.</span>
+                        <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
                         </a>
                     </div>
                 </div>
+                {% endif %}
                 <div class="row mt-4" style="font-size: 19px; line-height: 33px;">
                     {{ note.body_html|safe }}
                 </div>
                 <div class="row row-cols-auto d-flex justify-content-between mt-5">
                     <div class="col">
                         <a href="#" class="text-decoration-none text-dark">
-                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 66</span>
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0</span>
                         </a>
                         <a href="#" class="text-decoration-none text-dark pe-3">
-                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 5</span>
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0</span>
                         </a>
+                        {% if note.tags %}
                         <a href="#" class="text-decoration-none text-dark">
                         <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
                         </a>
@@ -94,12 +104,13 @@
                         <a href="#" class="text-decoration-none text-dark">
                         <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
                         </a>
+                        {% endif %}
                     </div>
                     <div class="col d-md-flex d-none text-secondary">
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-link-45deg"></i> Copy link</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-link-45deg"></i> {% trans "Copy link" %}</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
@@ -112,8 +123,15 @@
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-trash3"></i> {% trans "Delete" %}</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
+                                    <li>
+                                        <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dropdown-item" type="sumbit" href="#" onclick="return confirm('Are you sure you want to delete the note?');">
+                                            <i class="bi bi-trash3"></i> {% trans "Delete" %}
+                                        </button>
+                                        </form>
+                                    </li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
@@ -133,19 +151,21 @@
             </div>
             <div class="row mt-5">
                 <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="#" class="bi bi-person-circle" alt="A" width="80" height="80">
+                    <img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="80" height="80">
                 </a>
             </div>
             <div class="row mt-3">
                 <h5>{{ note.author.full_name }}</h5>
             </div>
             <div class="row">
-                <a class="text-decoration-none fs-6 link-h color-grey">312 {% trans "Followers" %}</a>
+                <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
             </div>
+            {% if note.author.bio %}
             <div class="row mt-3">
-                <p class="color-grey" style="font-size: 0.9rem;">Backend Developer ~ Software Developer</p>
+                <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ note.author.bio }}</p>
             </div>
-            <div class="row">
+            {% endif %}
+            <div class="row mt-3">
                 <div class="d-grid gap-2 d-md-block">
                     <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
                     <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>

@@ -1,17 +1,14 @@
 import django
 from django.test import TestCase
 
-from content.models import SourceType, Source, Note
+from content.models import Source, Note
 from users.models import User
 
 
 class ModelsTest(TestCase):
     def setUp(self):
-        self.book_type = SourceType.objects.get(title="Book")
-        self.def_type = SourceType.objects.get(title="Other")
-        self.custom_type = SourceType.objects.create(title="CustomType")
         self.source = Source.objects.create(
-            title="War and Peace", type=self.book_type
+            title="War and Peace", type=Source.BOOK
         )
         self.source_def_type = Source.objects.create(title="Car Manual")
         self.author = User.objects.create(
@@ -26,29 +23,8 @@ class ModelsTest(TestCase):
         self.note_only_title = Note.objects.create(title="xyz")
         return super().setUp()
 
-    def test_default_sourcetypes_exists(self):
-        default_types = [stype.title for stype in SourceType.objects.all()]
-        self.assertIn("Book", default_types)
-        self.assertIn("Video", default_types)
-        self.assertIn("Course", default_types)
-        self.assertIn("Article", default_types)
-        self.assertIn("Other", default_types)
-
-    def test_sourcetype_str(self):
-        self.assertEqual(str(self.book_type), self.book_type.title)
-
-    def test_sourcetype_slug(self):
-        self.assertIsNotNone(self.custom_type.slug)
-
-    def test_sourcetype_url(self):
-        pass
-
-    def test_sourcetype_unique_title(self):
-        self.assertRaises(
-            django.db.utils.IntegrityError,
-            SourceType.objects.create,
-            title="Book",
-        )
+    def test_defiend_sourcetype(self):
+        self.assertEqual(self.source.type, "BOOK")
 
     def test_source_str(self):
         self.assertEqual(str(self.source), self.source.title)
@@ -61,16 +37,13 @@ class ModelsTest(TestCase):
 
     def test_source_unique_slug(self):
         source2 = Source.objects.create(
-            title="War and Peace", type=self.book_type
+            title="War and Peace", type=Source.BOOK
         )
         self.assertNotEqual(self.source.slug, source2.slug)
 
     def test_source_default_type(self):
         source = Source.objects.create(title="1984")
-        self.assertEqual(source.type, self.def_type)
-
-    def test_source_type(self):
-        self.assertEqual(self.source.type, self.book_type)
+        self.assertEqual(source.type, Source.DEFAULT)
 
     def test_note_str(self):
         self.assertEqual(str(self.note), self.note.title)

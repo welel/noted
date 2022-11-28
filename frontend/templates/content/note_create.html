@@ -10,7 +10,7 @@
 
 {% block main %}
 <div class="container-fluid mt-5">
-<form action="{% url 'content:create_note' %}" method="POST">
+<form method="POST">
 {% csrf_token %}
     <div class="row">
         <div class="col-1 d-lg-block d-none">

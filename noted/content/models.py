@@ -11,39 +11,27 @@ from common import generate_unique_slug
 from users.models import User
 
 
-class SourceTypeManager:
-    # get_defaults()
-    pass
-
-
-class SourceType(models.Model):
-    title = models.CharField(max_length=50, unique=True, db_index=True)
-    slug = models.SlugField(max_length=254, unique=True, null=False)
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_unique_slug(self)
-        return super().save(*args, **kwargs)
-
-    # def get_absolute_url(self):
-    #     return reverse("source_type", args=[self.slug])
-
-
 class Source(models.Model):
+    BOOK = "BOOK"
+    COURSE = "COURSE"
+    VIDEO = "VIDEO"
+    ARTICLE = "ARTICLE"
+    LECTURE = "LECTURE"
+    TUTORIAL = "TUTORIAL"
+    DEFAULT = "DEFAULT"
+    TYPES = {
+        (BOOK, _("Book")),
+        (COURSE, _("Course")),
+        (VIDEO, _("Video")),
+        (ARTICLE, _("Article")),
+        (LECTURE, _("Lecture")),
+        (TUTORIAL, _("Tutorial")),
+        (DEFAULT, _("Other")),
+    }
     title = models.CharField(
         max_length=200, blank=False, null=False, db_index=True, editable=False
     )
-    # Don't forget to prepopulate SourceType with type "Other"
-    type = models.ForeignKey(
-        SourceType,
-        on_delete=models.SET_DEFAULT,
-        related_name="sources",
-        to_field="title",
-        default="Other",
-    )
+    type = models.CharField(max_length=20, choices=TYPES, default=DEFAULT)
     slug = models.SlugField(max_length=254, unique=True, null=False)
 
     def __str__(self):
@@ -98,7 +86,7 @@ class Note(models.Model):
     body_raw = MarkdownField(rendered_field="body_html", blank=True)
     body_html = RenderedMarkdownField(max_length=70000, default="", blank=True)
     summary = models.CharField(
-        max_length=100,
+        max_length=250,
         default="",
         blank=True,
         help_text=_("Write summary on the note in 100 symbols."),
@@ -115,6 +103,9 @@ class Note(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        ordering = ("-created",)
 
     def __str__(self):
         return self.title

@@ -41,6 +41,7 @@
                 {{ note.title }}
                 </a>
             </div>
+            {% if note.source %}
             <div class="row">
                 <div class="col d-flex align-items-center">
                     <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
@@ -48,19 +49,29 @@
                     </a>
                     <span>&nbsp;|&nbsp;</span>
                     <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge rounded-pill text-bg-success mx-1">Success</span>
+                    <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.type }}</span>
                     </a>
                     <a  href="#" class="text-decoration-none text-dark">
-                    <span class="fw-bold text-secondary source-title" >Lorem ipsum dolor sit amet.</span>
+                    <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
                     </a>
                 </div>
             </div>
+            {% endif %}
+            {% if note.summary %}
             <div class="row ps-1 d-md-inline d-none">
                 <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur nostrum quidem nulla, veniam ab labore accusamus veritatis corrupti porro repellat molestiae, illo soluta officia magnam alias nam. Perspiciatis, ab quos!</div>
+                    {{ note.summary }}
                 </a>
+            </div>
+            {% endif %}
             <div class="row row-cols-auto d-flex justify-content-between mt-2">
                 <div class="col">
+                    {% if not note.source %}
+                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
+                        <span><i class="bi bi-bookmark-plus"></i></span>
+                    </a>
+                    {% endif %}
+                    {% if note.tags %}
                     <a href="#" class="text-decoration-none text-dark">
                     <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
                     </a>
@@ -70,13 +81,14 @@
                     <a href="#" class="text-decoration-none text-dark">
                     <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
                     </a>
+                    {% endif %}
                 </div>
                 <div class="col d-md-block d-none">
                     <a href="#" class="text-decoration-none text-dark">
-                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 66 Reputation</span>
+                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0 {% trans "Reputation" %}</span>
                     </a>
                     <a href="#" class="text-decoration-none text-dark">
-                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 5 Comments</span>
+                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
                     </a>
                 </div>
             </div>
@@ -96,22 +108,25 @@
             <h6>Source types</h6>
             <span>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">Book</span>
+                <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">{{ source_types.BOOK }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Course</span>
+                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ source_types.COURSE }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-primary p-2 m-1 fs-6 fw-normal">Video</span>
+                <span class="badge rounded-pill text-bg-primary p-2 m-1 fs-6 fw-normal">{{ source_types.VIDEO }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-danger p-2 m-1 fs-6 fw-normal">Article</span>
+                <span class="badge rounded-pill text-bg-danger p-2 m-1 fs-6 fw-normal">{{ source_types.ARTICLE }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-info p-2 m-1 fs-6 fw-normal">Success</span>
+                <span class="badge rounded-pill text-bg-info p-2 m-1 fs-6 fw-normal">{{ source_types.LECTURE }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-dark p-2 m-1 fs-6 fw-normal">Succes</span>
+                <span class="badge rounded-pill text-bg-dark p-2 m-1 fs-6 fw-normal">{{ source_types.TUTORIAL }}</span>
+                </a>
+                <a href="#" class="text-decoration-none text-dark">
+                    <span class="badge rounded-pill text-bg-light p-2 m-1 fs-6 fw-normal">{{ source_types.DEFAULT }}</span>
                 </a>
             </span>
         </div>

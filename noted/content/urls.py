@@ -7,14 +7,17 @@ from content.models import Note
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("add-note/", views.create_note, name="create_note"),
+    path("add-note/", views.NoteCreateView.as_view(), name="create_note"),
     path(
-        "note/<str:slug>/",
-        DetailView.as_view(
-            model=Note, template_name="content/note_display.html"
-        ),
-        name="note",
+        "edit-note/<str:slug>/",
+        views.NoteUpdateView.as_view(),
+        name="edit_note",
     ),
-    # path("source-type/<str:slug>/", _, name="source_type"),
+    path(
+        "del-note/<str:slug>/",
+        views.NoteDeleteView.as_view(),
+        name="delete_note",
+    ),
+    path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
     # path("source/<str:slug>/", _, name="source"),
 ]
