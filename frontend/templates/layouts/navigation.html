@@ -52,7 +52,7 @@ Require script `js/auth.js`
     {% else %}
         <li class="nav-item dropdown" style="list-style-type: none;">
             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="#" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
+            <img src="{{ request.user.avatar.url }}" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
@@ -107,7 +107,7 @@ Require script `js/auth.js`
             <div class="mb-4">
                 <li class="nav-item dropdown" style="list-style-type: none;">
                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="assets/avatar.png" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
+                <img src="{{ request.user.avatar.url }}" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item"><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
@@ -155,9 +155,9 @@ Require script `js/auth.js`
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign in with email" %}</p>
                     <p class="text-center mt-5">{% trans "Enter the email address associated with your account and your password." %}</p>
-                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="Email" autocomplete="email">
+                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="{% trans "Email" %}" autocomplete="email">
                     <div id="signin_email_feedback" class="invalid-feedback"></div> 
-                    <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="Password">
+                    <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="{% trans "Password" %}">
                     <div id="signin_password_feedback" class="invalid-feedback"></div> 
                     <div id="signin_feedback" class="mt-2 text-danger"></div>
                     <button id="signin_submit" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
@@ -177,7 +177,7 @@ Require script `js/auth.js`
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign up with email" %}</p>
                     <p class="text-center mt-4">{% trans "Enter your email address to create an account." %}</p>
-                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="Email" autocomplete="email">
+                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="{% trans "Email" %}" autocomplete="email">
                     <div id="user_email_feedback" class="invalid-feedback">
                         {% trans "Enter a valid email." %}
                     </div>                      

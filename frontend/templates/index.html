@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col">
                     <a href="#" class="text-decoration-none text-dark">
-                    <span><img src="#" class="bi bi-person-circle" alt="A" width="24" height="24"></span>
+                    <span><img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="24" height="24"></span>
                     <span class="col">{{ note.author.full_name }}</span>
                     </a>
                     <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
@@ -90,7 +90,7 @@
             <span class="input-group-text border-0 bg-white" id="search-addon">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="search" class="form-control rounded form-control-sm" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <input type="search" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" disabled />
         </div>
         <div class="mt-4">
             <h6>Source types</h6>
@@ -162,24 +162,7 @@
                 <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
             </span>
         </div>
-        <hr>
-        <div class="text-center" style="font-size: 13px;">
-            <span><img src="assets/logo.png" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
-            <a href="#" class="link-secondary text-decoration-none ps-2">About</a>
-            <a href="#" class="link-secondary text-decoration-none ps-2">Contacts</a>
-            <a href="#" class="link-secondary text-decoration-none ps-2">Privacy Policy</a>
-        </div>
-        <div class="text-center mt-1" style="font-size: 1.2rem;">
-            <a href="#" class="text-decoration-none">
-            <i class="bi bi-github px-1 color-grey github-h"></i>
-            </a>
-            <a href="#" class="text-decoration-none">
-            <i class="bi bi-google px-1 color-grey google-h"></i>
-            </a>
-            <a href="#" class="text-decoration-none">
-            <i class="bi bi-telegram px-1 color-grey telegram-h"></i>
-            </a>
-        </div>
+        {% include 'layouts/side_footer.html' %}
     </div>
 </div>
 </div>

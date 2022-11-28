@@ -11,3 +11,4 @@ sqlparse==0.4.3
 urllib3==1.26.13
 django-simplemde==0.1.4
 markdown2==2.4.6
+Pillow==9.3.0

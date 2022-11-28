@@ -185,24 +185,8 @@
                     <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
                 </div>
             </div>
-            <hr>
-            <div class="text-center" style="font-size: 13px;">
-                <span><img src="{% static 'img/logo.png' %}" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
-                <a href="#" class="link-secondary text-decoration-none ps-2">About</a>
-                <a href="#" class="link-secondary text-decoration-none ps-2">Contacts</a>
-                <a href="#" class="link-secondary text-decoration-none ps-2">Privacy Policy</a>
-            </div>
-            <div class="text-center mt-1" style="font-size: 1.2rem;">
-                <a href="#" class="text-decoration-none">
-                <i class="bi bi-github px-1 color-grey github-h"></i>
-                </a>
-                <a href="#" class="text-decoration-none">
-                <i class="bi bi-google px-1 color-grey google-h"></i>
-                </a>
-                <a href="#" class="text-decoration-none">
-                <i class="bi bi-telegram px-1 color-grey telegram-h"></i>
-                </a>
-            </div>
+            {% include 'layouts/side_footer.html' %}
+
         </div>
     </div>
 </div>

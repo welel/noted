@@ -72,7 +72,6 @@ def signup(request, token):
         email = signer.unsign(token.token, max_age=7200)
     except SignatureExpired:
         return render(request, template_name, {"error": "Signature Expired"})
-    # TODO: Maybe excess
     except BadSignature:
         return render(request, template_name, {"error": "Bad Signature"})
 

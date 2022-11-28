@@ -1,6 +1,7 @@
 from django import forms
 
 from content.models import Source, Note
+from django.utils.translation import gettext_lazy as _
 
 
 class SourceForm:
@@ -15,11 +16,11 @@ class NoteForm(forms.ModelForm):
             "title": forms.TextInput(
                 attrs={
                     "class": "form-control form-control-lg",
-                    "placeholder": "Title",
+                    "placeholder": _("Title"),
                 }
             ),
             "summary": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Summary"}
+                attrs={"class": "form-control", "placeholder": _("Summary")}
             ),
             "anonymous": forms.CheckboxInput(
                 attrs={"class": "form-check-input", "role": "switch"}

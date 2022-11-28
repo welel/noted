@@ -14,6 +14,10 @@ class UserAdmin(BaseUserAdmin):
                     "username",
                     "password",
                     "full_name",
+                    "avatar",
+                    "bio",
+                    "location",
+                    "socials",
                     "last_login",
                 )
             },

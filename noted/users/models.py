@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -68,6 +69,15 @@ class UserManager(BaseUserManager):
         return user
 
 
+def user_avatars_path(instance, filename):
+    """Return a path to a user's profile picture."""
+    return f"user/avatars/{instance.user.id}/{filename}"
+
+
+def default_social_media_json():
+    return {"instagram": "", "twitter": "", "github": "", "vk": ""}
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """The main model for an account of a client.
 
@@ -76,20 +86,39 @@ class User(AbstractBaseUser, PermissionsMixin):
             `email` field is unique for users.
         full_name: store full name of a user.
         username: generates based on `first_name`.
+        ...
+        location: simple text to indicate user's location (country, city, etc.)
+                  at the discretion of the user.
+        socials: JSON with links to user's social media ({"social_name":"link"})
     """
 
     email = models.EmailField(
-        max_length=254, unique=True, blank=False, db_index=True, null=False
+        _("Email"),
+        max_length=254,
+        unique=True,
+        blank=False,
+        db_index=True,
+        null=False,
     )
     username = models.CharField(
-        max_length=150, unique=True, blank=True, null=False
+        _("Username"), max_length=150, unique=True, blank=True, null=False
     )
-    full_name = models.CharField(max_length=50, blank=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    last_login = models.DateTimeField(null=True, blank=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
+    full_name = models.CharField(_("Full Name"), max_length=50, blank=True)
+    is_staff = models.BooleanField(_("Staff"), default=False)
+    is_superuser = models.BooleanField(_("Superuser"), default=False)
+    is_active = models.BooleanField(_("User activated"), default=True)
+    last_login = models.DateTimeField(_("Last Login"), null=True, blank=True)
+    date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
+    avatar = models.ImageField(
+        _("Profile picture"),
+        upload_to=user_avatars_path,
+        default=settings.DEFAULT_USER_AVATAR_PATH,
+    )
+    bio = models.TextField(_("Bio"), max_length=700, blank=True)
+    location = models.CharField(_("Location"), max_length=40, blank=True)
+    socials = models.JSONField(
+        _("Social Media Links"), blank=True, default=default_social_media_json
+    )
 
     USERNAME_FIELD = "email"
     EMAIL_FIELD = "email"

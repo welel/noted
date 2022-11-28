@@ -1,8 +1,10 @@
 import json
+from pathlib import Path
 
 import django
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
+from django.conf import settings
 
 from users.models import User, SignupToken, UserManager
 
@@ -100,37 +102,6 @@ class URLTests(TestCase):
 
 
 class ModelsTests(TestCase):
-    def test_username_generator_unique(self):
-        username = User.objects._generate_username("Some Name")
-        self.assertEqual(username, "@some.name")
-
-    def test_username_generator_taken(self):
-        user = User.objects.create(email="one_email", full_name="Some Name")
-        user.save()
-        user2 = User.objects.create(
-            email="another_email", full_name="Some Name"
-        )
-        user2.save()
-        self.assertEqual(user2.username, "@some.name2")
-
-    def test_username_generator_full_name_empty(self):
-        user = User.objects.create()
-        self.assertRaises(ValueError, User.objects._generate_username, "")
-
-    def test_email_exists(self):
-        User.objects.create(email="email")
-        self.assertRaises(
-            django.db.utils.IntegrityError, User.objects.create, email="email"
-        )
-
-    def test_user_str(self):
-        user = User.objects.create(email="email", full_name="some name")
-        self.assertEqual(str(user), "@some.name / email")
-
-    def test_user_url(self):
-        user = User.objects.create(email="email", full_name="some name")
-        self.assertEqual(user.get_absolute_url(), "/users/some-name/")
-
     def test_signup_token_creates(self):
         pass
 
@@ -142,3 +113,60 @@ class ModelsTests(TestCase):
 
     def test_signup_token_doesnt_exists(self):
         pass
+
+
+class UserModelTests(TestCase):
+    def setUp(self):
+        self.mark = User.objects.create(
+            email="watney@nasa.us",
+            full_name="Mark Watney",
+            password="spacepirate543",
+        )
+        self.beth = User.objects.create(
+            email="johanssen@nasa.us", full_name="Beth Johanssen"
+        )
+        self.rich = User.objects.create(email="purnell@nasa.us")
+
+    def test_username_generator_unique(self):
+        self.assertEqual(self.mark.username, "@mark.watney")
+
+    def test_username_generator_taken(self):
+        mark2 = User.objects.create(
+            email="watney2@nasa.us",
+            full_name="Mark Watney",
+            password="spacepirate543",
+        )
+        mark3 = User.objects.create(
+            email="watney3@nasa.us",
+            full_name="Mark Watney",
+            password="spacepirate543",
+        )
+        self.assertEqual(mark2.username, "@mark.watney2")
+        self.assertEqual(mark3.username, "@mark.watney3")
+
+    def test_username_generator_empty_str(self):
+        self.assertRaises(ValueError, User.objects._generate_username, "")
+
+    def test_email_exists(self):
+        self.assertRaises(
+            django.db.utils.IntegrityError,
+            User.objects.create,
+            email="watney@nasa.us",
+        )
+
+    def test_user_str(self):
+        self.assertEqual(str(self.mark), "@mark.watney / watney@nasa.us")
+
+    def test_user_url(self):
+        self.assertEqual(self.mark.get_absolute_url(), "/users/mark-watney/")
+
+    def test_user_default_avatar_path(self):
+        self.assertEqual(self.mark.avatar, settings.DEFAULT_USER_AVATAR_PATH)
+
+    def test_user_default_avatar_exists(self):
+        self.assertTrue(Path(self.mark.avatar.path).is_file())
+
+    def test_user_default_socials(self):
+        instance_socials = list(self.mark.socials.keys())
+        default_socials = ["instagram", "twitter", "github", "vk"]
+        self.assertListEqual(instance_socials, default_socials)

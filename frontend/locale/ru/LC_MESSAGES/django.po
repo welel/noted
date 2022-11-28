@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-26 01:26+0300\n"
-"PO-Revision-Date: 2022-11-25 22:30+0000\n"
-"Last-Translator:   <pavel@ya.ru>\n"
+"POT-Creation-Date: 2022-11-28 12:57+0300\n"
+"PO-Revision-Date: 2022-11-28 09:57+0000\n"
+"Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,39 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: noted/users/auth.py:36
+#: noted/content/forms.py:19
+msgid "Title"
+msgstr "Название"
+
+#: noted/content/forms.py:23
+msgid "Summary"
+msgstr "Краткое изложение"
+
+#: noted/content/models.py:104
+msgid "Write summary on the note in 100 symbols."
+msgstr "Напишите краткое изложение в 100 символов."
+
+#: noted/content/models.py:107
+msgid "Only you can see the note."
+msgstr "Только вы сможете просматривать эту запись."
+
+#: noted/content/models.py:110
+msgid "Others won't see that the note is yours."
+msgstr "Ваше авторство у этой записи не будет указано."
+
+#: noted/content/models.py:113
+msgid "The note will appear in pin notes list."
+msgstr "Эта запись будет в списке закрепленных."
+
+#: noted/core/settings.py:128
+msgid "English"
+msgstr "Английский"
+
+#: noted/core/settings.py:129
+msgid "Russian"
+msgstr "Русский"
+
+#: noted/users/auth.py:35
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
@@ -39,9 +71,54 @@ msgstr "Полное имя должно содержать только лат�
 msgid "Full Name should include no more than 3 words."
 msgstr "Полное имя должно состоять не более чем из 3 слов."
 
-#: noted/users/models.py:16
-msgid "Email address"
-msgstr "Email адрес"
+#: noted/users/models.py:95 templates/layouts/navigation.html:158
+#: templates/layouts/navigation.html:180
+msgid "Email"
+msgstr "Электронная почта"
+
+#: noted/users/models.py:103
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: noted/users/models.py:105 templates/users/signup.html:38
+msgid "Full Name"
+msgstr "Полное имя"
+
+#: noted/users/models.py:106
+msgid "Staff"
+msgstr "Модератор"
+
+#: noted/users/models.py:107
+msgid "Superuser"
+msgstr "Администратор"
+
+#: noted/users/models.py:108
+msgid "User activated"
+msgstr "Активированный пользователь"
+
+#: noted/users/models.py:109
+msgid "Last Login"
+msgstr "Заходил"
+
+#: noted/users/models.py:110
+msgid "Date Joined"
+msgstr "Присоединился"
+
+#: noted/users/models.py:112
+msgid "Profile picture"
+msgstr "Изображение пользователя"
+
+#: noted/users/models.py:116
+msgid "Bio"
+msgstr "О себе"
+
+#: noted/users/models.py:117
+msgid "Location"
+msgstr "Местонахождение"
+
+#: noted/users/models.py:119
+msgid "Social Media Links"
+msgstr "Ссылки на социальные сети"
 
 #: noted/users/views.py:65
 msgid ""
@@ -51,70 +128,126 @@ msgstr ""
 "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 "регистрации."
 
-#: noted/users/views.py:114
+#: noted/users/views.py:110
 msgid ""
 "Sorry, but we could not find a user account with"
 "                             that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
-#: noted/users/views.py:124
+#: noted/users/views.py:120
 msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
 
-#: noted/core/settings.py:119
-msgid "English"
-msgstr "Английский"
+#: templates/content/note_create.html:34
+msgid "Source type"
+msgstr "Тип источника"
 
-#: noted/core/settings.py:120
-msgid "Russian"
-msgstr "Русский"
+#: templates/content/note_create.html:37 templates/content/note_create.html:38
+msgid "Source name"
+msgstr "Название источника"
 
-#: templates/users/signup.html:6
-msgid "Sign Up"
-msgstr "Регистрация"
+#: templates/content/note_create.html:45 templates/content/note_create.html:46
+msgid "Tags"
+msgstr "Теги"
 
-#: templates/users/signup.html:27
-msgid "The Link You Followed Has Expired"
-msgstr "Ссылка, по которой вы перешли, устарела."
+#: templates/content/note_create.html:50
+msgid "Summary in 140 symbols..."
+msgstr "Краткое изложение в 140 символов..."
 
-#: templates/users/signup.html:28
-msgid "Go to the "
-msgstr "Перейти на"
+#: templates/content/note_create.html:54
+msgid "Publish"
+msgstr "Опубликовать"
 
-#: templates/users/signup.html:28 templates/users/signup.html:31
-msgid "homepage"
-msgstr "домашнюю страницу"
+#: templates/content/note_create.html:55
+msgid "Save draft"
+msgstr "Сохранить черновик"
 
-#: templates/users/signup.html:28 templates/users/signup.html:31
-msgid "and start Sing Up process again."
-msgstr "и начать регистрацию заново."
+#: templates/content/note_create.html:58
+msgid "Allow comments"
+msgstr "Разрешить комментарии"
 
-#: templates/users/signup.html:30
-msgid "The Link You Followed Has Bad Signature"
-msgstr "Ссылка, по которой вы перешли, неверна."
+#: templates/content/note_create.html:62
+msgid "Post anonymous"
+msgstr "Опубликовать анонимно"
 
-#: templates/users/signup.html:31
-msgid "Try to follow the link from the email different way or go to the"
-msgstr ""
-"Попробуйте перейти по ссылке из email сообщения другим способом или "
-"перейдите на"
+#: templates/content/note_create.html:69
+msgid "Commonly used syntax"
+msgstr "Часто используемый синтаксис"
 
-#: templates/users/signup.html:38
-msgid "Full Name"
-msgstr "Полное имя"
+#: templates/content/note_create.html:73 templates/content/note_create.html:74
+msgid "Header"
+msgstr "Заголовок"
 
-#: templates/users/signup.html:44
-msgid "Password"
-msgstr "Пароль"
+#: templates/content/note_create.html:77 templates/content/note_create.html:78
+msgid "italics"
+msgstr "курсивный"
 
-#: templates/users/signup.html:49
-msgid "Confirm Password"
-msgstr "Подтвердите пароль"
+#: templates/content/note_create.html:81 templates/content/note_create.html:82
+msgid "bold"
+msgstr "жирный"
 
-#: templates/users/signup.html:55 templates/layouts/navigation.html:158
-#: templates/layouts/navigation.html:179 templates/layouts/navigation.html:212
-msgid "Continue"
-msgstr "Продолжить"
+#: templates/content/note_create.html:85 templates/content/note_create.html:86
+msgid "Link"
+msgstr "Ссылка"
+
+#: templates/content/note_create.html:89 templates/content/note_create.html:92
+#: templates/content/note_create.html:93 templates/content/note_create.html:98
+#: templates/content/note_create.html:101
+#: templates/content/note_create.html:102
+msgid "item"
+msgstr "пункт"
+
+#: templates/content/note_create.html:107
+#: templates/content/note_create.html:108
+msgid "quoted text"
+msgstr "цитата"
+
+#: templates/content/note_create.html:111
+#: templates/content/note_create.html:112
+msgid "inline code"
+msgstr "строка кода"
+
+#: templates/content/note_create.html:115
+#: templates/content/note_create.html:116
+msgid "code block"
+msgstr "блок кода"
+
+#: templates/content/note_display.html:29
+msgid "Posted on"
+msgstr "Опубликовано"
+
+#: templates/content/note_display.html:54
+#: templates/content/note_display.html:115
+msgid "Edit"
+msgstr "Редактировать"
+
+#: templates/content/note_display.html:55
+#: templates/content/note_display.html:116
+msgid "Delete"
+msgstr "Удалить"
+
+#: templates/content/note_display.html:57
+#: templates/content/note_display.html:118
+msgid "Download"
+msgstr "Скачать"
+
+#: templates/content/note_display.html:58
+#: templates/content/note_display.html:119
+msgid "Fork"
+msgstr "Копировать"
+
+#: templates/content/note_display.html:132 templates/html/home.html:143
+#: templates/index.html:93
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/content/note_display.html:143
+msgid "Followers"
+msgstr "Подписчики"
+
+#: templates/content/note_display.html:150
+msgid "Follow"
+msgstr "Подписаться"
 
 #: templates/emails/signup_email.html:40 templates/emails/signup_email.txt:5
 msgid "You’re almost there."
@@ -163,124 +296,185 @@ msgstr "Вставьте эту ссылку в ваш браузер:"
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
-#: templates/layouts/navigation.html:17
+#: templates/index.html:17
+msgid "Public"
+msgstr "Опубликовать"
+
+#: templates/index.html:20
+msgid "Following"
+msgstr "Подписки"
+
+#: templates/index.html:23
+msgid "My tags"
+msgstr "Мои теги"
+
+#: templates/index.html:46
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/layouts/navigation.html:18
 msgid "Home"
 msgstr "Главная"
 
-#: templates/layouts/navigation.html:22
+#: templates/layouts/navigation.html:23
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: templates/layouts/navigation.html:28
+#: templates/layouts/navigation.html:29
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: templates/layouts/navigation.html:32
+#: templates/layouts/navigation.html:33
 msgid "Notes"
 msgstr "Записи"
 
-#: templates/layouts/navigation.html:38
+#: templates/layouts/navigation.html:39 templates/layouts/navigation.html:94
 msgid "Write note"
 msgstr "Создать запись"
 
-#: templates/layouts/navigation.html:46
-#| msgid "Sign Up"
+#: templates/layouts/navigation.html:47 templates/layouts/navigation.html:100
 msgid "Sign In"
 msgstr "Вход"
 
-#: templates/layouts/navigation.html:57 templates/layouts/navigation.html:108
+#: templates/layouts/navigation.html:58 templates/layouts/navigation.html:113
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/layouts/navigation.html:58 templates/layouts/navigation.html:109
+#: templates/layouts/navigation.html:59 templates/layouts/navigation.html:114
 msgid "Profile settings"
 msgstr "Настройки профиля"
 
-#: templates/layouts/navigation.html:60 templates/layouts/navigation.html:111
+#: templates/layouts/navigation.html:61 templates/layouts/navigation.html:116
 msgid "Dark"
 msgstr "Тёмная"
 
-#: templates/layouts/navigation.html:62 templates/layouts/navigation.html:113
+#: templates/layouts/navigation.html:63 templates/layouts/navigation.html:118
 msgid "Sign Out"
 msgstr "Выйти"
 
-#: templates/layouts/navigation.html:129
+#: templates/layouts/navigation.html:134
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
-#: templates/layouts/navigation.html:130
+#: templates/layouts/navigation.html:135
 msgid "Sign in with Google"
 msgstr "Вход через Google"
 
-#: templates/layouts/navigation.html:131
+#: templates/layouts/navigation.html:136
 msgid "Sign in with GitHub"
 msgstr "Вход через GitHub"
 
-#: templates/layouts/navigation.html:132
+#: templates/layouts/navigation.html:137
 msgid "Sign in with Yandex"
 msgstr "Вход через Yandex"
 
-#: templates/layouts/navigation.html:133
+#: templates/layouts/navigation.html:138
 msgid "Sign in with VK"
 msgstr "Вход через Вконтакте"
 
-#: templates/layouts/navigation.html:134
+#: templates/layouts/navigation.html:139
 msgid "Sign in with Email"
 msgstr "Вход по email"
 
-#: templates/layouts/navigation.html:135
+#: templates/layouts/navigation.html:140
 msgid "No account?"
 msgstr "Нет аккаунта?"
 
-#: templates/layouts/navigation.html:135
+#: templates/layouts/navigation.html:140
 msgid "Create one."
 msgstr "Тогда создайте."
 
-#: templates/layouts/navigation.html:136
+#: templates/layouts/navigation.html:141
 msgid "Forgot email or password?"
 msgstr "Забыли email или пароль?"
 
-#: templates/layouts/navigation.html:136
+#: templates/layouts/navigation.html:141
 msgid "Get help."
 msgstr "Вспомнить."
 
-#: templates/layouts/navigation.html:151
+#: templates/layouts/navigation.html:156
 msgid "Sign in with email"
 msgstr "Вход через email"
 
-#: templates/layouts/navigation.html:152
+#: templates/layouts/navigation.html:157
 msgid ""
 "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
-#: templates/layouts/navigation.html:173
+#: templates/layouts/navigation.html:160 templates/users/signup.html:44
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/layouts/navigation.html:163 templates/layouts/navigation.html:184
+#: templates/layouts/navigation.html:217 templates/users/signup.html:55
+msgid "Continue"
+msgstr "Продолжить"
+
+#: templates/layouts/navigation.html:178
 msgid "Sign up with email"
 msgstr "Регистрация по email"
 
-#: templates/layouts/navigation.html:174
+#: templates/layouts/navigation.html:179
 msgid "Enter your email address to create an account."
 msgstr "Введите ваш email адрес и создайте аккаунт."
 
-#: templates/layouts/navigation.html:177
+#: templates/layouts/navigation.html:182
 msgid "Enter a valid email."
 msgstr "Введите корректный email адрес."
 
-#: templates/layouts/navigation.html:194
+#: templates/layouts/navigation.html:199
 msgid "Check your inbox."
 msgstr "Проверьте ваш почтовый ящик."
 
-#: templates/layouts/navigation.html:195
+#: templates/layouts/navigation.html:200
 msgid "Click the link we sent to"
 msgstr "Перейдите по ссылке, которую мы вам прислали на "
 
-#: templates/layouts/navigation.html:195
+#: templates/layouts/navigation.html:200
 msgid "to complete your account set-up."
 msgstr "для завершения регистрации."
 
-#: templates/layouts/navigation.html:196
+#: templates/layouts/navigation.html:201
 msgid "OK"
 msgstr "ОК"
 
-#: templates/layouts/navigation.html:211
+#: templates/layouts/navigation.html:216
 msgid "Are you sure you want to sign out?"
 msgstr "Вы уверены, что хотите выйти из аккаунта?"
+
+#: templates/users/signup.html:6
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: templates/users/signup.html:27
+msgid "The Link You Followed Has Expired"
+msgstr "Ссылка, по которой вы перешли, устарела."
+
+#: templates/users/signup.html:28
+msgid "Go to the "
+msgstr "Перейти на"
+
+#: templates/users/signup.html:28 templates/users/signup.html:31
+msgid "homepage"
+msgstr "домашнюю страницу"
+
+#: templates/users/signup.html:28 templates/users/signup.html:31
+msgid "and start Sing Up process again."
+msgstr "и начать регистрацию заново."
+
+#: templates/users/signup.html:30
+msgid "The Link You Followed Has Bad Signature"
+msgstr "Ссылка, по которой вы перешли, неверна."
+
+#: templates/users/signup.html:31
+msgid "Try to follow the link from the email different way or go to the"
+msgstr ""
+"Попробуйте перейти по ссылке из email сообщения другим способом или "
+"перейдите на"
+
+#: templates/users/signup.html:49
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+#~ msgid "Email address"
+#~ msgstr "Email адрес"
