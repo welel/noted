@@ -88,7 +88,11 @@ def signup(request, token):
             user.save()
             token.delete()
             if user:
-                login(request, user)
+                login(
+                    request,
+                    user,
+                    backend="django.contrib.auth.backends.ModelBackend",
+                )
             return redirect(reverse("content:home"))
         else:
             context["form"] = form
@@ -120,7 +124,9 @@ def signin(request):
                     "error_message": _("You have entered the wrong password."),
                 }
             )
-        login(request, user)
+        login(
+            request, user, backend="django.contrib.auth.backends.ModelBackend"
+        )
         # TODO: redirect on referer
         return JsonResponse(
             {

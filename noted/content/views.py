@@ -1,4 +1,7 @@
+import json
+
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -23,6 +26,20 @@ def home(request):
     return render(request, "index.html", context)
 
 
+def search_sources_select(request):
+    query = request.GET.get("query", "[{]}(2")
+    data = Source.objects.filter(title__icontains=query)
+    data = [
+        {
+            "id": source.pk,
+            "title": source.title,
+            "type": [source.type, source.get_readable_type()],
+        }
+        for source in data
+    ]
+    return JsonResponse({"data": data}, status=200)
+
+
 @method_decorator(login_required, name="dispatch")
 class NoteCreateView(CreateView):
     model = Note
@@ -31,7 +48,9 @@ class NoteCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        res = super().form_valid(form)
+        print(res)
+        return res
 
 
 @method_decorator(login_required, name="dispatch")

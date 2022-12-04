@@ -19,5 +19,10 @@ urlpatterns = [
         name="delete_note",
     ),
     path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
+    path(
+        "search-sources-select/",
+        views.search_sources_select,
+        name="search_sources_select",
+    )
     # path("source/<str:slug>/", _, name="source"),
 ]

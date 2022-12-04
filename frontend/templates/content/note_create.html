@@ -5,6 +5,14 @@
 
 
 {% block extra_head %}
+<!-- Selectalize: https://selectize.dev/docs/intro -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 <link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
 {% endblock %}
 
@@ -22,22 +30,20 @@
                     {{ form.title }}
                 </div>
                 <div class="row mt-4">
-                    <div class="col-3 px-0 form-floating">
-                        <select id="source-type" class="form-select" disabled>
-                            <option selected>Other</option>
-                            <option value="1">Book</option>
-                            <option value="2">Course</option>
-                            <option value="3">Video</option>
-                            <option value="4">Article</option>
-                            <option value="5">Lecture</option>
-                        </select>
-                        <label for="source-type">{% trans "Source type" %}</label>
-                    </div>
-                    <div class="col-9 pe-0 form-floating">
-                        <input id="source-name" type="text" class="form-control" placeholder="{% trans "Source name" %}" disabled>
-                        <label class="ms-3" for="source-name">{% trans "Source name" %}</label>
-                    </div>                      
+                    <button class="col-3 btn btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#source-form" aria-expanded="false" aria-controls="source-form">
+                        Add source
+                    </button>         
                 </div> 
+                <div class="row mt-3 collapse" id="source-form">
+                    <div class="col-3 px-0">
+                        <label class="fs-6 text-secondary" for="id_source_type">{% trans "Source type" %}</label>
+                        {{ form.source_type }}
+                    </div>
+                    <div class="col-9 pe-0">
+                        <label class="fs-6 text-secondary" for="id_source">{% trans "Sources of information from which you take the note." %}</label>
+                        {{ form.source }}
+                    </div>       
+                </div>
                 <div class="row mt-4">
                     {{ form.body_raw }}
                 </div>
@@ -124,5 +130,12 @@
 {% endblock %}
 
 {% block extra_scripts %}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="{% static 'js/note_create.js' %}"></script>
 <script src="{% static 'js/simplemde.js' %}"></script>
 {% endblock %}

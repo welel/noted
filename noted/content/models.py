@@ -6,7 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from content.fields import MarkdownField, RenderedMarkdownField, SimpleMDEField
+from content.fields import MarkdownField, RenderedMarkdownField
 from common import generate_unique_slug
 from users.models import User
 
@@ -19,7 +19,7 @@ class Source(models.Model):
     LECTURE = "LECTURE"
     TUTORIAL = "TUTORIAL"
     DEFAULT = "DEFAULT"
-    TYPES = {
+    TYPES = (
         (BOOK, _("Book")),
         (COURSE, _("Course")),
         (VIDEO, _("Video")),
@@ -27,9 +27,9 @@ class Source(models.Model):
         (LECTURE, _("Lecture")),
         (TUTORIAL, _("Tutorial")),
         (DEFAULT, _("Other")),
-    }
+    )
     title = models.CharField(
-        max_length=200, blank=False, null=False, db_index=True, editable=False
+        max_length=200, blank=False, null=False, db_index=True
     )
     type = models.CharField(max_length=20, choices=TYPES, default=DEFAULT)
     slug = models.SlugField(max_length=254, unique=True, null=False)
@@ -39,8 +39,18 @@ class Source(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_unique_slug(self)
+            self.slug = generate_unique_slug(self, from_field="title")
         return super().save(*args, **kwargs)
+
+    @classmethod
+    def make_type_readable(cls, query):
+        for type_code, type in cls.TYPES:
+            if type_code == query:
+                return type
+        return None
+
+    def get_readable_type(self):
+        return Source.make_type_readable(self.type)
 
     # def get_absolute_url(self):
     #     return reverse("source", args=[self.slug])
