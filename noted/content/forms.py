@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
 from content.models import Source, Note
@@ -29,10 +28,7 @@ class NoteForm(forms.ModelForm):
                 }
             ),
             "source": forms.TextInput(
-                attrs={
-                    "list": "source-list",
-                    "autocomplete": "off",
-                }
+                attrs={"autocomplete": "off", "class": "form-control"}
             ),
             "summary": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": _("Summary")}
@@ -42,26 +38,11 @@ class NoteForm(forms.ModelForm):
             ),
         }
 
-
-# class SourceForm(forms.ModelForm):
-#     class Meta:
-#         model = Source
-#         fields = ("sourcename", "type")
-
-
-# CLEATE ONE FORM AND HANDLE ALL FIELDS HARDCODLY
-# ModelChoiceField
-
-# class NoteForm(forms.Form):
-#     title = forms.CharField(
-#         max_length=100, min_length=3, required=True
-#     )
-#     source_type = forms.CharField()
-#     source_title = forms.CharField(
-#         max_length=200, min_length=3
-#     )
-#     body_raw = ""
-#     summary = forms.CharField(
-#         max_length=250, min_length=5
-#     )
-#     anonymous = forms.BooleanField()
+    def clean(self):
+        cleaned_data = super().clean()
+        if self.data["source"]:
+            source, _ = Source.objects.get_or_create(
+                type=cleaned_data["source_type"], title=self.data["source"]
+            )
+            cleaned_data["source"] = source
+            del self.errors["source"]

@@ -12,21 +12,21 @@ from users.models import User
 
 
 class Source(models.Model):
-    BOOK = "BOOK"
-    COURSE = "COURSE"
-    VIDEO = "VIDEO"
-    ARTICLE = "ARTICLE"
-    LECTURE = "LECTURE"
-    TUTORIAL = "TUTORIAL"
-    DEFAULT = "DEFAULT"
+    DEFAULT = "0"
+    BOOK = "1"
+    COURSE = "2"
+    VIDEO = "3"
+    ARTICLE = "4"
+    LECTURE = "5"
+    TUTORIAL = "6"
     TYPES = (
+        (DEFAULT, _("Other")),
         (BOOK, _("Book")),
         (COURSE, _("Course")),
         (VIDEO, _("Video")),
         (ARTICLE, _("Article")),
         (LECTURE, _("Lecture")),
         (TUTORIAL, _("Tutorial")),
-        (DEFAULT, _("Other")),
     )
     title = models.CharField(
         max_length=200, blank=False, null=False, db_index=True
@@ -91,7 +91,11 @@ class Note(models.Model):
         User, on_delete=models.SET_NULL, null=True, editable=False
     )
     source = models.ForeignKey(
-        Source, null=True, on_delete=models.SET_NULL, related_name="notes"
+        Source,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="notes",
+        blank=True,
     )
     body_raw = MarkdownField(rendered_field="body_html", blank=True)
     body_html = RenderedMarkdownField(max_length=70000, default="", blank=True)

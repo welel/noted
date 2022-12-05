@@ -20,7 +20,7 @@ urlpatterns = [
     ),
     path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
     path(
-        "search-sources-select/",
+        "search-sources-select",
         views.search_sources_select,
         name="search_sources_select",
     )

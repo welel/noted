@@ -42,7 +42,7 @@ body {
 .badge {
     font-weight: 400;
 }
-.badge:hover {
+.badge-h:hover {
     color: black !important;
     background-color: rgb(150, 150, 150) !important;
 }

@@ -48,9 +48,7 @@ class NoteCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        res = super().form_valid(form)
-        print(res)
-        return res
+        return super().form_valid(form)
 
 
 @method_decorator(login_required, name="dispatch")

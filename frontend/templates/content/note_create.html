@@ -5,14 +5,6 @@
 
 
 {% block extra_head %}
-<!-- Selectalize: https://selectize.dev/docs/intro -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
-  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
 <link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
 {% endblock %}
 
@@ -29,21 +21,66 @@
                 <div class="row">
                     {{ form.title }}
                 </div>
-                <div class="row mt-4">
-                    <button class="col-3 btn btn-success rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#source-form" aria-expanded="false" aria-controls="source-form">
-                        Add source
-                    </button>         
-                </div> 
-                <div class="row mt-3 collapse" id="source-form">
-                    <div class="col-3 px-0">
-                        <label class="fs-6 text-secondary" for="id_source_type">{% trans "Source type" %}</label>
-                        {{ form.source_type }}
+
+                <!-- Button trigger modal -->
+                <button id="add-source-btn" type="button" class="btn btn-success mt-4 rounded-pill btn-sm" data-bs-toggle="modal" data-bs-target="#add-source-modal">
+                    {% trans "Add source" %}
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="add-source-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">{% trans "Source" %}</h1>
+                        </div>
+                        <div class="modal-body container">
+                            <div class="row mt-3" id="source-form">
+                                <div class="col-1"></div>
+                                <div class="col-2 px-0">
+                                    <label class="fs-6 text-secondary" for="id_source_type">{% trans "Source type" %}</label>
+                                    {{ form.source_type }}
+                                </div>
+                                <div class="col-7 pe-0">
+                                    <label class="fs-6 text-secondary" for="id_source">{% trans "Sources of information from which you take the note." %}</label>
+                                    {{ form.source }}
+                                </div>
+                                <div class="col-2"></div>     
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-1"></div>
+                                <div id="sourses-list" class="col-9" hidden>
+                                    <h4>{% trans "Select an existing source" %}</h4>
+                                    <table class="table table-responsive" style="max-height: 300px;">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Source</th>
+                                            <th scope="col"></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="sources-output">
+                                        </tbody>
+                                      </table>
+                                </div>
+                                <div class="col-2"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button id="close-source-modal" type="button" class="btn btn-danger rounded-pill" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                        <button id="add-source-modal" type="button" class="btn btn-success rounded-pill" data-bs-dismiss="modal">{% trans "Add" %}</button>
+                        </div>
                     </div>
-                    <div class="col-9 pe-0">
-                        <label class="fs-6 text-secondary" for="id_source">{% trans "Sources of information from which you take the note." %}</label>
-                        {{ form.source }}
-                    </div>       
+                    </div>
                 </div>
+
+                <div id="selected-source-hidden" class="row" hidden>
+                    <div class="col mt-4 d-flex justify-content-between">
+                        <span id="selected-source"></span>
+                        <button id="remove-source-btn" class="btn btn-danger btn-sm rounded-pill" type="button">Remove</button>
+                    </div>
+                </div>
+
                 <div class="row mt-4">
                     {{ form.body_raw }}
                 </div>
@@ -130,12 +167,7 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
-  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-></script>
-<script src="{% static 'js/note_create.js' %}"></script>
+<span id="get-sources-url" hidden>{% url 'content:search_sources_select' %}</span>
 <script src="{% static 'js/simplemde.js' %}"></script>
+<script src="{% static 'js/note_create.js' %}"></script>
 {% endblock %}
