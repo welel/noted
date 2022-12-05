@@ -38,6 +38,12 @@ class NoteForm(forms.ModelForm):
             ),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.source:
+            self.initial["source"] = self.instance.source.title
+            self.initial["source_type"] = self.instance.source.type
+
     def clean(self):
         cleaned_data = super().clean()
         if self.data["source"]:
@@ -45,4 +51,5 @@ class NoteForm(forms.ModelForm):
                 type=cleaned_data["source_type"], title=self.data["source"]
             )
             cleaned_data["source"] = source
-            del self.errors["source"]
+            if "source" in self.errors:
+                del self.errors["source"]

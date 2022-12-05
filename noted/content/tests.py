@@ -24,7 +24,7 @@ class ModelsTest(TestCase):
         return super().setUp()
 
     def test_defiend_sourcetype(self):
-        self.assertEqual(self.source.type, "BOOK")
+        self.assertEqual(self.source.type, "1")
 
     def test_source_str(self):
         self.assertEqual(str(self.source), self.source.title)

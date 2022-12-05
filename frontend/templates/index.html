@@ -45,11 +45,11 @@
             <div class="row">
                 <div class="col d-flex align-items-center">
                     <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                    <span><i class="bi bi-bookmark-plus" style="font-size: 1.5rem;"></i></span>
+                    <span><i class="bi bi-bookmark-plus" style="font-size: 1.3rem;"></i></span>
                     </a>
                     <span>&nbsp;|&nbsp;</span>
                     <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.type }}</span>
+                    <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.get_readable_type }}</span>
                     </a>
                     <a  href="#" class="text-decoration-none text-dark">
                     <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
@@ -57,13 +57,15 @@
                 </div>
             </div>
             {% endif %}
-            {% if note.summary %}
             <div class="row ps-1 d-md-inline d-none">
                 <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
-                    {{ note.summary }}
+                    {% if note.summary %}
+                        {{ note.summary }}
+                    {% else %}
+                        {{ note.get_preview_text|truncatechars:140 }}
+                    {% endif %}
                 </a>
             </div>
-            {% endif %}
             <div class="row row-cols-auto d-flex justify-content-between mt-2">
                 <div class="col">
                     {% if not note.source %}
@@ -108,61 +110,45 @@
             <h6>Source types</h6>
             <span>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">{{ source_types.BOOK }}</span>
+                <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">{{ source_types.1 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ source_types.COURSE }}</span>
+                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ source_types.2 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-primary p-2 m-1 fs-6 fw-normal">{{ source_types.VIDEO }}</span>
+                <span class="badge rounded-pill text-bg-primary p-2 m-1 fs-6 fw-normal">{{ source_types.3 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-danger p-2 m-1 fs-6 fw-normal">{{ source_types.ARTICLE }}</span>
+                <span class="badge rounded-pill text-bg-danger p-2 m-1 fs-6 fw-normal">{{ source_types.4 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-info p-2 m-1 fs-6 fw-normal">{{ source_types.LECTURE }}</span>
+                <span class="badge rounded-pill text-bg-info p-2 m-1 fs-6 fw-normal">{{ source_types.5 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-dark p-2 m-1 fs-6 fw-normal">{{ source_types.TUTORIAL }}</span>
+                <span class="badge rounded-pill text-bg-dark p-2 m-1 fs-6 fw-normal">{{ source_types.6 }}</span>
                 </a>
                 <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge rounded-pill text-bg-light p-2 m-1 fs-6 fw-normal">{{ source_types.DEFAULT }}</span>
+                    <span class="badge rounded-pill text-bg-light p-2 m-1 fs-6 fw-normal">{{ source_types.0 }}</span>
                 </a>
             </span>
         </div>
         <div class="mt-5">
             <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
+            {% for note in notes|slice:":5" %}
             <div class="mt-4">
                 <div class="d-flex align-items-center" style="font-size: 13px;">
                     <a href="#" class="text-decoration-none text-dark">
-                    <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                    <span>Pavel Loginov</span>
+                    <span><img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="16" height="16"></span>
+                    <span>{{ note.author.full_name }}</span>
                     </a>
                     <span>&nbsp;&#8226;&nbsp;</span>
-                    <span class="text-secondary">Nov 3</span>
+                    <span class="text-secondary">{{ note.created|date:"M j" }}</span>
                 </div>
-                <a href="#" class="text-decoration-none text-dark">
-                <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
+                <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
+                <div class="mt-2"><h6>{{ note.title }}</h6></div>
                 </a>
             </div>
-            <div class="mt-4">
-                <div class="d-flex align-items-center" style="font-size: 13px;">
-                    <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                    <span>Pavel Loginov</span>
-                    <span>&nbsp;&#8226;&nbsp;</span>
-                    <span class="text-secondary">Nov 3</span>
-                </div>
-                <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-            </div>
-            <div class="mt-4">
-                <div class="d-flex align-items-center" style="font-size: 13px;">
-                    <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                    <span>Pavel Loginov</span>
-                    <span>&nbsp;&#8226;&nbsp;</span>
-                    <span class="text-secondary">Nov 3</span>
-                </div>
-                <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-            </div>
+            {% endfor %}
         </div>
         <div class="mt-5">
             <h6>Recommended topics</h6>

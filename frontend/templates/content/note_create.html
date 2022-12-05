@@ -36,20 +36,20 @@
                         </div>
                         <div class="modal-body container">
                             <div class="row mt-3" id="source-form">
-                                <div class="col-1"></div>
-                                <div class="col-2 px-0">
+                                <div class="col-lg-1 col-0"></div>
+                                <div class="col-lg-2 col-12">
                                     <label class="fs-6 text-secondary" for="id_source_type">{% trans "Source type" %}</label>
                                     {{ form.source_type }}
                                 </div>
-                                <div class="col-7 pe-0">
+                                <div class="col-lg-7 col-12 ms-lg-2 ms-0">
                                     <label class="fs-6 text-secondary" for="id_source">{% trans "Sources of information from which you take the note." %}</label>
                                     {{ form.source }}
                                 </div>
-                                <div class="col-2"></div>     
+                                <div class="col-lg-2 col-0"></div>     
                             </div>
                             <div class="row mt-5">
-                                <div class="col-1"></div>
-                                <div id="sourses-list" class="col-9" hidden>
+                                <div class="col-lg-1 col-0"></div>
+                                <div id="sourses-list" class="col-lg-9 col-12" hidden>
                                     <h4>{% trans "Select an existing source" %}</h4>
                                     <table class="table table-responsive" style="max-height: 300px;">
                                         <thead>
@@ -63,7 +63,7 @@
                                         </tbody>
                                       </table>
                                 </div>
-                                <div class="col-2"></div>
+                                <div class="col-lg-2 col-0"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -93,10 +93,10 @@
                     <label for="id_summary" class="form-label">{% trans "Summary in 140 symbols..." %}</label>
                 </div>
                 <div class="row mt-4">
-                    <div class="col px-0 d-flex align-items-center">
-                        <button type="submit" class="btn btn-success rounded-pill">{% trans "Publish" %}</button>
-                        <button type="button" class="btn btn-light rounded-pill ms-2" disabled>{% trans "Save draft" %}</button>
-                        <div class="form-check form-switch ms-3">
+                    <div class="col px-0 d-flex align-items-center flex-sm-row flex-column-reverse">
+                        <button type="submit" class="btn btn-success rounded-pill mt-sm-0 mt-3">{% trans "Publish" %}</button>
+                        <button type="button" class="btn btn-light rounded-pill ms-2 mt-sm-0 mt-3" disabled>{% trans "Save draft" %}</button>
+                        <div class="form-check form-switch ms-3 mt-sm-0 mt-3">
                             <input class="form-check-input" type="checkbox" role="switch" id="allow-comments" checked disabled>
                             <label class="form-check-label" for="allow-comments">{% trans "Allow comments" %}</label>
                         </div>
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-12 px-4">
+        <div class="col-lg-3 col-12 px-4 d-lg-inline d-none">
             <summary class="text-secondary">{% trans "Commonly used syntax" %}</summary>
             <table id="md-syntax-table" class="text-secondary w-150 mt-2 mb-4">
                 <tbody>

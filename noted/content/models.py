@@ -1,6 +1,7 @@
 """
 TODO: DRY - __str__, save, get_absolute_url
 """
+from bs4 import BeautifulSoup
 
 from django.db import models
 from django.urls import reverse
@@ -131,3 +132,6 @@ class Note(models.Model):
 
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
+
+    def get_preview_text(self):
+        return "".join(BeautifulSoup(self.body_html).findAll(text=True))

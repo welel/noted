@@ -67,61 +67,44 @@ Require script `js/auth.js`
     </div>
 </div>
 
-<!-- Top navigation -->
-<nav class="navbar navbar-expand-lg  d-lg-none d-flex" style="border: 1px solid #c6c7c8;">
-    <div class="container-fluid container-xxl">
-        <a class="navbar-brand" href="{% url 'content:home' %}">
-            <img src="{% static 'img/logo.png' %}" alt="NoteD." width="34" height="34">
-        </a>      
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
-            <li class="nav-item px-2">
-            <a class="nav-link" href="{% url 'content:home' %}"><i class="bi bi-house" style="font-size: 1.5rem;"></i></a>
-            </li>
-            <li class="nav-item px-2">
-            <a class="nav-link" type="button"><i class="bi bi-bell" style="font-size: 1.5rem;"></i></a>
-            </li>
-            <li class="nav-item px-2">
-            <a class="nav-link"><i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i></a>
-            </li>
-            <li class="nav-item px-2">
-            <a class="nav-link" href="#"><i class="bi bi-journals" style="font-size: 1.5rem;"></i></a>
-            </li>
-            <li class="nav-item px-2">
-                <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:create_note' %}{% else %}#{% endif %}"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Write note" %}">
-                    <i class="bi bi-pencil-square" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
-                </a>
-            </li>
-        </ul>
+
+<nav class="navbar fixed-bottom bg-dark nav-ligth d-lg-none d-inline">
+      <ul class="navbar-nav d-flex flex-row w-100 justify-content-around">
+        <li class="nav-item px-2">
+            <a class="nav-link" href="{% url 'content:home' %}">
+                <i class="bi bi-house" style="font-size: 1.5rem;"></i>
+            </a>
+        </li>
+        <li class="nav-item px-2">
+            <a class="nav-link">
+                <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i>
+            </a>
+        </li>
+        <li class="nav-item px-2">
+            <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:create_note' %}{% else %}#{% endif %}">
+                <i class="bi bi-pencil-square" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
+            </a>
+        </li>
+        <li class="nav-item px-2">
+            <a class="nav-link" href="#">
+                <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
+            </a>
+        </li>
         {% if not request.user.is_authenticated %}
-            <li style="list-style-type: none;"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Sign In" %}">
+            <li style="list-style-type: none;" >
                 <a class="nav-link color-grey" href="#">
                     <i class="bi bi-person-add" style="font-size: 1.5rem;" data-bs-toggle="modal" data-bs-target="#signin"></i>
                 </a>
             </li>
         {% else %}
-            </div>
-            <div class="mb-4">
-                <li class="nav-item dropdown" style="list-style-type: none;">
-                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ request.user.avatar.url }}" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
+            <li class="nav-item dropdown" style="list-style-type: none;">
+                <a class="nav-link" href="#" role="button">
+                <img src="{{ request.user.avatar.url }}" class="bi bi-person-circle" alt="{{ request.user.first_name.0 }}" width="30" height="30">
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item"><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-gear-fill px-2"></i>{% trans "Profile settings" %}</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-translate px-2"></i>Русский</a></li>
-                <li><a class="dropdown-item"><i class="bi bi-moon-stars-fill px-2"></i>{% trans "Dark" %}</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
-                </ul>
             </li>
-            </div>
         {% endif %}
-    </div>
-</nav>
+      </ul>
+  </nav>
 
 <!-- Modal sign-in -->
 <div class="modal fade" id="signin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">

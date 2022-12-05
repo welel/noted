@@ -59,7 +59,7 @@ sourceCloseButton.onclick = (event) => {
     sourceInputField.value = '';
 }
 
-sourceAddButton.onclick = (event) => {
+function showSource (event) {
     if (sourceInputField.value.length != 0) {
         selectedSourceElement.innerHTML = '<span class="badge text-bg-success rounded-pill">' +
                                             sourceTypeInputField.selectedOptions[0].innerText +
@@ -67,8 +67,12 @@ sourceAddButton.onclick = (event) => {
                                             sourceInputField.value + '</b>';
         selectedSourceHiddenElement.hidden = false;
         openSourceModalButton.hidden = true;
-    }
 }
+
+}
+
+sourceAddButton.onclick = showSource;
+
 
 sourceRemoveButton.onclick = (event) => {
     selectedSourceHiddenElement.hidden = true;
@@ -80,3 +84,10 @@ function trig(val) {
     sourceTypeInputField.selectedIndex = document.getElementById('source-type-' + val).getAttribute('code');
     sourceInputField.value = document.getElementById('source-' + val).innerText;
 }
+
+window.onload = function(){
+    console.log('LOF');
+    if (sourceInputField.value.length != 0) {
+        showSource(event);
+    }
+};
