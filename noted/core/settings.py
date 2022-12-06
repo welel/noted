@@ -160,6 +160,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+SOCIALACCOUNT_ADAPTER = "users.adapter.SocialAccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.getenv("HTTP_PROTOCOL")
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
