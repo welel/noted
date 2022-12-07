@@ -41,9 +41,9 @@
                         <a href="#" class="text-decoration-none text-dark">
                         <i class="bi bi-telegram telegram-h px-2 color-grey" style="font-size: 1.1rem;"></i>
                         </a>
-                        <a href="#" class="text-decoration-none text-dark">
+                        <button id="copy-note-link" class="btn btn-link text-decoration-none text-dark px-0">
                         <i class="bi bi-link-45deg link-h px-2 color-grey" style="font-size: 1.1rem;"></i>
-                        </a>
+                        </button>
                         <a href="#" class="text-decoration-none text-dark">
                         <i class="bi bi-bookmark-plus link-h ps-4 color-grey" style="font-size: 1.2rem;"></i>
                         </a>
@@ -110,7 +110,7 @@
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-link-45deg"></i> {% trans "Copy link" %}</a></li>
+                                <li><button id="copy-note-link2" class="btn btn-link dropdown-item"><i class="bi bi-link-45deg"></i> {% trans "Copy link" %}</button></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
@@ -171,43 +171,33 @@
                     <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
                 </div>
             </div>
-            <div class="mt-5">
-                <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
-                <div class="mt-4">
-                    <div class="d-flex align-items-center" style="font-size: 13px;">
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                        <span>Pavel Loginov</span>
-                        </a>
-                        <span>&nbsp;&#8226;&nbsp;</span>
-                        <span class="text-secondary">Nov 3</span>
-                    </div>
-                    <a href="#" class="text-decoration-none text-dark">
-                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                    </a>
-                </div>
-                <div class="mt-4">
-                    <div class="d-flex align-items-center" style="font-size: 13px;">
-                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                        <span>Pavel Loginov</span>
-                        <span>&nbsp;&#8226;&nbsp;</span>
-                        <span class="text-secondary">Nov 3</span>
-                    </div>
-                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                </div>
-                <div class="mt-4">
-                    <div class="d-flex align-items-center" style="font-size: 13px;">
-                        <span><img src="assets/avatar.png" class="bi bi-person-circle" alt="Avatar." width="16" height="16"></span>
-                        <span>Pavel Loginov</span>
-                        <span>&nbsp;&#8226;&nbsp;</span>
-                        <span class="text-secondary">Nov 3</span>
-                    </div>
-                    <div class="mt-2"><h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, itaque.</h6></div>
-                </div>
-            </div>
+            {% include 'layouts/more_from_noted.html' %}
             {% include 'layouts/side_footer.html' %}
 
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function copyToClipboard(text) {
+    var clipboard = document.createElement('input');
+    document.body.appendChild(clipboard);
+    clipboard.value = text;
+    clipboard.select();
+    document.execCommand('copy');
+    document.body.removeChild(clipboard);
+}
+
+document.getElementById('copy-note-link').onclick = (event) => {
+    copyToClipboard(window.location.href);
+}
+
+document.getElementById('copy-note-link2').onclick = (event) => {
+    copyToClipboard(window.location.href);
+}
+
+
+</script>
 {% endblock %}

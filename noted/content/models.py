@@ -4,6 +4,7 @@ TODO: DRY - __str__, save, get_absolute_url
 from bs4 import BeautifulSoup
 
 from django.db import models
+from django.db.models import QuerySet, Count
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -55,6 +56,28 @@ class Source(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse("source", args=[self.slug])
+
+
+class NoteManager(models.Manager):
+    def personal(self, user: User) -> QuerySet:
+        """Query notes for a specific user.
+
+        Args:
+            user: an author of notes.
+        Returns:
+            Notes for a specific user.
+        """
+        return self.filter(author=user)
+
+    def public(self) -> QuerySet:
+        """Query notes available for everyone."""
+        return self.filter(draft=False)
+
+    def datetime_created(self):
+        return self.order_by("created")
+
+    def datetime_created_dec(self):
+        return self.order_by("-created")
 
 
 class Note(models.Model):
@@ -118,6 +141,7 @@ class Note(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=1)
+    objects = NoteManager()
 
     class Meta:
         ordering = ("-created",)

@@ -6,7 +6,7 @@ from content.models import Note
 
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("", views.PublicNoteList.as_view(), name="home"),
     path("add-note/", views.NoteCreateView.as_view(), name="create_note"),
     path(
         "edit-note/<str:slug>/",

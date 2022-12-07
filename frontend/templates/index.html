@@ -14,13 +14,24 @@
     <div class="col-lg-8 col-12">
         <ul class="nav nav-tabs mb-3">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">{% trans "Public" %}</a>
+                <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-filter"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Latest" %}</a></li>
+                    <li><a class="dropdown-item" href="?order=datetime_created"><i class="bi bi-sort-down-alt"></i> {% trans "Oldest" %}</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li>
+                </ul>  
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">{% trans "Following" %}</a>
+                <a class="nav-link tablink active text-secondary" aria-current="page" href="#">{% trans "Public" %}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">{% trans "My tags" %}</a>
+                <a class="nav-link tablink text-secondary" href="#">{% trans "Following" %}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tablink text-secondary" href="#">{% trans "My tags" %}</a>
             </li>
         </ul>
 
@@ -132,24 +143,7 @@
                 </a>
             </span>
         </div>
-        <div class="mt-5">
-            <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
-            {% for note in notes|slice:":5" %}
-            <div class="mt-4">
-                <div class="d-flex align-items-center" style="font-size: 13px;">
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span><img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="16" height="16"></span>
-                    <span>{{ note.author.full_name }}</span>
-                    </a>
-                    <span>&nbsp;&#8226;&nbsp;</span>
-                    <span class="text-secondary">{{ note.created|date:"M j" }}</span>
-                </div>
-                <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
-                <div class="mt-2"><h6>{{ note.title }}</h6></div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
+        {% include 'layouts/more_from_noted.html' %}
         <div class="mt-5">
             <h6>Recommended topics</h6>
             <span>

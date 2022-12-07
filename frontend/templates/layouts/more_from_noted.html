@@ -1,0 +1,19 @@
+<!-- List of notes for a sidebar. -->
+<div class="mt-5">
+    <h6 style="margin-bottom: -15px;">More from NoteD.</h6>
+    {% for note in notes|slice:":5" %}
+    <div class="mt-4">
+        <div class="d-flex align-items-center" style="font-size: 13px;">
+            <a href="#" class="text-decoration-none text-dark">
+            <span><img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="16" height="16"></span>
+            <span>{{ note.author.full_name }}</span>
+            </a>
+            <span>&nbsp;&#8226;&nbsp;</span>
+            <span class="text-secondary">{{ note.created|date:"M j" }}</span>
+        </div>
+        <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
+        <div class="mt-2"><h6>{{ note.title }}</h6></div>
+        </a>
+    </div>
+    {% endfor %}
+</div>

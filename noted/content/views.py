@@ -1,29 +1,88 @@
-import json
-
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    FormView,
-)
+from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
+from django.utils.translation import gettext_lazy as _
 
 from content.forms import NoteForm
 from content.models import Note, Source
 
 
-def home(request):
-    notes = Note.objects.all()
-    source_types = dict(Source.TYPES)
-    context = {"notes": notes, "source_types": source_types}
-    return render(request, "index.html", context)
+class NoteList(ListView):
+    """Display a list of :model:`notes.Note`.
+    Uses as a superclass for other specific notes listings.
+
+    Notes order options (provides through a GET param `order`):
+        `datetime_created`: from oldest to newest by publish date.
+        `-datetime_created`: from newest to oldest by publish date.
+
+    **Context**
+        notes: a queryset of :model:`notes.Note` instances.
+        paginator: a paginator for notes list.
+        page_obj: a pagination navigator.
+        order_label: a human readable label of a notes order option.
+        source_types:
+    """
+
+    ORDER_LABELS = {
+        "datetime_created": _("Oldest"),
+        "-datetime_created": _("Latest"),
+    }
+    SORTING_FUNCS_MAPPING = {
+        "datetime_created": Note.objects.datetime_created,
+        "-datetime_created": Note.objects.datetime_created_dec,
+    }
+
+    model = Note
+    context_object_name = "notes"
+    paginate_by = 18
+
+    def get_ordering(self):
+        return self.request.GET.get("order", default="-datetime_created")
+
+    def get_ordered_queryset(self):
+        """Order a queryset by GET param `order`."""
+        order = self.get_ordering()
+        return self.SORTING_FUNCS_MAPPING[order]()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.get_ordering()
+        context["order_label"] = self.ORDER_LABELS.get(order, "")
+        context["source_types"] = dict(Source.TYPES)
+        return context
+
+
+class PublicNoteList(NoteList):
+    """Display a list of :model:`notes.Note` available for every one.
+    It displays the home page of the website. A list consists of all notes
+    except private notes.
+
+    **Context**
+        notes: a queryset of :model:`notes.Note` instances.
+        paginator: a paginator for notes list.
+        page_obj: a pagination navigator.
+        order_label: a human readable label of a notes order option.
+        most_liked: 5 most liked notes.
+        most_commented: 5 most commented notes.
+
+    **Template**
+        :template:`frontend/templates/index.html`
+    """
+
+    template_name = "index.html"
+
+    def get_queryset(self):
+        return super().get_ordered_queryset().filter(draft=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # add More from NoteD.
+        return context
 
 
 def search_sources_select(request):
@@ -64,6 +123,16 @@ class NoteDeleteView(DeleteView):
     success_url = reverse_lazy("content:home")
 
 
+class NoteDetailsView(DetailView):
+    model = Note
+    template_name = "content/note_display.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["notes"] = Note.objects.public()[:5]
+        return context
+
+
 class NoteView(View):
     """Chose a view based on a request method (GET/POST).
     It uses two different class based views with the same URL. We have
@@ -80,8 +149,3 @@ class NoteView(View):
     # def post(self, request, *args, **kwargs):
     #     view = CommentFormView.as_view()
     #     return view(request, *args, **kwargs)
-
-
-class NoteDetailsView(DetailView):
-    model = Note
-    template_name = "content/note_display.html"
