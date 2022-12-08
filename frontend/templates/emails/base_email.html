@@ -1,0 +1,47 @@
+<!doctype html>
+{% load i18n %}
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: system-ui, sans-serif;
+        }
+        .ps-2{padding-left:.5rem !important}
+        .fs-5{font-size:1.25rem !important}
+        .mt-4{margin-top:1.5rem !important}
+        .btn {
+            display: inline-block;
+            background-color: #04a65b;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 50px;
+          }
+        .px-3{padding-right:1rem !important; padding-left:1rem !important}
+        .mt-5 {
+            margin-top: 3rem !important
+        }
+        .text-secondary{color:grey}
+        .text-dark{color:black}
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <div class="wrapper">
+        <div style="max-width: 650px;">
+            <h1 class="logo"><img src="https://i.ibb.co/yQxRv8b/logo.png" width="70" atl=""><span class="ps-2">NoteD.</span></h1>
+            {% block message %}
+            {% endblock %}
+            <hr class="mt-4">
+            <p>{% trans "Sent by" %} <a class="text-dark" href="{{ host }}" target="_blank">NoteD.</a></p>
+        </div>
+    <div>
+</body>
+</html>

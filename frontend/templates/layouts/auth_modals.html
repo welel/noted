@@ -1,0 +1,107 @@
+{% load i18n %}
+{% load socialaccount %}
+
+<!-- Modal sign-in -->
+<div class="modal fade" id="signin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" style="float: right;"></button>
+            <div class="container-fluid d-flex justify-content-center">
+                <div class="row mt-3" style="max-width: 250px;">
+                    <h3 class="text-center mb-5">{% trans "Welcome!" %}</h3>
+                    <a href="{% provider_login_url 'google' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-red">{% trans "Sign in with Google" %}</a>
+                    <a href="{% provider_login_url 'github' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black">{% trans "Sign in with GitHub" %}</a>
+                    <a href="{% provider_login_url 'yandex' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-red">{% trans "Sign in with Yandex" %}</a>
+                    <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign-black" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">{% trans "Sign in with Email" %}</button>                   
+                    <p class="text-center mt-5">{% trans "No account?" %} <a href="#" class="fw-bold text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#signup" data-bs-dismiss="modal">{% trans "Create one." %}</a></p>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot password?" %} <a href="{% url 'account_reset_password' %}">{% trans "Get help." %}</a></p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal sign-in via email -->
+<div class="modal fade" id="signin-email" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Sign in with email" %}</p>
+                    <p class="text-center mt-5">{% trans "Enter the email address associated with your account and your password." %}</p>
+                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="{% trans "Email" %}" autocomplete="email">
+                    <div id="signin_email_feedback" class="invalid-feedback"></div> 
+                    <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="{% trans "Password" %}">
+                    <div id="signin_password_feedback" class="invalid-feedback"></div> 
+                    <div id="signin_feedback" class="mt-2 text-danger"></div>
+                    <button id="signin_submit" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot password?" %} <a href="{% url 'account_reset_password' %}">{% trans "Get help." %}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Modal sign-up -->
+<div class="modal fade" id="signup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Sign up with email" %}</p>
+                    <p class="text-center mt-4">{% trans "Enter your email address to create an account." %}</p>
+                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="{% trans "Email" %}" autocomplete="email">
+                    <div id="user_email_feedback" class="invalid-feedback">
+                        {% trans "Enter a valid email." %}
+                    </div>                      
+                    <button id="submit_email" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Modal sign-up email message -->
+<div class="modal fade" id="signup-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Check your inbox." %}</p>
+                    <p class="text-center mt-4">{% trans "Click the link we sent to" %} <b id="signup-sent-to"></b> {% trans "to complete your account set-up." %}</p>
+                    <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center" data-bs-dismiss="modal">{% trans "OK" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Modal sign out -->
+<div class="modal fade" id="signout-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Are you sure you want to sign out?" %}</p>
+                    <a href="{% url 'users:signout' %}" type="button" class="btn btn-danger rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Context for scripts -->
+    <span id="validate_email_url" class="js-context" hidden>{% url 'users:validate_email' %}</span>
+    <span id="signup_email_url" class="js-context" hidden>{% url 'users:signup_request' %}</span>
+    <span id="signin_url" class="js-context" hidden>{% url 'users:signin' %}</span>
+<!-- endcontext -->

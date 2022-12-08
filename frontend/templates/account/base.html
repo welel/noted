@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block nav %}
+<!-- Top navigation -->
+<nav class="navbar bg-light" style="border: 1px solid #c6c7c8;">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'content:home' %}">
+      <img src="{% static 'img/logo.png' %}" alt="NoteD." width="34" height="34" class="d-inline-block align-text-top">
+      NoteD.
+    </a>
+  </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+
+
+<div class="container-fluid mt-5">
+  <div class="row">
+      <div class="col">
+  
+      </div>
+      <div class="col">
+        {% block content %}
+        {% endblock %}
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% endif %}
+      </div>
+      <div class="col">
+  
+      </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_body %}
+{% endblock %}
+
+
+{% block extra_scripts %}
+<span id="validate_email_url" class="js-context" hidden>{% url 'users:validate_email' %}</span>
+<span id="signup_email_url" class="js-context" hidden>{% url 'users:signup_request' %}</span>
+<span id="signin_url" class="js-context" hidden>{% url 'users:signin' %}</span>
+{% endblock %}

@@ -1,3 +1,5 @@
+from allauth.account.decorators import verified_email_required
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -99,6 +101,7 @@ def search_sources_select(request):
     return JsonResponse({"data": data}, status=200)
 
 
+@method_decorator(verified_email_required, name="dispatch")
 @method_decorator(login_required, name="dispatch")
 class NoteCreateView(CreateView):
     model = Note

@@ -1,5 +1,7 @@
 import json
 
+from allauth.account.models import EmailAddress
+
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.core.exceptions import ValidationError
@@ -37,7 +39,10 @@ def validate_email(request):
     """Check if a user with a given email already exists in the database."""
     if request.method == "GET":
         email = request.GET.get("email", None)
-        response = {"is_taken": User.objects.filter(email=email).exists()}
+        response = {
+            "is_taken": EmailAddress.objects.filter(email=email).exists()
+            or User.objects.filter(email=email).exists()
+        }
         return JsonResponse(response, status=200)
     return JsonResponse({"is_taken": "error"}, status=200)
 
@@ -85,6 +90,7 @@ def signup(request, token):
         if form.is_valid():
             user = form.save(commit=False)
             user.email = email
+            user.is_active = True
             user.save()
             token.delete()
             if user:
