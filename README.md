@@ -11,7 +11,7 @@
 
 This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes. 
 
-<p align="center"><a href="https://welel-noted.site/"><img src="https://s4.gifyu.com/images/ezgif.com-gif-makerd1278193c866c2fa.gif" alt="ezgif.com-gif-makerd1278193c866c2fa.gif"  border="0" /></a></p>
+<p align="center"><a href="https://welel-noted.site/"><img src="" alt="ezgif.com-gif-makerd1278193c866c2fa.gif"  border="0" /></a></p>
 
 **Link on the website:** https://welel-noted.site/
 
