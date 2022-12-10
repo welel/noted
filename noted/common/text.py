@@ -22,12 +22,12 @@ def generate_unique_slug(
     model = type(instance)
     try:
         model._meta.get_field(from_field)
-    except:
-        FieldDoesNotExist(f"Model must have `{from_field}` field.")
+    except FieldDoesNotExist:
+        raise FieldDoesNotExist(f"Model must have `{from_field}` field.")
     try:
         model._meta.get_field(for_field)
-    except:
-        FieldDoesNotExist(f"Model must have slug field - `{for_field}`.")
+    except FieldDoesNotExist:
+        raise FieldDoesNotExist(f"Model must have slug field - `{for_field}`.")
 
     from_field_val = getattr(instance, from_field)
     if not from_field_val:
