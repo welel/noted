@@ -187,7 +187,6 @@ document.getElementById('submit_email').onclick = function() {
     });
 }
 
-// TODO: CHECK MULTIPLE CLICKS ON SUBMIT BUTTON, MAY BE SHOULD BLOCK IT
 
 /**
  *  On click validate signin form, then either call next function or show error messages.
@@ -223,3 +222,19 @@ document.getElementById('submit_email').onclick = function() {
     }
     signin(email, password)
 }
+
+
+// Submit sign up form on Enter
+document.getElementById('user_email').addEventListener('keypress', (event) => {
+    if (event.key == "Enter") {
+        document.getElementById('submit_email').click();
+    }
+});
+
+
+// Submit sign in form on Enter
+document.getElementById('signin_password').addEventListener('keypress', (event) => {
+    if (event.key == "Enter") {
+        document.getElementById('signin_submit').click();
+    }
+});

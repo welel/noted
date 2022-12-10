@@ -3,12 +3,11 @@
 {% load static %}
 {% load i18n %}
 
+
 {% block main %}
 <div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-1">
-
-        </div>
+        <div class="col-1"></div>
         <div class="col-8">
             <div class="container-fluid" style="max-width: 700px;">
                 <div class="row d-flex justify-content-between">
@@ -18,7 +17,7 @@
                                 <tr>
                                 <td class="pe-3" rowspan="2">
                                     <a class="text-decoration-none text-dark">
-                                    <img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="45" height="45">
+                                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
                                     </a>
                                 </td>
                                 <td class="fw-bold">
@@ -151,7 +150,7 @@
             </div>
             <div class="row mt-5">
                 <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="80" height="80">
+                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="80" height="80">
                 </a>
             </div>
             <div class="row mt-3">
@@ -179,25 +178,7 @@
 </div>
 {% endblock %}
 
+
 {% block extra_scripts %}
-<script>
-function copyToClipboard(text) {
-    var clipboard = document.createElement('input');
-    document.body.appendChild(clipboard);
-    clipboard.value = text;
-    clipboard.select();
-    document.execCommand('copy');
-    document.body.removeChild(clipboard);
-}
-
-document.getElementById('copy-note-link').onclick = (event) => {
-    copyToClipboard(window.location.href);
-}
-
-document.getElementById('copy-note-link2').onclick = (event) => {
-    copyToClipboard(window.location.href);
-}
-
-
-</script>
+<script src="{% static 'js/note_display.js' %}"></script>
 {% endblock %}

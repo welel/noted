@@ -18,6 +18,10 @@ const sourcesListElement = document.getElementById('sourses-list');
 const get_sources_url = document.getElementById('get-sources-url').innerText;
 
 
+/**
+ * Get existing sources in the database and output to a HTML element.
+ * The source title input element as a query requests sources via ajax. 
+ */
 sourceInputField.oninput = (event) => {
     if (sourceInputField.value.length > 3) {
         $.ajax({
@@ -29,7 +33,6 @@ sourceInputField.oninput = (event) => {
                 
                 let output = [];
                 for (source_id in response.data) {
-                    
                     let id = response.data[source_id].id
                     let source_type_code = response.data[source_id].type[0]
                     let source_type = response.data[source_id].type[1]
@@ -37,7 +40,7 @@ sourceInputField.oninput = (event) => {
                     output.push(`<tr> \
                         <td id="source-type-${id}" code="${source_type_code}">${source_type}</td> \
                         <td id="source-${id}">${title}</td> \
-                        <td><button type="button" class="btn btn-sm btn-success rounded-pill" onclick="trig(${id});">Select</button></td> \
+                        <td><button type="button" class="btn btn-sm btn-success rounded-pill" onclick="select(${id});">Select</button></td> \
                         </tr>`
                     );
                     sourcesOutputElement.innerHTML = output.join('');
@@ -55,10 +58,12 @@ sourceInputField.oninput = (event) => {
     }
 }
 
+// Close the modal with the source form.
 sourceCloseButton.onclick = (event) => {
     sourceInputField.value = '';
 }
 
+// Display a source in the note form.
 function showSource (event) {
     if (sourceInputField.value.length != 0) {
         selectedSourceElement.innerHTML = '<span class="badge text-bg-success rounded-pill">' +
@@ -67,26 +72,28 @@ function showSource (event) {
                                             sourceInputField.value + '</b>';
         selectedSourceHiddenElement.hidden = false;
         openSourceModalButton.hidden = true;
+    }
 }
 
-}
 
 sourceAddButton.onclick = showSource;
 
 
+// Remove a source from the note form.
 sourceRemoveButton.onclick = (event) => {
     selectedSourceHiddenElement.hidden = true;
     openSourceModalButton.hidden = false;
     sourceInputField.value = '';
 }
 
-function trig(val) {
+
+// Select a source to input.
+function select(val) {
     sourceTypeInputField.selectedIndex = document.getElementById('source-type-' + val).getAttribute('code');
     sourceInputField.value = document.getElementById('source-' + val).innerText;
 }
 
 window.onload = function(){
-    console.log('LOF');
     if (sourceInputField.value.length != 0) {
         showSource(event);
     }

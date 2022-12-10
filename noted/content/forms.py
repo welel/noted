@@ -5,6 +5,11 @@ from content.models import Source, Note
 
 
 class NoteForm(forms.ModelForm):
+    """A form for creating/updating :model:`Note` and :model:`Source`.
+
+    A note can have a source. The form handles creating a note and a source.
+    """
+
     source_type = forms.ChoiceField(
         choices=Source.TYPES,
         widget=forms.Select(attrs={"class": "form-select"}),
@@ -46,7 +51,7 @@ class NoteForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if self.data["source"]:
+        if self.data.get("source"):
             source, _ = Source.objects.get_or_create(
                 type=cleaned_data["source_type"], title=self.data["source"]
             )

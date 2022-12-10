@@ -17,10 +17,12 @@ HEADERS = {"Content-Type": "text/plain"}
 
 def markdown_to_html(text: str) -> Tuple[str, bool]:
     """Transfer Markdown text into HTML via GitHub API.
+
     API docs: https://docs.github.com/en/rest/reference/markdown
     Makes POST request to GitHub API for HTML code.
     Sends Markdown text in body of POST request to GitHub API.
     Gets HTML code of Markdown text and returns it with a flag.
+
     Args:
         text: the Markdown text to render in HTML.
     Returns:
@@ -50,9 +52,11 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
 
 def pick_markdown_to_html(text: str) -> str:
     """Transfer Markdown text into HTML.
+
     The function transfers Markdown text into HTML using 2 independent
     methods. First method via GitHub API, if it fails, the function uses
     `markdown2` module. And returns first success result.
+
     Args:
         text: the Markdown text to render in HTML.
     Returns:

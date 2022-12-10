@@ -1,11 +1,12 @@
 <!-- Footer for sidebar -->
 {% load static %}
+{% load i18n %}
 <hr>
 <div class="text-center" style="font-size: 13px;">
     <span><img src="{% static 'img/logo.png' %}" class="bi bi-person-circle" alt="Avatar." width="24" height="24"></span>
-    <a href="https://github.com/welel/noted" target="_blank" class="link-secondary text-decoration-none ps-2">About</a>
-    <a href="https://github.com/welel/noted" target="_blank"  class="link-secondary text-decoration-none ps-2">Contacts</a>
-    <a href="#" class="link-secondary text-decoration-none ps-2">Privacy Policy</a>
+    <a href="https://github.com/welel/noted" target="_blank" class="link-secondary text-decoration-none ps-2">{% trans "About" %}</a>
+    <a href="https://github.com/welel/noted" target="_blank"  class="link-secondary text-decoration-none ps-2">{% trans "Contacts" %}</a>
+    <a href="#" class="link-secondary text-decoration-none ps-2">{% trans "Privacy Policy" %}</a>
 </div>
 <div class="text-center mt-1" style="font-size: 1.2rem;">
     <a href="https://github.com/welel/noted" target="_blank"  class="text-decoration-none">

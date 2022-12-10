@@ -1,3 +1,4 @@
+<!-- Create Note/Source form -->
 {% extends 'layouts/base.html' %}
 
 {% load static %}
@@ -8,26 +9,37 @@
 <link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
 {% endblock %}
 
+
 {% block main %}
 <div class="container-fluid mt-5">
 <form method="POST">
 {% csrf_token %}
     <div class="row">
-        <div class="col-1 d-lg-block d-none">
-
-        </div>
+        <div class="col-1 d-lg-block d-none"></div>
         <div class="col-lg-8 col-12">
             <div class="container-fluid" style="max-width: 700px;">
+                {% if form.errors %}
+                <div id="form-error">
+                    <p>The operation could not be performed because one or more error(s) occurred.<br />Please resubmit the form after making the following changes:</p>
+                    <ul>
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <li class="text-danger">
+                                <b>{{ field.label }}</b>: {{ field.errors|striptags }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 <div class="row">
                     {{ form.title }}
                 </div>
-
-                <!-- Button trigger modal -->
+                <!-- Button trigger source modal -->
                 <button id="add-source-btn" type="button" class="btn btn-success mt-4 rounded-pill btn-sm" data-bs-toggle="modal" data-bs-target="#add-source-modal">
                     {% trans "Add source" %}
                 </button>
-                
-                <!-- Modal -->
+                <!-- Source modal -->
                 <div class="modal fade" id="add-source-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-scrollable">
                     <div class="modal-content">
@@ -53,15 +65,15 @@
                                     <h4>{% trans "Select an existing source" %}</h4>
                                     <table class="table table-responsive" style="max-height: 300px;">
                                         <thead>
-                                          <tr>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Source</th>
+                                            <tr>
+                                            <th scope="col">{% trans "Type" %}</th>
+                                            <th scope="col">{% trans "Source" %}</th>
                                             <th scope="col"></th>
-                                          </tr>
+                                            </tr>
                                         </thead>
                                         <tbody id="sources-output">
                                         </tbody>
-                                      </table>
+                                        </table>
                                 </div>
                                 <div class="col-lg-2 col-0"></div>
                             </div>
@@ -73,14 +85,12 @@
                     </div>
                     </div>
                 </div>
-
                 <div id="selected-source-hidden" class="row" hidden>
                     <div class="col mt-4 d-flex justify-content-between">
                         <span id="selected-source"></span>
-                        <button id="remove-source-btn" class="btn btn-danger btn-sm rounded-pill" type="button">Remove</button>
+                        <button id="remove-source-btn" class="btn btn-danger btn-sm rounded-pill" type="button">{% trans "Remove" %}</button>
                     </div>
                 </div>
-
                 <div class="row mt-4">
                     {{ form.body_raw }}
                 </div>
@@ -107,6 +117,7 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-5"></div<
         </div>
         <div class="col-lg-3 col-12 px-4 d-lg-inline d-none">
             <summary class="text-secondary">{% trans "Commonly used syntax" %}</summary>

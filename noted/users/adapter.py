@@ -1,5 +1,7 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
+from django.utils.translation import gettext_lazy as _
+
 from users.models import User
 
 
@@ -15,6 +17,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         elif "username" in data:
             user.full_name = data["username"]
         else:
-            user.full_name = "User Name"
+            user.full_name = _("User Name")
         user.username = User.objects._generate_username(user.full_name)
         return user

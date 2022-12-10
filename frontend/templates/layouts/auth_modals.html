@@ -1,3 +1,5 @@
+<!-- Modals for sign in and sign up -->
+
 {% load i18n %}
 {% load socialaccount %}
 
@@ -32,9 +34,9 @@
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign in with email" %}</p>
                     <p class="text-center mt-5">{% trans "Enter the email address associated with your account and your password." %}</p>
-                    <input id="signin_email" class="form-control form-control-sm mt-5" type="text" placeholder="{% trans "Email" %}" autocomplete="email">
+                    <input id="signin_email" class="form-control form-control-sm mt-5" placeholder="{% trans "Email" %}" type="email" name="email" autocomplete="on" />
                     <div id="signin_email_feedback" class="invalid-feedback"></div> 
-                    <input id="signin_password" class="form-control form-control-sm mt-2" type="password" placeholder="{% trans "Password" %}">
+                    <input id="signin_password" class="form-control form-control-sm mt-2" placeholder="{% trans "Password" %}" type="password" name="password" autocomplete="on" />
                     <div id="signin_password_feedback" class="invalid-feedback"></div> 
                     <div id="signin_feedback" class="mt-2 text-danger"></div>
                     <button id="signin_submit" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
@@ -55,7 +57,7 @@
                 <div class="row">
                     <p class="text-center fs-3 mt-5">{% trans "Sign up with email" %}</p>
                     <p class="text-center mt-4">{% trans "Enter your email address to create an account." %}</p>
-                    <input id="user_email" name="user_email" class="form-control form-control-sm mt-5" type="email" placeholder="{% trans "Email" %}" autocomplete="email">
+                    <input id="user_email" class="form-control form-control-sm mt-5" placeholder="{% trans "Email" %}" type="email" name="email" autocomplete="on" />
                     <div id="user_email_feedback" class="invalid-feedback">
                         {% trans "Enter a valid email." %}
                     </div>                      

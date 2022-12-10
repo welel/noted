@@ -6,9 +6,7 @@ from content.markdown import pick_markdown_to_html
 
 
 class RenderedMarkdownField(TextField):
-    """
-    RenderedMarkdownField is just html code in plain/text format.
-    """
+    """RenderedMarkdownField is just html code in plain/text format."""
 
     def __init__(self, *args, **kwargs):
         kwargs["editable"] = False
@@ -26,6 +24,7 @@ class MarkdownField(SimpleMDEField):
 
     HTML code generates by custom functions based on the value of this field,
     and then puts HTML code to another specified model's field.
+
     """
 
     def __init__(self, *args, rendered_field: str = None, **kwargs):

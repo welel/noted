@@ -22,6 +22,10 @@ This website helps to create personal notes, share them public, search notes for
 Now:
 
 * Registration, authentication, authorization
+  * + with socials (google, github, yandex)
+* WYSIWYG editing
+* Markdown editor
+* GitHub API Integration (markdown)
 * Internationalization (2 languages: en, ru)
 * Twitter Bootstrap integration
 * Responsive (modile) design
@@ -29,10 +33,6 @@ Now:
 
 In future:
 
-* Markdown editor
-* WYSIWYG editing
-* GitHub API Integration (markdown)
-* Registration via django-allauth (github, yandex)
 * User profile
 * Following system
 * Sharing content (facebook, twitter)

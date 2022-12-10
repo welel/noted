@@ -1,8 +1,5 @@
-from allauth.account.decorators import verified_email_required
-
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -12,10 +9,12 @@ from django.utils.translation import gettext_lazy as _
 
 from content.forms import NoteForm
 from content.models import Note, Source
+from common import ajax_required
 
 
 class NoteList(ListView):
     """Display a list of :model:`notes.Note`.
+
     Uses as a superclass for other specific notes listings.
 
     Notes order options (provides through a GET param `order`):
@@ -27,7 +26,6 @@ class NoteList(ListView):
         paginator: a paginator for notes list.
         page_obj: a pagination navigator.
         order_label: a human readable label of a notes order option.
-        source_types:
     """
 
     ORDER_LABELS = {
@@ -55,22 +53,21 @@ class NoteList(ListView):
         context = super().get_context_data(**kwargs)
         order = self.get_ordering()
         context["order_label"] = self.ORDER_LABELS.get(order, "")
-        context["source_types"] = dict(Source.TYPES)
         return context
 
 
 class PublicNoteList(NoteList):
     """Display a list of :model:`notes.Note` available for every one.
+
     It displays the home page of the website. A list consists of all notes
-    except private notes.
+    except drafts.
 
     **Context**
         notes: a queryset of :model:`notes.Note` instances.
         paginator: a paginator for notes list.
         page_obj: a pagination navigator.
         order_label: a human readable label of a notes order option.
-        most_liked: 5 most liked notes.
-        most_commented: 5 most commented notes.
+        source_types: all source types.
 
     **Template**
         :template:`frontend/templates/index.html`
@@ -83,11 +80,14 @@ class PublicNoteList(NoteList):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["source_types"] = dict(Source.TYPES)
         # add More from NoteD.
         return context
 
 
+@ajax_required
 def search_sources_select(request):
+    """Search for sources by title and return JSON results."""
     query = request.GET.get("query", "[{]}(2")
     data = Source.objects.filter(title__icontains=query)
     data = [
@@ -101,7 +101,6 @@ def search_sources_select(request):
     return JsonResponse({"data": data}, status=200)
 
 
-@method_decorator(verified_email_required, name="dispatch")
 @method_decorator(login_required, name="dispatch")
 class NoteCreateView(CreateView):
     model = Note
@@ -138,6 +137,7 @@ class NoteDetailsView(DetailView):
 
 class NoteView(View):
     """Chose a view based on a request method (GET/POST).
+
     It uses two different class based views with the same URL. We have
     a division here: GET requests should get the ``NoteDetailView`` (with
     a form added to the context data), and POST requests should get

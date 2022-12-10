@@ -1,10 +1,7 @@
-"""
-TODO: DRY - __str__, save, get_absolute_url
-"""
 from bs4 import BeautifulSoup
 
 from django.db import models
-from django.db.models import QuerySet, Count
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -14,6 +11,12 @@ from users.models import User
 
 
 class Source(models.Model):
+    """An information source.
+
+    Links to a note(s).
+
+    """
+
     DEFAULT = "0"
     BOOK = "1"
     COURSE = "2"
@@ -30,11 +33,13 @@ class Source(models.Model):
         (LECTURE, _("Lecture")),
         (TUTORIAL, _("Tutorial")),
     )
-    title = models.CharField(
-        max_length=200, blank=False, null=False, db_index=True
+    type = models.CharField(
+        _("Type"), max_length=20, choices=TYPES, default=DEFAULT
     )
-    type = models.CharField(max_length=20, choices=TYPES, default=DEFAULT)
-    slug = models.SlugField(max_length=254, unique=True, null=False)
+    title = models.CharField(
+        _("Title"), max_length=200, blank=False, null=False, db_index=True
+    )
+    slug = models.SlugField(_("Slug"), max_length=254, unique=True, null=False)
 
     def __str__(self):
         return self.title
@@ -98,21 +103,27 @@ class Note(models.Model):
         created: publish datetime of a note.
         modified: update datetime of a note.
         views: a counter of note's visitors.
-        fork: a link to :model:`Note` if a note forked from another.
-        allow_comments: a boolean flag allows to users leave comments
+        *fork: a link to :model:`Note` if a note forked from another.
+        *allow_comments: a boolean flag allows to users leave comments
                         to a note.
-        tags: tags of a note (max tags - 5, max length - 24 symbols).
-        users_like: a m2m field for note likes.
-        bookmarked: a m2m field for bookmarks for user.
+        *tags: tags of a note (max tags - 5, max length - 24 symbols).
+        *users_like: a m2m field for note likes.
+        *bookmarked: a m2m field for bookmarks for user.
 
     """
 
     title = models.CharField(
-        max_length=100, null=False, blank=False, db_index=True
+        _("Title"), max_length=100, null=False, blank=False, db_index=True
     )
-    slug = models.SlugField(max_length=255, editable=False, unique=True)
+    slug = models.SlugField(
+        _("Slug"), max_length=255, editable=False, unique=True
+    )
     author = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, editable=False
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        editable=False,
+        verbose_name=_("Author"),
     )
     source = models.ForeignKey(
         Source,
@@ -120,27 +131,37 @@ class Note(models.Model):
         on_delete=models.SET_NULL,
         related_name="notes",
         blank=True,
+        verbose_name=_("Source"),
     )
-    body_raw = MarkdownField(rendered_field="body_html", blank=True)
-    body_html = RenderedMarkdownField(max_length=70000, default="", blank=True)
+    body_raw = MarkdownField(
+        _("Markdown body"), rendered_field="body_html", blank=True
+    )
+    body_html = RenderedMarkdownField(
+        _("HTML body"), max_length=70000, default="", blank=True
+    )
     summary = models.CharField(
+        _("Summary"),
         max_length=250,
         default="",
         blank=True,
         help_text=_("Write summary on the note in 100 symbols."),
     )
     draft = models.BooleanField(
-        default=False, help_text=_("Only you can see the note.")
+        _("Draft"), default=False, help_text=_("Only you can see the note.")
     )
     anonymous = models.BooleanField(
-        default=False, help_text=_("Others won't see that the note is yours.")
+        _("Anonymous"),
+        default=False,
+        help_text=_("Others won't see that the note is yours."),
     )
     pin = models.BooleanField(
-        default=False, help_text=_("The note will appear in pin notes list.")
+        _("Pin"),
+        default=False,
+        help_text=_("The note will appear in pin notes list."),
     )
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    views = models.PositiveIntegerField(default=1)
+    created = models.DateTimeField(_("Created"), auto_now_add=True)
+    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    views = models.PositiveIntegerField(_("Views"), default=1)
     objects = NoteManager()
 
     class Meta:

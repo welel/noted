@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col">
                     <a href="#" class="text-decoration-none text-dark">
-                    <span><img src="{{ note.author.avatar.url }}" class="bi bi-person-circle" alt="A" width="24" height="24"></span>
+                    <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="24" height="24"></span>
                     <span class="col">{{ note.author.full_name }}</span>
                     </a>
                     <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
@@ -111,7 +111,8 @@
 
     </div>
     <div class="col-lg-3 col-12 px-4">
-        <div class="input-group rounded mt-5">
+        <img class="mt-5" src="{% static 'img/pngwing.com.png' %}" width="60px;" style="margin-left: 186px;" />
+        <div class="input-group rounded mt-0">
             <span class="input-group-text border-0 bg-white" id="search-addon">
                 <i class="bi bi-search"></i>
             </span>
@@ -158,6 +159,7 @@
             </span>
         </div>
         {% include 'layouts/side_footer.html' %}
+        <div class="mb-5"></div>
     </div>
 </div>
 </div>

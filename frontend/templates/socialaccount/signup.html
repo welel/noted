@@ -4,24 +4,12 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
-{% block main %}
-<div class="container-fluid mt-5">
-  <div class="row">
-      <div class="col">
-  
-      </div>
-      <div class="col">
-        <h1 class="text-center">{% trans "Sign Up" %}</h1>
+{% block content %}
+  <h1 class="text-center">{% trans "Sign Up" %}</h1>
 
-        <p class="mt-4">{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-        {{site_name}}. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one.{% endblocktrans %}</p>
+  <p class="mt-4">{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+  {{site_name}}. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one.{% endblocktrans %}</p>
 
-        <a href="{% url 'content:home' %}" class="btn btn-success rounded-pill">{% trans "Home" %}</a>
-      </div>
-      <div class="col">
-  
-      </div>
-  </div>
+  <a href="{% url 'content:home' %}" class="btn btn-success rounded-pill">{% trans "Home" %}</a>
 </div>
-
 {% endblock %}

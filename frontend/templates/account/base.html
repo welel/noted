@@ -1,3 +1,4 @@
+<!-- Base for account data handlers pages -->
 {% extends 'layouts/base.html' %}
 
 {% load static %}
@@ -21,18 +22,18 @@
 
 <div class="container-fluid mt-5">
   <div class="row">
-      <div class="col">
+      <div class="col-md-3 col-0">
   
       </div>
       <div class="col">
         {% block content %}
         {% endblock %}
         {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        <li><a href="{% url 'account_email' %}">{% trans "Change E-mail" %}</a></li>
+        <li><a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a></li>
         {% endif %}
       </div>
-      <div class="col">
+      <div class="col-md-3 col-0">
   
       </div>
   </div>

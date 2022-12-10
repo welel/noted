@@ -150,5 +150,5 @@ class SignupToken(models.Model):
     registered on the website.
     """
 
-    token = models.CharField(max_length=255, unique=True)
-    created = models.DateTimeField(auto_now_add=True)
+    token = models.CharField(_("Token"), max_length=255, unique=True)
+    created = models.DateTimeField(_("Created"), auto_now_add=True)
