@@ -6,5 +6,5 @@ python manage.py makemigrations users
 python manage.py makemigrations content
 python manage.py migrate
 python manage.py collectstatic --noinput
-gunicorn noted.wsgi:application --bind 172.18.1.3:8000
+gunicorn core.wsgi:application --bind 172.18.1.3:8000
 
