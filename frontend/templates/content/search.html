@@ -1,0 +1,78 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load filtersourcetags %}
+
+
+{% block main %}
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-lg-1 col-0"></div>
+        <div class="col-lg-8 col-12">
+            <div class="container-fluid" style="max-width: 700px;">
+                <form class="mb-4 d-lg-none d-block" method="GET" action="{% url 'content:search' type='notes' %}">
+                    <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
+                </form>
+                <h1 class="fw-bold mt-2"><span class="text-secondary">{% trans "Results for" %}</span> {{ query|truncatechars:20 }}</h1>
+                <!-- Tabs -->
+                <ul class="nav nav-tabs mt-4">
+                    <li class="nav-item">
+                        <a class="nav-link tablink text-secondary {% if type == 'notes' %}active{% endif %}" aria-current="page" href="{% url 'content:search' type='notes' %}?query={{ query }}">{% trans "Notes" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tablink text-secondary {% if type == 'sources' %}active{% endif %}" href="{% url 'content:search' type='sources' %}?query={{ query }}">{% trans "Sources" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tablink text-secondary" href="#">{% trans "Topics" %}</a>
+                    </li>
+                </ul>
+                <!-- Results -->
+                {% for source in sources %}
+                <div class="row mt-3 mb-3 d-flex align-items-center">
+                    <div class="col-2 text-center d-sm-inline d-none">
+                        <div>{{ source.type|icon:"1.8rem" }}</div>
+                        <div style="font-size: 0.8rem;">{{ source.type|readabletype }}</div>
+                    </div>
+                    <div class="col">
+                        <div class="fw-bold" style="font-size: 1.1rem;">{{ source.title }}</div>
+                        {% if source.description %}<div class="text-secondary">{{ source.description }}</div>{% endif %}
+                        <div class="d-sm-none d-block"><span class="badge bg-success mt-3 rounded-pill">{{ source.type|readabletype }}</span></div>
+                    </div>
+                    <div class="col-2">
+                        <a href="{% url 'content:create_note' %}?source={{ source.slug }}" id="source-add-note-btn" class="btn btn-success rounded-pill d-sm-block d-none">{% trans "Add Note" %}</a>
+                        <a href="{% url 'content:create_note' %}?source={{ source.slug }}" class="btn btn-success rounded-pill d-sm-none d-block"><i class="bi bi-pencil-square" style="font-size: 0.8rem;"></i></a>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+
+                <!-- No results -->
+                {% if not notes and not sources %}
+                    <div class="mt-5 text-secondary">{% trans "Make sure all words are spelled correctly." %}</div>
+                    <div class="text-secondary">{% trans "Try different keywords." %}</div>
+                    <div class="text-secondary">{% trans "Try more general keywords." %}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-3 col-12 px-4">
+            <div class="input-group rounded mt-5 d-lg-flex d-none">
+                <span class="input-group-text border-0 bg-white" id="search-addon">
+                    <i class="bi bi-search"></i>
+                </span>
+                <form class="w-75" method="GET" action="{% url 'content:search' type='notes' %}">
+                    <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
+                </form>
+            </div>
+            {% include 'layouts/side_footer.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+    
+</script>
+{% endblock %}

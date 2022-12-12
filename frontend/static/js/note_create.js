@@ -1,6 +1,8 @@
 // input
 const sourceInputField = document.getElementById('id_source');
 const sourceTypeInputField = document.getElementById('id_source_type');
+const sourceLinkInputField = document.getElementById('id_source_link');
+const sourceDescriptionInputField = document.getElementById('id_source_description');
 
 // buttons
 const openSourceModalButton = document.getElementById('add-source-btn');
@@ -37,10 +39,14 @@ sourceInputField.oninput = (event) => {
                     let source_type_code = response.data[source_id].type[0]
                     let source_type = response.data[source_id].type[1]
                     let title = response.data[source_id].title
-                    output.push(`<tr> \
+                    let link = response.data[source_id].link
+                    let description = response.data[source_id].description
+                    output.push(`<tr class="source-table-row"> \
                         <td id="source-type-${id}" code="${source_type_code}">${source_type}</td> \
                         <td id="source-${id}">${title}</td> \
                         <td><button type="button" class="btn btn-sm btn-success rounded-pill" onclick="select(${id});">Select</button></td> \
+                        <span id="source-link-${id}" hidden>${link}</span> \
+                        <span id="source-description-${id}" hidden>${description}</span> \
                         </tr>`
                     );
                     sourcesOutputElement.innerHTML = output.join('');
@@ -58,18 +64,14 @@ sourceInputField.oninput = (event) => {
     }
 }
 
-// Close the modal with the source form.
-sourceCloseButton.onclick = (event) => {
-    sourceInputField.value = '';
-}
 
 // Display a source in the note form.
 function showSource (event) {
     if (sourceInputField.value.length != 0) {
         selectedSourceElement.innerHTML = '<span class="badge text-bg-success rounded-pill">' +
                                             sourceTypeInputField.selectedOptions[0].innerText +
-                                            '</span><b class="ms-2">' +
-                                            sourceInputField.value + '</b>';
+                                            '</span><a href="#" class="ms-2 fw-bold text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#add-source-modal">' +
+                                            sourceInputField.value + '</a>';
         selectedSourceHiddenElement.hidden = false;
         openSourceModalButton.hidden = true;
     }
@@ -84,6 +86,8 @@ sourceRemoveButton.onclick = (event) => {
     selectedSourceHiddenElement.hidden = true;
     openSourceModalButton.hidden = false;
     sourceInputField.value = '';
+    sourceLinkInputField.value = '';
+    sourceDescriptionInputField.value = '';
 }
 
 
@@ -91,6 +95,8 @@ sourceRemoveButton.onclick = (event) => {
 function select(val) {
     sourceTypeInputField.selectedIndex = document.getElementById('source-type-' + val).getAttribute('code');
     sourceInputField.value = document.getElementById('source-' + val).innerText;
+    sourceLinkInputField.value = document.getElementById('source-link-' + val).innerText;
+    sourceDescriptionInputField.value = document.getElementById('source-description-' + val).innerText;
 }
 
 window.onload = function(){

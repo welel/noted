@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-10 15:10+0300\n"
-"PO-Revision-Date: 2022-12-10 12:31+0000\n"
+"POT-Creation-Date: 2022-12-12 20:20+0300\n"
+"PO-Revision-Date: 2022-12-12 17:24+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,228 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
-
-#: noted/content/forms.py:32 noted/content/models.py:40
-#: noted/content/models.py:116
-msgid "Title"
-msgstr "Название"
-
-#: noted/content/forms.py:39 noted/content/models.py:143
-msgid "Summary"
-msgstr "Краткое изложение"
-
-#: noted/content/models.py:28
-msgid "Other"
-msgstr "Другой"
-
-#: noted/content/models.py:29
-#| msgid "Bookmarks"
-msgid "Book"
-msgstr "Книга"
-
-#: noted/content/models.py:30
-msgid "Course"
-msgstr "Курс"
-
-#: noted/content/models.py:31
-msgid "Video"
-msgstr "Видео"
-
-#: noted/content/models.py:32
-msgid "Article"
-msgstr "Статья"
-
-#: noted/content/models.py:33
-msgid "Lecture"
-msgstr "Лекция"
-
-#: noted/content/models.py:34
-msgid "Tutorial"
-msgstr "Руководство"
-
-#: noted/content/models.py:37 templates/content/note_create.html:69
-msgid "Type"
-msgstr "Тип"
-
-#: noted/content/models.py:42 noted/content/models.py:119
-msgid "Slug"
-msgstr "Ключ поиска"
-
-#: noted/content/models.py:126
-msgid "Author"
-msgstr "Автор"
-
-#: noted/content/models.py:134 templates/content/note_create.html:47
-#: templates/content/note_create.html:70
-#| msgid "Source type"
-msgid "Source"
-msgstr "Источник"
-
-#: noted/content/models.py:137
-msgid "Markdown body"
-msgstr "Markdown текст"
-
-#: noted/content/models.py:140
-msgid "HTML body"
-msgstr "HTML разметка"
-
-#: noted/content/models.py:147
-msgid "Write summary on the note in 100 symbols."
-msgstr "Напишите краткое изложение в 100 символов."
-
-#: noted/content/models.py:150
-msgid "Draft"
-msgstr "Черновик"
-
-#: noted/content/models.py:150
-msgid "Only you can see the note."
-msgstr "Только вы сможете просматривать эту запись."
-
-#: noted/content/models.py:153
-#| msgid "Post anonymous"
-msgid "Anonymous"
-msgstr "Анонимно"
-
-#: noted/content/models.py:155
-msgid "Others won't see that the note is yours."
-msgstr "Ваше авторство у этой записи не будет указано."
-
-#: noted/content/models.py:158
-msgid "Pin"
-msgstr "Прикреплен"
-
-#: noted/content/models.py:160
-msgid "The note will appear in pin notes list."
-msgstr "Эта запись будет в списке закрепленных."
-
-#: noted/content/models.py:162 noted/users/models.py:154
-#| msgid "Create one."
-msgid "Created"
-msgstr "Создано"
-
-#: noted/content/models.py:163
-msgid "Modified"
-msgstr "Изменен"
-
-#: noted/content/models.py:164
-msgid "Views"
-msgstr "Просмотров"
-
-#: noted/content/views.py:32 templates/index.html:22
-msgid "Oldest"
-msgstr "Старые"
-
-#: noted/content/views.py:33 templates/index.html:21
-msgid "Latest"
-msgstr "Новые"
-
-#: noted/core/settings.py:128
-msgid "English"
-msgstr "Английский"
-
-#: noted/core/settings.py:129
-msgid "Russian"
-msgstr "Русский"
-
-#: noted/users/adapter.py:20
-#| msgid "Username"
-msgid "User Name"
-msgstr "Имя Пользователя"
-
-#: noted/users/apps.py:8
-msgid "User Accounts"
-msgstr "Аккаунты пользователя"
-
-#: noted/users/auth.py:35
-msgid "Finish creating your account on NoteD."
-msgstr "Закончи регистрацию на NoteD."
-
-#: noted/users/forms.py:19
-msgid ""
-"Full Name should contain only latin letters, and                    should "
-"include no more than 3 words"
-msgstr ""
-"Полное имя должно содержать только латинские буквы и состоять не более чем "
-"из 3 слов."
-
-#: noted/users/forms.py:45
-msgid "Full Name should contain only latin letters."
-msgstr "Полное имя должно содержать только латинские буквы."
-
-#: noted/users/forms.py:49
-msgid "Full Name should include no more than 3 words."
-msgstr "Полное имя должно состоять не более чем из 3 слов."
-
-#: noted/users/models.py:96 templates/layouts/auth_modals.html:37
-#: templates/layouts/auth_modals.html:60
-msgid "Email"
-msgstr "Электронная почта"
-
-#: noted/users/models.py:104
-msgid "Username"
-msgstr "Имя пользователя"
-
-#: noted/users/models.py:106 templates/users/signup.html:38
-msgid "Full Name"
-msgstr "Полное имя"
-
-#: noted/users/models.py:107
-msgid "Staff"
-msgstr "Модератор"
-
-#: noted/users/models.py:108
-msgid "Superuser"
-msgstr "Администратор"
-
-#: noted/users/models.py:109
-msgid "User activated"
-msgstr "Активированный пользователь"
-
-#: noted/users/models.py:110
-msgid "Last Login"
-msgstr "Заходил"
-
-#: noted/users/models.py:111
-msgid "Date Joined"
-msgstr "Присоединился"
-
-#: noted/users/models.py:113
-msgid "Profile picture"
-msgstr "Изображение пользователя"
-
-#: noted/users/models.py:117
-msgid "Bio"
-msgstr "О себе"
-
-#: noted/users/models.py:118
-msgid "Location"
-msgstr "Местонахождение"
-
-#: noted/users/models.py:120
-msgid "Social Media Links"
-msgstr "Ссылки на социальные сети"
-
-#: noted/users/models.py:153
-msgid "Token"
-msgstr "Токен"
-
-#: noted/users/views.py:70
-msgid ""
-"You already registered. If you didn't register, request              for "
-"another link!"
-msgstr ""
-"Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
-"регистрации."
-
-#: noted/users/views.py:120
-msgid ""
-"Sorry, but we could not find a user account with"
-"                             that email."
-msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
-
-#: noted/users/views.py:130
-msgid "You have entered the wrong password."
-msgstr "Вы ввели неправильный пароль."
 
 #: templates/account/base.html:32
 msgid "Change E-mail"
@@ -253,7 +31,6 @@ msgstr "Выйти"
 #: templates/account/email/password_reset_key_message.html:5
 #: templates/account/password_reset.html:7
 #: templates/account/password_reset.html:11
-#| msgid "Password"
 msgid "Password Reset"
 msgstr "Изменить Пароль"
 
@@ -266,7 +43,6 @@ msgstr ""
 "Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите кнопку ниже, чтобы сбросить пароль."
 
 #: templates/account/email/password_reset_key_message.html:9
-#| msgid "Password"
 msgid "Reset password"
 msgstr "Изменить Пароль"
 
@@ -299,7 +75,6 @@ msgstr ""
 "электронное письмо  с инструкцией для сброса пароля. "
 
 #: templates/account/password_reset.html:21
-#| msgid "Password"
 msgid "Reset My Password"
 msgstr "Изменить Пароль"
 
@@ -312,7 +87,6 @@ msgstr ""
 #: templates/account/password_reset_from_key.html:5
 #: templates/account/password_reset_from_key.html:8
 #: templates/account/password_reset_from_key.html:18
-#| msgid "Confirm Password"
 msgid "Change Password"
 msgstr "Изменить Пароль"
 
@@ -334,6 +108,10 @@ msgstr ""
 msgid "Add source"
 msgstr "Добавить источник"
 
+#: templates/content/note_create.html:47 templates/content/note_create.html:98
+msgid "Source"
+msgstr "Источник"
+
 #: templates/content/note_create.html:53
 msgid "Source type"
 msgstr "Тип источника"
@@ -342,96 +120,109 @@ msgstr "Тип источника"
 msgid "Sources of information from which you take the note."
 msgstr "Источники информации, с которого вы берете запись."
 
-#: templates/content/note_create.html:65
+#: templates/content/note_create.html:66
+#| msgid "Link"
+msgid "Add Link"
+msgstr "Добавить ссылку"
+
+#: templates/content/note_create.html:80
+msgid "Add Description"
+msgstr "Добавить описание"
+
+#: templates/content/note_create.html:93
 msgid "Select an existing source"
 msgstr "Выберете существующий источник"
 
-#: templates/content/note_create.html:82
+#: templates/content/note_create.html:97
+msgid "Type"
+msgstr "Тип"
+
+#: templates/content/note_create.html:110
 msgid "Close"
 msgstr "Закрыть"
 
-#: templates/content/note_create.html:83
+#: templates/content/note_create.html:111
 msgid "Add"
 msgstr "Добавить"
 
-#: templates/content/note_create.html:91
+#: templates/content/note_create.html:119
 msgid "Remove"
 msgstr "Удалить"
 
-#: templates/content/note_create.html:98 templates/content/note_create.html:99
+#: templates/content/note_create.html:126
+#: templates/content/note_create.html:127
 msgid "Tags"
 msgstr "Теги"
 
-#: templates/content/note_create.html:103
+#: templates/content/note_create.html:131
 msgid "Summary in 140 symbols..."
 msgstr "Краткое изложение в 140 символов..."
 
-#: templates/content/note_create.html:107
+#: templates/content/note_create.html:135
 msgid "Publish"
 msgstr "Опубликовать"
 
-#: templates/content/note_create.html:108
+#: templates/content/note_create.html:136
 msgid "Save draft"
 msgstr "Сохранить черновик"
 
-#: templates/content/note_create.html:111
+#: templates/content/note_create.html:139
 msgid "Allow comments"
 msgstr "Разрешить комментарии"
 
-#: templates/content/note_create.html:115
+#: templates/content/note_create.html:143
 msgid "Post anonymous"
 msgstr "Опубликовать анонимно"
 
-#: templates/content/note_create.html:123
+#: templates/content/note_create.html:151
 msgid "Commonly used syntax"
 msgstr "Часто используемый синтаксис"
 
-#: templates/content/note_create.html:127
-#: templates/content/note_create.html:128
+#: templates/content/note_create.html:155
+#: templates/content/note_create.html:156
 msgid "Header"
 msgstr "Заголовок"
 
-#: templates/content/note_create.html:131
-#: templates/content/note_create.html:132
+#: templates/content/note_create.html:159
+#: templates/content/note_create.html:160
 msgid "italics"
 msgstr "курсивный"
 
-#: templates/content/note_create.html:131
-#| msgid "Fork"
+#: templates/content/note_create.html:159
 msgid "or"
 msgstr "или"
 
-#: templates/content/note_create.html:135
-#: templates/content/note_create.html:136
+#: templates/content/note_create.html:163
+#: templates/content/note_create.html:164
 msgid "bold"
 msgstr "жирный"
 
-#: templates/content/note_create.html:139
-#: templates/content/note_create.html:140
+#: templates/content/note_create.html:167
+#: templates/content/note_create.html:168
 msgid "Link"
 msgstr "Ссылка"
 
-#: templates/content/note_create.html:143
-#: templates/content/note_create.html:146
-#: templates/content/note_create.html:147
-#: templates/content/note_create.html:152
-#: templates/content/note_create.html:155
-#: templates/content/note_create.html:156
+#: templates/content/note_create.html:171
+#: templates/content/note_create.html:174
+#: templates/content/note_create.html:175
+#: templates/content/note_create.html:180
+#: templates/content/note_create.html:183
+#: templates/content/note_create.html:184
 msgid "item"
 msgstr "пункт"
 
-#: templates/content/note_create.html:161
-#: templates/content/note_create.html:162
+#: templates/content/note_create.html:189
+#: templates/content/note_create.html:190
 msgid "quoted text"
 msgstr "цитата"
 
-#: templates/content/note_create.html:165
-#: templates/content/note_create.html:166
+#: templates/content/note_create.html:193
+#: templates/content/note_create.html:194
 msgid "inline code"
 msgstr "строка кода"
 
-#: templates/content/note_create.html:169
-#: templates/content/note_create.html:170
+#: templates/content/note_create.html:197
+#: templates/content/note_create.html:198
 msgid "code block"
 msgstr "блок кода"
 
@@ -463,17 +254,52 @@ msgstr "Копировать"
 msgid "Copy link"
 msgstr "Скопировать ссылку"
 
-#: templates/content/note_display.html:149 templates/index.html:119
+#: templates/content/note_display.html:150 templates/content/search.html:15
+#: templates/content/search.html:64 templates/index.html:120
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/content/note_display.html:160
+#: templates/content/note_display.html:162
 msgid "Followers"
 msgstr "Подписчики"
 
-#: templates/content/note_display.html:169
+#: templates/content/note_display.html:171
 msgid "Follow"
 msgstr "Подписаться"
+
+#: templates/content/search.html:17
+msgid "Results for"
+msgstr "Результаты для"
+
+#: templates/content/search.html:21 templates/layouts/navigation.html:33
+msgid "Notes"
+msgstr "Записи"
+
+#: templates/content/search.html:24
+#| msgid "Source"
+msgid "Sources"
+msgstr "Источники"
+
+#: templates/content/search.html:27
+msgid "Topics"
+msgstr "Темы"
+
+#: templates/content/search.html:43
+#| msgid "Add source"
+msgid "Add Note"
+msgstr "Добавить запись"
+
+#: templates/content/search.html:52
+msgid "Make sure all words are spelled correctly."
+msgstr "Убедитесь, что нет ошибок в словах."
+
+#: templates/content/search.html:53
+msgid "Try different keywords."
+msgstr "Попробуйте другие ключевые слова."
+
+#: templates/content/search.html:54
+msgid "Try more general keywords."
+msgstr "Попробуйте больше ключевых слов."
 
 #: templates/emails/base_email.html:44
 msgid "Sent by"
@@ -509,12 +335,19 @@ msgstr "Вставьте эту ссылку в ваш браузер:"
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
+#: templates/index.html:21
+msgid "Latest"
+msgstr "Новые"
+
+#: templates/index.html:22
+msgid "Oldest"
+msgstr "Старые"
+
 #: templates/index.html:23
 msgid "Most liked"
 msgstr "Популярные"
 
 #: templates/index.html:24
-#| msgid "Allow comments"
 msgid "Most commented"
 msgstr "Обсуждаемые"
 
@@ -539,7 +372,6 @@ msgid "Reputation"
 msgstr "Репутация"
 
 #: templates/index.html:104
-#| msgid "Allow comments"
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -572,7 +404,6 @@ msgid "Create one."
 msgstr "Тогда создайте."
 
 #: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
-#| msgid "Forgot email or password?"
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
@@ -588,6 +419,10 @@ msgstr "Вход через email"
 msgid ""
 "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
+
+#: templates/layouts/auth_modals.html:37 templates/layouts/auth_modals.html:60
+msgid "Email"
+msgstr "Электронная почта"
 
 #: templates/layouts/auth_modals.html:39 templates/users/signup.html:44
 msgid "Password"
@@ -646,10 +481,6 @@ msgstr "Уведомления"
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: templates/layouts/navigation.html:33
-msgid "Notes"
-msgstr "Записи"
-
 #: templates/layouts/navigation.html:39
 msgid "Write note"
 msgstr "Создать запись"
@@ -694,7 +525,6 @@ msgstr ""
 "Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
 
 #: templates/socialaccount/signup.html:5
-#| msgid "Sign Up"
 msgid "Signup"
 msgstr "Регистрация"
 
@@ -739,9 +569,158 @@ msgstr ""
 "Попробуйте перейти по ссылке из email сообщения другим способом или "
 "перейдите на"
 
+#: templates/users/signup.html:38
+msgid "Full Name"
+msgstr "Полное имя"
+
 #: templates/users/signup.html:49
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
+
+#~ msgid "Title"
+#~ msgstr "Название"
+
+#~ msgid "Summary"
+#~ msgstr "Краткое изложение"
+
+#~ msgid "Other"
+#~ msgstr "Другой"
+
+#~ msgid "Book"
+#~ msgstr "Книга"
+
+#~ msgid "Course"
+#~ msgstr "Курс"
+
+#~ msgid "Video"
+#~ msgstr "Видео"
+
+#~ msgid "Article"
+#~ msgstr "Статья"
+
+#~ msgid "Lecture"
+#~ msgstr "Лекция"
+
+#~ msgid "Tutorial"
+#~ msgstr "Руководство"
+
+#~ msgid "Slug"
+#~ msgstr "Ключ поиска"
+
+#~ msgid "Author"
+#~ msgstr "Автор"
+
+#~ msgid "Markdown body"
+#~ msgstr "Markdown текст"
+
+#~ msgid "HTML body"
+#~ msgstr "HTML разметка"
+
+#~ msgid "Write summary on the note in 100 symbols."
+#~ msgstr "Напишите краткое изложение в 100 символов."
+
+#~ msgid "Draft"
+#~ msgstr "Черновик"
+
+#~ msgid "Only you can see the note."
+#~ msgstr "Только вы сможете просматривать эту запись."
+
+#~ msgid "Anonymous"
+#~ msgstr "Анонимно"
+
+#~ msgid "Others won't see that the note is yours."
+#~ msgstr "Ваше авторство у этой записи не будет указано."
+
+#~ msgid "Pin"
+#~ msgstr "Прикреплен"
+
+#~ msgid "The note will appear in pin notes list."
+#~ msgstr "Эта запись будет в списке закрепленных."
+
+#~ msgid "Created"
+#~ msgstr "Создано"
+
+#~ msgid "Modified"
+#~ msgstr "Изменен"
+
+#~ msgid "Views"
+#~ msgstr "Просмотров"
+
+#~ msgid "English"
+#~ msgstr "Английский"
+
+#~ msgid "Russian"
+#~ msgstr "Русский"
+
+#~ msgid "User Name"
+#~ msgstr "Имя Пользователя"
+
+#~ msgid "User Accounts"
+#~ msgstr "Аккаунты пользователя"
+
+#~ msgid "Finish creating your account on NoteD."
+#~ msgstr "Закончи регистрацию на NoteD."
+
+#~ msgid ""
+#~ "Full Name should contain only latin letters, and                    should "
+#~ "include no more than 3 words"
+#~ msgstr ""
+#~ "Полное имя должно содержать только латинские буквы и состоять не более чем "
+#~ "из 3 слов."
+
+#~ msgid "Full Name should contain only latin letters."
+#~ msgstr "Полное имя должно содержать только латинские буквы."
+
+#~ msgid "Full Name should include no more than 3 words."
+#~ msgstr "Полное имя должно состоять не более чем из 3 слов."
+
+#~ msgid "Username"
+#~ msgstr "Имя пользователя"
+
+#~ msgid "Staff"
+#~ msgstr "Модератор"
+
+#~ msgid "Superuser"
+#~ msgstr "Администратор"
+
+#~ msgid "User activated"
+#~ msgstr "Активированный пользователь"
+
+#~ msgid "Last Login"
+#~ msgstr "Заходил"
+
+#~ msgid "Date Joined"
+#~ msgstr "Присоединился"
+
+#~ msgid "Profile picture"
+#~ msgstr "Изображение пользователя"
+
+#~ msgid "Bio"
+#~ msgstr "О себе"
+
+#~ msgid "Location"
+#~ msgstr "Местонахождение"
+
+#~ msgid "Social Media Links"
+#~ msgstr "Ссылки на социальные сети"
+
+#~ msgid "Token"
+#~ msgstr "Токен"
+
+#~ msgid ""
+#~ "You already registered. If you didn't register, request              for "
+#~ "another link!"
+#~ msgstr ""
+#~ "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
+#~ "регистрации."
+
+#~ msgid ""
+#~ "Sorry, but we could not find a user account with"
+#~ "                             that email."
+#~ msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
+
+#~ msgid "You have entered the wrong password."
+#~ msgstr "Вы ввели неправильный пароль."
 
 #~ msgid "Source name"
 #~ msgstr "Название источника"

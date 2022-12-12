@@ -139,10 +139,20 @@ body {
     border-bottom-width: 1px;
     border-bottom: 1px solid rgb(206, 206, 206) !important;
 }
+.source-table-row:hover {
+    background-color: #ececec;
+}
 
 /* TABS */
 .tablink.active {
     border-bottom: 1px solid black !important;
     border: aliceblue;
     color: black !important;
+}
+
+/* SEARCH */
+@media (max-width: 750px) {
+    #source-add-note-btn {
+        font-size: 0.7rem !important; 
+    }
 }

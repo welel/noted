@@ -59,6 +59,34 @@
                                 </div>
                                 <div class="col-lg-2 col-0"></div>     
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-1 col-0"></div>
+                                <div class="col-lg-2 col-12 d-grid">
+                                    <button class="btn btn-success btn-sm rounded-pill d-inline mb-lg-0 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLinkInput" aria-expanded="false">
+                                        {% trans "Add Link" %}
+                                    </button>
+                                </div>
+                                <div class="col-lg-7 col-12">
+                                    <div class="collapse collapse-horizontal" id="collapseLinkInput">
+                                        {{ form.source_link }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-0"></div>  
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-1 col-0"></div>
+                                <div class="col-lg-2 col-12 d-grid">
+                                    <button class="btn btn-success btn-sm rounded-pill d-inline mb-lg-0 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescriptionInput" aria-expanded="false">
+                                        {% trans "Add Description" %}
+                                    </button>
+                                </div>
+                                <div class="col-lg-7 col-12">
+                                    <div class="collapse collapse-horizontal" id="collapseDescriptionInput">
+                                        {{ form.source_description }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-0"></div>  
+                            </div>
                             <div class="row mt-5">
                                 <div class="col-lg-1 col-0"></div>
                                 <div id="sourses-list" class="col-lg-9 col-12" hidden>

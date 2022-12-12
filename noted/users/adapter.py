@@ -8,13 +8,18 @@ from users.models import User
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)
-        if "first_name" in data and "last_name" in data:
+        if (
+            "first_name" in data
+            and "last_name" in data
+            and data["first_name"]
+            and data["last_name"]
+        ):
             user.full_name = data["first_name"] + " " + data["last_name"]
-        elif "full_name" in data:
+        elif "full_name" in data and data["full_name"]:
             user.full_name = data["full_name"]
-        elif "name" in data:
+        elif "name" in data and data["name"]:
             user.full_name = data["name"]
-        elif "username" in data:
+        elif "username" in data and data["username"]:
             user.full_name = data["username"]
         else:
             user.full_name = _("User Name")

@@ -1,14 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.urls import reverse_lazy
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from content.forms import NoteForm
 from content.models import Note, Source
+from content.search import search_sources
 from common import ajax_required
 
 
@@ -88,13 +90,15 @@ class PublicNoteList(NoteList):
 @ajax_required
 def search_sources_select(request):
     """Search for sources by title and return JSON results."""
-    query = request.GET.get("query", "[{]}(2")
-    data = Source.objects.filter(title__icontains=query)
+    query = request.GET.get("query", "")
+    data = search_sources(query)
     data = [
         {
             "id": source.pk,
             "title": source.title,
             "type": [source.type, source.get_readable_type()],
+            "link": source.link,
+            "description": source.description,
         }
         for source in data
     ]
@@ -106,6 +110,18 @@ class NoteCreateView(CreateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
+
+    def get_initial(self):
+        initial = super().get_initial()
+        try:
+            source = Source.objects.get(slug=self.request.GET.get("source"))
+        except Source.DoesNotExist:
+            return initial
+        initial["source"] = source.title
+        initial["source_type"] = source.type
+        initial["source_link"] = source.link
+        initial["source_description"] = source.description
+        return initial
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -152,3 +168,16 @@ class NoteView(View):
     # def post(self, request, *args, **kwargs):
     #     view = CommentFormView.as_view()
     #     return view(request, *args, **kwargs)
+
+
+def search(request, type):
+    query = request.GET.get("query")
+    context = {"query": query, "type": type}
+
+    if type == "notes":
+        context["notes"] = {}
+
+    elif type == "sources":
+        context["sources"] = search_sources(query)
+
+    return render(request, "content/search.html", context)

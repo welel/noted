@@ -14,6 +14,26 @@ class NoteForm(forms.ModelForm):
         choices=Source.TYPES,
         widget=forms.Select(attrs={"class": "form-select"}),
     )
+    source_link = forms.URLField(
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control d-inline form-control-sm ms-2",
+                "placeholder": _("Link"),
+            }
+        ),
+    )
+    source_description = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control d-inline form-control-sm ms-2",
+                "placeholder": _("Description in 100 characters."),
+            }
+        ),
+    )
 
     class Meta:
         model = Note
@@ -48,12 +68,19 @@ class NoteForm(forms.ModelForm):
         if self.instance.source:
             self.initial["source"] = self.instance.source.title
             self.initial["source_type"] = self.instance.source.type
+            self.initial["source_link"] = self.instance.source.link
+            self.initial[
+                "source_description"
+            ] = self.instance.source.description
 
     def clean(self):
         cleaned_data = super().clean()
         if self.data.get("source"):
             source, _ = Source.objects.get_or_create(
-                type=cleaned_data["source_type"], title=self.data["source"]
+                type=cleaned_data["source_type"],
+                title=self.data["source"],
+                link=cleaned_data["source_link"],
+                description=cleaned_data["source_description"],
             )
             cleaned_data["source"] = source
             if "source" in self.errors:

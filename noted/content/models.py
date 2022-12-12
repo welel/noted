@@ -39,6 +39,12 @@ class Source(models.Model):
     title = models.CharField(
         _("Title"), max_length=200, blank=False, null=False, db_index=True
     )
+    link = models.URLField(
+        _("Link to the source"), max_length=255, blank=True, null=True
+    )
+    description = models.CharField(
+        _("Description"), max_length=100, blank=True, null=True
+    )
     slug = models.SlugField(_("Slug"), max_length=254, unique=True, null=False)
 
     def __str__(self):
