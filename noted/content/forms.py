@@ -13,6 +13,7 @@ class NoteForm(forms.ModelForm):
     source_type = forms.ChoiceField(
         choices=Source.TYPES,
         widget=forms.Select(attrs={"class": "form-select"}),
+        label=_("Source Type"),
     )
     source_link = forms.URLField(
         max_length=255,
@@ -23,6 +24,7 @@ class NoteForm(forms.ModelForm):
                 "placeholder": _("Link"),
             }
         ),
+        label=_("Source link"),
     )
     source_description = forms.CharField(
         max_length=100,
@@ -33,6 +35,7 @@ class NoteForm(forms.ModelForm):
                 "placeholder": _("Description in 100 characters."),
             }
         ),
+        label=_("Source Description"),
     )
 
     class Meta:
@@ -73,13 +76,18 @@ class NoteForm(forms.ModelForm):
                 "source_description"
             ] = self.instance.source.description
 
+    # def clean_source_link(self):
+    #     link = super().clean_source_link()
+    #     print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", link)
+    #     return link
+
     def clean(self):
         cleaned_data = super().clean()
         if self.data.get("source"):
             source, _ = Source.objects.get_or_create(
                 type=cleaned_data["source_type"],
                 title=self.data["source"],
-                link=cleaned_data["source_link"],
+                link=cleaned_data.get("source_link", ""),
                 description=cleaned_data["source_description"],
             )
             cleaned_data["source"] = source

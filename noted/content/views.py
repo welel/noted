@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -83,26 +83,8 @@ class PublicNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        # add More from NoteD.
+        context["sidenotes"] = Note.objects.public()[:5]
         return context
-
-
-@ajax_required
-def search_sources_select(request):
-    """Search for sources by title and return JSON results."""
-    query = request.GET.get("query", "")
-    data = search_sources(query)
-    data = [
-        {
-            "id": source.pk,
-            "title": source.title,
-            "type": [source.type, source.get_readable_type()],
-            "link": source.link,
-            "description": source.description,
-        }
-        for source in data
-    ]
-    return JsonResponse({"data": data}, status=200)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -177,7 +159,45 @@ class SourceDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["notes"] = self.get_object().notes.all().filter(draft=False)
+        context["source_types"] = dict(Source.TYPES)
+        context["sidenotes"] = Note.objects.by_source_type(
+            self.get_object().type
+        )[:5]
         return context
+
+
+class SourceTypeDetailsView(View):
+    def get(self, request, code):
+        context = {}
+        try:
+            type = Source.TYPES[int(code)]
+        except (KeyError, ValueError):
+            return HttpResponseBadRequest()
+        context["type_code"] = type[0]
+        context["type"] = type[1]
+        context["notes"] = Note.objects.by_source_type(type[0])
+        context["sources"] = Source.objects.by_type(type[0])
+        context["source_types"] = dict(Source.TYPES)
+        context["sidenotes"] = Note.objects.public()[:5]
+        return render(request, "content/source_type_details.html", context)
+
+
+@ajax_required
+def search_sources_select(request):
+    """Search for sources by title and return JSON results."""
+    query = request.GET.get("query", "")
+    data = search_sources(query)
+    data = [
+        {
+            "id": source.pk,
+            "title": source.title,
+            "type": [source.type, source.get_readable_type()],
+            "link": source.link,
+            "description": source.description,
+        }
+        for source in data
+    ]
+    return JsonResponse({"data": data}, status=200)
 
 
 def search(request, type):

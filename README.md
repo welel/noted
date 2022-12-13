@@ -27,6 +27,7 @@ Now:
 * Markdown editor
 * GitHub API Integration (markdown)
 * Internationalization (2 languages: en, ru)
+* Search
 * Twitter Bootstrap integration
 * Responsive (modile) design
 * Code documentation
@@ -37,7 +38,6 @@ In future:
 * Following system
 * Sharing content (facebook, twitter)
 * Tagging
-* Search
 * Bookmarks
 * Likes
 * Recommendations

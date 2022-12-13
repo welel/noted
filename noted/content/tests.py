@@ -1,8 +1,61 @@
 import django
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.urls import reverse
 
 from content.models import Source, Note
 from users.models import User
+
+
+##########
+# MODELS #
+##########
+
+
+class SourceModelTest(TestCase):
+    def setUp(self):
+        self.source = Source.objects.create(
+            title="War and Peace", type=Source.BOOK
+        )
+        self.source_def_type = Source.objects.create(title="Car Manual")
+
+    def test_defiend_type(self):
+        self.assertEqual(self.source.type, "1")
+
+    def test_default_type(self):
+        self.assertEqual(self.source_def_type.type, Source.DEFAULT)
+
+    def test_title_require(self):
+        self.assertRaises(ValueError, Source.objects.create, type=Source.BOOK)
+
+    def test_default_description(self):
+        self.assertEqual(self.source.description, "")
+
+    def test_slug(self):
+        self.assertIsNotNone(self.source.slug)
+
+    def test_unique_slug(self):
+        source2 = Source.objects.create(
+            title="War and Peace", type=Source.BOOK
+        )
+        self.assertNotEqual(self.source.slug, source2.slug)
+
+    def test_str(self):
+        self.assertEqual(str(self.source), self.source.title)
+
+    def test_reabable_type(self):
+        self.assertEqual(Source.make_type_readable("1"), "Book")
+
+    def test_reabable_type_none(self):
+        self.assertIsNone(Source.make_type_readable("100"))
+
+    def test_get_readable_type(self):
+        self.assertEqual(self.source.get_readable_type(), "Book")
+
+    def test_url(self):
+        self.assertIsNotNone(self.source.get_absolute_url())
+
+    def test_type_url(self):
+        self.assertIsNotNone(reverse("content:source_type", args=["1"]))
 
 
 class ModelsTest(TestCase):
@@ -22,28 +75,6 @@ class ModelsTest(TestCase):
         )
         self.note_only_title = Note.objects.create(title="xyz")
         return super().setUp()
-
-    def test_defiend_sourcetype(self):
-        self.assertEqual(self.source.type, "1")
-
-    def test_source_str(self):
-        self.assertEqual(str(self.source), self.source.title)
-
-    def test_source_slug(self):
-        self.assertIsNotNone(self.source.slug)
-
-    def test_source_url(self):
-        pass
-
-    def test_source_unique_slug(self):
-        source2 = Source.objects.create(
-            title="War and Peace", type=Source.BOOK
-        )
-        self.assertNotEqual(self.source.slug, source2.slug)
-
-    def test_source_default_type(self):
-        source = Source.objects.create(title="1984")
-        self.assertEqual(source.type, Source.DEFAULT)
 
     def test_note_str(self):
         self.assertEqual(str(self.note), self.note.title)
@@ -85,3 +116,40 @@ class ModelsTest(TestCase):
     def test_note_datetime(self):
         self.note.title += "mod"
         self.assertNotEqual(self.note.created, self.note.modified)
+
+
+########
+# URLS #
+########
+
+
+class SourceUrlsTest(TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ajax_client = Client(HTTP_X_REQUESTED_WITH="XMLHttpRequest")
+        self.client = Client()
+
+    def setUp(self):
+        self.source = Source.objects.create(
+            type=Source.BOOK,
+            title="War and Peace",
+            link="http://warandpeace.ru",
+            description="Great book!",
+        )
+        return super().setUp()
+
+    def test_search_source_ajax(self):
+        # PostgreSQL extenstion problem.
+        pass
+
+    def test_source_details(self):
+        response = self.client.get(
+            reverse("content:source", args=[self.source.slug])
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_source_type_details(self):
+        response = self.client.get(
+            reverse("content:source_type", args=[Source.BOOK])
+        )
+        self.assertEqual(response.status_code, 200)

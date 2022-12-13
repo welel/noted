@@ -2,7 +2,7 @@
 {% load i18n %}
 <div class="mt-5">
     <h6 style="margin-bottom: -15px;">{% trans "More from NoteD." %}</h6>
-    {% for note in notes|slice:":5" %}
+    {% for note in sidenotes|slice:":5" %}
     <div class="mt-4">
         <div class="d-flex align-items-center" style="font-size: 13px;">
             <a href="#" class="text-decoration-none text-dark">

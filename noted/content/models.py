@@ -12,6 +12,11 @@ from common import generate_unique_slug
 from users.models import User
 
 
+class SourceManager(models.Manager):
+    def by_type(self, type_code: str) -> QuerySet:
+        return self.filter(type=type_code)
+
+
 class Source(models.Model):
     """An information source.
 
@@ -48,13 +53,14 @@ class Source(models.Model):
         _("Description"), max_length=100, blank=True, default=""
     )
     slug = models.SlugField(_("Slug"), max_length=254, unique=True, null=False)
+    objects = SourceManager()
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_unique_slug(self, from_field="title")
+            self.slug = generate_unique_slug(self)
         return super().save(*args, **kwargs)
 
     @classmethod
@@ -88,11 +94,14 @@ class NoteManager(models.Manager):
         """Query notes available for everyone."""
         return self.filter(draft=False)
 
-    def datetime_created(self):
+    def datetime_created(self) -> QuerySet:
         return self.order_by("created")
 
-    def datetime_created_dec(self):
+    def datetime_created_dec(self) -> QuerySet:
         return self.order_by("-created")
+
+    def by_source_type(self, type_code: str) -> QuerySet:
+        return self.filter(draft=False, source__type=type_code)
 
 
 class Note(models.Model):
