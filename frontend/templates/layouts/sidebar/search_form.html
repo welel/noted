@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="input-group rounded mt-0">
+    <span class="input-group-text border-0 bg-white" id="search-addon">
+        <i class="bi bi-search"></i>
+    </span>
+    <form class="w-75" method="GET" action="{% url 'content:search' type='notes' %}">
+        <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
+    </form>
+</div>

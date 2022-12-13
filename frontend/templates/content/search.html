@@ -2,7 +2,9 @@
 
 {% load static %}
 {% load i18n %}
-{% load filtersourcetags %}
+
+
+{% block title %}{% trans "Search" %}{% endblock %}
 
 
 {% block main %}
@@ -28,24 +30,7 @@
                     </li>
                 </ul>
                 <!-- Results -->
-                {% for source in sources %}
-                <div class="row mt-3 mb-3 d-flex align-items-center">
-                    <div class="col-2 text-center d-sm-inline d-none">
-                        <div>{{ source.type|icon:"1.8rem" }}</div>
-                        <div style="font-size: 0.8rem;">{{ source.type|readabletype }}</div>
-                    </div>
-                    <div class="col">
-                        <div class="fw-bold" style="font-size: 1.1rem;">{{ source.title }}</div>
-                        {% if source.description %}<div class="text-secondary">{{ source.description }}</div>{% endif %}
-                        <div class="d-sm-none d-block"><span class="badge bg-success mt-3 rounded-pill">{{ source.type|readabletype }}</span></div>
-                    </div>
-                    <div class="col-2">
-                        <a href="{% url 'content:create_note' %}?source={{ source.slug }}" id="source-add-note-btn" class="btn btn-success rounded-pill d-sm-block d-none">{% trans "Add Note" %}</a>
-                        <a href="{% url 'content:create_note' %}?source={{ source.slug }}" class="btn btn-success rounded-pill d-sm-none d-block"><i class="bi bi-pencil-square" style="font-size: 0.8rem;"></i></a>
-                    </div>
-                </div>
-                <hr>
-                {% endfor %}
+                {% include 'content/source_list_layout.html' %}
 
                 <!-- No results -->
                 {% if not notes and not sources %}
@@ -64,7 +49,7 @@
                     <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
                 </form>
             </div>
-            {% include 'layouts/side_footer.html' %}
+            {% include 'layouts/sidebar/footer.html' %}
         </div>
     </div>
 </div>

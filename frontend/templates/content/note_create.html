@@ -5,6 +5,8 @@
 {% load i18n %}
 
 
+{% block title %}{% trans "New Note" %}{% endblock %}
+
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
 {% endblock %}
@@ -20,7 +22,7 @@
             <div class="container-fluid" style="max-width: 700px;">
                 {% if form.errors %}
                 <div id="form-error">
-                    <p>The operation could not be performed because one or more error(s) occurred.<br />Please resubmit the form after making the following changes:</p>
+                    <p>{% trans "The operation could not be performed because one or more error(s) occurred" %}.<br />{% trans "Please resubmit the form after making the following changes" %}:</p>
                     <ul>
                     {% for field in form %}
                         {% if field.errors %}

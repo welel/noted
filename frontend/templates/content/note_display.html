@@ -4,6 +4,9 @@
 {% load i18n %}
 
 
+{% block title %}{{ note.title }}{% endblock %}
+
+
 {% block main %}
 <div class="container-fluid mt-5">
     <div class="row">
@@ -73,7 +76,7 @@
                 {% if note.source %}
                 <div class="row">
                     <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
                         <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.get_readable_type }}</span>
                         </a>
                         <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
@@ -172,8 +175,8 @@
                     <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
                 </div>
             </div>
-            {% include 'layouts/more_from_noted.html' %}
-            {% include 'layouts/side_footer.html' %}
+            {% include 'layouts/sidebar/more_from_noted.html' %}
+            {% include 'layouts/sidebar/footer.html' %}
 
         </div>
     </div>

@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<div class="mt-4">
+    <h6>{% trans "Source types" %}</h6>
+    <span>
+        <a href="{% url 'content:source_type' code='1' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-1 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.1 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='2' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-2 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.2 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='3' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-3 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.3 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='4' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-4 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.4 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='5' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-5 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.5 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='6' %}" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-dark bg-source-6 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.6 }}</span>
+        </a>
+        <a href="{% url 'content:source_type' code='0' %}" class="text-decoration-none text-dark">
+            <span class="badge rounded-pill text-dark bg-source-0 p-2 m-1 mt-2 fs-6 fw-normal">{{ source_types.0 }}</span>
+        </a>
+    </span>
+</div>

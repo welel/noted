@@ -17,12 +17,12 @@ urlpatterns = [
         name="delete_note",
     ),
     path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
+    path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",
         views.search_sources_select,
         name="search_sources_select",
     ),
-    path("search/<str:type>/", views.search, name="search"),
     path(
         "source/<str:slug>/", views.SourceDetailsView.as_view(), name="source"
     ),

@@ -170,6 +170,10 @@ body {
     border: aliceblue;
     color: black !important;
 }
+.tablink:hover {
+    border-color: rgba(0,0,0,0) !important;
+    color: black !important;
+}
 
 /* SEARCH */
 @media (max-width: 750px) {
