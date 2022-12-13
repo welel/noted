@@ -7,27 +7,37 @@ from content.models import Source
 register = template.Library()
 
 
+ICON_TEMPLATE = '<i class="bi {icon}" style="font-size: {size}; \
+    background-color: rgba({rgb},{bg_alpha});  padding: 4px 10px 4px 10px; \
+    border-radius: 50px;"></i>'
+
 SOURCE_ICONS = {
-    Source.DEFAULT: '<i class="bi bi-grid" style="font-size: %s;"></i>',
-    Source.BOOK: '<i class="bi bi-book" style="font-size: %s;"></i>',
-    Source.ARTICLE: '<i class="bi bi-journal-richtext" style="font-size: %s;"></i>',
-    Source.COURSE: '<i class="bi bi-mortarboard-fill" style="font-size: %s;"></i>',
-    Source.LECTURE: '<i class="bi bi-pen" style="font-size: %s;"></i>',
-    Source.TUTORIAL: '<i class="bi bi-map" style="font-size: %s;"></i>',
-    Source.VIDEO: '<i class="bi bi-camera-video" style="font-size: %s;"></i>',
+    Source.DEFAULT: {"icon": "bi-grid", "color": "213, 213, 213"},
+    Source.BOOK: {"icon": "bi-book", "color": "200, 93, 93"},
+    Source.COURSE: {"icon": "bi-mortarboard-fill", "color": "107, 234, 139"},
+    Source.VIDEO: {"icon": "bi-camera-video", "color": "150, 200, 255"},
+    Source.ARTICLE: {"icon": "bi-journal-richtext", "color": "185, 143, 227"},
+    Source.LECTURE: {"icon": "bi-pen", "color": "100, 235, 255"},
+    Source.TUTORIAL: {"icon": "bi-map", "color": "232, 222, 76"},
 }
 
 
 @register.filter
-def icon(source_code, size="1rem"):
+def icon(source_code, size: str = "1rem", background_alpha: str = "1"):
     """Transform `source_code` to HTML icon of a source."""
     if source_code not in SOURCE_ICONS:
         return ""
-    return mark_safe(SOURCE_ICONS[source_code] % size)
+    icon = ICON_TEMPLATE.format(
+        icon=SOURCE_ICONS[source_code]["icon"],
+        size=size,
+        rgb=SOURCE_ICONS[source_code]["color"],
+        bg_alpha=background_alpha,
+    )
+    return mark_safe(icon)
 
 
 @register.filter
-def readabletype(source_code):
+def readabletype(source_code: str):
     """Transform `source_code` to a human readable source name."""
     if source_code not in [s[0] for s in Source.TYPES]:
         return ""

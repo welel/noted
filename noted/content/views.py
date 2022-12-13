@@ -170,6 +170,16 @@ class NoteView(View):
     #     return view(request, *args, **kwargs)
 
 
+class SourceDetailsView(DetailView):
+    model = Source
+    template_name = "content/source_display.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["notes"] = self.get_object().notes.all().filter(draft=False)
+        return context
+
+
 def search(request, type):
     query = request.GET.get("query")
     context = {"query": query, "type": type}

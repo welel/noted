@@ -35,79 +35,7 @@
             </li>
         </ul>
 
-        {% for note in notes %}
-        <div class="container py-3" style="max-width: 700px;">
-            <div class="row">
-                <div class="col">
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="24" height="24"></span>
-                    <span class="col">{{ note.author.full_name }}</span>
-                    </a>
-                    <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
-                    <span class="text-secondary">{{ note.created|date:"M j" }}</span>
-                </div>
-            </div>
-            <div class="row mt-2 mb-0">
-                <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark fs-4 fs-5 fw-bold">
-                {{ note.title }}
-                </a>
-            </div>
-            {% if note.source %}
-            <div class="row">
-                <div class="col d-flex align-items-center">
-                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                    <span><i class="bi bi-bookmark-plus" style="font-size: 1.3rem;"></i></span>
-                    </a>
-                    <span>&nbsp;|&nbsp;</span>
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.get_readable_type }}</span>
-                    </a>
-                    <a  href="#" class="text-decoration-none text-dark">
-                    <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-            <div class="row ps-1 d-md-inline d-none">
-                <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
-                    {% if note.summary %}
-                        {{ note.summary }}
-                    {% else %}
-                        {{ note.get_preview_text|truncatechars:140 }}
-                    {% endif %}
-                </a>
-            </div>
-            <div class="row row-cols-auto d-flex justify-content-between mt-2">
-                <div class="col">
-                    {% if not note.source %}
-                    <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                        <span><i class="bi bi-bookmark-plus"></i></span>
-                    </a>
-                    {% endif %}
-                    {% if note.tags %}
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                    </a>
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                    </a>
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                    </a>
-                    {% endif %}
-                </div>
-                <div class="col d-md-block d-none">
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0 {% trans "Reputation" %}</span>
-                    </a>
-                    <a href="#" class="text-decoration-none text-dark">
-                    <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <hr>
-        {% endfor %}
+        {% include 'content/note_list_layout.html' %}
 
     </div>
     <div class="col-lg-3 col-12 px-4">
@@ -121,7 +49,7 @@
             </form>
         </div>
         <div class="mt-4">
-            <h6>Source types</h6>
+            <h6>{% trans "Source types" %}</h6>
             <span>
                 <a href="#" class="text-decoration-none text-dark">
                 <span class="badge rounded-pill text-bg-warning p-2 m-1 fs-6 fw-normal">{{ source_types.1 }}</span>
@@ -148,7 +76,7 @@
         </div>
         {% include 'layouts/more_from_noted.html' %}
         <div class="mt-5">
-            <h6>Recommended topics</h6>
+            <h6>{% trans "Recommended topics" %}</h6>
             <span>
                 <a href="#" class="text-decoration-none text-dark">
                 <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>

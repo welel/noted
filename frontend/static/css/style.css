@@ -77,7 +77,28 @@ body {
 .link-h:hover {
     color:black;
 }
-
+/* Source type badges */
+.bg-source-0 {
+    background-color: rgb(213, 213, 213) !important;
+}
+.bg-source-1 {
+    background-color: rgb(200, 93, 93) !important;
+}
+.bg-source-2 {
+    background-color: rgb(107, 234, 139) !important;
+}
+.bg-source-3 {
+    background-color: rgb(150, 200, 255) !important;
+}
+.bg-source-4 {
+    background-color: rgb(185, 143, 227) !important;
+}
+.bg-source-5 {
+    background-color: rgb(100, 235, 255) !important;
+}
+.bg-source-6 {
+    background-color: rgb(232, 222, 76) !important;
+}
 
 
 /* LOGIN */

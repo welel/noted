@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-1 d-lg-block d-none"></div>
+        <div class="col-lg-8 col-12">
+            {% block center %}{% endblock %}
+        </div>
+        <div class="col-lg-3 col-12 px-4">
+            {% block sidebar %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from bs4 import BeautifulSoup
 
 from django.db import models
@@ -43,7 +45,7 @@ class Source(models.Model):
         _("Link to the source"), max_length=255, blank=True, null=True
     )
     description = models.CharField(
-        _("Description"), max_length=100, blank=True, null=True
+        _("Description"), max_length=100, blank=True, default=""
     )
     slug = models.SlugField(_("Slug"), max_length=254, unique=True, null=False)
 
@@ -56,17 +58,19 @@ class Source(models.Model):
         return super().save(*args, **kwargs)
 
     @classmethod
-    def make_type_readable(cls, query):
-        for type_code, type in cls.TYPES:
-            if type_code == query:
-                return type
+    def make_type_readable(cls, type_code: str) -> Optional[str]:
+        """Translate a source type code to a readable type name."""
+        for code, name in cls.TYPES:
+            if code == type_code:
+                return name
         return None
 
-    def get_readable_type(self):
+    def get_readable_type(self) -> Optional[str]:
+        """Return readable source type name."""
         return Source.make_type_readable(self.type)
 
-    # def get_absolute_url(self):
-    #     return reverse("source", args=[self.slug])
+    def get_absolute_url(self):
+        return reverse("content:source", args=[self.slug])
 
 
 class NoteManager(models.Manager):
@@ -184,5 +188,6 @@ class Note(models.Model):
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
 
-    def get_preview_text(self):
+    def get_preview_text(self) -> str:
+        """Get body preview text for a note."""
         return "".join(BeautifulSoup(self.body_html).findAll(text=True))

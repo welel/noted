@@ -23,5 +23,7 @@ urlpatterns = [
         name="search_sources_select",
     ),
     path("search/<str:type>/", views.search, name="search"),
-    # path("source/<str:slug>/", _, name="source"),
+    path(
+        "source/<str:slug>/", views.SourceDetailsView.as_view(), name="source"
+    ),
 ]

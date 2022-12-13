@@ -73,10 +73,10 @@
                 {% if note.source %}
                 <div class="row">
                     <div class="col">
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge rounded-pill text-bg-success mx-1">{{ note.source.get_readable_type }}</span>
+                        <a href="#" class="text-decoration-none">
+                        <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.get_readable_type }}</span>
                         </a>
-                        <a  href="#" class="text-decoration-none text-dark">
+                        <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
                         <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
                         </a>
                     </div>
