@@ -9,7 +9,8 @@ register = template.Library()
 
 ICON_TEMPLATE = '<i class="bi {icon}" style="font-size: {size}; \
     background-color: rgba({rgb},{bg_alpha});  padding: 4px 10px 4px 10px; \
-    border-radius: 50px;"></i>'
+    border-radius: 50px;" data-bs-toggle="tooltip" \
+    data-bs-title="{tooltip}"></i>'
 
 SOURCE_ICONS = {
     Source.DEFAULT: {"icon": "bi-grid", "color": "213, 213, 213"},
@@ -32,6 +33,7 @@ def icon(source_code, size: str = "1rem", background_alpha: str = "1"):
         size=size,
         rgb=SOURCE_ICONS[source_code]["color"],
         bg_alpha=background_alpha,
+        tooltip=Source.make_type_readable(source_code),
     )
     return mark_safe(icon)
 

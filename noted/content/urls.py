@@ -26,4 +26,9 @@ urlpatterns = [
     path(
         "source/<str:slug>/", views.SourceDetailsView.as_view(), name="source"
     ),
+    path(
+        "source/type/<str:code>/",
+        views.SourceTypeDetailsView.as_view(),
+        name="source_type",
+    ),
 ]

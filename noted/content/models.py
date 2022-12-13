@@ -88,11 +88,14 @@ class NoteManager(models.Manager):
         """Query notes available for everyone."""
         return self.filter(draft=False)
 
-    def datetime_created(self):
+    def datetime_created(self) -> QuerySet:
         return self.order_by("created")
 
-    def datetime_created_dec(self):
+    def datetime_created_dec(self) -> QuerySet:
         return self.order_by("-created")
+
+    def by_source_type(self, type_code: str) -> QuerySet:
+        return self.filter(draft=False, source__type=type_code)
 
 
 class Note(models.Model):

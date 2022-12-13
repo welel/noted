@@ -1,0 +1,26 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load i18n %}
+{% load filtersourcetags %}
+
+
+{% block center %}
+
+<div class="container-fluid mt-4" style="max-width:770px;">
+    <div class="row">
+        <div class="col-1 d-flex flex-column justify-content-start align-items-center">
+            <div>{{ type_code|icon:"2rem" }}</div>
+        </div>
+        <div class="col-auto">
+            <h1 class="fw-bold">{{ type }}</h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <hr>
+    </div>
+    <div class="row">
+        {% include 'content/note_list_layout.html' %}
+    </div>
+</div>
+
+{% endblock %}

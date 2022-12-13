@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -178,6 +178,19 @@ class SourceDetailsView(DetailView):
         context = super().get_context_data(**kwargs)
         context["notes"] = self.get_object().notes.all().filter(draft=False)
         return context
+
+
+class SourceTypeDetailsView(View):
+    def get(self, request, code):
+        context = {}
+        try:
+            type = Source.TYPES[int(code)]
+        except (KeyError, ValueError):
+            return HttpResponseBadRequest()
+        context["type_code"] = type[0]
+        context["type"] = type[1]
+        context["notes"] = Note.objects.by_source_type(type[0])
+        return render(request, "content/source_type_details.html", context)
 
 
 def search(request, type):
