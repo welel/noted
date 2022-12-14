@@ -87,8 +87,18 @@ class PublicNoteList(NoteList):
         return context
 
 
+class NoteDraftMixin:
+    def form_valid(self, form):
+        form.instance.draft = self.draft
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        self.draft = "savedraft" in request.POST
+        return super().post(request, *args, **kwargs)
+
+
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(CreateView):
+class NoteCreateView(NoteDraftMixin, CreateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
@@ -110,6 +120,7 @@ class NoteCreateView(CreateView):
         return super().form_valid(form)
 
 
+@method_decorator(login_required, name="dispatch")
 class NoteForkView(NoteCreateView):
     def get_initial(self):
         initial = super().get_initial()
@@ -121,15 +132,16 @@ class NoteForkView(NoteCreateView):
         note.pk = None
         note.slug = None
         self.object = note
-        initial["source"] = note.source.title
-        initial["source_type"] = note.source.type
-        initial["source_link"] = note.source.link
-        initial["source_description"] = note.source.description
+        if note.source:
+            initial["source"] = note.source.title
+            initial["source_type"] = note.source.type
+            initial["source_link"] = note.source.link
+            initial["source_description"] = note.source.description
         return initial
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(UpdateView):
+class NoteUpdateView(NoteDraftMixin, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
