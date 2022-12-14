@@ -182,6 +182,23 @@ class NoteView(View):
     #     return view(request, *args, **kwargs)
 
 
+@ajax_required
+def pin_note(request, slug):
+    if request.method == "GET":
+        try:
+            note = Note.objects.get(slug=slug)
+        except Note.DoesNotExist:
+            print("BAD NOTE")
+            return HttpResponseBadRequest()
+        if note.author != request.user:
+            print("BAD AUTHOR")
+            return HttpResponseBadRequest()
+        note.pin = not note.pin
+        note.save()
+        return JsonResponse({"pin": note.pin})
+    return HttpResponseBadRequest()
+
+
 class SourceDetailsView(DetailView):
     model = Source
     template_name = "content/source_display.html"

@@ -18,6 +18,7 @@ urlpatterns = [
     ),
     path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
     path("note/fork/<str:slug>/", views.NoteForkView.as_view(), name="fork"),
+    path("note/pin/<str:slug>/", views.pin_note, name="pin_note"),
     path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",

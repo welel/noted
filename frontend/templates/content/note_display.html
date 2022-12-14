@@ -53,6 +53,11 @@
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
+                                    {% if note.pin %}
+                                    <li><button  id="pin" class="dropdown-item"><i class="bi bi-pin-angle-fill"></i> <span>{% trans "Unpin" %}</span></button></li>
+                                    {% else %}
+                                    <li><button id="pin" class="dropdown-item"><i class="bi bi-pin-angle"></i> <span>{% trans "Pin" %}</span></button></li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
                                     <li>
                                         <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
@@ -186,5 +191,6 @@
 
 
 {% block extra_scripts %}
+<div id="pin-note-url" hidden>{% url 'content:pin_note' slug=note.slug %}</div>
 <script src="{% static 'js/note_display.js' %}"></script>
 {% endblock %}
