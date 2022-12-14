@@ -110,6 +110,24 @@ class NoteCreateView(CreateView):
         return super().form_valid(form)
 
 
+class NoteForkView(NoteCreateView):
+    def get_initial(self):
+        initial = super().get_initial()
+        try:
+            note = Note.objects.get(slug=self.kwargs.get("slug"))
+        except Source.DoesNotExist:
+            return initial
+        note.fork = Note.objects.get(pk=note.pk)
+        note.pk = None
+        note.slug = None
+        self.object = note
+        initial["source"] = note.source.title
+        initial["source_type"] = note.source.type
+        initial["source_link"] = note.source.link
+        initial["source_description"] = note.source.description
+        return initial
+
+
 @method_decorator(login_required, name="dispatch")
 class NoteUpdateView(UpdateView):
     model = Note
@@ -129,7 +147,7 @@ class NoteDetailsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["notes"] = Note.objects.public()[:5]
+        context["sidenotes"] = Note.objects.public()[:5]
         return context
 
 

@@ -47,7 +47,7 @@ class Source(models.Model):
         _("Title"), max_length=200, blank=False, null=False, db_index=True
     )
     link = models.URLField(
-        _("Link to the source"), max_length=255, blank=True, null=True
+        _("Link to the source"), max_length=255, blank=True, default=""
     )
     description = models.CharField(
         _("Description"), max_length=100, blank=True, default=""
@@ -122,7 +122,7 @@ class Note(models.Model):
         created: publish datetime of a note.
         modified: update datetime of a note.
         views: a counter of note's visitors.
-        *fork: a link to :model:`Note` if a note forked from another.
+        fork: a link to :model:`Note` if a note forked from another.
         *allow_comments: a boolean flag allows to users leave comments
                         to a note.
         *tags: tags of a note (max tags - 5, max length - 24 symbols).
@@ -181,6 +181,13 @@ class Note(models.Model):
     created = models.DateTimeField(_("Created"), auto_now_add=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True)
     views = models.PositiveIntegerField(_("Views"), default=1)
+    fork = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Parent"),
+        blank=True,
+    )
     objects = NoteManager()
 
     class Meta:

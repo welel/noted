@@ -64,13 +64,14 @@
                                     </li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <h2>{{ note.title }}</h2>
+                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Fork" %}: {{ note.fork.title }}</i></a>{% endif %} 
                 </div>
                 <hr>
                 {% if note.source %}
@@ -136,7 +137,7 @@
                                     </li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
                     </div>
