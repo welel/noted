@@ -62,11 +62,9 @@
             {% endif %}
         </div>
         <div class="col d-md-block d-none">
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0 {% trans "Reputation" %}</span>
-            </a>
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
+            <a href="{{ note.get_absolute_url }}" class="text-decoration-none">
+            <span class="text-secondary p-1 rounded"><i class="bi bi-balloon-heart"></i> {{ note.likes.count }} {% trans "Reputation" %}</span>
+            <span class="text-secondary p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
             </a>
         </div>
     </div>

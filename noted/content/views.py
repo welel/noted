@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
@@ -182,21 +183,42 @@ class NoteView(View):
     #     return view(request, *args, **kwargs)
 
 
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def pin_note(request, slug):
-    if request.method == "GET":
-        try:
-            note = Note.objects.get(slug=slug)
-        except Note.DoesNotExist:
-            print("BAD NOTE")
-            return HttpResponseBadRequest()
-        if note.author != request.user:
-            print("BAD AUTHOR")
-            return HttpResponseBadRequest()
-        note.pin = not note.pin
-        note.save()
-        return JsonResponse({"pin": note.pin})
-    return HttpResponseBadRequest()
+    note = get_object_or_404(Note, slug=slug)
+    if note.author != request.user:
+        return HttpResponseBadRequest()
+    note.pin = not note.pin
+    note.save()
+    return JsonResponse({"pin": note.pin})
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def like_note(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    if request.user in note.likes.all():
+        note.likes.remove(request.user)
+        return JsonResponse({"liked": False})
+    else:
+        note.likes.add(request.user)
+        return JsonResponse({"liked": True})
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def bookmark_note(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    if request.user in note.bookmarks.all():
+        note.bookmarks.remove(request.user)
+        return JsonResponse({"bookmarked": False})
+    else:
+        note.bookmarks.add(request.user)
+        return JsonResponse({"bookmarked": True})
 
 
 class SourceDetailsView(DetailView):

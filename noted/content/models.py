@@ -188,6 +188,12 @@ class Note(models.Model):
         verbose_name=_("Parent"),
         blank=True,
     )
+    likes = models.ManyToManyField(
+        User, related_name="liked_notes", blank=True
+    )
+    bookmarks = models.ManyToManyField(
+        User, related_name="bookmarked_notes", default=None, blank=True
+    )
     objects = NoteManager()
 
     class Meta:

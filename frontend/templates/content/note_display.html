@@ -46,9 +46,9 @@
                         <button id="copy-note-link" class="btn btn-link text-decoration-none text-dark px-0">
                         <i class="bi bi-link-45deg link-h px-2 color-grey" style="font-size: 1.1rem;"></i>
                         </button>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-bookmark-plus link-h ps-4 color-grey" style="font-size: 1.2rem;"></i>
-                        </a>
+                        <button id="bookmark-btn-1" class="btn btn-link text-decoration-none text-dark">
+                        <i class="bi bi-bookmark-plus{% if request.user in note.bookmarks.all %}-fill{% endif %} link-h ps-2 color-grey" style="font-size: 1.2rem;"></i>
+                        </button>
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
@@ -96,9 +96,9 @@
                 </div>
                 <div class="row row-cols-auto d-flex justify-content-between mt-5">
                     <div class="col">
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0</span>
-                        </a>
+                        <button id="like-btn" class="btn btn-link text-decoration-none text-dark">
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-heart{% if request.user in note.likes.all %}-fill{% endif %}"></i> <span>{{ note.likes.count }}</span></span>
+                        </button>
                         <a href="#" class="text-decoration-none text-dark pe-3">
                         <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0</span>
                         </a>
@@ -124,13 +124,18 @@
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
                             </ul>
                         </div>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-bookmark-plus ps-4 color-grey link-h" style="font-size: 1.2rem;"></i>
-                        </a>
+                        <button id="bookmark-btn-2" class="btn btn-link text-decoration-none text-dark pt-0">
+                            <i class="bi bi-bookmark-plus{% if request.user in note.bookmarks.all %}-fill{% endif %} link-h ps-3 color-grey" style="font-size: 1.2rem;"></i>
+                        </button>
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
+                                    {% if note.pin %}
+                                    <li><button  id="pin-2" class="dropdown-item"><i class="bi bi-pin-angle-fill"></i> <span>{% trans "Unpin" %}</span></button></li>
+                                    {% else %}
+                                    <li><button id="pin-2" class="dropdown-item"><i class="bi bi-pin-angle"></i> <span>{% trans "Pin" %}</span></button></li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
                                     <li>
                                         <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
@@ -147,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="mt-5">
+                <hr class="mt-4">
             </div>
         </div>
         <div class="col-lg-3 col-12 px-4">
@@ -183,7 +188,6 @@
             </div>
             {% include 'layouts/sidebar/more_from_noted.html' %}
             {% include 'layouts/sidebar/footer.html' %}
-
         </div>
     </div>
 </div>
@@ -192,5 +196,7 @@
 
 {% block extra_scripts %}
 <div id="pin-note-url" hidden>{% url 'content:pin_note' slug=note.slug %}</div>
+<div id="like-note-url" hidden>{% url 'content:like_note' slug=note.slug %}</div>
+<div id="bookmark-note-url" hidden>{% url 'content:bookmark_note' slug=note.slug %}</div>
 <script src="{% static 'js/note_display.js' %}"></script>
 {% endblock %}
