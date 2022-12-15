@@ -1,10 +1,9 @@
 {% load i18n %}
 
-{% for note in notes %}
 <div class="container py-3" style="max-width: 700px;">
     <div class="row">
         <div class="col">
-            <a href="#" class="text-decoration-none text-dark">
+            <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
             <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="24" height="24"></span>
             <span class="col">{{ note.author.full_name }}</span>
             </a>
@@ -18,12 +17,12 @@
         </a>
     </div>
     {% if note.source %}
-    <div class="row">
+    <div class="row mb-2">
         <div class="col d-flex align-items-center">
-            <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
+            {% comment %} <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
             <span><i class="bi bi-bookmark-plus" style="font-size: 1.3rem;"></i></span>
             </a>
-            <span>&nbsp;|&nbsp;</span>
+            <span>&nbsp;|&nbsp;</span> {% endcomment %}
             <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
             <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.get_readable_type }}</span>
             </a>
@@ -33,7 +32,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="row ps-1 d-md-inline d-none">
+    <div class="row mt-4 ps-1 d-md-inline d-none">
         <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
             {% if note.summary %}
                 {{ note.summary }}
@@ -44,11 +43,9 @@
     </div>
     <div class="row row-cols-auto d-flex justify-content-between mt-2">
         <div class="col">
-            {% if not note.source %}
-            <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                <span><i class="bi bi-bookmark-plus"></i></span>
-            </a>
-            {% endif %}
+            <button id="bookmark-btn-{{ note.pk }}" url="{% url 'content:bookmark_note' slug=note.slug %}" onclick="bookmarkNote({{ note.pk }});" class="btn btn-link p-0 text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
+                <span><i class="bi bi-bookmark-plus{% if note in request.user.bookmarked_notes.all %}-fill{% endif %}"></i></span>
+            </button>
             {% if note.tags %}
             <a href="#" class="text-decoration-none text-dark">
             <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
@@ -70,4 +67,29 @@
     </div>
 </div>
 <hr>
-{% endfor %}
+
+<script>
+// Ajax request to like the note (toggle `like` note instance field value).
+function bookmarkNote(note_pk) {
+    const bookmarkButton = document.getElementById(`bookmark-btn-${note_pk}`);
+    const bookmarkIcon = bookmarkButton.firstElementChild.firstElementChild;
+    const url = bookmarkButton.getAttribute('url');
+    $.ajax({
+        type: 'GET',
+        url: url,
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        success: (res) => {
+            if (res.bookmarked) {
+                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus-fill');
+            }
+            if (!res.bookmarked) {
+                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus');
+            }
+        },
+        error: (res) => {
+            console.log('Bad Request: unable to bookmark.');
+        },
+        timeout: 3000
+    });
+}
+</script>

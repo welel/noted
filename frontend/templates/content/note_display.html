@@ -10,8 +10,8 @@
 {% block main %}
 <div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-1"></div>
-        <div class="col-8">
+        <div class="col-lg-1 col-0"></div>
+        <div class="col-lg-8 col-12 mx-lg-0 mx-2">
             <div class="container-fluid" style="max-width: 700px;">
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto me-auto">
@@ -19,12 +19,12 @@
                             <tbody>
                                 <tr>
                                 <td class="pe-3" rowspan="2">
-                                    <a class="text-decoration-none text-dark">
+                                    <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
                                     <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -68,7 +68,7 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</button></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
                                 <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
@@ -146,7 +146,7 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</button></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
                                 <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
@@ -164,28 +164,9 @@
                     <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
                 </form>
             </div>
-            <div class="row mt-5">
-                <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="80" height="80">
-                </a>
-            </div>
-            <div class="row mt-3">
-                <h5>{{ note.author.full_name }}</h5>
-            </div>
-            <div class="row">
-                <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
-            </div>
-            {% if note.author.bio %}
-            <div class="row mt-3">
-                <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ note.author.bio }}</p>
-            </div>
-            {% endif %}
-            <div class="row mt-3">
-                <div class="d-grid gap-2 d-md-block">
-                    <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
-                    <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
-                </div>
-            </div>
+            {% with user=note.author %}
+                {% include 'users/profile_sidebar_layout.html' %}
+            {% endwith %}
             {% include 'layouts/sidebar/more_from_noted.html' %}
             {% include 'layouts/sidebar/footer.html' %}
         </div>
@@ -202,9 +183,9 @@
     <div class="modal-body">
         <div class="container-fluid d-flex justify-content-center">
             <div class="row" style="max-width: 200px; text-align: left;">
-                <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> {% trans "Download MarkDown" %}</a>
-                <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> {% trans "Download HTML" %}</a>
-                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> {% trans "Download PDF" %}</a>
+                <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> MarkDown</a>
+                <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> HTML</a>
+                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</a>
             </div>
         </div>
     </div>

@@ -28,6 +28,11 @@ urlpatterns = [
         views.download_note,
         name="download_note",
     ),
+    path(
+        "u/notes/<int:user_pk>/",
+        views.ProfileNoteList.as_view(),
+        name="profile_notes",
+    ),
     path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",

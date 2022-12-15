@@ -518,16 +518,16 @@ msgstr "Подписчики"
 msgid "Follow"
 msgstr "Подписаться"
 
-#: templates/content/note_list_layout.html:23
-#: templates/content/note_list_layout.html:48
+#: templates/content/note_list_for_layout.html:23
+#: templates/content/note_list_for_layout.html:48
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/content/note_list_layout.html:66
+#: templates/content/note_list_for_layout.html:66
 msgid "Reputation"
 msgstr "Репутация"
 
-#: templates/content/note_list_layout.html:69
+#: templates/content/note_list_for_layout.html:69
 msgid "Comments"
 msgstr "Комментарии"
 

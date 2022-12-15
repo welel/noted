@@ -1,8 +1,6 @@
-import io
-
 from django.contrib.auth.decorators import login_required
-from django.db.models import F
-from django.http import JsonResponse, HttpResponseBadRequest, FileResponse
+from django.db.models import F, QuerySet
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -16,6 +14,7 @@ from content.forms import NoteForm
 from content.models import Note, Source
 from content.search import search_sources
 from common import ajax_required
+from users.models import User
 
 
 class NoteList(ListView):
@@ -45,12 +44,12 @@ class NoteList(ListView):
 
     model = Note
     context_object_name = "notes"
-    paginate_by = 18
+    paginate_by = 100
 
-    def get_ordering(self):
+    def get_ordering(self) -> str:
         return self.request.GET.get("order", default="-datetime_created")
 
-    def get_ordered_queryset(self):
+    def get_ordered_queryset(self) -> QuerySet:
         """Order a queryset by GET param `order`."""
         order = self.get_ordering()
         return self.SORTING_FUNCS_MAPPING[order]()
@@ -87,6 +86,28 @@ class PublicNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
+        context["sidenotes"] = Note.objects.public()[:5]
+        return context
+
+
+class ProfileNoteList(NoteList):
+    """Display a list of public :model:`notes.Note` of a selected user."""
+
+    template_name = "content/note_list_profile.html"
+
+    def get_queryset(self):
+        user = get_object_or_404(User, pk=self.kwargs.get("user_pk"))
+        return (
+            super()
+            .get_ordered_queryset()
+            .filter(author=user, draft=False, anonymous=False)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get("user_pk")
+        context["user"] = get_object_or_404(User, pk=pk)
+        context["pins"] = self.get_queryset().filter(pin=True)
         context["sidenotes"] = Note.objects.public()[:5]
         return context
 
@@ -239,7 +260,7 @@ from django.http import HttpResponse
 def download_note(request, filetype: str, slug: str):
     note = get_object_or_404(Note, slug=slug)
     file = note.generate_file_to_response(filetype=filetype)
-    if not file:
+    if not file or (note.draft and request.user != note.author):
         return HttpResponseBadRequest()
     response = HttpResponse(
         FileWrapper(file["file"]), content_type=file["content_type"]

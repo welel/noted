@@ -1,65 +1,56 @@
 <!-- Home page, note list -->
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_cols.html' %}
 
 {% load static %}
 {% load i18n %}
 
-{% block main %}
 
-<div class="container-fluid mt-5">
-<div class="row">
-    <div class="col-1 d-lg-block d-none">
+{% block center %}
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+        <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-filter"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Latest" %}</a></li>
+            <li><a class="dropdown-item" href="?order=datetime_created"><i class="bi bi-sort-down-alt"></i> {% trans "Oldest" %}</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li>
+        </ul>  
+    </li>
+    <li class="nav-item">
+        <a class="nav-link tablink active text-secondary" aria-current="page" href="{% url 'content:home' %}">{% trans "Public" %}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link tablink text-secondary disable" href="#">{% trans "Following" %}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link tablink text-secondary disable" href="#">{% trans "My tags" %}</a>
+    </li>
+</ul>
 
-    </div>
-    <div class="col-lg-8 col-12">
-        <ul class="nav nav-tabs mb-3">
-            <li class="nav-item">
-                <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-filter"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Latest" %}</a></li>
-                    <li><a class="dropdown-item" href="?order=datetime_created"><i class="bi bi-sort-down-alt"></i> {% trans "Oldest" %}</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li>
-                </ul>  
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tablink active text-secondary" aria-current="page" href="#">{% trans "Public" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tablink text-secondary" href="#">{% trans "Following" %}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tablink text-secondary" href="#">{% trans "My tags" %}</a>
-            </li>
-        </ul>
+{% include 'content/note_list_for_layout.html' %}
+{% endblock %}
 
-        {% include 'content/note_list_layout.html' %}
 
-    </div>
-    <div class="col-lg-3 col-12 px-4">
-        <img class="mt-5" src="{% static 'img/pngwing.com.png' %}" width="60px;" style="margin-left: 186px;" />   
-        {% include 'layouts/sidebar/search_form.html' %}
-        {% include 'layouts/sidebar/source_types.html' %}
-        {% include 'layouts/sidebar/more_from_noted.html' %}
-        <div class="mt-5">
-            <h6>{% trans "Recommended topics" %}</h6>
-            <span>
-                <a href="#" class="text-decoration-none text-dark">
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>
-                </a>
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-                <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-            </span>
-        </div>
-        {% include 'layouts/sidebar/footer.html' %}
-        <div class="mb-5"></div>
-    </div>
+{% block sidebar %}
+<img class="mt-5" src="{% static 'img/pngwing.com.png' %}" width="60px;" style="margin-left: 186px;" />   
+{% include 'layouts/sidebar/search_form.html' %}
+{% include 'layouts/sidebar/source_types.html' %}
+{% include 'layouts/sidebar/more_from_noted.html' %}
+<div class="mt-5">
+    <h6>{% trans "Recommended topics" %}</h6>
+    <span>
+        <a href="#" class="text-decoration-none text-dark">
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>
+        </a>
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
+        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
+    </span>
 </div>
-</div>
-
+{% include 'layouts/sidebar/footer.html' %}
+<div class="mb-5"></div>
 {% endblock %}
