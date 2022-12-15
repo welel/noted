@@ -1,6 +1,8 @@
+import io
 from typing import Optional
 
 from bs4 import BeautifulSoup
+import pdfkit
 
 from django.db import models
 from django.db.models import QuerySet
@@ -213,3 +215,54 @@ class Note(models.Model):
     def get_preview_text(self) -> str:
         """Get body preview text for a note."""
         return "".join(BeautifulSoup(self.body_html).findAll(text=True))
+
+    def generate_md_file(self) -> io.BytesIO:
+        output = f"# {self.title}\n\n"
+        if self.source and self.source.link:
+            output += f"Source: [{self.source.title}]({self.source.link})\n\n"
+        elif self.source:
+            output += f"Source: __{self.source.title}__\n\n"
+        output += self.body_raw
+        return io.BytesIO(output.encode())
+
+    def generate_html_file(self) -> io.BytesIO:
+        output = f"<h1>{self.title}</h1>\n"
+        if self.source and self.source.link:
+            output += f"<p>Source: <a href='{self.source.link}'>{self.source.title}</a></p>\n"
+        elif self.source:
+            output += f"<p>Source: {self.source.title}</p>\n"
+        output += self.body_html
+        return io.BytesIO(output.encode())
+
+    def generate_pdf_file(self) -> io.BytesIO:
+        html = self.generate_html_file().read().decode(encoding="utf-8")
+        options = {"page-size": "Letter", "encoding": "UTF-8"}
+        pdf = pdfkit.from_string(html, False, options=options)
+        return io.BytesIO(pdf)
+
+    def generate_file(self, filetype: str = "md") -> Optional[io.BytesIO]:
+        if filetype == "md":
+            return self.generate_md_file()
+        elif filetype == "html":
+            return self.generate_html_file()
+        elif filetype == "pdf":
+            return self.generate_pdf_file()
+        return None
+
+    def generate_file_to_response(
+        self, filetype: str = "md"
+    ) -> Optional[dict]:
+        filename = self.slug[:20] + "." + filetype
+        file = self.generate_file(filetype=filetype)
+        if not file:
+            return None
+        content_type = {
+            "md": "text/markdown; charset=UTF-8",
+            "html": "text/html; charset=utf-8",
+            "pdf": "application/pdf",
+        }[filetype]
+        return {
+            "file": file,
+            "filename": filename,
+            "content_type": content_type,
+        }

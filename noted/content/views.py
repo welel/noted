@@ -1,12 +1,15 @@
+import io
+
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.db.models import F
+from django.http import JsonResponse, HttpResponseBadRequest, FileResponse
 from django.shortcuts import render, get_object_or_404
-from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from content.forms import NoteForm
@@ -163,6 +166,12 @@ class NoteDetailsView(DetailView):
         context["sidenotes"] = Note.objects.public()[:5]
         return context
 
+    def get_object(self):
+        note = super().get_object()
+        if note:
+            Note.objects.filter(pk=note.pk).update(views=F("views") + 1)
+        return note
+
 
 class NoteView(View):
     """Chose a view based on a request method (GET/POST).
@@ -219,6 +228,26 @@ def bookmark_note(request, slug):
     else:
         note.bookmarks.add(request.user)
         return JsonResponse({"bookmarked": True})
+
+
+from wsgiref.util import FileWrapper
+from django.http import HttpResponse
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+def download_note(request, filetype: str, slug: str):
+    note = get_object_or_404(Note, slug=slug)
+    file = note.generate_file_to_response(filetype=filetype)
+    if not file:
+        return HttpResponseBadRequest()
+    response = HttpResponse(
+        FileWrapper(file["file"]), content_type=file["content_type"]
+    )
+    response[
+        "Content-Disposition"
+    ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
+    return response
 
 
 class SourceDetailsView(DetailView):

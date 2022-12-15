@@ -68,7 +68,7 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</button></li>
                                 <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
@@ -146,7 +146,7 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</button></li>
                                 <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
@@ -190,6 +190,26 @@
             {% include 'layouts/sidebar/footer.html' %}
         </div>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans "Download Note" %}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="row" style="max-width: 200px; text-align: left;">
+                <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> {% trans "Download MarkDown" %}</a>
+                <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> {% trans "Download HTML" %}</a>
+                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> {% trans "Download PDF" %}</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
 </div>
 {% endblock %}
 

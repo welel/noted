@@ -23,6 +23,11 @@ urlpatterns = [
     path(
         "note/bookmark/<str:slug>/", views.bookmark_note, name="bookmark_note"
     ),
+    path(
+        "note/download/<str:filetype>/<str:slug>/",
+        views.download_note,
+        name="download_note",
+    ),
     path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",
