@@ -17,6 +17,23 @@ urlpatterns = [
         name="delete_note",
     ),
     path("note/<str:slug>/", views.NoteView.as_view(), name="note"),
+    path("note/fork/<str:slug>/", views.NoteForkView.as_view(), name="fork"),
+    path("note/pin/<str:slug>/", views.pin_note, name="pin_note"),
+    path("note/like/<str:slug>/", views.like_note, name="like_note"),
+    path(
+        "note/bookmark/<str:slug>/", views.bookmark_note, name="bookmark_note"
+    ),
+    path(
+        "note/download/<str:filetype>/<str:slug>/",
+        views.download_note,
+        name="download_note",
+    ),
+    path(
+        "u/notes/<int:user_pk>/",
+        views.ProfileNoteList.as_view(),
+        name="profile_notes",
+    ),
+    path("p/notes/", views.PersonalNotesView.as_view(), name="personal_notes"),
     path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",

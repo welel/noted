@@ -37,6 +37,10 @@ body {
     font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
 
 /* BADGES & TAGS */
 .badge {

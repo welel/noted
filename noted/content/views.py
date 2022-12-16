@@ -1,17 +1,21 @@
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render
-from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import F, QuerySet
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
 from django.views import View
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from wsgiref.util import FileWrapper
 
 from content.forms import NoteForm
 from content.models import Note, Source
-from content.search import search_sources
 from common import ajax_required
+from users.models import User
 
 
 class NoteList(ListView):
@@ -31,22 +35,24 @@ class NoteList(ListView):
     """
 
     ORDER_LABELS = {
-        "datetime_created": _("Oldest"),
         "-datetime_created": _("Latest"),
+        "views": _("Popular"),
+        "likes": _("Most liked"),
     }
     SORTING_FUNCS_MAPPING = {
-        "datetime_created": Note.objects.datetime_created,
         "-datetime_created": Note.objects.datetime_created_dec,
+        "views": Note.objects.popular,
+        "likes": Note.objects.most_liked,
     }
 
     model = Note
     context_object_name = "notes"
-    paginate_by = 18
+    paginate_by = 100
 
-    def get_ordering(self):
+    def get_ordering(self) -> str:
         return self.request.GET.get("order", default="-datetime_created")
 
-    def get_ordered_queryset(self):
+    def get_ordered_queryset(self) -> QuerySet:
         """Order a queryset by GET param `order`."""
         order = self.get_ordering()
         return self.SORTING_FUNCS_MAPPING[order]()
@@ -87,8 +93,65 @@ class PublicNoteList(NoteList):
         return context
 
 
+class ProfileNoteList(NoteList):
+    """Display a list of public :model:`notes.Note` of a selected user."""
+
+    template_name = "content/note_list_profile.html"
+
+    def get(self, request, user_pk, *args, **kwargs):
+        if request.user.pk == user_pk:
+            return redirect("content:personal_notes", *args, **kwargs)
+        return super().get(request, user_pk, *args, **kwargs)
+
+    def get_queryset(self):
+        user = get_object_or_404(User, pk=self.kwargs.get("user_pk"))
+        return (
+            super()
+            .get_ordered_queryset()
+            .filter(author=user, draft=False, anonymous=False)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get("user_pk")
+        context["user"] = get_object_or_404(User, pk=pk)
+        context["pins"] = self.get_queryset().filter(pin=True)
+        context["sidenotes"] = Note.objects.public()[:5]
+        return context
+
+
+class PersonalNotesView(LoginRequiredMixin, NoteList):
+    """Display a list of notes and profile of a client."""
+
+    template_name = "content/note_list_personal.html"
+
+    def get_queryset(self):
+        return super().get_ordered_queryset().filter(author=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        qs = self.get_queryset()
+        context["notes"] = qs.filter(draft=False)
+        context["pins"] = qs.filter(pin=True)
+        context["drafts"] = qs.filter(draft=True)
+        context["bookmarks"] = self.request.user.bookmarked_notes.all()
+        context["sidenotes"] = Note.objects.public()[:5]
+        return context
+
+
+class NoteDraftMixin:
+    def form_valid(self, form):
+        form.instance.draft = self.draft
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        self.draft = "savedraft" in request.POST
+        return super().post(request, *args, **kwargs)
+
+
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(CreateView):
+class NoteCreateView(NoteDraftMixin, CreateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
@@ -111,7 +174,27 @@ class NoteCreateView(CreateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(UpdateView):
+class NoteForkView(NoteCreateView):
+    def get_initial(self):
+        initial = super().get_initial()
+        try:
+            note = Note.objects.get(slug=self.kwargs.get("slug"))
+        except Source.DoesNotExist:
+            return initial
+        note.fork = Note.objects.get(pk=note.pk)
+        note.pk = None
+        note.slug = None
+        self.object = note
+        if note.source:
+            initial["source"] = note.source.title
+            initial["source_type"] = note.source.type
+            initial["source_link"] = note.source.link
+            initial["source_description"] = note.source.description
+        return initial
+
+
+@method_decorator(login_required, name="dispatch")
+class NoteUpdateView(NoteDraftMixin, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
@@ -129,8 +212,14 @@ class NoteDetailsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["notes"] = Note.objects.public()[:5]
+        context["sidenotes"] = Note.objects.public()[:5]
         return context
+
+    def get_object(self):
+        note = super().get_object()
+        if note:
+            Note.objects.filter(pk=note.pk).update(views=F("views") + 1)
+        return note
 
 
 class NoteView(View):
@@ -150,6 +239,60 @@ class NoteView(View):
     # def post(self, request, *args, **kwargs):
     #     view = CommentFormView.as_view()
     #     return view(request, *args, **kwargs)
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def pin_note(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    if note.author != request.user:
+        return HttpResponseBadRequest()
+    note.pin = not note.pin
+    note.save()
+    return JsonResponse({"pin": note.pin})
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def like_note(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    if request.user in note.likes.all():
+        note.likes.remove(request.user)
+        return JsonResponse({"liked": False})
+    else:
+        note.likes.add(request.user)
+        return JsonResponse({"liked": True})
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def bookmark_note(request, slug):
+    note = get_object_or_404(Note, slug=slug)
+    if request.user in note.bookmarks.all():
+        note.bookmarks.remove(request.user)
+        return JsonResponse({"bookmarked": False})
+    else:
+        note.bookmarks.add(request.user)
+        return JsonResponse({"bookmarked": True})
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+def download_note(request, filetype: str, slug: str):
+    note = get_object_or_404(Note, slug=slug)
+    file = note.generate_file_to_response(filetype=filetype)
+    if not file or (note.draft and request.user != note.author):
+        return HttpResponseBadRequest()
+    response = HttpResponse(
+        FileWrapper(file["file"]), content_type=file["content_type"]
+    )
+    response[
+        "Content-Disposition"
+    ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
+    return response
 
 
 class SourceDetailsView(DetailView):
@@ -186,7 +329,7 @@ class SourceTypeDetailsView(View):
 def search_sources_select(request):
     """Search for sources by title and return JSON results."""
     query = request.GET.get("query", "")
-    data = search_sources(query)
+    data = Source.objects.search(query)
     data = [
         {
             "id": source.pk,
@@ -205,9 +348,9 @@ def search(request, type):
     context = {"query": query, "type": type}
 
     if type == "notes":
-        context["notes"] = {}
+        context["notes"] = Note.objects.search(query)
 
     elif type == "sources":
-        context["sources"] = search_sources(query)
+        context["sources"] = Source.objects.search(query)
 
     return render(request, "content/search.html", context)

@@ -1,0 +1,50 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load filtersourcetags %}
+
+
+{% block title %}{{ user.full_name }} {% trans "notes" %}.{% endblock %}
+
+
+{% block center %}
+
+<ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        {% include 'layouts/note_order.html' %}
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link tablink active text-secondary" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" >{% trans "Public" %}</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link tablink text-secondary disable" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" >{% trans "Pins" %}</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+        {% if notes %}
+        {% include 'content/note_list_for_layout.html' %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{{ user.full_name }} {% trans "hasn't written notes yet" %}.</p>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+        {% if pins %}
+        {% for note in pins %}
+            {% include 'content/note_list_layout.html' %}
+        {% endfor %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{{ user.full_name }} {% trans "hasn't pined any notes" %}.</p>
+        {% endif %}
+    </div>
+  </div>
+  
+{% endblock %}
+
+
+{% block sidebar %}
+{% include 'users/profile_sidebar_layout.html' %}
+{% include 'layouts/sidebar/more_from_noted.html' %}
+{% include 'layouts/sidebar/footer.html' %}
+{% endblock %}

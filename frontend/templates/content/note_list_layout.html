@@ -1,10 +1,10 @@
 {% load i18n %}
+{% load filtersourcetags %}
 
-{% for note in notes %}
 <div class="container py-3" style="max-width: 700px;">
     <div class="row">
         <div class="col">
-            <a href="#" class="text-decoration-none text-dark">
+            <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
             <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="24" height="24"></span>
             <span class="col">{{ note.author.full_name }}</span>
             </a>
@@ -18,12 +18,12 @@
         </a>
     </div>
     {% if note.source %}
-    <div class="row">
+    <div class="row mb-2">
         <div class="col d-flex align-items-center">
-            <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
+            {% comment %} <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
             <span><i class="bi bi-bookmark-plus" style="font-size: 1.3rem;"></i></span>
             </a>
-            <span>&nbsp;|&nbsp;</span>
+            <span>&nbsp;|&nbsp;</span> {% endcomment %}
             <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
             <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.get_readable_type }}</span>
             </a>
@@ -44,11 +44,9 @@
     </div>
     <div class="row row-cols-auto d-flex justify-content-between mt-2">
         <div class="col">
-            {% if not note.source %}
-            <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                <span><i class="bi bi-bookmark-plus"></i></span>
-            </a>
-            {% endif %}
+            <button id="bookmark-btn-{{ note.pk }}" url="{% url 'content:bookmark_note' slug=note.slug %}" onclick="bookmarkNote({{ note.pk }});" class="btn btn-link p-0 text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
+                <span><i class="bi bi-bookmark-plus{% if note in request.user.bookmarked_notes.all %}-fill{% endif %}"></i></span>
+            </button>
             {% if note.tags %}
             <a href="#" class="text-decoration-none text-dark">
             <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
@@ -62,14 +60,13 @@
             {% endif %}
         </div>
         <div class="col d-md-block d-none">
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0 {% trans "Reputation" %}</span>
-            </a>
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
+            <a href="{{ note.get_absolute_url }}" class="text-decoration-none">
+            <span class="text-secondary p-1 rounded"><i class="bi bi-heart"></i> {{ note.likes.count }} {% trans "likes" %}</span>
+            <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
+            <span class="text-secondary p-1 rounded"><i class="bi bi-eye"></i> {{ note.views }} {% trans "views" %}</span>
+            {% comment %} <span class="text-secondary p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span> {% endcomment %}
             </a>
         </div>
     </div>
 </div>
 <hr>
-{% endfor %}

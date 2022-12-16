@@ -124,33 +124,35 @@
                 <div class="row mt-4">
                     {{ form.body_raw }}
                 </div>
-                <div class="row mt-4 form-floating">  
+                {% comment %} <div class="row mt-4 form-floating">  
                     <input id="tags" class="form-control" type="text" placeholder="{% trans "Tags" %}" disabled>
                     <label for="tags" class="form-label">{% trans "Tags" %}</label>
-                </div>
+                </div> {% endcomment %}
                 <div class="row mt-4 form-floating">  
                     {{ form.summary }}
                     <label for="id_summary" class="form-label">{% trans "Summary in 140 symbols..." %}</label>
                 </div>
                 <div class="row mt-4">
                     <div class="col px-0 d-flex align-items-center flex-sm-row flex-column-reverse">
-                        <button type="submit" class="btn btn-success rounded-pill mt-sm-0 mt-3">{% trans "Publish" %}</button>
-                        <button type="button" class="btn btn-light rounded-pill ms-2 mt-sm-0 mt-3" disabled>{% trans "Save draft" %}</button>
-                        <div class="form-check form-switch ms-3 mt-sm-0 mt-3">
+                        <button type="submit" name="publish" class="btn btn-success rounded-pill mt-sm-0 mt-3">{% trans "Publish" %}</button>
+                        <button type="submit" name="savedraft" class="btn btn-light rounded-pill ms-2 mt-sm-0 mt-3">{% trans "Save draft" %}</button>
+                        {% comment %} <div class="form-check form-switch ms-3 mt-sm-0 mt-3">
                             <input class="form-check-input" type="checkbox" role="switch" id="allow-comments" checked disabled>
                             <label class="form-check-label" for="allow-comments">{% trans "Allow comments" %}</label>
-                        </div>
-                        <div class="form-check form-switch ms-3">
+                        </div> {% endcomment %}
+                        {% comment %} <div class="form-check form-switch ms-3">
                             {{ form.anonymous }}
                             <label class="form-check-label" for="id_anonymous">{% trans "Post anonymous" %}</label>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                 </div>
             </div>
             <div class="mb-5"></div>
         </div>
         <div class="col-lg-3 col-12 px-4 d-lg-inline d-none">
-            <summary class="text-secondary">{% trans "Commonly used syntax" %}</summary>
+            <summary class="text-secondary">
+                <a href="https://simplemde.com/markdown-guide" target="_blank" class="text-secondary text-decoration-none">{% trans "Commonly used syntax" %}</a>
+            </summary>
             <table id="md-syntax-table" class="text-secondary w-150 mt-2 mb-4">
                 <tbody>
                     <tr>

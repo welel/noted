@@ -25,11 +25,12 @@
                     <li class="nav-item">
                         <a class="nav-link tablink text-secondary {% if type == 'sources' %}active{% endif %}" href="{% url 'content:search' type='sources' %}?query={{ query }}">{% trans "Sources" %}</a>
                     </li>
-                    <li class="nav-item">
+                    {% comment %} <li class="nav-item">
                         <a class="nav-link tablink text-secondary" href="#">{% trans "Topics" %}</a>
-                    </li>
+                    </li> {% endcomment %}
                 </ul>
                 <!-- Results -->
+                {% include  'content/note_list_for_layout.html' %}
                 {% include 'content/source_list_layout.html' %}
 
                 <!-- No results -->

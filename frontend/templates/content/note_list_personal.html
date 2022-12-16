@@ -1,0 +1,73 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load filtersourcetags %}
+
+
+{% block title %}{{ user.full_name }} {% trans "notes" %}.{% endblock %}
+
+
+{% block center %}
+
+<ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        {% include 'layouts/note_order.html' %} 
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link tablink active text-secondary" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" >{% trans "Public" %}</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link tablink text-secondary" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" >{% trans "Pins" %}</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link tablink text-secondary" id="pills-draft-tab" data-bs-toggle="pill" data-bs-target="#pills-draft" type="button" role="tab" aria-controls="pills-draft" aria-selected="false" >{% trans "Drafts" %}</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link tablink text-secondary" id="pills-bookmarks-tab" data-bs-toggle="pill" data-bs-target="#pills-bookmarks" type="button" role="tab" aria-controls="pills-bookmarks" aria-selected="false" >{% trans "Bookmarks" %}</button>
+    </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+        {% if notes %}
+        {% include 'content/note_list_for_layout.html' %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{{ user.full_name }} {% trans "hasn't written notes yet" %}.</p>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+        {% if pins %}
+        {% for note in pins %}
+            {% include 'content/note_list_layout.html' %}
+        {% endfor %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{{ user.full_name }} {% trans "hasn't pined any notes" %}.</p>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="pills-draft" role="tabpanel" aria-labelledby="pills-draft-tab" tabindex="0">
+        {% if drafts %}
+        {% for note in drafts %}
+            {% include 'content/note_list_layout.html' %}
+        {% endfor %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{% trans "You hasn't written any drafts" %}.</p>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="pills-bookmarks" role="tabpanel" aria-labelledby="pills-bookmarks-tab" tabindex="0">
+        {% if bookmarks %}
+        {% for note in bookmarks %}
+            {% include 'content/note_list_layout.html' %}
+        {% endfor %}
+        {% else %}
+        <p class="mt-4 ms-4 text-secondary fs-4">{% trans "You hasn't added any bookmarks" %}.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block sidebar %}
+{% include 'users/personal_sidebar_layout.html' %}
+{% include 'layouts/sidebar/more_from_noted.html' %}
+{% include 'layouts/sidebar/footer.html' %}
+{% endblock %}

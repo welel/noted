@@ -1,9 +1,18 @@
+import io
 from typing import Optional
 
 from bs4 import BeautifulSoup
+import pdfkit
 
+from django.contrib.postgres.search import (
+    SearchVector,
+    SearchQuery,
+    SearchRank,
+    TrigramSimilarity,
+    SearchHeadline,
+)
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count, Q
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -15,6 +24,14 @@ from users.models import User
 class SourceManager(models.Manager):
     def by_type(self, type_code: str) -> QuerySet:
         return self.filter(type=type_code)
+
+    def search(self, query: str) -> QuerySet:
+        similarity = TrigramSimilarity("title", query)
+        return (
+            self.annotate(similarity=similarity)
+            .filter(similarity__gte=0.1)
+            .order_by("-similarity")
+        )
 
 
 class Source(models.Model):
@@ -47,7 +64,7 @@ class Source(models.Model):
         _("Title"), max_length=200, blank=False, null=False, db_index=True
     )
     link = models.URLField(
-        _("Link to the source"), max_length=255, blank=True, null=True
+        _("Link to the source"), max_length=255, blank=True, default=""
     )
     description = models.CharField(
         _("Description"), max_length=100, blank=True, default=""
@@ -103,6 +120,38 @@ class NoteManager(models.Manager):
     def by_source_type(self, type_code: str) -> QuerySet:
         return self.filter(draft=False, source__type=type_code)
 
+    def popular(self) -> QuerySet:
+        return self.filter(draft=False).order_by("-views")
+
+    def most_liked(self) -> QuerySet:
+        """Query notes sorted by number of likes from the most to least."""
+        return (
+            self.filter(draft=False)
+            .annotate(count=Count("likes"))
+            .order_by("-count")
+        )
+
+    def search(self, query: str) -> QuerySet:
+        search_vector = (
+            SearchVector("title", weight="A")
+            + SearchVector("summary", weight="A")
+            + SearchVector("body_raw", weight="B")
+        )
+        search_query = SearchQuery(query)
+        headline = SearchHeadline(
+            "title", search_query, start_sel="<mark>", stop_sel="</mark>"
+        )
+        return (
+            self.filter(draft=False)
+            .annotate(
+                rank=SearchRank(search_vector, search_query),
+                similarity=TrigramSimilarity("title", query),
+                headline=headline,
+            )
+            .filter(Q(rank__gte=0.2) | Q(similarity__gt=0.1))
+            .order_by("-rank")
+        )
+
 
 class Note(models.Model):
     """Markdown text with a list of attributes.
@@ -122,12 +171,12 @@ class Note(models.Model):
         created: publish datetime of a note.
         modified: update datetime of a note.
         views: a counter of note's visitors.
-        *fork: a link to :model:`Note` if a note forked from another.
+        fork: a link to :model:`Note` if a note forked from another.
+        likes: a m2m field for note likes.
+        bookmarked: a m2m field for bookmarks for user.
         *allow_comments: a boolean flag allows to users leave comments
                         to a note.
         *tags: tags of a note (max tags - 5, max length - 24 symbols).
-        *users_like: a m2m field for note likes.
-        *bookmarked: a m2m field for bookmarks for user.
 
     """
 
@@ -181,6 +230,19 @@ class Note(models.Model):
     created = models.DateTimeField(_("Created"), auto_now_add=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True)
     views = models.PositiveIntegerField(_("Views"), default=1)
+    fork = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Parent"),
+        blank=True,
+    )
+    likes = models.ManyToManyField(
+        User, related_name="liked_notes", blank=True
+    )
+    bookmarks = models.ManyToManyField(
+        User, related_name="bookmarked_notes", default=None, blank=True
+    )
     objects = NoteManager()
 
     class Meta:
@@ -200,3 +262,54 @@ class Note(models.Model):
     def get_preview_text(self) -> str:
         """Get body preview text for a note."""
         return "".join(BeautifulSoup(self.body_html).findAll(text=True))
+
+    def generate_md_file(self) -> io.BytesIO:
+        output = f"# {self.title}\n\n"
+        if self.source and self.source.link:
+            output += f"Source: [{self.source.title}]({self.source.link})\n\n"
+        elif self.source:
+            output += f"Source: __{self.source.title}__\n\n"
+        output += self.body_raw
+        return io.BytesIO(output.encode())
+
+    def generate_html_file(self) -> io.BytesIO:
+        output = f"<h1>{self.title}</h1>\n"
+        if self.source and self.source.link:
+            output += f"<p>Source: <a href='{self.source.link}'>{self.source.title}</a></p>\n"
+        elif self.source:
+            output += f"<p>Source: {self.source.title}</p>\n"
+        output += self.body_html
+        return io.BytesIO(output.encode())
+
+    def generate_pdf_file(self) -> io.BytesIO:
+        html = self.generate_html_file().read().decode(encoding="utf-8")
+        options = {"page-size": "Letter", "encoding": "UTF-8"}
+        pdf = pdfkit.from_string(html, False, options=options)
+        return io.BytesIO(pdf)
+
+    def generate_file(self, filetype: str = "md") -> Optional[io.BytesIO]:
+        if filetype == "md":
+            return self.generate_md_file()
+        elif filetype == "html":
+            return self.generate_html_file()
+        elif filetype == "pdf":
+            return self.generate_pdf_file()
+        return None
+
+    def generate_file_to_response(
+        self, filetype: str = "md"
+    ) -> Optional[dict]:
+        filename = self.slug[:20] + "." + filetype
+        file = self.generate_file(filetype=filetype)
+        if not file:
+            return None
+        content_type = {
+            "md": "text/markdown; charset=UTF-8",
+            "html": "text/html; charset=utf-8",
+            "pdf": "application/pdf",
+        }[filetype]
+        return {
+            "file": file,
+            "filename": filename,
+            "content_type": content_type,
+        }

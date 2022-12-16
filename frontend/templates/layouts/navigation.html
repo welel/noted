@@ -25,12 +25,12 @@ Require script `js/auth.js`
             </a>
         </li>
         <li class="nav-item px-2">
-            <a class="nav-link">
+            <a class="nav-link" href="{% url 'content:personal_notes' %}?bookmark=open">
                 <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Bookmarks" %}"></i>
             </a>
         </li>
         <li class="nav-item px-2">
-            <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notes" %}">
+            <a class="nav-link" href="{% url 'content:personal_notes' %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notes" %}">
                 <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
             </a>
         </li>
@@ -55,7 +55,7 @@ Require script `js/auth.js`
             <img src="{{ request.user.avatar.url }}" class="rounded-circle" alt="{{ request.user.first_name.0 }}" width="34" height="34">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item disabled" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
+            <li><a href="{% url 'content:personal_notes' %}" class="dropdown-item" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
             <li><a class="dropdown-item disabled" ><i class="bi bi-gear-fill px-2"></i>{% trans "Profile settings" %}</a></li>
             <li><a class="dropdown-item disabled" ><i class="bi bi-translate px-2"></i>Русский</a></li>
             <li><a class="dropdown-item disabled" ><i class="bi bi-moon-stars-fill px-2"></i>{% trans "Dark" %}</a></li>

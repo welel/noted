@@ -1,0 +1,25 @@
+{% load static %}
+{% load i18n %}
+
+<div class="row mt-5 ps-2">
+    <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{{ user.avatar.url }}" class="rounded-circle" alt="A" width="80" height="80">
+    </a>
+</div>
+<div class="row mt-3">
+    <h5>{{ user.full_name }}</h5>
+</div>
+<div class="row">
+    <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
+</div>
+{% if user.bio %}
+<div class="row mt-3">
+    <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ user.bio }}</p>
+</div>
+{% endif %}
+<div class="row mt-3">
+    <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
+        <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
+    </div>
+</div>

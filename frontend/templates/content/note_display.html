@@ -10,8 +10,8 @@
 {% block main %}
 <div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-1"></div>
-        <div class="col-8">
+        <div class="col-lg-1 col-0"></div>
+        <div class="col-lg-8 col-12 mx-lg-0 mx-2">
             <div class="container-fluid" style="max-width: 700px;">
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto me-auto">
@@ -19,12 +19,12 @@
                             <tbody>
                                 <tr>
                                 <td class="pe-3" rowspan="2">
-                                    <a class="text-decoration-none text-dark">
+                                    <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
                                     <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
                             <tr>
@@ -46,13 +46,18 @@
                         <button id="copy-note-link" class="btn btn-link text-decoration-none text-dark px-0">
                         <i class="bi bi-link-45deg link-h px-2 color-grey" style="font-size: 1.1rem;"></i>
                         </button>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-bookmark-plus link-h ps-4 color-grey" style="font-size: 1.2rem;"></i>
-                        </a>
+                        <button id="bookmark-btn-1" class="btn btn-link text-decoration-none text-dark">
+                        <i class="bi bi-bookmark-plus{% if request.user in note.bookmarks.all %}-fill{% endif %} link-h ps-2 color-grey" style="font-size: 1.2rem;"></i>
+                        </button>
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
+                                    {% if note.pin %}
+                                    <li><button  id="pin" class="dropdown-item"><i class="bi bi-pin-angle-fill"></i> <span>{% trans "Unpin" %}</span></button></li>
+                                    {% else %}
+                                    <li><button id="pin" class="dropdown-item"><i class="bi bi-pin-angle"></i> <span>{% trans "Pin" %}</span></button></li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
                                     <li>
                                         <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
@@ -63,14 +68,15 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <h2>{{ note.title }}</h2>
+                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Fork" %}: {{ note.fork.title }}</i></a>{% endif %} 
                 </div>
                 <hr>
                 {% if note.source %}
@@ -90,9 +96,9 @@
                 </div>
                 <div class="row row-cols-auto d-flex justify-content-between mt-5">
                     <div class="col">
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-balloon-heart"></i> 0</span>
-                        </a>
+                        <button id="like-btn" class="btn btn-link text-decoration-none text-dark">
+                        <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-heart{% if request.user in note.likes.all %}-fill{% endif %}"></i> <span>{{ note.likes.count }}</span></span>
+                        </button>
                         <a href="#" class="text-decoration-none text-dark pe-3">
                         <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0</span>
                         </a>
@@ -118,13 +124,18 @@
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
                             </ul>
                         </div>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-bookmark-plus ps-4 color-grey link-h" style="font-size: 1.2rem;"></i>
-                        </a>
+                        <button id="bookmark-btn-2" class="btn btn-link text-decoration-none text-dark pt-0">
+                            <i class="bi bi-bookmark-plus{% if request.user in note.bookmarks.all %}-fill{% endif %} link-h ps-3 color-grey" style="font-size: 1.2rem;"></i>
+                        </button>
                         <div class="dropdown">
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 {% if request.user == note.author %}
+                                    {% if note.pin %}
+                                    <li><button  id="pin-2" class="dropdown-item"><i class="bi bi-pin-angle-fill"></i> <span>{% trans "Unpin" %}</span></button></li>
+                                    {% else %}
+                                    <li><button id="pin-2" class="dropdown-item"><i class="bi bi-pin-angle"></i> <span>{% trans "Pin" %}</span></button></li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="{% url 'content:edit_note' slug=note.slug %}"><i class="bi bi-pencil-square"></i> {% trans "Edit" %}</a></li>
                                     <li>
                                         <form action="{% url 'content:delete_note' slug=note.slug %}" method="post">
@@ -135,13 +146,13 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-filetype-pdf"></i> {% trans "Download" %}</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <hr class="mt-5">
+                <hr class="mt-4">
             </div>
         </div>
         <div class="col-lg-3 col-12 px-4">
@@ -153,37 +164,40 @@
                     <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
                 </form>
             </div>
-            <div class="row mt-5">
-                <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="80" height="80">
-                </a>
-            </div>
-            <div class="row mt-3">
-                <h5>{{ note.author.full_name }}</h5>
-            </div>
-            <div class="row">
-                <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
-            </div>
-            {% if note.author.bio %}
-            <div class="row mt-3">
-                <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ note.author.bio }}</p>
-            </div>
-            {% endif %}
-            <div class="row mt-3">
-                <div class="d-grid gap-2 d-md-block">
-                    <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
-                    <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
-                </div>
-            </div>
+            {% with user=note.author %}
+                {% include 'users/profile_sidebar_layout.html' %}
+            {% endwith %}
             {% include 'layouts/sidebar/more_from_noted.html' %}
             {% include 'layouts/sidebar/footer.html' %}
-
         </div>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans "Download Note" %}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="row" style="max-width: 200px; text-align: left;">
+                <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> MarkDown</a>
+                <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> HTML</a>
+                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
 </div>
 {% endblock %}
 
 
 {% block extra_scripts %}
+<div id="pin-note-url" hidden>{% url 'content:pin_note' slug=note.slug %}</div>
+<div id="like-note-url" hidden>{% url 'content:like_note' slug=note.slug %}</div>
+<div id="bookmark-note-url" hidden>{% url 'content:bookmark_note' slug=note.slug %}</div>
 <script src="{% static 'js/note_display.js' %}"></script>
 {% endblock %}

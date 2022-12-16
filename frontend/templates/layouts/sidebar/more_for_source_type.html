@@ -7,7 +7,7 @@
     {% for note in sidenotes|slice:":5" %}
     <div class="mt-4">
         <div class="d-flex align-items-center" style="font-size: 13px;">
-            <a href="#" class="text-decoration-none text-dark">
+            <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
             <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
             <span>{{ note.author.full_name }}</span>
             </a>
