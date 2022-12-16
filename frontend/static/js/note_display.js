@@ -46,8 +46,10 @@ function togglePin() {
         timeout: 3000
     });
 }
-pinButton.onclick = togglePin;
-pinButton2.onclick = togglePin;
+if (pinButton) {
+    pinButton.onclick = togglePin;
+    pinButton2.onclick = togglePin;
+}
 
 
 // Ajax request to like the note (toggle `like` note instance field value).

@@ -72,7 +72,7 @@ class UserManager(BaseUserManager):
 
 def user_avatars_path(instance, filename):
     """Return a path to a user's profile picture."""
-    return f"user/avatars/{instance.user.id}/{filename}"
+    return f"user/avatars/{instance.id}/{filename}"
 
 
 def default_social_media_json():

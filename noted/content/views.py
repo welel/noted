@@ -181,10 +181,7 @@ class NoteForkView(NoteCreateView):
             note = Note.objects.get(slug=self.kwargs.get("slug"))
         except Source.DoesNotExist:
             return initial
-        note.fork = Note.objects.get(pk=note.pk)
-        note.pk = None
-        note.slug = None
-        self.object = note
+        self.object = note.get_fork()
         if note.source:
             initial["source"] = note.source.title
             initial["source_type"] = note.source.type

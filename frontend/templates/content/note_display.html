@@ -76,7 +76,7 @@
                 </div>
                 <div class="row mt-5">
                     <h2>{{ note.title }}</h2>
-                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Fork" %}: {{ note.fork.title }}</i></a>{% endif %} 
+                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Parent" %}: {{ note.fork.title }}</i></a>{% endif %} 
                 </div>
                 <hr>
                 {% if note.source %}

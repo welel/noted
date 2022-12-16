@@ -273,12 +273,14 @@ class Note(models.Model):
         return io.BytesIO(output.encode())
 
     def generate_html_file(self) -> io.BytesIO:
-        output = f"<h1>{self.title}</h1>\n"
+        output = "<html><head><meta content='text/html;charset=UTF-8' \
+            http-equiv='content-type' /></head><body>"
+        output += f"<h1>{self.title}</h1>\n"
         if self.source and self.source.link:
             output += f"<p>Source: <a href='{self.source.link}'>{self.source.title}</a></p>\n"
         elif self.source:
             output += f"<p>Source: {self.source.title}</p>\n"
-        output += self.body_html
+        output += self.body_html + "</body></html>"
         return io.BytesIO(output.encode())
 
     def generate_pdf_file(self) -> io.BytesIO:
@@ -313,3 +315,13 @@ class Note(models.Model):
             "filename": filename,
             "content_type": content_type,
         }
+
+    def get_fork(self):
+        return Note(
+            title=self.title,
+            source=self.source,
+            body_raw=self.body_raw,
+            body_html=self.body_html,
+            summary=self.summary,
+            fork=self,
+        )

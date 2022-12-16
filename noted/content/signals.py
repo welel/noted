@@ -7,5 +7,5 @@ from content.models import Note
 @receiver(post_delete, sender=Note)
 def free_source(sender, instance, **kwargs):
     """Delete :model:`Source` instance from the database if it has 0 notes."""
-    if not instance.source.notes.all():
+    if instance.source and not instance.source.notes.all():
         instance.source.delete()
