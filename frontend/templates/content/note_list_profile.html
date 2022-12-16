@@ -5,19 +5,14 @@
 {% load filtersourcetags %}
 
 
+{% block title %}{{ user.full_name }} {% trans "notes" %}.{% endblock %}
+
+
 {% block center %}
 
 <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
-        <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-filter"></i>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Latest" %}</a></li>
-            <li><a class="dropdown-item" href="?order=datetime_created"><i class="bi bi-sort-down-alt"></i> {% trans "Oldest" %}</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li>
-        </ul>  
+        {% include 'layouts/note_order.html' %}
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link tablink active text-secondary" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" >{% trans "Public" %}</button>

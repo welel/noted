@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load filtersourcetags %}
 
 <div class="container py-3" style="max-width: 700px;">
     <div class="row">
@@ -32,7 +33,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="row mt-4 ps-1 d-md-inline d-none">
+    <div class="row ps-1 d-md-inline d-none">
         <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
             {% if note.summary %}
                 {{ note.summary }}
@@ -60,36 +61,12 @@
         </div>
         <div class="col d-md-block d-none">
             <a href="{{ note.get_absolute_url }}" class="text-decoration-none">
-            <span class="text-secondary p-1 rounded"><i class="bi bi-balloon-heart"></i> {{ note.likes.count }} {% trans "Reputation" %}</span>
-            <span class="text-secondary p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span>
+            <span class="text-secondary p-1 rounded"><i class="bi bi-heart"></i> {{ note.likes.count }} {% trans "likes" %}</span>
+            <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
+            <span class="text-secondary p-1 rounded"><i class="bi bi-eye"></i> {{ note.views }} {% trans "views" %}</span>
+            {% comment %} <span class="text-secondary p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span> {% endcomment %}
             </a>
         </div>
     </div>
 </div>
 <hr>
-
-<script>
-// Ajax request to like the note (toggle `like` note instance field value).
-function bookmarkNote(note_pk) {
-    const bookmarkButton = document.getElementById(`bookmark-btn-${note_pk}`);
-    const bookmarkIcon = bookmarkButton.firstElementChild.firstElementChild;
-    const url = bookmarkButton.getAttribute('url');
-    $.ajax({
-        type: 'GET',
-        url: url,
-        headers: {"X-Requested-With": "XMLHttpRequest"},
-        success: (res) => {
-            if (res.bookmarked) {
-                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus-fill');
-            }
-            if (!res.bookmarked) {
-                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus');
-            }
-        },
-        error: (res) => {
-            console.log('Bad Request: unable to bookmark.');
-        },
-        timeout: 3000
-    });
-}
-</script>

@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
@@ -34,12 +35,14 @@ class NoteList(ListView):
     """
 
     ORDER_LABELS = {
-        "datetime_created": _("Oldest"),
         "-datetime_created": _("Latest"),
+        "views": _("Popular"),
+        "likes": _("Most liked"),
     }
     SORTING_FUNCS_MAPPING = {
-        "datetime_created": Note.objects.datetime_created,
         "-datetime_created": Note.objects.datetime_created_dec,
+        "views": Note.objects.popular,
+        "likes": Note.objects.most_liked,
     }
 
     model = Note
@@ -95,6 +98,11 @@ class ProfileNoteList(NoteList):
 
     template_name = "content/note_list_profile.html"
 
+    def get(self, request, user_pk, *args, **kwargs):
+        if request.user.pk == user_pk:
+            return redirect("content:personal_notes", *args, **kwargs)
+        return super().get(request, user_pk, *args, **kwargs)
+
     def get_queryset(self):
         user = get_object_or_404(User, pk=self.kwargs.get("user_pk"))
         return (
@@ -108,6 +116,26 @@ class ProfileNoteList(NoteList):
         pk = self.kwargs.get("user_pk")
         context["user"] = get_object_or_404(User, pk=pk)
         context["pins"] = self.get_queryset().filter(pin=True)
+        context["sidenotes"] = Note.objects.public()[:5]
+        return context
+
+
+class PersonalNotesView(LoginRequiredMixin, NoteList):
+    """Display a list of notes and profile of a client."""
+
+    template_name = "content/note_list_personal.html"
+
+    def get_queryset(self):
+        return super().get_ordered_queryset().filter(author=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        qs = self.get_queryset()
+        context["notes"] = qs.filter(draft=False)
+        context["pins"] = qs.filter(pin=True)
+        context["drafts"] = qs.filter(draft=True)
+        context["bookmarks"] = self.request.user.bookmarked_notes.all()
         context["sidenotes"] = Note.objects.public()[:5]
         return context
 

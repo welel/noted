@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import pdfkit
 
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -105,6 +105,17 @@ class NoteManager(models.Manager):
     def by_source_type(self, type_code: str) -> QuerySet:
         return self.filter(draft=False, source__type=type_code)
 
+    def popular(self) -> QuerySet:
+        return self.filter(draft=False).order_by("-views")
+
+    def most_liked(self) -> QuerySet:
+        """Query notes sorted by number of likes from the most to least."""
+        return (
+            self.filter(draft=False)
+            .annotate(count=Count("likes"))
+            .order_by("-count")
+        )
+
 
 class Note(models.Model):
     """Markdown text with a list of attributes.
@@ -125,11 +136,11 @@ class Note(models.Model):
         modified: update datetime of a note.
         views: a counter of note's visitors.
         fork: a link to :model:`Note` if a note forked from another.
+        likes: a m2m field for note likes.
+        bookmarked: a m2m field for bookmarks for user.
         *allow_comments: a boolean flag allows to users leave comments
                         to a note.
         *tags: tags of a note (max tags - 5, max length - 24 symbols).
-        *users_like: a m2m field for note likes.
-        *bookmarked: a m2m field for bookmarks for user.
 
     """
 

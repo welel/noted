@@ -33,6 +33,7 @@ urlpatterns = [
         views.ProfileNoteList.as_view(),
         name="profile_notes",
     ),
+    path("p/notes/", views.PersonalNotesView.as_view(), name="personal_notes"),
     path("search/<str:type>/", views.search, name="search"),
     path(
         "source/search/",

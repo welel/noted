@@ -165,6 +165,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+LOGIN_URL = "users:signin"
 SOCIALACCOUNT_ADAPTER = "users.adapter.SocialAccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.getenv("HTTP_PROTOCOL")
 SITE_ID = 1

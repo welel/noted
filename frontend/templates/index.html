@@ -8,25 +8,17 @@
 {% block center %}
 <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-        <button class="btn btn-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-filter"></i>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Latest" %}</a></li>
-            <li><a class="dropdown-item" href="?order=datetime_created"><i class="bi bi-sort-down-alt"></i> {% trans "Oldest" %}</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li>
-        </ul>  
+        {% include 'layouts/note_order.html' %}
     </li>
     <li class="nav-item">
         <a class="nav-link tablink active text-secondary" aria-current="page" href="{% url 'content:home' %}">{% trans "Public" %}</a>
     </li>
-    <li class="nav-item">
+    {% comment %} <li class="nav-item">
         <a class="nav-link tablink text-secondary disable" href="#">{% trans "Following" %}</a>
     </li>
     <li class="nav-item">
         <a class="nav-link tablink text-secondary disable" href="#">{% trans "My tags" %}</a>
-    </li>
+    </li> {% endcomment %}
 </ul>
 
 {% include 'content/note_list_for_layout.html' %}
