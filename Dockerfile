@@ -7,5 +7,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
 
 RUN pip install -r requirements.txt \
-    && apt-get install wkhtmltopdf -y \
-    && apt-get autoclean -y
+    && apt-get update \
+    && apt-get -y install wkhtmltopdf \
+    && apt-get -y autoclean
