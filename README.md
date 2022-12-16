@@ -28,6 +28,8 @@ Now:
 * GitHub API Integration (markdown)
 * Internationalization (2 languages: en, ru)
 * Search
+* Bookmarks
+* Likes
 * Twitter Bootstrap integration
 * Responsive (modile) design
 * Code documentation
@@ -38,8 +40,6 @@ In future:
 * Following system
 * Sharing content (facebook, twitter)
 * Tagging
-* Bookmarks
-* Likes
 * Recommendations
 * Tree comments
 

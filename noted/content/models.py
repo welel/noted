@@ -4,8 +4,15 @@ from typing import Optional
 from bs4 import BeautifulSoup
 import pdfkit
 
+from django.contrib.postgres.search import (
+    SearchVector,
+    SearchQuery,
+    SearchRank,
+    TrigramSimilarity,
+    SearchHeadline,
+)
 from django.db import models
-from django.db.models import QuerySet, Count
+from django.db.models import QuerySet, Count, Q
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -17,6 +24,14 @@ from users.models import User
 class SourceManager(models.Manager):
     def by_type(self, type_code: str) -> QuerySet:
         return self.filter(type=type_code)
+
+    def search(self, query: str) -> QuerySet:
+        similarity = TrigramSimilarity("title", query)
+        return (
+            self.annotate(similarity=similarity)
+            .filter(similarity__gte=0.1)
+            .order_by("-similarity")
+        )
 
 
 class Source(models.Model):
@@ -114,6 +129,27 @@ class NoteManager(models.Manager):
             self.filter(draft=False)
             .annotate(count=Count("likes"))
             .order_by("-count")
+        )
+
+    def search(self, query: str) -> QuerySet:
+        search_vector = (
+            SearchVector("title", weight="A")
+            + SearchVector("summary", weight="A")
+            + SearchVector("body_raw", weight="B")
+        )
+        search_query = SearchQuery(query)
+        headline = SearchHeadline(
+            "title", search_query, start_sel="<mark>", stop_sel="</mark>"
+        )
+        return (
+            self.filter(draft=False)
+            .annotate(
+                rank=SearchRank(search_vector, search_query),
+                similarity=TrigramSimilarity("title", query),
+                headline=headline,
+            )
+            .filter(Q(rank__gte=0.2) | Q(similarity__gt=0.1))
+            .order_by("-rank")
         )
 
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -10,10 +10,10 @@ from django.views import View
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from wsgiref.util import FileWrapper
 
 from content.forms import NoteForm
 from content.models import Note, Source
-from content.search import search_sources
 from common import ajax_required
 from users.models import User
 
@@ -279,10 +279,6 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": True})
 
 
-from wsgiref.util import FileWrapper
-from django.http import HttpResponse
-
-
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):
@@ -333,7 +329,7 @@ class SourceTypeDetailsView(View):
 def search_sources_select(request):
     """Search for sources by title and return JSON results."""
     query = request.GET.get("query", "")
-    data = search_sources(query)
+    data = Source.objects.search(query)
     data = [
         {
             "id": source.pk,
@@ -352,9 +348,9 @@ def search(request, type):
     context = {"query": query, "type": type}
 
     if type == "notes":
-        context["notes"] = {}
+        context["notes"] = Note.objects.search(query)
 
     elif type == "sources":
-        context["sources"] = search_sources(query)
+        context["sources"] = Source.objects.search(query)
 
     return render(request, "content/search.html", context)
