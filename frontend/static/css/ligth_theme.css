@@ -1,0 +1,121 @@
+#decor-sep {
+    background-color: #e6e6e6;
+}
+
+
+/* BADGES & TAGS */
+.badge-h:hover {
+    color: black !important;
+    background-color: rgb(150, 150, 150) !important;
+}
+.tag {
+    color: black !important;
+    background-color: rgb(202, 202, 202) !important;
+}
+.source-title:hover {
+    color: black !important;
+}
+.note-stat:hover {
+    background-color: rgb(240, 240, 240);
+}
+.color-grey {
+    color: rgb(145, 144, 144);
+}
+.github-h:hover {
+    color: rgb(0, 0, 0);
+}
+.google-h:hover {
+    color: rgb(199, 0, 0);
+}
+.telegram-h:hover {
+    color: rgb(0, 119, 255);
+}
+.twitter-h:hover {
+    color: rgb(0, 119, 255);
+}
+.whatsapp-h:hover {
+    color: rgb(23, 172, 23);
+}
+.link-h:hover {
+    color:black;
+}
+/* Source type badges */
+.bg-source-0 {
+    background-color: rgb(213, 213, 213) !important;
+}
+.bg-source-1 {
+    background-color: rgb(200, 93, 93) !important;
+}
+.bg-source-2 {
+    background-color: rgb(107, 234, 139) !important;
+}
+.bg-source-3 {
+    background-color: rgb(150, 200, 255) !important;
+}
+.bg-source-4 {
+    background-color: rgb(185, 143, 227) !important;
+}
+.bg-source-5 {
+    background-color: rgb(100, 235, 255) !important;
+}
+.bg-source-6 {
+    background-color: rgb(232, 222, 76) !important;
+}
+
+
+/* LOGIN */
+#signin .social-sign-red:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(255, 72, 72) !important;
+    border-color: black !important;
+}
+#signin .social-sign-black:hover {
+    color: white !important;
+    background-color: black !important;
+    border-color: black !important;
+}
+#signin .social-sign-blue:hover {
+    color: white !important;
+    background-color: rgb(21, 130, 255) !important;
+    border-color: black !important;
+}
+
+/* SIGNUP */
+.validation-errors {
+    color: red;
+}
+
+
+/* NAVIGATION */
+#left-nav {
+    border: 1px solid #c6c7c8;
+}
+.nav-item i {
+    color: #757575;
+}
+.nav-item i:hover {
+    color: black;
+}
+
+
+/* NOTE CREATE */
+#md-syntax-table {
+    border: 1px solid rgb(223, 223, 223);
+}
+#md-syntax-table tr {
+    border-bottom: 1px solid rgb(206, 206, 206) !important;
+}
+.source-table-row:hover {
+    background-color: #ececec;
+}
+
+/* TABS */
+.tablink.active {
+    border-bottom: 1px solid black !important;
+    border: aliceblue;
+    color: black !important;
+}
+.tablink:hover {
+    border-color: rgba(0,0,0,0) !important;
+    color: black !important;
+}

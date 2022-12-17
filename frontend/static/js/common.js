@@ -34,3 +34,30 @@ function findGetParameter(parameterName) {
         });
     return result;
 }
+
+
+// Color theme toggle
+const lightThemeUrl = document.getElementById('css-light-theme-url'); 
+const darkThemeUrl = document.getElementById('css-dark-theme-url');
+const themeBtn = document.getElementById('theme-btn')
+const styleLink = document.getElementById('color-theme');
+themeBtn.onclick = (event) => {
+    if (styleLink.href == lightThemeUrl.href) {
+        styleLink.href = darkThemeUrl.href;
+        themeBtn.lastElementChild.innerText = gettext('Light theme');
+        themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
+        localStorage.setItem('theme', darkThemeUrl.href);
+    } else {
+        styleLink.href = lightThemeUrl.href;
+        themeBtn.lastElementChild.innerText = gettext('Dark theme');
+        themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high-fill px-2');
+        localStorage.setItem('theme', lightThemeUrl.href);
+    }
+}
+const theme = localStorage.getItem('theme');
+if (theme == darkThemeUrl.href) {
+    styleLink.href = darkThemeUrl.href;
+    themeBtn.lastElementChild.innerText = gettext('Light theme');
+    themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
+}
+

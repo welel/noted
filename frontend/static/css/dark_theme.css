@@ -1,0 +1,227 @@
+:root {
+    --dr-bg: #222831;
+    --dr-sl: #393E46;
+    --dr-cl: #EEEEEE;
+    --dr-cl-d: #7C8593;
+    --dr-ac: #4ECCA3;
+}
+
+body {
+    background-color: var(--dr-bg);
+    color: var(--dr-cl);
+}
+
+#decor-sep {
+    background-color: var(--dr-sl);
+}
+
+hr {
+    color: var(--dr-sl);
+    opacity: 1;
+}
+
+
+/* BADGES & TAGS */
+.badge-h:hover {
+    color: var(--dr-sl) !important;
+    background-color: rgb(150, 150, 150) !important;
+}
+.tag {
+    color: var(--dr-sl)!important;
+    background-color: rgb(202, 202, 202) !important;
+}
+.source-title:hover {
+    color: var(--dr-sl) !important;
+}
+.note-stat:hover {
+    background-color: rgb(240, 240, 240);
+}
+.color-grey {
+    color: rgb(145, 144, 144);
+}
+.github-h:hover {
+    color: var(--dr-sl);
+}
+.google-h:hover {
+    color: rgb(199, 0, 0);
+}
+.telegram-h:hover {
+    color: rgb(0, 119, 255);
+}
+.twitter-h:hover {
+    color: rgb(0, 119, 255);
+}
+.whatsapp-h:hover {
+    color: rgb(23, 172, 23);
+}
+.link-h:hover {
+    color:var(--dr-sl);
+}
+/* Source type badges */
+.bg-source-0 {
+    background-color: rgb(77, 77, 77) !important;
+}
+.bg-source-1 {
+    background-color: rgb(104, 46, 46) !important;
+}
+.bg-source-2 {
+    background-color: rgb(49, 112, 65) !important;
+}
+.bg-source-3 {
+    background-color: rgb(57, 78, 100) !important;
+}
+.bg-source-4 {
+    background-color: rgb(97, 75, 119) !important;
+}
+.bg-source-5 {
+    background-color: rgb(49, 115, 126) !important;
+}
+.bg-source-6 {
+    background-color: rgb(165, 161, 107) !important;
+}
+
+
+/* LOGIN */
+#signin .social-sign-red:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(255, 72, 72) !important;
+    border-color: black !important;
+}
+#signin .social-sign-black:hover {
+    color: white !important;
+    background-color: var(--dr-sl) !important;
+    border-color: black !important;
+}
+#signin .social-sign-blue:hover {
+    color: white !important;
+    background-color: rgb(21, 130, 255) !important;
+    border-color: black !important;
+}
+.btn-outline-dark {
+    border-color: var(--dr-sl);
+    color: var(--dr-cl);
+}
+
+
+/* SIGNUP */
+.validation-errors {
+    color: red;
+}
+
+
+/* NAVIGATION */
+#left-nav {
+    border: 1px solid var(--dr-sl);
+}
+.nav-item i {
+    color: #757575;
+}
+.nav-item i:hover {
+    color: var(--dr-cl);
+}
+.dropdown-menu {
+    background-color: var(--dr-sl);
+}
+.dropdown-item {
+    color: var(--dr-cl);
+}
+.dropdown-item.disabled {
+    color: var(--dr-cl-d);
+}
+
+
+/* NOTE CREATE */
+#md-syntax-table {
+    border: 1px solid rgb(223, 223, 223);
+}
+#md-syntax-table tr {
+    border-bottom: 1px solid rgb(206, 206, 206) !important;
+}
+.source-table-row:hover {
+    background-color: #ececec;
+}
+
+/* TABS */
+.nav-tabs {
+    border-color: var(--dr-sl);
+}
+.nav-link {
+    transition: none;
+}
+.nav-link.active {
+    background-color: var(--dr-bg) !important;
+}
+.tablink.active {
+    border-bottom: 1px solid var(--dr-cl) !important;
+    border: var(--dr-bg);
+    color: var(--dr-cl) !important;
+}
+.tablink:hover {
+    border-bottom: 1px solid var(--dr-cl) !important;
+    border: var(--dr-bg);
+    color: var(--dr-cl) !important;
+}
+
+
+/* TEXT */
+.text-dark {
+    color: var(--dr-cl) !important;
+}
+
+
+/* SEARCH */
+#search-addon {
+    background-color: var(--dr-bg) !important;
+    color: var(--dr-cl-d);
+}
+.form-control {
+    background-color: var(--dr-bg);
+    border-color: var(--dr-sl);
+    color: var(--dr-cl);
+}
+.form-control:focus {
+    background-color: var(--dr-sl);
+    color: var(--dr-cl);
+}
+
+
+/* MODAL */
+.modal-content {
+    background-color: var(--dr-bg) !important;
+}
+.modal-header {
+    border-color: var(--dr-sl);
+}
+.modal-footer {
+    border-color: var(--dr-sl);
+}
+.modal-content .btn:hover {
+    background-color:  var(--dr-sl);
+    border-color: var(--dr-cl);
+}
+
+
+/* MD EDITOR & NOTE CREATE */
+.CodeMirror {
+    background-color: var(--dr-bg) !important;
+    color: var(--dr-cl) !important;
+    border-color: var(--dr-sl) !important;
+}
+.editor-toolbar {
+    background-color: var(--dr-bg) !important;
+    border-color: var(--dr-sl) !important;
+}
+.editor-toolbar a {
+    color: var(--dr-cl-d) !important;
+}
+.CodeMirror-cursor {
+    color: var(--dr-cl) !important;
+}
+.separator {
+    border-color: var(--dr-cl-d) !important;
+}
+.form-select {
+    background-color: var(--dr-bg);
+    color: var(--dr-cl);
+    border-color: var(--dr-sl);
+}

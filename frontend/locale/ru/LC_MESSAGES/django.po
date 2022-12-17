@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-16 18:43+0300\n"
-"PO-Revision-Date: 2022-12-16 10:45+0000\n"
+"POT-Creation-Date: 2022-12-17 16:00+0300\n"
+"PO-Revision-Date: 2022-12-17 13:02+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: noted/content/forms.py:16
@@ -153,7 +151,7 @@ msgstr "Изменен"
 msgid "Views"
 msgstr "Просмотров"
 
-#: noted/content/models.py:237
+#: noted/content/models.py:237 templates/content/note_display.html:79
 msgid "Parent"
 msgstr "Родитель"
 
@@ -268,8 +266,8 @@ msgstr ""
 
 #: noted/users/views.py:120
 msgid ""
-"Sorry, but we could not find a user account with                             "
-"that email."
+"Sorry, but we could not find a user account with"
+"                             that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
 #: noted/users/views.py:130
@@ -280,8 +278,8 @@ msgstr "Вы ввели неправильный пароль."
 msgid "Change E-mail"
 msgstr "Изменить адрес электронной почты"
 
-#: templates/account/base.html:33 templates/layouts/navigation.html:63
-#: templates/layouts/navigation.html:110
+#: templates/account/base.html:33 templates/layouts/navigation.html:72
+#: templates/layouts/navigation.html:119
 msgid "Sign Out"
 msgstr "Выйти"
 
@@ -293,15 +291,11 @@ msgstr "Изменить Пароль"
 
 #: templates/account/email/password_reset_key_message.html:6
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"button below to reset your password."
+"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the button below to reset your password."
 msgstr ""
-"Вы получили это электронное письмо, потому что вы или кто-то другой "
-"запросили пароль для вашей учетной записи пользователя.\n"
-"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите "
-"кнопку ниже, чтобы сбросить пароль."
+"Вы получили это электронное письмо, потому что вы или кто-то другой запросили пароль для вашей учетной записи пользователя.\n"
+"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите кнопку ниже, чтобы сбросить пароль."
 
 #: templates/account/email/password_reset_key_message.html:9
 msgid "Reset password"
@@ -329,8 +323,8 @@ msgstr "Ваше имя пользователя - %(username)s."
 
 #: templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
 msgstr ""
 "Забыли свой пароль? Введите адрес электронной почты внизу, и мы вышлем вам "
 "электронное письмо  с инструкцией для сброса пароля. "
@@ -342,7 +336,8 @@ msgstr "Изменить Пароль"
 #: templates/account/password_reset.html:24
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
-"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом пароля."
+"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом "
+"пароля."
 
 #: templates/account/password_reset_from_key.html:5
 #: templates/account/password_reset_from_key.html:8
@@ -358,8 +353,8 @@ msgstr "Испорченный Токен"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
 "Ссылка для смены пароля не рабочая, возможно она была уже использована. "
 "Пожалуйста, запросите <a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
@@ -498,7 +493,6 @@ msgid "Download"
 msgstr "Скачать"
 
 #: templates/content/note_display.html:72
-#: templates/content/note_display.html:79
 #: templates/content/note_display.html:150
 msgid "Fork"
 msgstr "Копировать"
@@ -686,7 +680,8 @@ msgid "Sign in with email"
 msgstr "Вход через email"
 
 #: templates/layouts/auth_modals.html:36
-msgid "Enter the email address associated with your account and your password."
+msgid ""
+"Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
 #: templates/layouts/auth_modals.html:39 templates/users/signup.html:44
@@ -746,15 +741,19 @@ msgstr "Создать запись"
 msgid "Sign In"
 msgstr "Вход"
 
-#: templates/layouts/navigation.html:58 templates/layouts/navigation.html:105
+#: templates/layouts/navigation.html:58 templates/layouts/navigation.html:114
 msgid "Profile"
 msgstr "Профиль"
 
-#: templates/layouts/navigation.html:59 templates/layouts/navigation.html:106
+#: templates/layouts/navigation.html:59 templates/layouts/navigation.html:115
 msgid "Profile settings"
 msgstr "Настройки профиля"
 
-#: templates/layouts/navigation.html:61 templates/layouts/navigation.html:108
+#: templates/layouts/navigation.html:70
+msgid "Dark theme"
+msgstr "Тёмная тема"
+
+#: templates/layouts/navigation.html:117
 msgid "Dark"
 msgstr "Тёмная"
 
@@ -790,7 +789,8 @@ msgstr "Ошибка при входе через социальную сеть"
 #: templates/socialaccount/authentication_error.html:10
 msgid ""
 "An error occurred while attempting to login via your social network account."
-msgstr "Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
+msgstr ""
+"Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
 
 #: templates/socialaccount/signup.html:5
 msgid "Signup"
@@ -804,8 +804,7 @@ msgstr "Регистрация"
 #, python-format
 msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
-"  %(site_name)s. The email associated with your account already exists on "
-"NoteD. Please login with your existing email or register with a new one."
+"  %(site_name)s. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one."
 msgstr ""
 "Вы пытаетесь зарегистрироваться на сайте через %(provider_name)s. Адрес "
 "электронной почты привязанный к этому аккаунту уже существует на NoteD. "

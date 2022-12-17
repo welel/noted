@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-16 12:19+0300\n"
-"PO-Revision-Date: 2022-12-16 09:25+0000\n"
+"POT-Creation-Date: 2022-12-17 16:01+0300\n"
+"PO-Revision-Date: 2022-12-17 13:02+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -34,6 +34,14 @@ msgstr "Этот email адрес уже занят."
 #: static/js/auth.js:9
 msgid "Enter password."
 msgstr "Введите пароль."
+
+#: static/js/common.js:47 static/js/common.js:60
+msgid "Light theme"
+msgstr "Светлая тема"
+
+#: static/js/common.js:52
+msgid "Dark theme"
+msgstr "Тёмная тема"
 
 #: static/js/note_display.js:33 static/js/note_display.js:34
 msgid "Unpin"
