@@ -1,3 +1,5 @@
+from taggit.models import Tag
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
@@ -90,6 +92,7 @@ class PublicNoteList(NoteList):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
         context["sidenotes"] = Note.objects.public()[:5]
+        context["tags"] = Tag.objects.all()[:5]
         return context
 
 

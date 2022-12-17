@@ -47,17 +47,11 @@
             <button id="bookmark-btn-{{ note.pk }}" url="{% url 'content:bookmark_note' slug=note.slug %}" onclick="bookmarkNote({{ note.pk }});" class="btn btn-link p-0 text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
                 <span><i class="bi bi-bookmark-plus{% if note in request.user.bookmarked_notes.all %}-fill{% endif %}"></i></span>
             </button>
-            {% if note.tags %}
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+            {% for tag in note.tags.all %}
+            <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+            <span class="badge tag rounded-pill text-bg-secondary ms-1">{{ tag }}</span>
             </a>
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-            </a>
-            <a href="#" class="text-decoration-none text-dark">
-            <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-            </a>
-            {% endif %}
+            {% endfor %}
         </div>
         <div class="col d-md-block d-none">
             <a href="{{ note.get_absolute_url }}" class="text-decoration-none">

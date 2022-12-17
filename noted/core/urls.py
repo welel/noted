@@ -10,6 +10,7 @@ urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("users/", include(("users.urls", "users"), namespace="users")),
+    path("tags/", include(("tags.urls", "tags"), namespace="tags")),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", include(("content.urls", "content"), namespace="content")),
 )

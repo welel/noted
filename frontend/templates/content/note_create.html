@@ -9,6 +9,7 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/simplemde.css' %}" >
+<link rel="stylesheet" href="{% static 'css/tagsinput.css' %}" >
 {% endblock %}
 
 
@@ -124,13 +125,14 @@
                 <div class="row mt-4">
                     {{ form.body_raw }}
                 </div>
-                {% comment %} <div class="row mt-4 form-floating">  
-                    <input id="tags" class="form-control" type="text" placeholder="{% trans "Tags" %}" disabled>
-                    <label for="tags" class="form-label">{% trans "Tags" %}</label>
-                </div> {% endcomment %}
                 <div class="row mt-4 form-floating">  
                     {{ form.summary }}
                     <label for="id_summary" class="form-label">{% trans "Summary in 140 symbols..." %}</label>
+                </div>
+                <div class="row mt-4">  
+                    <label class="text-dark">{% trans "Topics" %}</label>
+                    {{ form.tags }}
+                    <p class="text-secondary">{{ form.tags.help_text }}</p>
                 </div>
                 <div class="row mt-4">
                     <div class="col px-0 d-flex align-items-center flex-sm-row flex-column-reverse">
@@ -213,4 +215,5 @@
 <span id="get-sources-url" hidden>{% url 'content:search_sources_select' %}</span>
 <script src="{% static 'js/simplemde.js' %}"></script>
 <script src="{% static 'js/note_create.js' %}"></script>
+<script src="{% static 'js/tagsinput.js' %}"></script>
 {% endblock %}

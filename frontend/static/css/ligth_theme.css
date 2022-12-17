@@ -10,7 +10,11 @@
 }
 .tag {
     color: black !important;
-    background-color: rgb(202, 202, 202) !important;
+    background-color: rgb(231, 231, 231) !important;
+    transition: 0.4s ease;
+}
+.tag:hover {
+    background-color: rgb(199, 199, 199) !important;
 }
 .source-title:hover {
     color: black !important;

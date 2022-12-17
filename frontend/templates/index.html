@@ -33,14 +33,11 @@
 <div class="mt-5">
     <h6>{% trans "Recommended topics" %}</h6>
     <span>
-        <a href="#" class="text-decoration-none text-dark">
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>
+        {% for tag in tags %}
+        <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+        <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
         </a>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
+        {% endfor %}
     </span>
 </div>
 {% include 'layouts/sidebar/footer.html' %}

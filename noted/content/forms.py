@@ -1,4 +1,7 @@
+from taggit.forms import TagWidget
+
 from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from content.models import Source, Note
@@ -45,6 +48,7 @@ class NoteForm(forms.ModelForm):
             "source_type",
             "source",
             "body_raw",
+            "tags",
             "summary",
             "anonymous",
         )
@@ -64,6 +68,7 @@ class NoteForm(forms.ModelForm):
             "anonymous": forms.CheckboxInput(
                 attrs={"class": "form-check-input", "role": "switch"}
             ),
+            "tags": TagWidget(attrs={"data-role": "tagsinput"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -76,10 +81,24 @@ class NoteForm(forms.ModelForm):
                 "source_description"
             ] = self.instance.source.description
 
-    # def clean_source_link(self):
-    #     link = super().clean_source_link()
-    #     print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", link)
-    #     return link
+    def clean_tags(self):
+        """Validates the `tags` field.
+
+        Validates the number of tags (less than 6) and tag length
+        (less than 25 symbols).
+        """
+        tags = self.cleaned_data["tags"]
+        if len(tags) > 3:
+            raise ValidationError(_("You can add only 3 tags."))
+        for i, tag in enumerate(tags):
+            if len(tag) > 25:
+                raise ValidationError(
+                    _(
+                        f"Length of {i+1} tag should be \
+                            less than 25 symbols."
+                    )
+                )
+        return tags
 
     def clean(self):
         cleaned_data = super().clean()

@@ -1,5 +1,6 @@
 import io
 from typing import Optional
+from taggit.managers import TaggableManager
 
 from bs4 import BeautifulSoup
 import pdfkit
@@ -18,6 +19,7 @@ from django.utils.translation import gettext_lazy as _
 
 from content.fields import MarkdownField, RenderedMarkdownField
 from common import generate_unique_slug
+from tags.models import UnicodeTaggedItem
 from users.models import User
 
 
@@ -243,6 +245,16 @@ class Note(models.Model):
     bookmarks = models.ManyToManyField(
         User, related_name="bookmarked_notes", default=None, blank=True
     )
+    tags = TaggableManager(
+        through=UnicodeTaggedItem,
+        blank=True,
+        related_name="notes",
+        help_text=_(
+            """Add tags. Separate tags by using "Enter" or comma.
+        You can add maximum 3 tags, and length of tags should be less than 25
+        symbols."""
+        ),
+    )
     objects = NoteManager()
 
     class Meta:
@@ -325,3 +337,20 @@ class Note(models.Model):
             summary=self.summary,
             fork=self,
         )
+
+    def get_similar_by_tags(self) -> QuerySet:
+        """Get notes with similar tag.
+
+        Returns QuerySet of notes with similar tags for a note ordered by
+        number of common tags and creation datetime.
+        """
+        note_tags_ids = self.tags.values_list("id", flat=True)
+        similar_notes = (
+            Note.objects.public()
+            .filter(tags__in=note_tags_ids)
+            .exclude(id=self.id)
+        )
+        similar_notes = similar_notes.annotate(
+            same_tags=Count("tags")
+        ).order_by("-same_tags", "-datetime_created")
+        return similar_notes

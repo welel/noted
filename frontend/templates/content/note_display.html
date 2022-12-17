@@ -102,17 +102,11 @@
                         <a href="#" class="text-decoration-none text-dark pe-3">
                         <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0</span>
                         </a>
-                        {% if note.tags %}
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+                        {% for tag in note.tags.all %}
+                        <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1">{{ tag }}</span>
                         </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                        </a>
-                        {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="col d-md-flex d-none text-secondary">
                         <div class="dropdown">
