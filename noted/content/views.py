@@ -2,6 +2,7 @@ from taggit.models import Tag
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import TrigramSimilarity, SearchVector
 from django.db.models import F, QuerySet
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -352,5 +353,19 @@ def search(request, type):
 
     elif type == "sources":
         context["sources"] = Source.objects.search(query)
+
+    elif type == "tags":
+        similarity = TrigramSimilarity("name", query)
+        context["tags"] = (
+            Tag.objects.annotate(similarity=similarity)
+            .filter(similarity__gte=0.1)
+            .order_by("-similarity")
+        )
+
+    elif type == "people":
+        vector = SearchVector("full_name", "username")
+        context["users"] = User.objects.annotate(search=vector).filter(
+            search=query
+        )
 
     return render(request, "content/search.html", context)

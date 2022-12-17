@@ -142,10 +142,10 @@
                             <input class="form-check-input" type="checkbox" role="switch" id="allow-comments" checked disabled>
                             <label class="form-check-label" for="allow-comments">{% trans "Allow comments" %}</label>
                         </div> {% endcomment %}
-                        {% comment %} <div class="form-check form-switch ms-3">
+                        <div class="form-check form-switch ms-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ form.anonymous.help_text }}">
                             {{ form.anonymous }}
                             <label class="form-check-label" for="id_anonymous">{% trans "Post anonymous" %}</label>
-                        </div> {% endcomment %}
+                        </div> 
                     </div>
                 </div>
             </div>

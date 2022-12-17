@@ -17,7 +17,19 @@
                     <div class="col-auto me-auto">
                         <table>
                             <tbody>
-                                <tr>
+                            {% if note.anonymous %}
+                            <tr>
+                                <td class="pe-3" rowspan="2">
+                                    <a class="text-decoration-none text-dark">
+                                        <i class="bi bi-person-circle" style="font-size: 2.2rem;"></i>
+                                    </a>
+                                </td>
+                                <td class="fw-bold">
+                                    <a class="text-decoration-none text-dark">{% trans "Anonymous" %}</a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
                                 <td class="pe-3" rowspan="2">
                                     <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
                                     <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
@@ -27,10 +39,12 @@
                                     <a  href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
+                            {% endif %}
                             <tr>
                                 <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {{ note.created|date:"M j" }}</td>
                             </tr>
                             </tbody>
+
                         </table>
                     </div>
                     <div class="col-auto d-flex align-items-center text-secondary">
@@ -158,9 +172,11 @@
                     <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
                 </form>
             </div>
+            {% if not note.anonymous %}
             {% with user=note.author %}
                 {% include 'users/profile_sidebar_layout.html' %}
             {% endwith %}
+            {% endif %}
             {% include 'layouts/sidebar/more_from_noted.html' %}
             {% include 'layouts/sidebar/footer.html' %}
         </div>
