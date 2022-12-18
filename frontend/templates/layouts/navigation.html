@@ -14,28 +14,28 @@ Require script `js/auth.js`
     </div>
     <div>
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">  
-        <li class="nav-item px-2">
+        <li class="nav-item px-2 py-1">
             <a class="nav-link" href="{% url 'content:home' %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Home" %}">
                 <i class="bi bi-house" style="font-size: 1.5rem;"></i>
             </a>
         </li>
-        <li class="nav-item px-2">
+        <li class="nav-item px-2 py-1">
             <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notifications" %}">
                 <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
             </a>
         </li>
-        <li class="nav-item px-2">
-            <a class="nav-link" href="{% url 'content:personal_notes' %}?bookmark=open">
-                <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Bookmarks" %}"></i>
+        <li class="nav-item px-2 py-1">
+            <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:personal_notes' %}?bookmark=open{% else %}#{% endif %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Bookmarks" %}" >
+                <i class="bi bi-bookmark-star" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %} ></i>
             </a>
         </li>
-        <li class="nav-item px-2">
-            <a class="nav-link" href="{% url 'content:personal_notes' %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notes" %}">
-                <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
+        <li class="nav-item px-2 py-1">
+            <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:personal_notes' %}{% else %}#{% endif %}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notes" %}">
+                <i class="bi bi-journals" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %} ></i>
             </a>
         </li>
-        <li class="nav-item my-2"><div id="decor-sep" style="height: 1px; width: 40px;"></div></li>
-        <li class="nav-item px-2">
+        <li class="nav-item my-2 py-1"><div id="decor-sep" style="height: 1px; width: 40px;"></div></li>
+        <li class="nav-item px-2 py-1">
             <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:create_note' %}{% else %}#{% endif %}"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Write note" %}">
                 <i class="bi bi-pencil-square" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
             </a>
@@ -67,7 +67,7 @@ Require script `js/auth.js`
                 {% endif %}
                 </a>
             </li>
-            <li><button id="theme-btn" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2"></i><span>{% trans "Dark theme" %}</span></button></li>
+            <li><button id="theme-btn" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>
@@ -123,7 +123,7 @@ Require script `js/auth.js`
                     {% endif %}
                     </a>
                 </li>
-                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2"></i><span>{% trans "Dark theme" %}</span></button></li>
+                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>

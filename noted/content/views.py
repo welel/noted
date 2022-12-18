@@ -96,9 +96,10 @@ class PublicNoteList(NoteList):
         context["tags"] = Tag.objects.annotate(
             num_times=Count("notes", filter=Q(notes__draft=False))
         ).filter(num_times__gt=0)[:7]
-        context["tags_notes"] = Note.objects.tags_notes(
-            self.request.user.tags.names()
-        )
+        if self.request.user.is_authenticated:
+            context["tags_notes"] = Note.objects.tags_notes(
+                self.request.user.tags.names()
+            )
         return context
 
 

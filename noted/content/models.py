@@ -235,7 +235,7 @@ class Note(models.Model):
     )
     created = models.DateTimeField(_("Created"), auto_now_add=True)
     modified = models.DateTimeField(_("Modified"), auto_now=True)
-    views = models.PositiveIntegerField(_("Views"), default=1)
+    views = models.PositiveIntegerField(_("Views"), default=0)
     fork = models.ForeignKey(
         "self",
         on_delete=models.SET_NULL,
