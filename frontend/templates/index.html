@@ -6,6 +6,7 @@
 
 
 {% block center %}
+<div style="max-width: 700px; margin: auto;">
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
         {% include 'layouts/note_order.html' %}
@@ -27,6 +28,7 @@
     {% endfor %}
     </div>
 </div>
+</div>
 {% endblock %}
 
 
@@ -36,14 +38,14 @@
 {% include 'layouts/sidebar/source_types.html' %}
 {% include 'layouts/sidebar/more_from_noted.html' %}
 <div class="mt-5">
-    <h6>{% trans "Recommended topics" %}</h6>
-    <span>
+    <h6 style="font-size: 16px;">{% trans "Recommended topics" %}</h6>
+    <div class="mt-3">
         {% for tag in tags %}
         <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
         <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
         </a>
         {% endfor %}
-    </span>
+    </div>
 </div>
 {% include 'layouts/sidebar/footer.html' %}
 <div class="mb-5"></div>

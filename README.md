@@ -27,6 +27,7 @@ Now:
 * Markdown editor
 * GitHub API Integration (markdown)
 * Internationalization (2 languages: en, ru)
+* Tagging
 * Search
 * Bookmarks
 * Likes
@@ -39,7 +40,6 @@ In future:
 * User profile
 * Following system
 * Sharing content (facebook, twitter)
-* Tagging
 * Recommendations
 * Tree comments
 
@@ -83,6 +83,7 @@ In future:
 5. Make migrations and migrate.
 
 ```
+python manage.py makemigrations tags
 python manage.py makemigrations users
 python manage.py makemigrations content
 python manage.py migrate

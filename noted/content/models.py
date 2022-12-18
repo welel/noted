@@ -1,3 +1,4 @@
+from datetime import date
 import io
 from typing import Optional
 
@@ -338,6 +339,7 @@ class Note(models.Model):
             body_raw=self.body_raw,
             body_html=self.body_html,
             summary=self.summary,
+            tags=self.tags,
             fork=self,
         )
 
@@ -357,3 +359,21 @@ class Note(models.Model):
             same_tags=Count("tags")
         ).order_by("-same_tags", "-datetime_created")
         return similar_notes
+
+    @property
+    def this_year(self) -> bool:
+        return date.today().year == self.modified.year
+
+    @property
+    def is_modified(self) -> bool:
+        return self.created.date() != self.modified.date()
+
+    @property
+    def min_read(self) -> int:
+        """Return how many minutes required to read the note.
+
+        Average ru word length = 7,2
+        Average en word length = 5,2
+        Average wpm reading speed = 150
+        """
+        return int((len(self.body_raw) + 1) / ((7.2 + 5.2) / 2) // 150)

@@ -3,7 +3,7 @@ from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import TrigramSimilarity, SearchVector
-from django.db.models import F, QuerySet
+from django.db.models import F, QuerySet, Count, Q
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_GET
@@ -92,8 +92,10 @@ class PublicNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        context["sidenotes"] = Note.objects.public()[:5]
-        context["tags"] = Tag.objects.all()[:5]
+        context["sidenotes"] = Note.objects.popular()[:5]
+        context["tags"] = Tag.objects.annotate(
+            num_times=Count("notes", filter=Q(notes__draft=False))
+        ).filter(num_times__gt=0)[:7]
         context["tags_notes"] = Note.objects.tags_notes(
             self.request.user.tags.names()
         )
@@ -163,16 +165,33 @@ class NoteCreateView(NoteDraftMixin, CreateView):
     form_class = NoteForm
     template_name = "content/note_create.html"
 
-    def get_initial(self):
-        initial = super().get_initial()
+    def add_initial_source(self, slug, initial):
         try:
-            source = Source.objects.get(slug=self.request.GET.get("source"))
+            source = Source.objects.get(slug=slug)
         except Source.DoesNotExist:
             return initial
         initial["source"] = source.title
         initial["source_type"] = source.type
         initial["source_link"] = source.link
         initial["source_description"] = source.description
+        return initial
+
+    def add_initial_tag(self, slug, initial):
+        try:
+            tag = Tag.objects.get(slug=slug)
+        except Tag.DoesNotExist:
+            return initial
+        initial["tags"] = tag.name
+        return initial
+
+    def get_initial(self):
+        initial = super().get_initial()
+        source_slug = self.request.GET.get("source")
+        tag_slug = self.request.GET.get("tag")
+        if source_slug:
+            initial = self.add_initial_source(source_slug, initial)
+        if tag_slug:
+            initial = self.add_initial_tag(tag_slug, initial)
         return initial
 
     def form_valid(self, form):
@@ -194,6 +213,8 @@ class NoteForkView(NoteCreateView):
             initial["source_type"] = note.source.type
             initial["source_link"] = note.source.link
             initial["source_description"] = note.source.description
+        if note.tags:
+            initial["tags"] = note.tags.all()
         return initial
 
 

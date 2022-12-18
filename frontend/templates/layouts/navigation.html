@@ -85,7 +85,7 @@ Require script `js/auth.js`
         </a>
     </li>
     <li class="nav-item px-2">
-        <a class="nav-link">
+        <a class="nav-link" href="{% url 'content:personal_notes' %}?bookmark=open">
             <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i>
         </a>
     </li>
@@ -95,7 +95,7 @@ Require script `js/auth.js`
         </a>
     </li>
     <li class="nav-item px-2">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'content:personal_notes' %}">
             <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
         </a>
     </li>
@@ -113,8 +113,17 @@ Require script `js/auth.js`
             <ul class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark">
                 <li><a class="dropdown-item disabled" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
                 <li><a class="dropdown-item disabled" ><i class="bi bi-gear-fill px-2"></i>{% trans "Profile settings" %}</a></li>
-                <li><a class="dropdown-item disabled" ><i class="bi bi-translate px-2"></i>Русский</a></li>
-                <li><a class="dropdown-item disabled" ><i class="bi bi-moon-stars-fill px-2"></i>{% trans "Dark" %}</a></li>
+                <li>
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    <a class="dropdown-item" href="{% if CURRENT_LANGUAGE == 'ru' %}/en/{{request.get_full_path|slice:"4:"}}{% else %}/ru/{{request.get_full_path|slice:"4:"}}{% endif %}">
+                    {% if CURRENT_LANGUAGE == 'ru' %}
+                    <i class="bi bi-translate px-2"></i> English
+                    {% else %}
+                    <i class="bi bi-translate px-2"></i> Русский
+                    {% endif %}
+                    </a>
+                </li>
+                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2"></i><span>{% trans "Dark theme" %}</span></button></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>

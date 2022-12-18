@@ -41,7 +41,7 @@
                             </tr>
                             {% endif %}
                             <tr>
-                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {{ note.created|date:"M j" }}</td>
+                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {% if note.is_modified %}{% trans "Updated" %}{% endif %} {{ note.modified|date:"M j" }} {% if not note.this_year %}, {{ note.modified|date:"Y" }}{% endif %}</td>
                             </tr>
                             </tbody>
 

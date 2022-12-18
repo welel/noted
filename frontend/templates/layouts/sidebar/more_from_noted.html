@@ -1,10 +1,10 @@
 <!-- List of notes for a sidebar. -->
 {% load i18n %}
 <div class="mt-5">
-    <h6 style="margin-bottom: -15px;">{% trans "More from NoteD." %}</h6>
-    {% for note in sidenotes|slice:":5" %}
+    <h5 style="font-size: 16px;">{% trans "More from NoteD." %}</h5>
     <div class="mt-4">
-        <div class="d-flex align-items-center" style="font-size: 13px;">
+        {% for note in sidenotes|slice:":5" %}
+        <div class="d-flex align-items-center mt-3" style="font-size: 13px;">
             {% if not note.anonymous %}
             <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
             <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
@@ -17,11 +17,11 @@
             </a>
             {% endif %}
             <span>&nbsp;&#8226;&nbsp;</span>
-            <span class="text-secondary">{{ note.created|date:"M j" }}</span>
+            <span class="text-secondary">{% if note.is_modified %}{% trans "Updated" %}{% endif %} {{ note.modified|date:"M j" }} {% if not note.this_year %}, {{ note.modified|date:"Y" }}{% endif %}</span>
         </div>
         <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark">
         <div class="mt-2 fs-6 fw-bold">{{ note.title }}</div>
         </a>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>

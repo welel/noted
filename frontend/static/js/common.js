@@ -39,25 +39,31 @@ function findGetParameter(parameterName) {
 // Color theme toggle
 const lightThemeUrl = document.getElementById('css-light-theme-url'); 
 const darkThemeUrl = document.getElementById('css-dark-theme-url');
-const themeBtn = document.getElementById('theme-btn')
 const styleLink = document.getElementById('color-theme');
-themeBtn.onclick = (event) => {
+function swapTheme(event) {
+    const btn = event.target; 
     if (styleLink.href == lightThemeUrl.href) {
         styleLink.href = darkThemeUrl.href;
-        themeBtn.lastElementChild.innerText = gettext('Light theme');
-        themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
+        btn.lastElementChild.innerText = gettext('Light theme');
+        btn.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
         localStorage.setItem('theme', darkThemeUrl.href);
     } else {
         styleLink.href = lightThemeUrl.href;
-        themeBtn.lastElementChild.innerText = gettext('Dark theme');
-        themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high-fill px-2');
+        btn.lastElementChild.innerText = gettext('Dark theme');
+        btn.firstElementChild.setAttribute('class', 'bi bi-brightness-high-fill px-2');
         localStorage.setItem('theme', lightThemeUrl.href);
     }
 }
+document.getElementById('theme-btn').onclick = swapTheme;
+document.getElementById('theme-btn-2').onclick = swapTheme;
 const theme = localStorage.getItem('theme');
 if (theme == darkThemeUrl.href) {
+    const btn1 = document.getElementById('theme-btn');
+    const btn2 = document.getElementById('theme-btn-2');
     styleLink.href = darkThemeUrl.href;
-    themeBtn.lastElementChild.innerText = gettext('Light theme');
-    themeBtn.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
+    btn1.lastElementChild.innerText = gettext('Light theme');
+    btn1.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
+    btn2.lastElementChild.innerText = gettext('Light theme');
+    btn2.firstElementChild.setAttribute('class', 'bi bi-brightness-high px-2');
 }
 

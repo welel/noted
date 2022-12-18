@@ -16,7 +16,7 @@
         <div class="col-11">
             <h1 class="fw-bold">{{ tag }}</h1>
             <button id="follow-tag" class="btn btn-sm btn-success rounded-pill mt-2">{% if tag not in request.user.tags %}{% trans "Follow" %}{% else %}{% trans "Unfollow" %}{% endif %}</button>
-            <a href="#" target="_blank" class="btn btn-sm btn-outline-success rounded-pill mt-2 ms-1">{% trans "Add Note" %}</a>
+            <a href="{% url 'content:create_note' %}?tag={{ tag }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill mt-2 ms-1">{% trans "Add Note" %}</a>
         </div>
     </div>
     <div class="row mt-4">
