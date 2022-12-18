@@ -1,7 +1,9 @@
+from datetime import date
 import io
 from typing import Optional
 
 from bs4 import BeautifulSoup
+from taggit.managers import TaggableManager
 import pdfkit
 
 from django.contrib.postgres.search import (
@@ -18,6 +20,7 @@ from django.utils.translation import gettext_lazy as _
 
 from content.fields import MarkdownField, RenderedMarkdownField
 from common import generate_unique_slug
+from tags.models import UnicodeTaggedItem
 from users.models import User
 
 
@@ -131,6 +134,9 @@ class NoteManager(models.Manager):
             .order_by("-count")
         )
 
+    def tags_notes(self, tag_names: list) -> QuerySet:
+        return self.filter(draft=False, tags__name__in=tag_names).distinct()
+
     def search(self, query: str) -> QuerySet:
         search_vector = (
             SearchVector("title", weight="A")
@@ -174,9 +180,9 @@ class Note(models.Model):
         fork: a link to :model:`Note` if a note forked from another.
         likes: a m2m field for note likes.
         bookmarked: a m2m field for bookmarks for user.
+        tags: tags of a note (max tags - 3, max length - 24 symbols).
         *allow_comments: a boolean flag allows to users leave comments
                         to a note.
-        *tags: tags of a note (max tags - 5, max length - 24 symbols).
 
     """
 
@@ -242,6 +248,16 @@ class Note(models.Model):
     )
     bookmarks = models.ManyToManyField(
         User, related_name="bookmarked_notes", default=None, blank=True
+    )
+    tags = TaggableManager(
+        through=UnicodeTaggedItem,
+        blank=True,
+        related_name="notes",
+        help_text=_(
+            """Add tags. Separate tags by using "Enter" or comma.
+        You can add maximum 3 tags, and length of tags should be less than 25
+        symbols."""
+        ),
     )
     objects = NoteManager()
 
@@ -323,5 +339,41 @@ class Note(models.Model):
             body_raw=self.body_raw,
             body_html=self.body_html,
             summary=self.summary,
+            tags=self.tags,
             fork=self,
         )
+
+    def get_similar_by_tags(self) -> QuerySet:
+        """Get notes with similar tag.
+
+        Returns QuerySet of notes with similar tags for a note ordered by
+        number of common tags and creation datetime.
+        """
+        note_tags_ids = self.tags.values_list("id", flat=True)
+        similar_notes = (
+            Note.objects.public()
+            .filter(tags__in=note_tags_ids)
+            .exclude(id=self.id)
+        )
+        similar_notes = similar_notes.annotate(
+            same_tags=Count("tags")
+        ).order_by("-same_tags", "-datetime_created")
+        return similar_notes
+
+    @property
+    def this_year(self) -> bool:
+        return date.today().year == self.modified.year
+
+    @property
+    def is_modified(self) -> bool:
+        return self.created.date() != self.modified.date()
+
+    @property
+    def min_read(self) -> int:
+        """Return how many minutes required to read the note.
+
+        Average ru word length = 7,2
+        Average en word length = 5,2
+        Average wpm reading speed = 150
+        """
+        return int((len(self.body_raw) + 1) / ((7.2 + 5.2) / 2) // 150)

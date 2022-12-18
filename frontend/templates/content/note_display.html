@@ -17,7 +17,19 @@
                     <div class="col-auto me-auto">
                         <table>
                             <tbody>
-                                <tr>
+                            {% if note.anonymous %}
+                            <tr>
+                                <td class="pe-3" rowspan="2">
+                                    <a class="text-decoration-none text-dark">
+                                        <i class="bi bi-person-circle" style="font-size: 2.2rem;"></i>
+                                    </a>
+                                </td>
+                                <td class="fw-bold">
+                                    <a class="text-decoration-none text-dark">{% trans "Anonymous" %}</a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
                                 <td class="pe-3" rowspan="2">
                                     <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
                                     <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
@@ -27,10 +39,12 @@
                                     <a  href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
+                            {% endif %}
                             <tr>
-                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {{ note.created|date:"M j" }}</td>
+                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {% if note.is_modified %}{% trans "Updated" %}{% endif %} {{ note.modified|date:"M j" }} {% if not note.this_year %}, {{ note.modified|date:"Y" }}{% endif %}</td>
                             </tr>
                             </tbody>
+
                         </table>
                     </div>
                     <div class="col-auto d-flex align-items-center text-secondary">
@@ -102,17 +116,11 @@
                         <a href="#" class="text-decoration-none text-dark pe-3">
                         <span class="text-secondary note-stat p-1 rounded"><i class="bi bi-chat ms-2"></i> 0</span>
                         </a>
-                        {% if note.tags %}
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
+                        {% for tag in note.tags.all %}
+                        <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1">{{ tag }}</span>
                         </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">Success</span>
-                        </a>
-                        {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="col d-md-flex d-none text-secondary">
                         <div class="dropdown">
@@ -164,9 +172,11 @@
                     <input type="search" name="query" class="form-control rounded form-control-sm" placeholder="{% trans "Search" %}" aria-label="Search" aria-describedby="search-addon" />
                 </form>
             </div>
+            {% if not note.anonymous %}
             {% with user=note.author %}
                 {% include 'users/profile_sidebar_layout.html' %}
             {% endwith %}
+            {% endif %}
             {% include 'layouts/sidebar/more_from_noted.html' %}
             {% include 'layouts/sidebar/footer.html' %}
         </div>

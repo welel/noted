@@ -1,7 +1,8 @@
 #!/bin/sh
  
 sleep 5
-cd noted 
+cd noted
+python manage.py makemigrations tags
 python manage.py makemigrations users
 python manage.py makemigrations content
 python manage.py migrate

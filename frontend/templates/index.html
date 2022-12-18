@@ -6,22 +6,29 @@
 
 
 {% block center %}
-<ul class="nav nav-tabs mb-3">
+<div style="max-width: 700px; margin: auto;">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
         {% include 'layouts/note_order.html' %}
     </li>
-    <li class="nav-item">
-        <a class="nav-link tablink active text-secondary" aria-current="page" href="{% url 'content:home' %}">{% trans "Public" %}</a>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active tablink text-secondary" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">{% trans "Public" %}</button>
     </li>
-    {% comment %} <li class="nav-item">
-        <a class="nav-link tablink text-secondary disable" href="#">{% trans "Following" %}</a>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link tablink text-secondary" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">{% trans "Topics" %}</button>
     </li>
-    <li class="nav-item">
-        <a class="nav-link tablink text-secondary disable" href="#">{% trans "My tags" %}</a>
-    </li> {% endcomment %}
 </ul>
-
-{% include 'content/note_list_for_layout.html' %}
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        {% include 'content/note_list_for_layout.html' %}
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    {% for note in tags_notes %}
+        {% include 'content/note_list_layout.html' %}
+    {% endfor %}
+    </div>
+</div>
+</div>
 {% endblock %}
 
 
@@ -31,17 +38,14 @@
 {% include 'layouts/sidebar/source_types.html' %}
 {% include 'layouts/sidebar/more_from_noted.html' %}
 <div class="mt-5">
-    <h6>{% trans "Recommended topics" %}</h6>
-    <span>
-        <a href="#" class="text-decoration-none text-dark">
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Successess</span>
+    <h6 style="font-size: 16px;">{% trans "Recommended topics" %}</h6>
+    <div class="mt-3">
+        {% for tag in tags %}
+        <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+        <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
         </a>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Success</span>
-        <span class="badge rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">Succes</span>
-    </span>
+        {% endfor %}
+    </div>
 </div>
 {% include 'layouts/sidebar/footer.html' %}
 <div class="mb-5"></div>

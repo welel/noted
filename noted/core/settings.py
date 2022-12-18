@@ -51,11 +51,12 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.yandex",
-    "allauth.socialaccount.providers.vk",
+    "taggit",
     "simplemde",
     "rosetta",
     "users.apps.UsersConfig",
     "content.apps.ContentConfig",
+    "tags.apps.TagsConfig",
 ]
 
 MIDDLEWARE = [
@@ -207,3 +208,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "OAUTH_PKCE_ENABLED": True,
     },
 }
+
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"

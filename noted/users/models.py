@@ -1,3 +1,5 @@
+from taggit.managers import TaggableManager
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -8,6 +10,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.conf import settings
+
+from tags.models import UnicodeTaggedItem
 
 
 class UserManager(BaseUserManager):
@@ -119,6 +123,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     location = models.CharField(_("Location"), max_length=40, blank=True)
     socials = models.JSONField(
         _("Social Media Links"), blank=True, default=default_social_media_json
+    )
+    tags = TaggableManager(
+        through=UnicodeTaggedItem,
+        blank=True,
+        related_name="users",
+        verbose_name=_("Tag subscriptions"),
     )
 
     USERNAME_FIELD = "email"

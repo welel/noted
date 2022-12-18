@@ -25,16 +25,40 @@
                     <li class="nav-item">
                         <a class="nav-link tablink text-secondary {% if type == 'sources' %}active{% endif %}" href="{% url 'content:search' type='sources' %}?query={{ query }}">{% trans "Sources" %}</a>
                     </li>
-                    {% comment %} <li class="nav-item">
-                        <a class="nav-link tablink text-secondary" href="#">{% trans "Topics" %}</a>
-                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-link tablink text-secondary {% if type == 'tags' %}active{% endif %}" href="{% url 'content:search' type='tags' %}?query={{ query }}">{% trans "Topics" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tablink text-secondary {% if type == 'people' %}active{% endif %}" href="{% url 'content:search' type='people' %}?query={{ query }}">{% trans "People" %}</a>
+                    </li> 
                 </ul>
                 <!-- Results -->
                 {% include  'content/note_list_for_layout.html' %}
                 {% include 'content/source_list_layout.html' %}
+                {% if tags %}<div class="mt-5"></div>{% endif %}
+                {% for tag in tags %}
+                <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+                <span class="badge tag rounded-pill text-bg-secondary p-3 m-1 fs-6 fw-normal">{{ tag }}</span>
+                </a>
+                {% endfor %}
+                {% for user in users %}
+                <div class="row mt-3 mb-3 d-flex align-items-center">
+                    <div class="col-2 text-center d-sm-inline d-none">
+                        <div><img src="{{ user.avatar.url }}" class="rounded-circle" alt="A" width="60" height="60"></div>
+                    </div>
+                    <div class="col">
+                        <a href="{{ user.get_absolute_url }}" class="fw-bold text-dark text-decoration-none" style="font-size: 1.1rem;">{{ user.full_name }}</a>
+                        {% if user.bio %}<div class="text-secondary">{{ user.bio }}</div>{% endif %}
+                    </div>
+                    <div class="col-2">
+                        <a href="#" id="source-add-note-btn" class="btn btn-outline-success rounded-pill disabled">{% trans "Follow" %}</a>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
 
                 <!-- No results -->
-                {% if not notes and not sources %}
+                {% if not notes and not sources and not tags and not users %}
                     <div class="mt-5 text-secondary">{% trans "Make sure all words are spelled correctly." %}</div>
                     <div class="text-secondary">{% trans "Try different keywords." %}</div>
                     <div class="text-secondary">{% trans "Try more general keywords." %}</div>
