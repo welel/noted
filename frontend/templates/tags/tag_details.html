@@ -1,5 +1,6 @@
 {% extends 'layouts/base_cols.html' %}
 
+{% load static %}
 {% load i18n %}
 {% load filtersourcetags %}
 
@@ -14,6 +15,8 @@
         </div>
         <div class="col-11">
             <h1 class="fw-bold">{{ tag }}</h1>
+            <button id="follow-tag" class="btn btn-sm btn-success rounded-pill mt-2">{% if tag not in request.user.tags %}{% trans "Follow" %}{% else %}{% trans "Unfollow" %}{% endif %}</button>
+            <a href="#" target="_blank" class="btn btn-sm btn-outline-success rounded-pill mt-2 ms-1">{% trans "Add Note" %}</a>
         </div>
     </div>
     <div class="row mt-4">
@@ -37,4 +40,10 @@
 {% include 'layouts/sidebar/source_types.html' %}
 {% include 'layouts/sidebar/more_from_noted.html' %}
 {% include 'layouts/sidebar/footer.html' %}
+{% endblock %}
+
+
+{% block extra_scripts %}
+<div id="follow-tag-url" hidden>{% url 'tags:subscribe' slug=tag.slug %}</div>
+<script type="text/javascript" src="{% static 'js/tag_details.js' %}"></script>
 {% endblock %}

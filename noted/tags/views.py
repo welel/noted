@@ -1,9 +1,15 @@
 from taggit.models import Tag
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET
 from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
 
 from content.models import Note
+from common import ajax_required
 
 
 class TagList(ListView):
@@ -44,3 +50,16 @@ class TagDetails(DetailView):
         )
         context["sidenotes"] = Note.objects.public()[:5]
         return context
+
+
+@require_GET
+@login_required(login_url=reverse_lazy("account_login"))
+@ajax_required
+def subscribe(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    if tag in request.user.tags.all():
+        request.user.tags.remove(tag.name)
+        return JsonResponse({"result": "removed"})
+    else:
+        request.user.tags.add(tag.name)
+        return JsonResponse({"result": "added"})

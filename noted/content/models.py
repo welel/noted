@@ -1,8 +1,8 @@
 import io
 from typing import Optional
-from taggit.managers import TaggableManager
 
 from bs4 import BeautifulSoup
+from taggit.managers import TaggableManager
 import pdfkit
 
 from django.contrib.postgres.search import (
@@ -132,6 +132,9 @@ class NoteManager(models.Manager):
             .annotate(count=Count("likes"))
             .order_by("-count")
         )
+
+    def tags_notes(self, tag_names: list) -> QuerySet:
+        return self.filter(draft=False, tags__name__in=tag_names).distinct()
 
     def search(self, query: str) -> QuerySet:
         search_vector = (

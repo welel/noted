@@ -94,6 +94,9 @@ class PublicNoteList(NoteList):
         context["source_types"] = dict(Source.TYPES)
         context["sidenotes"] = Note.objects.public()[:5]
         context["tags"] = Tag.objects.all()[:5]
+        context["tags_notes"] = Note.objects.tags_notes(
+            self.request.user.tags.names()
+        )
         return context
 
 
