@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-17 16:01+0300\n"
-"PO-Revision-Date: 2022-12-17 13:02+0000\n"
+"POT-Creation-Date: 2022-12-18 22:28+0300\n"
+"PO-Revision-Date: 2022-12-18 19:33+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -35,22 +35,31 @@ msgstr "Этот email адрес уже занят."
 msgid "Enter password."
 msgstr "Введите пароль."
 
-#: static/js/common.js:47 static/js/common.js:60
+#: static/js/common.js:48 static/js/common.js:49 static/js/common.js:64
+#: static/js/common.js:65
 msgid "Light theme"
 msgstr "Светлая тема"
 
-#: static/js/common.js:52
+#: static/js/common.js:54 static/js/common.js:55
 msgid "Dark theme"
 msgstr "Тёмная тема"
 
-#: static/js/note_display.js:33 static/js/note_display.js:34
+#: static/js/note_display.js:37 static/js/note_display.js:38
 msgid "Unpin"
 msgstr "Открепить"
 
-#: static/js/note_display.js:39 static/js/note_display.js:40
+#: static/js/note_display.js:43 static/js/note_display.js:44
 msgid "Pin"
 msgstr "Прикрепить"
 
 #: static/js/simplemde.js:70
 msgid "Write your note here..."
 msgstr "Начните писать свою запись..."
+
+#: static/js/tag_details.js:10
+msgid "Unfollow"
+msgstr "Отписаться"
+
+#: static/js/tag_details.js:12
+msgid "Follow"
+msgstr "Подписаться"

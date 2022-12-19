@@ -275,9 +275,23 @@ class Note(models.Model):
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
 
-    def get_preview_text(self) -> str:
+    @property
+    def preview_text(self) -> str:
         """Get body preview text for a note."""
-        return "".join(BeautifulSoup(self.body_html).findAll(text=True))
+        return "".join(
+            BeautifulSoup(self.body_html, features="html.parser").findAll(
+                text=True
+            )
+        )
+
+    @property
+    def first_image_url(self) -> Optional[str]:
+        """Get first image `src` from body text."""
+        image = BeautifulSoup(self.body_html, features="html.parser").find(
+            name="img"
+        )
+        if image:
+            return image.get("src")
 
     def generate_md_file(self) -> io.BytesIO:
         output = f"# {self.title}\n\n"

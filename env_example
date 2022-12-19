@@ -1,8 +1,9 @@
 # (!) Fill the file with required data and rename it on `.env`
 
 DEBUG=True
-SECRET_KEY=
+SECRET_KEY=leave_it_or_create_yours
 HTTP_PROTOCOL=http
+IP=127.0.0.1
 
 DATABASE_NAME=
 DATABASE_USER=

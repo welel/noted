@@ -1,0 +1,279 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block nav %}{% endblock %}
+
+{% block main %}
+
+<div id="body" style="position: absolute; height: 500px; border-bottom: 1px solid black; width: 100%;">
+<div id="welcome-anhor" class="container">
+<div class="row">
+<div class="col" style="max-width: 1100px; margin: auto;">
+    <nav class="navbar mt-2">
+        <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="{% static 'img/logo.png' %}" alt="NoteD." width="30" height="30" class="d-inline-block align-text-top">
+            <span class="text-white fw-bold">NoteD.</span>
+        </a>
+        <ul class="nav justify-content-end">
+            <li class="nav-item d-sm-block d-none">
+            <a class="nav-link active text-white fw-bold fs-6" target="_blank" aria-current="page" href="https://github.com/welel/noted">{% trans "About" %}</a>
+            </li>
+            <li class="nav-item d-sm-block d-none">
+            <a class="nav-link text-white fw-bold fs-6" target="_blank" href="mailto:pavel.loginov.dev@gmail.com">{% trans "Contact" %}</a>
+            </li>
+            <li class="nav-item d-sm-block d-none">
+            <button class="nav-link btn btn-link text-white fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Sing In" %}</button>
+            </li>
+            <li class="nav-item ms-2">
+            <button class="btn btn-success nav-link text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Start writing" %}</button>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    <h1 class="text-white mt-5 text-left" style="font-size: 67px;" >Stay curious.</h1>
+    <p class="text-white fs-5 mt-2" > Discover notes, sources, and share your notes and knowleadge on any topic.</p>
+    <a id="welcome-header-btn" class="btn btn-success rounded-pill fs-5 mt-3" data-bs-toggle="modal" data-bs-target="#signin">Start reading</a> 
+</div>
+</div>
+</div>
+</div>
+
+<div class="container" style="position: absolute; top: 500px; text-align: left;">
+    <div class="row" style="max-width: 1100px; margin: auto;" >
+        <div class="row mt-5">
+            <div class="col d-flex justify-content-start">
+            <i class="bi bi-graph-up"></i> <span class="ms-2 fs-6 fw-bold text-uppercase">{% trans "trending on noted" %}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" style="max-width: 1100px; margin: auto;">
+        <div class="col-lg-4 col-sm-6 col-12">
+            <div class="row">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    01
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.0.anonymous %}
+                        <a href="{{ trends.0.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.0.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.0.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.0.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.0.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.0.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.0.modified|date:"M j" }} {% if not trends.0.this_year %}, {{ trends.0.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.0.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    02
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.1.anonymous %}
+                        <a href="{{ trends.1.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.1.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.1.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.1.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.1.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.1.modified|date:"M j" }} {% if not trends.1.this_year %}, {{ trends.1.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.1.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-12 mt-sm-0 mt-4">
+            <div class="row">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    03
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.2.anonymous %}
+                        <a href="{{ trends.2.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.2.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.2.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.2.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.2.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.2.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.2.modified|date:"M j" }} {% if not trends.2.this_year %}, {{ trends.2.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.2.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    04
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.3.anonymous %}
+                        <a href="{{ trends.3.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.3.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.3.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.3.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.3.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.3.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.3.modified|date:"M j" }} {% if not trends.3.this_year %}, {{ trends.3.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.3.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 d-lg-block d-none">
+            <div class="row">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    05
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.4.anonymous %}
+                        <a href="{{ trends.4.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.4.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.4.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.4.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.4.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.4.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.4.modified|date:"M j" }} {% if not trends.4.this_year %}, {{ trends.4.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.4.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-2">
+                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    06
+                    </h2>
+                </div>
+                <div class="col-10 d-flex flex-column align-items-start">
+                    <div class="d-flex align-items-center" style="font-size: 13px;">
+                        {% if not trends.5.anonymous %}
+                        <a href="{{ trends.5.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span>{{ trends.5.author.full_name }}</span>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none text-dark">
+                        <span><i class="bi bi-person-circle"></i></span>
+                        <span>{% trans "Anonymous" %}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="{{ trends.5.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trends.5.title }}</div>
+                    </a>
+                    <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
+                        <span>{% if trends.5.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.5.modified|date:"M j" }} {% if not trends.5.this_year %}, {{ trends.5.modified|date:"Y" }}{% endif %}</span>
+                        {% if min_read %}
+                        <span>&nbsp;&#8226;&nbsp;</span>
+                        {{ trends.5.min_read }} {% trans "min read" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg-9 col-12">
+            {% include 'content/note_list_for_layout.html' %}
+        </div>
+        <div class="col-lg-3 col-12">
+            {% include 'layouts/sidebar/source_types.html' %}
+            <div class="mt-5">
+                <h6 style="font-size: 16px;">{% trans "Recommended topics" %}</h6>
+                <div class="mt-3">
+                    {% for tag in tags %}
+                    <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+                    <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+{% include 'layouts/auth_modals.html' %}
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script type="text/javascript" src="{% static 'js/welcome.js' %}"></script>
+{% endblock %}

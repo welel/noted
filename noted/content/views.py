@@ -67,7 +67,29 @@ class NoteList(ListView):
         return context
 
 
-class PublicNoteList(NoteList):
+class WelcomeNoteList(NoteList):
+    template_name = "welcome.html"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("content:home")
+        else:
+            return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return super().get_ordered_queryset().filter(draft=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["source_types"] = dict(Source.TYPES)
+        context["trends"] = Note.objects.popular()[:6]
+        context["tags"] = Tag.objects.annotate(
+            num_times=Count("notes", filter=Q(notes__draft=False))
+        ).filter(num_times__gt=0)[:7]
+        return context
+
+
+class PublicNoteList(LoginRequiredMixin, NoteList):
     """Display a list of :model:`notes.Note` available for every one.
 
     It displays the home page of the website. A list consists of all notes
@@ -85,6 +107,8 @@ class PublicNoteList(NoteList):
     """
 
     template_name = "index.html"
+    login_url = "content:welcome"
+    redirect_field_name = "content:home"
 
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)

@@ -10,7 +10,11 @@ function copyToClipboard(text) {
 // Copy current URL to clipboard
 document.getElementById('copy-note-link').onclick = (event) => {
     copyToClipboard(window.location.href);
+    document.getElementById('copy-note-link').firstElementChild.setAttribute("class", "bi bi-check-lg link-h px-2 color-grey");
 }
+document.getElementById('copy-note-link').addEventListener('mouseout', (event) => {
+    document.getElementById('copy-note-link').firstElementChild.setAttribute("class", "bi bi-link-45deg link-h px-2 color-grey");
+});
 
 // Copy current URL to clipboard
 document.getElementById('copy-note-link2').onclick = (event) => {
