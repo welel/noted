@@ -16,9 +16,7 @@ def free_source(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Note)
 def free_tags(sender, instance, **kwargs):
-    """
-    Delete unused tags from the database (if it has 0 notes).
-    """
+    """Delete unused tags from the database (if it has 0 notes)."""
     Tag.objects.annotate(ntag=Count("taggit_taggeditem_items")).filter(
         ntag=0
     ).delete()

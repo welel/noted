@@ -1,11 +1,32 @@
+"""Views for :model:`Note`.
+
+
+**Views**
+    NoteList: a superclass for note listing.
+        ├── WelcomeNoteList: welcome page for unlogged users (with note list).
+        ├── PublicNoteList: displays a list of public notes.
+        ├── ProfileNoteList: displays a list of public of a selected user.
+        └── PersonalNoteList: display a list of all user's notes.
+    NoteView: a selector of a view between 2 views below (in future).
+        1. NoteDetailView: displays note details.
+        2. [Comments in future]
+    NoteCreateView: handles creating of a note.
+    NoteForkView: handles creating of a fork note.
+    NoteUpdateView: handles editing of a note.
+    NoteDeleteView: handles deletion of a note.
+    pin_note: pin/unpin a note.
+    like_note: like/unlike a note.
+    bookmark_note: add/delete a note to/from user's bookmarks.
+    download_note: download a note as a file.
+
+"""
 from taggit.models import Tag
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.postgres.search import TrigramSimilarity, SearchVector
 from django.db.models import F, QuerySet, Count, Q
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
@@ -22,28 +43,24 @@ from users.models import User
 
 
 class NoteList(ListView):
-    """Display a list of :model:`notes.Note`.
+    """Base display list of :model:`Note`.
 
     Uses as a superclass for other specific notes listings.
 
     Notes order options (provides through a GET param `order`):
-        `datetime_created`: from oldest to newest by publish date.
         `-datetime_created`: from newest to oldest by publish date.
+        `views`: from the most viewed to the least.
+        `likes`: from the most liked to the least.
 
     **Context**
         notes: a queryset of :model:`notes.Note` instances.
         paginator: a paginator for notes list.
         page_obj: a pagination navigator.
-        order_label: a human readable label of a notes order option.
+
     """
 
-    ORDER_LABELS = {
-        "-datetime_created": _("Latest"),
-        "views": _("Popular"),
-        "likes": _("Most liked"),
-    }
     SORTING_FUNCS_MAPPING = {
-        "-datetime_created": Note.objects.datetime_created_dec,
+        "-datetime_created": Note.objects.by_created,
         "views": Note.objects.popular,
         "likes": Note.objects.most_liked,
     }
@@ -60,14 +77,20 @@ class NoteList(ListView):
         order = self.get_ordering()
         return self.SORTING_FUNCS_MAPPING[order]()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        order = self.get_ordering()
-        context["order_label"] = self.ORDER_LABELS.get(order, "")
-        return context
-
 
 class WelcomeNoteList(NoteList):
+    """Welcome page for unlogged users.
+
+    **Context**
+        source_types: all source types of `Source`.
+        trends: top 6 popular notes (by views).
+        tags: top 7 tags (by number of notes).
+
+    **Template**
+        :template:`frontend/templates/welcome.html`
+
+    """
+
     template_name = "welcome.html"
 
     def get(self, request, *args, **kwargs):
@@ -90,20 +113,20 @@ class WelcomeNoteList(NoteList):
 
 
 class PublicNoteList(LoginRequiredMixin, NoteList):
-    """Display a list of :model:`notes.Note` available for every one.
+    """Display a list of :model:`Note` available for every one.
 
     It displays the home page of the website. A list consists of all notes
     except drafts.
 
     **Context**
-        notes: a queryset of :model:`notes.Note` instances.
-        paginator: a paginator for notes list.
-        page_obj: a pagination navigator.
-        order_label: a human readable label of a notes order option.
+        tags_notes: a note list with tags to which the user is subscribed.
         source_types: all source types.
+        sidenotes: a recommended note list.
+        tags: top 7 tags (by number of notes).
 
     **Template**
         :template:`frontend/templates/index.html`
+
     """
 
     template_name = "index.html"
@@ -121,14 +144,26 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
             num_times=Count("notes", filter=Q(notes__draft=False))
         ).filter(num_times__gt=0)[:7]
         if self.request.user.is_authenticated:
-            context["tags_notes"] = Note.objects.tags_notes(
+            context["tags_notes"] = Note.objects.tags_in(
                 self.request.user.tags.names()
             )
         return context
 
 
 class ProfileNoteList(NoteList):
-    """Display a list of public :model:`notes.Note` of a selected user."""
+    """Display a list of public :model:`Note` of a selected user.
+
+    It displays the profile page of the specifiec user (only public notes).
+
+    **Context**
+        user: the selected user.
+        pins: user's pins (note list).
+        sidenotes: a recommended note list.
+
+    **Template**
+        :template:`frontend/templates/content/note_list_profile.html`
+
+    """
 
     template_name = "content/note_list_profile.html"
 
@@ -155,7 +190,19 @@ class ProfileNoteList(NoteList):
 
 
 class PersonalNotesView(LoginRequiredMixin, NoteList):
-    """Display a list of notes and profile of a client."""
+    """Display a list of all user's notes.
+
+    **Context**
+        user: the selected user.
+        pins: user's pins (note list).
+        drafts: user's drafts (note list).
+        bookmarks: users's bookmarks (note list).
+        sidenotes: a recommended note list.
+
+    **Template**
+        :template:`frontend/templates/content/note_list_personal.html`
+
+    """
 
     template_name = "content/note_list_personal.html"
 
@@ -175,6 +222,8 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
 
 class NoteDraftMixin:
+    """Manages saving of a note based on pressed button (publish or draft)."""
+
     def form_valid(self, form):
         form.instance.draft = self.draft
         return super().form_valid(form)
@@ -186,22 +235,30 @@ class NoteDraftMixin:
 
 @method_decorator(login_required, name="dispatch")
 class NoteCreateView(NoteDraftMixin, CreateView):
+    """Handels the note create form."""
+
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
-    def add_initial_source(self, slug, initial):
+    def add_initial_source(self, slug: str, initial: dict) -> dict:
+        """Prepopulates the form with `Source` data."""
         try:
             source = Source.objects.get(slug=slug)
         except Source.DoesNotExist:
             return initial
-        initial["source"] = source.title
-        initial["source_type"] = source.type
-        initial["source_link"] = source.link
-        initial["source_description"] = source.description
+        initial.update(
+            {
+                "source": source.title,
+                "source_type": source.type,
+                "source_link": source.link,
+                "source_description": source.description,
+            }
+        )
         return initial
 
-    def add_initial_tag(self, slug, initial):
+    def add_initial_tag(self, slug: str, initial: dict) -> dict:
+        """Prepopulates the form with a tag."""
         try:
             tag = Tag.objects.get(slug=slug)
         except Tag.DoesNotExist:
@@ -226,6 +283,8 @@ class NoteCreateView(NoteDraftMixin, CreateView):
 
 @method_decorator(login_required, name="dispatch")
 class NoteForkView(NoteCreateView):
+    """Handles the create note form (for forked note)."""
+
     def get_initial(self):
         initial = super().get_initial()
         try:
@@ -234,10 +293,7 @@ class NoteForkView(NoteCreateView):
             return initial
         self.object = note.get_fork()
         if note.source:
-            initial["source"] = note.source.title
-            initial["source_type"] = note.source.type
-            initial["source_link"] = note.source.link
-            initial["source_description"] = note.source.description
+            initial = super().get_initial_source(note.source.slug, initial)
         if note.tags:
             initial["tags"] = note.tags.all()
         return initial
@@ -257,6 +313,16 @@ class NoteDeleteView(DeleteView):
 
 
 class NoteDetailsView(DetailView):
+    """Display details of a :model:`Note` instance.
+
+    **Context**
+        sidenotes: a recommended note list.
+
+    **Template**
+        :template:`frontend/templates/content/note_display.html`
+
+    """
+
     model = Note
     template_name = "content/note_display.html"
 
@@ -273,22 +339,15 @@ class NoteDetailsView(DetailView):
 
 
 class NoteView(View):
-    """Chose a view based on a request method (GET/POST).
+    """Choose a view based on a request method (GET/POST).
 
-    It uses two different class based views with the same URL. We have
-    a division here: GET requests should get the ``NoteDetailView`` (with
-    a form added to the context data), and POST requests should get
-    the ``CommentFormView``.
+    For future: it will choose between GET - the details view and
+    POST - the comment form handler.
     """
 
     def get(self, request, *args, **kwargs):
         view = NoteDetailsView.as_view()
         return view(request, *args, **kwargs)
-
-    # For future (comments)
-    # def post(self, request, *args, **kwargs):
-    #     view = CommentFormView.as_view()
-    #     return view(request, *args, **kwargs)
 
 
 @require_GET
@@ -343,78 +402,3 @@ def download_note(request, filetype: str, slug: str):
         "Content-Disposition"
     ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
     return response
-
-
-class SourceDetailsView(DetailView):
-    model = Source
-    template_name = "content/source_display.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["notes"] = self.get_object().notes.all().filter(draft=False)
-        context["source_types"] = dict(Source.TYPES)
-        context["sidenotes"] = Note.objects.by_source_type(
-            self.get_object().type
-        )[:5]
-        return context
-
-
-class SourceTypeDetailsView(View):
-    def get(self, request, code):
-        context = {}
-        try:
-            type = Source.TYPES[int(code)]
-        except (KeyError, ValueError):
-            return HttpResponseBadRequest()
-        context["type_code"] = type[0]
-        context["type"] = type[1]
-        context["notes"] = Note.objects.by_source_type(type[0])
-        context["sources"] = Source.objects.by_type(type[0])
-        context["source_types"] = dict(Source.TYPES)
-        context["sidenotes"] = Note.objects.public()[:5]
-        return render(request, "content/source_type_details.html", context)
-
-
-@ajax_required
-def search_sources_select(request):
-    """Search for sources by title and return JSON results."""
-    query = request.GET.get("query", "")
-    data = Source.objects.search(query)
-    data = [
-        {
-            "id": source.pk,
-            "title": source.title,
-            "type": [source.type, source.get_readable_type()],
-            "link": source.link,
-            "description": source.description,
-        }
-        for source in data
-    ]
-    return JsonResponse({"data": data}, status=200)
-
-
-def search(request, type):
-    query = request.GET.get("query")
-    context = {"query": query, "type": type}
-
-    if type == "notes":
-        context["notes"] = Note.objects.search(query)
-
-    elif type == "sources":
-        context["sources"] = Source.objects.search(query)
-
-    elif type == "tags":
-        similarity = TrigramSimilarity("name", query)
-        context["tags"] = (
-            Tag.objects.annotate(similarity=similarity)
-            .filter(similarity__gte=0.1)
-            .order_by("-similarity")
-        )
-
-    elif type == "people":
-        vector = SearchVector("full_name", "username")
-        context["users"] = User.objects.annotate(search=vector).filter(
-            search=query
-        )
-
-    return render(request, "content/search.html", context)

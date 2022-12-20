@@ -17,11 +17,8 @@ class TagList(ListView):
 
     It displays tags, each tag has a number of its' notes.
 
-    TODO: Cache results.
-
     **Context**
         tags: a queryset of all :model:`taggit.Tag` instances.
-
 
     **Template**
         :template:`frontend/templates/tags/list.html`
@@ -40,6 +37,8 @@ class TagList(ListView):
 
 
 class TagDetails(DetailView):
+    """Tag details with a list of notes of the current tag."""
+
     model = Tag
     template_name = "tags/tag_details.html"
 
@@ -56,6 +55,7 @@ class TagDetails(DetailView):
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def subscribe(request, slug):
+    """Starts/ends following a tag."""
     tag = get_object_or_404(Tag, slug=slug)
     if tag in request.user.tags.all():
         request.user.tags.remove(tag.name)

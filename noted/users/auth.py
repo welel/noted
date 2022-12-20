@@ -15,7 +15,7 @@ signer = TimestampSigner()
 
 
 def send_signup_link(email_to: str) -> bool:
-    """Send email to client with link for registration.
+    """Sends email to client with link for registration.
 
     Sign client's email to create the token for registration, send an email
     to the client with token and save the token to the database.

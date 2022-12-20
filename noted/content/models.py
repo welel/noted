@@ -1,3 +1,10 @@
+"""Models of the the `content` app.
+
+**Models**
+    Source (Model): an information source (book, acticle, video etc).
+    Note (Model): a Markdown text with a list of attributes.
+
+"""
 from datetime import date
 import io
 from typing import Optional
@@ -25,10 +32,8 @@ from users.models import User
 
 
 class SourceManager(models.Manager):
-    def by_type(self, type_code: str) -> QuerySet:
-        return self.filter(type=type_code)
-
     def search(self, query: str) -> QuerySet:
+        """Search source by `title` and return results."""
         similarity = TrigramSimilarity("title", query)
         return (
             self.annotate(similarity=similarity)
@@ -40,7 +45,15 @@ class SourceManager(models.Manager):
 class Source(models.Model):
     """An information source.
 
-    Links to a note(s).
+    An information source defines by the `type` and the `title` (source name).
+    Sources relates to notes. One note has one source.
+
+    **Fields**
+        type: a source type (book, article, video etc.).
+        title: a source name.
+        link: URL to the source.
+        description: a description of the source.
+        slug: an unique identifier for URL.
 
     """
 
@@ -67,7 +80,7 @@ class Source(models.Model):
         _("Title"), max_length=200, blank=False, null=False, db_index=True
     )
     link = models.URLField(
-        _("Link to the source"), max_length=255, blank=True, default=""
+        _("External link"), max_length=255, blank=True, default=""
     )
     description = models.CharField(
         _("Description"), max_length=100, blank=True, default=""
@@ -91,7 +104,8 @@ class Source(models.Model):
                 return name
         return None
 
-    def get_readable_type(self) -> Optional[str]:
+    @property
+    def verbose_type(self) -> Optional[str]:
         """Return readable source type name."""
         return Source.make_type_readable(self.type)
 
@@ -101,43 +115,55 @@ class Source(models.Model):
 
 class NoteManager(models.Manager):
     def personal(self, user: User) -> QuerySet:
-        """Query notes for a specific user.
+        """Query notes for a specific user (for private list).
 
         Args:
             user: an author of notes.
         Returns:
-            Notes for a specific user.
+            Private notes for a specific user.
         """
         return self.filter(author=user)
 
+    def profile(self, user: User) -> QuerySet:
+        """Query notes for a specific user (for public list).
+
+        Args:
+            user: an author of notes.
+        Returns:
+            Public notes for a specific user.
+        """
+        return self.filter(author=user, draft=False, anonymous=False)
+
     def public(self) -> QuerySet:
-        """Query notes available for everyone."""
+        """Query public notes available for everyone."""
         return self.filter(draft=False)
 
-    def datetime_created(self) -> QuerySet:
-        return self.order_by("created")
-
-    def datetime_created_dec(self) -> QuerySet:
+    def by_created(self) -> QuerySet:
+        """Query notes ordered by creation time (latest on the top)."""
         return self.order_by("-created")
 
-    def by_source_type(self, type_code: str) -> QuerySet:
+    def with_source_type(self, type_code: str) -> QuerySet:
+        """Query public notes with a specific source type."""
         return self.filter(draft=False, source__type=type_code)
 
     def popular(self) -> QuerySet:
+        """Query public notes ordered by number of views."""
         return self.filter(draft=False).order_by("-views")
 
     def most_liked(self) -> QuerySet:
-        """Query notes sorted by number of likes from the most to least."""
+        """Query public notes ordered by number of likes."""
         return (
             self.filter(draft=False)
             .annotate(count=Count("likes"))
             .order_by("-count")
         )
 
-    def tags_notes(self, tag_names: list) -> QuerySet:
+    def tags_in(self, tag_names: list) -> QuerySet:
+        """Query public notes that have tags from `tag_names` list."""
         return self.filter(draft=False, tags__name__in=tag_names).distinct()
 
     def search(self, query: str) -> QuerySet:
+        """Search public notes by `title`, `summary`, `body_raw`."""
         search_vector = (
             SearchVector("title", weight="A")
             + SearchVector("summary", weight="A")
@@ -171,18 +197,16 @@ class Note(models.Model):
         body_html: HTML representation of `body_raw`, it is generated
                    based on `body_raw` via GitHub API.
         summary: a short summary on a text of a note.
-        draft: a boolean flag makes a notes private (hides from other users).
+        draft: a boolean flag makes a note private (hides from other users).
         anonymous: a boolean flag hides an author of a note.
         pin: a boolean flag, gives functionality to pin notes.
         created: publish datetime of a note.
         modified: update datetime of a note.
-        views: a counter of note's visitors.
+        views: a counter of visit number.
         fork: a link to :model:`Note` if a note forked from another.
         likes: a m2m field for note likes.
         bookmarked: a m2m field for bookmarks for user.
         tags: tags of a note (max tags - 3, max length - 24 symbols).
-        *allow_comments: a boolean flag allows to users leave comments
-                        to a note.
 
     """
 
@@ -276,17 +300,17 @@ class Note(models.Model):
         return reverse("content:note", args=[self.slug])
 
     @property
-    def preview_text(self) -> str:
-        """Get body preview text for a note."""
+    def preview_text(self, num_chars: int = 300) -> str:
+        """The body preview text for a note."""
         return "".join(
             BeautifulSoup(self.body_html, features="html.parser").findAll(
                 text=True
             )
-        )
+        )[:num_chars]
 
     @property
     def first_image_url(self) -> Optional[str]:
-        """Get first image `src` from body text."""
+        """First image `src` from the body text."""
         image = BeautifulSoup(self.body_html, features="html.parser").find(
             name="img"
         )
@@ -294,6 +318,7 @@ class Note(models.Model):
             return image.get("src")
 
     def generate_md_file(self) -> io.BytesIO:
+        """Generates .md file of the note."""
         output = f"# {self.title}\n\n"
         if self.source and self.source.link:
             output += f"Source: [{self.source.title}]({self.source.link})\n\n"
@@ -303,6 +328,7 @@ class Note(models.Model):
         return io.BytesIO(output.encode())
 
     def generate_html_file(self) -> io.BytesIO:
+        """Generates .html file of the note."""
         output = "<html><head><meta content='text/html;charset=UTF-8' \
             http-equiv='content-type' /></head><body>"
         output += f"<h1>{self.title}</h1>\n"
@@ -314,12 +340,20 @@ class Note(models.Model):
         return io.BytesIO(output.encode())
 
     def generate_pdf_file(self) -> io.BytesIO:
+        """Generates .pdf file of the note."""
         html = self.generate_html_file().read().decode(encoding="utf-8")
         options = {"page-size": "Letter", "encoding": "UTF-8"}
         pdf = pdfkit.from_string(html, False, options=options)
         return io.BytesIO(pdf)
 
     def generate_file(self, filetype: str = "md") -> Optional[io.BytesIO]:
+        """Generates a file of the note.
+
+        Attrs:
+            filetype: a file extension (options: `md`, `html`, `pdf`).
+        Returns:
+            A generated file if success or `None`.
+        """
         if filetype == "md":
             return self.generate_md_file()
         elif filetype == "html":
@@ -331,6 +365,19 @@ class Note(models.Model):
     def generate_file_to_response(
         self, filetype: str = "md"
     ) -> Optional[dict]:
+        """Generates file and metadata for a HTTP response.
+
+        Data Structure (dict keys, all keys are str):
+            file (io.BytesIO): a generated file.
+            filename (str): a filename generated based on `slug`.
+            content_type (str): the MIME type of a file.
+
+        Attrs:
+            filetype: a file extension (options: `md`, `html`, `pdf`).
+        Returns:
+            A dict with file and metadata if success or `None`.
+
+        """
         filename = self.slug[:20] + "." + filetype
         file = self.generate_file(filetype=filetype)
         if not file:
@@ -347,6 +394,7 @@ class Note(models.Model):
         }
 
     def get_fork(self):
+        """Generates a fork (copy) for a current note and returns."""
         return Note(
             title=self.title,
             source=self.source,
@@ -376,10 +424,12 @@ class Note(models.Model):
 
     @property
     def this_year(self) -> bool:
+        """Returns true if this note was created in this year."""
         return date.today().year == self.modified.year
 
     @property
     def is_modified(self) -> bool:
+        """Return true if the note was edited on a date other than the day it was created."""
         return self.created.date() != self.modified.date()
 
     @property

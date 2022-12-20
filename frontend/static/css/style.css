@@ -113,3 +113,12 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.7rem !important; 
     }
 }
+
+
+/* BODY NOTE */
+#note-body pre {
+    background-color: var(--bs-dark);
+    color: whitesmoke;
+    border-radius: 15px;
+    padding: 10px 0px 5px 20px;
+}

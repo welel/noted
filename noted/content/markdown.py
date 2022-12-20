@@ -1,4 +1,5 @@
 """The module provides functions for transfering Markdown to HTML.
+
 **Functions**
     markdown_to_html: transfers Markdown text into HTML via GitHub API.
     pick_markdown_to_html: transfer Markdown text into HTML (2 methods).
@@ -41,7 +42,6 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
         if response.status_code == 200:
             return response.text, True
     except requests.exceptions.ConnectionError as erorr:
-        # TODO: Log this
         print(
             "Markdown API request is failed:\n",
             traceback.print_tb(erorr.__traceback__),

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-18 22:28+0300\n"
-"PO-Revision-Date: 2022-12-18 19:32+0000\n"
+"POT-Creation-Date: 2022-12-20 12:58+0300\n"
+"PO-Revision-Date: 2022-12-20 10:02+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: noted/content/apps.py:8
+msgid "Content"
+msgstr "Контент"
 
 #: noted/content/forms.py:19
 msgid "Source Type"
@@ -40,12 +44,12 @@ msgstr "Описание в 100 символов."
 msgid "Source Description"
 msgstr "Описание источника"
 
-#: noted/content/forms.py:59 noted/content/models.py:67
-#: noted/content/models.py:190
+#: noted/content/forms.py:59 noted/content/models.py:80
+#: noted/content/models.py:214
 msgid "Title"
 msgstr "Название"
 
-#: noted/content/forms.py:66 noted/content/models.py:217
+#: noted/content/forms.py:66 noted/content/models.py:241
 msgid "Summary"
 msgstr "Краткое изложение"
 
@@ -59,115 +63,118 @@ msgid ""
 "symbols."
 msgstr "Длинна тегов не должны превышать 25 символов."
 
-#: noted/content/models.py:55
+#: noted/content/models.py:68
 msgid "Other"
 msgstr "Другой"
 
-#: noted/content/models.py:56
+#: noted/content/models.py:69
 msgid "Book"
 msgstr "Книга"
 
-#: noted/content/models.py:57
+#: noted/content/models.py:70
 msgid "Course"
 msgstr "Курс"
 
-#: noted/content/models.py:58
+#: noted/content/models.py:71
 msgid "Video"
 msgstr "Видео"
 
-#: noted/content/models.py:59
+#: noted/content/models.py:72
 msgid "Article"
 msgstr "Статья"
 
-#: noted/content/models.py:60
+#: noted/content/models.py:73
 msgid "Lecture"
 msgstr "Лекция"
 
-#: noted/content/models.py:61
+#: noted/content/models.py:74
 msgid "Tutorial"
 msgstr "Руководство"
 
-#: noted/content/models.py:64 templates/content/note_create.html:100
+#: noted/content/models.py:77 templates/content/note_create.html:100
 msgid "Type"
 msgstr "Тип"
 
-#: noted/content/models.py:70
-msgid "Link to the source"
-msgstr "Ссылка на источник"
+#: noted/content/models.py:83
+msgid "External link"
+msgstr "Внешняя ссылка"
 
-#: noted/content/models.py:73
+#: noted/content/models.py:86
 msgid "Description"
 msgstr "Описание"
 
-#: noted/content/models.py:75 noted/content/models.py:193
+#: noted/content/models.py:88 noted/content/models.py:217
 msgid "Slug"
 msgstr "Ключ поиска"
 
-#: noted/content/models.py:200
+#: noted/content/models.py:224
 msgid "Author"
 msgstr "Автор"
 
-#: noted/content/models.py:208 templates/content/note_create.html:50
+#: noted/content/models.py:232 templates/content/note_create.html:50
 #: templates/content/note_create.html:101
 msgid "Source"
 msgstr "Источник"
 
-#: noted/content/models.py:211
+#: noted/content/models.py:235
 msgid "Markdown body"
 msgstr "Markdown текст"
 
-#: noted/content/models.py:214
+#: noted/content/models.py:238
 msgid "HTML body"
 msgstr "HTML разметка"
 
-#: noted/content/models.py:221
+#: noted/content/models.py:245
 msgid "Write summary on the note in 100 symbols."
 msgstr "Напишите краткое изложение в 100 символов."
 
-#: noted/content/models.py:224
+#: noted/content/models.py:248
 msgid "Draft"
 msgstr "Черновик"
 
-#: noted/content/models.py:224
+#: noted/content/models.py:248
 msgid "Only you can see the note."
 msgstr "Только вы сможете просматривать эту запись."
 
-#: noted/content/models.py:227 templates/content/note_display.html:28
-#: templates/content/note_list_layout.html:16
-#: templates/layouts/sidebar/more_from_noted.html:16
+#: noted/content/models.py:251 templates/content/note_display.html:28
+#: templates/content/note_list_layout.html:15
+#: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:70
+#: templates/welcome.html:102 templates/welcome.html:136
+#: templates/welcome.html:168 templates/welcome.html:202
+#: templates/welcome.html:234
 msgid "Anonymous"
 msgstr "Анонимно"
 
-#: noted/content/models.py:229
+#: noted/content/models.py:253
 msgid "Others won't see that the note is yours."
 msgstr "Ваше авторство у этой записи не будет указано."
 
-#: noted/content/models.py:232 templates/content/note_display.html:73
+#: noted/content/models.py:256 templates/content/note_display.html:73
 #: templates/content/note_display.html:145
 msgid "Pin"
 msgstr "Прикреплен"
 
-#: noted/content/models.py:234
+#: noted/content/models.py:258
 msgid "The note will appear in pin notes list."
 msgstr "Эта запись будет в списке закрепленных."
 
-#: noted/content/models.py:236 noted/users/models.py:164
+#: noted/content/models.py:260 noted/users/models.py:164
 msgid "Created"
 msgstr "Создано"
 
-#: noted/content/models.py:237
+#: noted/content/models.py:261
 msgid "Modified"
 msgstr "Изменен"
 
-#: noted/content/models.py:238
+#: noted/content/models.py:262
 msgid "Views"
 msgstr "Просмотров"
 
-#: noted/content/models.py:243 templates/content/note_display.html:93
+#: noted/content/models.py:267 templates/content/note_display.html:93
 msgid "Parent"
 msgstr "Родитель"
 
-#: noted/content/models.py:257
+#: noted/content/models.py:281
 msgid ""
 "Add tags. Separate tags by using \"Enter\" or comma.\n"
 "        You can add maximum 3 tags, and length of tags should be less than 25\n"
@@ -176,18 +183,6 @@ msgstr ""
 "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". Вы "
 "можете добавить не более 3 тегов с именем длинной до 25 символов. "
 
-#: noted/content/views.py:41 templates/layouts/note_order.html:7
-msgid "Latest"
-msgstr "Новые"
-
-#: noted/content/views.py:42 templates/layouts/note_order.html:8
-msgid "Popular"
-msgstr "Популярные"
-
-#: noted/content/views.py:43 templates/layouts/note_order.html:9
-msgid "Most liked"
-msgstr "По лайкам"
-
 #: noted/core/settings.py:134
 msgid "English"
 msgstr "Английский"
@@ -195,6 +190,10 @@ msgstr "Английский"
 #: noted/core/settings.py:135
 msgid "Russian"
 msgstr "Русский"
+
+#: noted/tags/apps.py:7
+msgid "Tags"
+msgstr "Теги"
 
 #: noted/users/adapter.py:25
 msgid "User Name"
@@ -274,7 +273,6 @@ msgid "Social Media Links"
 msgstr "Ссылки на социальные сети"
 
 #: noted/users/models.py:131
-#| msgid "Description"
 msgid "Tag subscriptions"
 msgstr "Подписки на теги"
 
@@ -508,8 +506,11 @@ msgid "Posted on"
 msgstr "Опубликовано"
 
 #: templates/content/note_display.html:44
-#: templates/content/note_list_layout.html:21
-#: templates/layouts/sidebar/more_from_noted.html:20
+#: templates/content/note_list_layout.html:20
+#: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:78
+#: templates/welcome.html:110 templates/welcome.html:144
+#: templates/welcome.html:176 templates/welcome.html:210
+#: templates/welcome.html:242
 msgid "Updated"
 msgstr "Обновлен"
 
@@ -552,19 +553,22 @@ msgstr "Поиск"
 msgid "Download Note"
 msgstr "Скачать Запись"
 
-#: templates/content/note_list_layout.html:58
+#: templates/content/note_list_layout.html:68
 msgid "Save"
 msgstr "Сохранить"
 
-#: templates/content/note_list_layout.html:67
+#: templates/content/note_list_layout.html:77 templates/welcome.html:81
+#: templates/welcome.html:113 templates/welcome.html:147
+#: templates/welcome.html:179 templates/welcome.html:213
+#: templates/welcome.html:245
 msgid "min read"
 msgstr "мин читать"
 
-#: templates/content/note_list_layout.html:72
+#: templates/content/note_list_layout.html:82
 msgid "likes"
 msgstr "лайков"
 
-#: templates/content/note_list_layout.html:74
+#: templates/content/note_list_layout.html:84
 msgid "views"
 msgstr "просмотров"
 
@@ -690,7 +694,7 @@ msgstr "Вставьте эту ссылку в ваш браузер:"
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
-#: templates/index.html:45
+#: templates/index.html:45 templates/welcome.html:259
 msgid "Recommended topics"
 msgstr "Рекомендуемые темы"
 
@@ -808,7 +812,19 @@ msgstr "Настройки профиля"
 msgid "Dark theme"
 msgstr "Тёмная тема"
 
-#: templates/layouts/sidebar/footer.html:7
+#: templates/layouts/note_order.html:7
+msgid "Latest"
+msgstr "Новые"
+
+#: templates/layouts/note_order.html:8
+msgid "Popular"
+msgstr "Популярные"
+
+#: templates/layouts/note_order.html:9
+msgid "Most liked"
+msgstr "По лайкам"
+
+#: templates/layouts/sidebar/footer.html:7 templates/welcome.html:22
 msgid "About"
 msgstr "О нас"
 
@@ -863,7 +879,6 @@ msgstr ""
 "зарегистрируйте новую. "
 
 #: templates/tags/tag_details.html:18
-#| msgid "Follow"
 msgid "Unfollow"
 msgstr "Отписаться"
 
@@ -906,11 +921,43 @@ msgstr ""
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
+#: templates/welcome.html:25
+msgid "Contact"
+msgstr "Связаться"
+
+#: templates/welcome.html:28
+msgid "Sing In"
+msgstr "Вход"
+
+#: templates/welcome.html:31
+msgid "Start writing"
+msgstr "Начать писать"
+
+#: templates/welcome.html:36
+msgid "Stay curious."
+msgstr "Делись знаниями."
+
+#: templates/welcome.html:37
+msgid ""
+"Discover notes, sources, and share your notes and knowleadge on any topic."
+msgstr ""
+"Изучай записи людей на книги, статьи, курсы и другие источники, делись "
+"своими записями с остальными на любые темы."
+
+#: templates/welcome.html:38
+#| msgid "Start writing"
+msgid "Start reading"
+msgstr "Начать читать"
+
+#: templates/welcome.html:48
+msgid "trending on noted"
+msgstr "записи набирающие популярность"
+
+#~ msgid "Link to the source"
+#~ msgstr "Ссылка на источник"
+
 #~ msgid "Dark"
 #~ msgstr "Тёмная"
-
-#~ msgid "Tags"
-#~ msgstr "Теги"
 
 #~ msgid "Allow comments"
 #~ msgstr "Разрешить комментарии"

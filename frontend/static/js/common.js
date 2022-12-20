@@ -39,8 +39,8 @@ function findGetParameter(parameterName) {
 // Color theme toggle
 const lightThemeUrl = document.getElementById('css-light-theme-url'); 
 const darkThemeUrl = document.getElementById('css-dark-theme-url');
-const themeBtn = document.getElementById('theme-btn')
-const themeBtn2 = document.getElementById('theme-btn-2')
+const themeBtn = document.getElementById('theme-btn');
+const themeBtn2 = document.getElementById('theme-btn-2');
 const styleLink = document.getElementById('color-theme');
 themeBtn.onclick = (event) => {
     if (styleLink.href == lightThemeUrl.href) {

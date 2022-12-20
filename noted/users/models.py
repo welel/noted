@@ -147,7 +147,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.username} / {self.email}"
+        return f"{self.username}"
 
     def get_absolute_url(self):
         return reverse("content:profile_notes", args=[self.pk])

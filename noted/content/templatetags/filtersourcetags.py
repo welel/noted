@@ -6,12 +6,13 @@ from content.models import Source
 
 register = template.Library()
 
-
+# HTML template for bootstrap icon for a source type
 ICON_TEMPLATE = '<i class="bi {icon}" style="font-size: {size}; \
     background-color: rgba({rgb},{bg_alpha});  padding: 4px 10px 4px 10px; \
     border-radius: 50px;" data-bs-toggle="tooltip" \
     data-bs-title="{tooltip}"></i>'
 
+# Data mapping for `ICON_TEMPLATE`
 SOURCE_ICONS = {
     Source.DEFAULT: {"icon": "bi-grid", "color": "213, 213, 213"},
     Source.BOOK: {"icon": "bi-book", "color": "200, 93, 93"},

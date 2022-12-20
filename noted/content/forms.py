@@ -84,7 +84,7 @@ class NoteForm(forms.ModelForm):
     def clean_tags(self):
         """Validates the `tags` field.
 
-        Validates the number of tags (less than 6) and tag length
+        Validates the number of tags (less than 4) and tag length
         (less than 25 symbols).
         """
         tags = self.cleaned_data["tags"]
