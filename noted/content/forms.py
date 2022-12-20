@@ -81,6 +81,12 @@ class NoteForm(forms.ModelForm):
                 "source_description"
             ] = self.instance.source.description
 
+    def clean_body_raw(self):
+        body_raw = self.cleaned_data.get("body_raw")
+        if not body_raw:
+            raise ValidationError(_("Note text can't be empty."))
+        return body_raw
+
     def clean_tags(self):
         """Validates the `tags` field.
 

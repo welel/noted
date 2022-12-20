@@ -232,7 +232,7 @@ class Note(models.Model):
         verbose_name=_("Source"),
     )
     body_raw = MarkdownField(
-        _("Markdown body"), rendered_field="body_html", blank=False
+        _("Markdown body"), rendered_field="body_html", blank=True
     )
     body_html = RenderedMarkdownField(
         _("HTML body"), max_length=70000, default="", blank=True
