@@ -61,25 +61,27 @@ const likeButton = document.getElementById('like-btn');
 const likeIcon = likeButton.firstElementChild.firstElementChild;
 const likeCount = likeButton.firstElementChild.lastElementChild;
 likeButton.onclick = (event) => {
-    $.ajax({
-        type: 'GET',
-        url: document.getElementById('like-note-url').innerText,
-        headers: {"X-Requested-With": "XMLHttpRequest"},
-        success: (res) => {
-            if (res.liked) {
-                likeIcon.setAttribute('class', 'bi bi-heart-fill');
-                likeCount.innerText = Number(likeCount.innerText) + 1;
-            }
-            if (!res.liked) {
-                likeIcon.setAttribute('class', 'bi bi-heart');
-                likeCount.innerText = Number(likeCount.innerText) - 1;
-            }
-        },
-        error: (res) => {
-            console.log('Bad Request: unable to like.');
-        },
-        timeout: 3000
-    });
+    if (likeButton.getAttribute('is-user-auth') == 'True') {
+        $.ajax({
+            type: 'GET',
+            url: document.getElementById('like-note-url').innerText,
+            headers: {"X-Requested-With": "XMLHttpRequest"},
+            success: (res) => {
+                if (res.liked) {
+                    likeIcon.setAttribute('class', 'bi bi-heart-fill');
+                    likeCount.innerText = Number(likeCount.innerText) + 1;
+                }
+                if (!res.liked) {
+                    likeIcon.setAttribute('class', 'bi bi-heart');
+                    likeCount.innerText = Number(likeCount.innerText) - 1;
+                }
+            },
+            error: (res) => {
+                console.log('Bad Request: unable to like.');
+            },
+            timeout: 3000
+        });
+    }
 }
 
 

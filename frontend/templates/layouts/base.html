@@ -43,6 +43,9 @@
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <script type="text/javascript" src="{% static 'js/auth.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/common.js' %}"></script>
+    {% if request.user.is_authenticated %}
+    <script type="text/javascript" src="{% static 'js/theme_switch.js' %}"></script>
+    {% endif %}
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>

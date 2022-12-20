@@ -232,7 +232,7 @@ class Note(models.Model):
         verbose_name=_("Source"),
     )
     body_raw = MarkdownField(
-        _("Markdown body"), rendered_field="body_html", blank=True
+        _("Markdown body"), rendered_field="body_html", blank=False
     )
     body_html = RenderedMarkdownField(
         _("HTML body"), max_length=70000, default="", blank=True
@@ -242,7 +242,7 @@ class Note(models.Model):
         max_length=250,
         default="",
         blank=True,
-        help_text=_("Write summary on the note in 100 symbols."),
+        help_text=_("Write summary on the note in 250 symbols."),
     )
     draft = models.BooleanField(
         _("Draft"), default=False, help_text=_("Only you can see the note.")
@@ -299,8 +299,7 @@ class Note(models.Model):
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
 
-    @property
-    def preview_text(self, num_chars: int = 300) -> str:
+    def get_preview_text(self, num_chars: int = 300) -> str:
         """The body preview text for a note."""
         return "".join(
             BeautifulSoup(self.body_html, features="html.parser").findAll(

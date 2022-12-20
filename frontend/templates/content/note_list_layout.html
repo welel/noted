@@ -38,7 +38,7 @@
                 </a>
                 <span>&nbsp;|&nbsp;</span> {% endcomment %}
                 <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
-                <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.get_readable_type }}</span>
+                <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.verbose_type }}</span>
                 </a>
                 <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
                 <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
@@ -51,7 +51,7 @@
                 {% if note.summary %}
                     {{ note.summary }}
                 {% else %}
-                    {{ note.preview_text|truncatechars:140 }}
+                    {{ note.get_preview_text|truncatechars:140 }}
                 {% endif %}
             </a>
         </div>
