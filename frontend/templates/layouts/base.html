@@ -13,6 +13,15 @@
     <link id="color-theme" rel="stylesheet" href="{% static 'css/ligth_theme.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJ01VPW2FF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KJ01VPW2FF');
+</script>
 <body class="pb-5">
     {% block nav %}
         {% include 'layouts/navigation.html' %}
