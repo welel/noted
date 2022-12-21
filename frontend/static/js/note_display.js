@@ -132,6 +132,10 @@ function addFullScreenBtnsToCodeBlock() {
         });
         btn.innerHTML = '<i class="bi bi-arrows-fullscreen"></i>';
         pre.insertBefore(btn, pre.firstElementChild);
+        // Move button along on scroll code block
+        pre.addEventListener("scroll", function(e) {
+            btn.style.right = `-${pre.scrollLeft}px`; 
+        });
     });
 }
 

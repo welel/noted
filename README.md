@@ -59,14 +59,17 @@ Users can:
 
 Notes are created in the markdown editor. The editor supports preview, split editing, full screen editing, hotkeys.
 
-Dark mode / code highlight / code full-screen.
+Dark mode / code highlight / code full-screen / mobile version.
 
 <p>
-  <code><img width="40%" src="https://i.ibb.co/rtX98KM/screely-1671564311882.png"></code>
+  <code><img width="40%" src="https://i.ibb.co/zR73qnJ/screely-1671641709714.png"></code>
   <code><img width="40%" src="https://i.ibb.co/QJCZk42/screely-1671564364437.png"></code>
   <br>
   <code><img width="40%" src="https://i.ibb.co/JRmRVjF/screely-1671630742282.png"></code>
   <code><img width="40%" src="https://i.ibb.co/86NxJQ4/screely-1671630946911.png"></code>
+    <br>
+  <code><img width="35%" src="https://i.ibb.co/fvGJFwN/Screen-Shot-2022-12-21-at-19-46-17-iphone13pink-portrait.png"></code>
+  <code><img width="35%" src="https://i.ibb.co/Vx7scdn/Screen-Shot-2022-12-21-at-19-46-51-iphone13blue-portrait.png"></code>
 </p>
 
 

@@ -20,7 +20,7 @@
   
   .pl-smi /* variable.parameter.function, storage.modifier.package, storage.modifier.import, storage.type.java, variable.other */,
   .pl-s .pl-s1 /* string source */ {
-    color: #24292e;
+    color: #bcffa4;
   }
   
   .pl-ent /* entity.name.tag, markup.quote */ {
@@ -82,12 +82,12 @@
   
   .pl-mi /* markup.italic */ {
     font-style: italic;
-    color: #24292e;
+    color: #bcffa4;
   }
   
   .pl-mb /* markup.bold */ {
     font-weight: bold;
-    color: #24292e;
+    color: #bcffa4;
   }
   
   .pl-md /* markup.deleted, meta.diff.header.from-file, punctuation.definition.deleted */ {

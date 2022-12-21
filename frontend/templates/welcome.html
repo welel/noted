@@ -25,7 +25,7 @@
             <a class="nav-link text-white fw-bold fs-6" target="_blank" href="mailto:pavel.loginov.dev@gmail.com">{% trans "Contact" %}</a>
             </li>
             <li class="nav-item d-sm-block d-none">
-            <button class="nav-link btn btn-link text-white fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Sing In" %}</button>
+            <a class="nav-link btn btn-link text-white fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Sing In" %}</a>
             </li>
             <li class="nav-item ms-2">
             <button class="btn btn-success nav-link text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Start writing" %}</button>
@@ -76,7 +76,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.0.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.0.modified|date:"M j" }} {% if not trends.0.this_year %}, {{ trends.0.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.0.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.0.min_read }} {% trans "min read" %}
                         {% endif %}
@@ -108,7 +108,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.1.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.1.modified|date:"M j" }} {% if not trends.1.this_year %}, {{ trends.1.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.1.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.1.min_read }} {% trans "min read" %}
                         {% endif %}
@@ -142,7 +142,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.2.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.2.modified|date:"M j" }} {% if not trends.2.this_year %}, {{ trends.2.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.2.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.2.min_read }} {% trans "min read" %}
                         {% endif %}
@@ -174,7 +174,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.3.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.3.modified|date:"M j" }} {% if not trends.3.this_year %}, {{ trends.3.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.3.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.3.min_read }} {% trans "min read" %}
                         {% endif %}
@@ -208,7 +208,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.4.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.4.modified|date:"M j" }} {% if not trends.4.this_year %}, {{ trends.4.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.4.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.4.min_read }} {% trans "min read" %}
                         {% endif %}
@@ -240,7 +240,7 @@
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
                         <span>{% if trends.5.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.5.modified|date:"M j" }} {% if not trends.5.this_year %}, {{ trends.5.modified|date:"Y" }}{% endif %}</span>
-                        {% if min_read %}
+                        {% if trends.5.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
                         {{ trends.5.min_read }} {% trans "min read" %}
                         {% endif %}

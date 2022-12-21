@@ -63,8 +63,15 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 2;
     background-color: rgba(0, 138, 74, 0.7);
     border: none;
+    padding: 8px 24px;
 }
 #welcome-header-btn:hover {
+    background-color: rgba(0, 138, 74, 1);
+}
+#welcome-anhor button {
+    background-color: rgba(0, 138, 74, 0.7);
+}
+#welcome-anhor button:hover {
     background-color: rgba(0, 138, 74, 1);
 }
 
@@ -75,6 +82,34 @@ h1, h2, h3, h4, h5, h6 {
 .tag {
     font-size: 0.8rem;
 }
+#myTab li {
+    position: relative;
+    top: 1px;
+    border-bottom: 1px solid rgba(0,0,0,0);
+    transition: 0.4s ease;
+}
+#myTab li:hover {
+    color: black;
+    border-bottom: 1px solid black;
+}
+#myTab button {
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0);
+    transition: 0.4s ease;
+}
+#myTab button.active {
+    background-color: rgba(0,0,0,0);
+    border-bottom: 1px solid black;
+    color: rgb(36, 36, 36) !important;
+}
+#myTab button.active:hover {
+    color: black !important;
+}
+#myTab button:hover {
+    border: none;
+    color: black !important;
+}
+
 
 
 /* NAVIGATION */
@@ -210,10 +245,4 @@ pre:hover button {
     margin-top: 1rem;
     border-left: 5px solid darkgrey;
     padding-left: 25px;
-}
-
-/* lists */
-#note-body li {
-    display: flex;
-    flex-direction: column;
 }

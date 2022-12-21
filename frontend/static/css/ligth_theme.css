@@ -46,24 +46,52 @@
 /* Source type badges */
 .bg-source-0 {
     background-color: rgb(213, 213, 213) !important;
+    transition: 0.4s ease;
 }
 .bg-source-1 {
     background-color: rgb(200, 93, 93) !important;
+    transition: 0.4s ease;
 }
 .bg-source-2 {
     background-color: rgb(107, 234, 139) !important;
+    transition: 0.4s ease;
 }
 .bg-source-3 {
     background-color: rgb(150, 200, 255) !important;
+    transition: 0.4s ease;
 }
 .bg-source-4 {
     background-color: rgb(185, 143, 227) !important;
+    transition: 0.4s ease;
 }
 .bg-source-5 {
     background-color: rgb(100, 235, 255) !important;
+    transition: 0.4s ease;
 }
 .bg-source-6 {
     background-color: rgb(232, 222, 76) !important;
+    transition: 0.4s ease;
+}
+.bg-source-0:hover {
+    background-color: rgba(153, 153, 153, 0.8) !important;
+}
+.bg-source-1:hover {
+    background-color: rgba(243, 4, 4, 0.8) !important;
+}
+.bg-source-2:hover {
+    background-color: rgba(23, 252, 80, 0.8) !important;
+}
+.bg-source-3:hover {
+    background-color: rgba(58, 153, 255, 0.8) !important;
+}
+.bg-source-4:hover {
+    background-color: rgba(149, 43, 255, 0.8) !important;
+}
+.bg-source-5:hover {
+    background-color: rgba(4, 222, 255, 0.8) !important;
+}
+.bg-source-6:hover {
+    background-color: rgba(255, 239, 18, 0.8) !important;
 }
 
 
@@ -112,16 +140,4 @@
 }
 .source-table-row:hover {
     background-color: #ececec;
-}
-
-
-/* TABS */
-.tablink.active {
-    border-bottom: 1px solid black !important;
-    border: aliceblue;
-    color: black !important;
-}
-.tablink:hover {
-    border-color: rgba(0,0,0,0) !important;
-    color: black !important;
 }
