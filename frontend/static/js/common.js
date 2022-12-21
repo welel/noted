@@ -1,4 +1,4 @@
-// Ajax request to like the note (toggle `like` note instance field value).
+// Ajax request to add/remove the note to/from bookmarks.
 function bookmarkNote(note_pk) {
     const bookmarkButton = document.getElementById(`bookmark-btn-${note_pk}`);
     const bookmarkIcon = bookmarkButton.firstElementChild.firstElementChild;
@@ -33,4 +33,25 @@ function findGetParameter(parameterName) {
             if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
         });
     return result;
+}
+
+
+/**
+ *  Get a Cookie value by a key. 
+ *  From Django docs: https://docs.djangoproject.com/en/4.1/howto/csrf/
+ */
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
 }

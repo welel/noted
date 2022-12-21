@@ -9,20 +9,66 @@
 
 <h3 align="center">This is a web service that helps to make, store and share notes.</h3>
 
-This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes. 
+This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes, but has a practical application.
 
-<p align="center"><a href="https://welel-noted.site/"><img src="" alt=""  border="0" /></a></p>
+<p align="center"><a href="https://welel-noted.site/"><img src="https://i.ibb.co/JxX9Tqm/screely-1671564299536.png" alt="NoteD."  border="0" /></a></p>
 
 **Link on the website:** https://welel-noted.site/
 
 </br>
 
+## 🔍 About
+
+**The goal of the project is to develop a system for creating, storing notes and searching for notes by sources of information.**
+
+A note is a summary of some material, for example: a book, video, course, article, etc. A source is a some information material.
+The user can search for public notes or notes by the name of the Source. The user can create public notes and drafts, subscribe to other users.
+
+**The benefit of this project** is that a person studying any material reduces the time for taking notes. 
+
+Users can:
+- look for notes of other people;
+- start writing notes from other people's notes;
+- to study the material in a short form, according to other people's notes;
+- skimming over existing notes to find a Source to study something
+- etc.
+
+<p align="center"><img src="https://i.ibb.co/rtX98KM/screely-1671564311882.png" alt="NoteD. Home"  border="0" /></p>
+
+
+**Main useful features**:
+
+- Create public notes (and drafts)
+- Create a note on a specific source
+- Search notes
+- Search notes by a specific source
+- Search for sources and list of notes on them
+
+**Additional features**:
+
+- Add tags to notes
+- Search notes by tags
+- Subscribe to tags
+- Follow users
+- Pin your important notes
+- Add notes to bookmarks
+
+<p align="center"><img src="https://i.ibb.co/FY8JrJw/screely-1671564251678.png" alt="NoteD. Form"  border="0" /></p>
+
+Notes are created in the markdown editor. The editor supports preview, split editing, full screen editing, hotkeys.
+
+Dark mode:
+
+<p>
+  <code><img width="40%" src="https://i.ibb.co/rtX98KM/screely-1671564311882.png"></code>
+  <code><img width="40%" src="https://i.ibb.co/QJCZk42/screely-1671564364437.png"></code>
+</p>
+
+
 ## 🔥 Features
 
-Now:
-
 * Registration, authentication, authorization
-  * + with socials (google, github, yandex)
+  * with socials (google, github, yandex)
 * WYSIWYG editing
 * Markdown editor
 * GitHub API Integration (markdown)
@@ -34,6 +80,7 @@ Now:
 * Twitter Bootstrap integration
 * Responsive (modile) design
 * Code documentation
+* Dark mode
 
 In future:
 

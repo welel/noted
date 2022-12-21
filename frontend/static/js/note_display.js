@@ -115,3 +115,28 @@ function toggleBookmark() {
 }
 bookmarkButton1.onclick = toggleBookmark;
 bookmarkButton2.onclick = toggleBookmark;
+
+
+// Add button to a code block to open the code block in fullscreen.
+function addFullScreenBtnsToCodeBlock() {
+    document.querySelectorAll('pre').forEach(function(pre, i) {
+        if (pre.firstElementChild.tagName != 'CODE') {
+            pre.setAttribute('id', `code-block-${i}`);
+            const btn = document.createElement('button');
+            btn.setAttribute('id', `code-block-btn-${i}`);
+            btn.addEventListener('click', function(){
+                if (document.fullscreenElement) {
+                  document.exitFullscreen();
+                } else {
+                  $(`#code-block-${i}`).get(0).requestFullscreen();
+                }
+            });
+            btn.innerHTML = '<i class="bi bi-arrows-fullscreen"></i>';
+            pre.insertBefore(btn, pre.firstElementChild);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    addFullScreenBtnsToCodeBlock();
+});

@@ -7,6 +7,11 @@
 {% block title %}{{ note.title }}{% endblock %}
 
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/github-light.css' %}">
+{% endblock %}
+
+
 {% block main %}
 <div class="container-fluid mt-5">
     <div class="row">

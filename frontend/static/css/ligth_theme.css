@@ -84,6 +84,7 @@
     border-color: black !important;
 }
 
+
 /* SIGNUP */
 .validation-errors {
     color: red;
@@ -112,6 +113,7 @@
 .source-table-row:hover {
     background-color: #ececec;
 }
+
 
 /* TABS */
 .tablink.active {

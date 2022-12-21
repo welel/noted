@@ -115,10 +115,98 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* BODY NOTE */
+/* BODY TEXT NOTE */
+
+/* code blocks */
 #note-body pre {
+    margin-top: 1rem;
     background-color: var(--bs-dark);
     color: whitesmoke;
     border-radius: 15px;
-    padding: 10px 0px 5px 20px;
+    padding: 15px 3px 15px 20px;
+    font-size: 16px;
+}
+#note-body code {
+    color: #009339;
+    background-color: azure;
+    padding: 5px;
+    border-radius: 5px;
+}
+#note-body pre code {
+    background-color: var(--bs-dark) !important;
+}
+.highlight {
+    position: relative;
+}
+pre button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 11px;
+	margin-top: 15px;
+	background-color: #888;
+	color: white;
+	padding: 7px 15px;
+	font-size: 17px;
+	opacity: 0.8;
+	border-radius: 0px 15px 0px 15px;
+    border: 0px;
+    display: none;
+}
+pre:hover button {
+    display: flex;
+}
+
+/* headers */
+#note-body h1, #note-body h2, #note-body h3, #note-body h4 {
+    margin-top: 3.14rem !important;
+}
+#note-body h5, #note-body h6 {
+    margin-top: 2.8rem !important;
+}
+#note-body h1 + p,
+#note-body h2 + p,
+#note-body h3 + p,
+#note-body h4 + p,
+#note-body h5 + p,
+#note-body h6 + p {
+    margin-top: 0.5rem !important;
+}
+
+/* paragraphs */
+#note-body p {
+    margin-top: 1.8rem;
+    font-size: 21px;
+    letter-spacing: 0rem;
+    line-height: 32px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* imgs */
+#note-body p img {
+    margin-top: -1rem;
+}
+
+/* tables */
+#note-body table {
+	display: block;
+	width: auto;
+    padding: 0px;
+}
+#note-body th {
+    padding: 0.5rem;
+    background-color: azure;
+    border: 1px solid #b9b9b9;
+}
+#note-body td {
+    padding: 0.5rem;
+    border: 1px solid #b9b9b9;
+}
+
+/* quote */
+#note-body blockquote {
+    margin-top: 1rem;
+    border-left: 5px solid darkgrey;
+    padding-left: 25px;
 }
