@@ -40,9 +40,11 @@ Users can:
 
 - Create public notes (and drafts)
 - Create a note on a specific source
+- Copy (fork) and edit other's notes
 - Search notes
 - Search notes by a specific source
 - Search for sources and list of notes on them
+- Download notes [md, pdf, html]
 
 **Additional features**:
 
@@ -57,11 +59,14 @@ Users can:
 
 Notes are created in the markdown editor. The editor supports preview, split editing, full screen editing, hotkeys.
 
-Dark mode:
+Dark mode / code highlight / code full-screen.
 
 <p>
   <code><img width="40%" src="https://i.ibb.co/rtX98KM/screely-1671564311882.png"></code>
   <code><img width="40%" src="https://i.ibb.co/QJCZk42/screely-1671564364437.png"></code>
+  <br>
+  <code><img width="40%" src="https://i.ibb.co/JRmRVjF/screely-1671630742282.png"></code>
+  <code><img width="40%" src="https://i.ibb.co/86NxJQ4/screely-1671630946911.png"></code>
 </p>
 
 
@@ -81,6 +86,7 @@ Dark mode:
 * Responsive (modile) design
 * Code documentation
 * Dark mode
+* Download posts (md, pdf, html)
 
 In future:
 
