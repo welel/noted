@@ -30,6 +30,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG_SET")
 
+SITE_ID = 1
+
 ALLOWED_HOSTS = ["welel-noted.site"]
 ALLOWED_HOSTS.append(os.getenv("IP"))
 if DEBUG:
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -259,7 +262,6 @@ AUTHENTICATION_BACKENDS = (
 
 SOCIALACCOUNT_ADAPTER = "users.adapter.SocialAccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.getenv("HTTP_PROTOCOL")
-SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
