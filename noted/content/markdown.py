@@ -7,15 +7,21 @@
 
 import traceback
 from typing import Tuple
+import logging as log
 import requests
 
 from markdown2 import markdown
 
+from common.logging import logging
+
+
+logger = log.getLogger("markdown")
 
 API_URL = "https://api.github.com/markdown/raw"
 HEADERS = {"Content-Type": "text/plain"}
 
 
+@logging
 def markdown_to_html(text: str) -> Tuple[str, bool]:
     """Transfer Markdown text into HTML via GitHub API.
 
@@ -42,14 +48,19 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
         if response.status_code == 200:
             return response.text, True
     except requests.exceptions.ConnectionError as erorr:
-        print(
-            "Markdown API request is failed:\n",
-            traceback.print_tb(erorr.__traceback__),
+        logger.error(
+            "Markdown API request is failed:\n"
+            + traceback.print_tb(erorr.__traceback__)
         )
-
+    logger.warning(
+        "Markdown API request is failed:\nStatus code: {code}".format(
+            code=response.status_code
+        )
+    )
     return text, False
 
 
+@logging
 def pick_markdown_to_html(text: str) -> str:
     """Transfer Markdown text into HTML.
 

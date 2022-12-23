@@ -2,6 +2,7 @@
 
 """
 import smtplib
+import logging as log
 
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
@@ -9,11 +10,15 @@ from django.core.signing import TimestampSigner
 from django.utils.translation import gettext as _
 
 from core import settings
+from common.logging import logging
 from users.models import SignupToken
 
+
 signer = TimestampSigner()
+logger = log.getLogger("emails")
 
 
+@logging
 def send_signup_link(email_to: str) -> bool:
     """Sends email to client with link for registration.
 
@@ -48,7 +53,10 @@ def send_signup_link(email_to: str) -> bool:
         msg.attach_alternative(html_content, "text/html")
         msg.send(fail_silently=False)
         SignupToken.objects.create(token=token)
+        logger.info("Sing up email sent to: " + email_to)
         return True
     except smtplib.SMTPException as e:
-        print("There was an error sending an email: ", e)
+        logger.error(
+            f"There was an error sending an email to {email_to}: " + str(e)
+        )
         return False

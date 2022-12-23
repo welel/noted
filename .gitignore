@@ -20,3 +20,4 @@ frontend/noted
 noted/htmlcov/
 noted/.coverage
 dev/
+*.log

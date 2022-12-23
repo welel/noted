@@ -6,9 +6,10 @@ from django.utils.translation import gettext_lazy as _
 
 from content.models import Note, Source
 from common import ajax_required
+from common.logging import LoggingView, logging_view
 
 
-class SourceDetailsView(DetailView):
+class SourceDetailsView(LoggingView, DetailView):
     """A source details with list of notes of the source.
 
     **Context**
@@ -34,7 +35,7 @@ class SourceDetailsView(DetailView):
         return context
 
 
-class SourceTypeDetailsView(View):
+class SourceTypeDetailsView(LoggingView, View):
     """A source type details with list of notes and sources of the source type.
 
     **Context**
@@ -66,6 +67,7 @@ class SourceTypeDetailsView(View):
         return render(request, "content/source_type_details.html", context)
 
 
+@logging_view
 @ajax_required
 def search_sources_select(request):
     """Search for sources by title and return JSON results."""

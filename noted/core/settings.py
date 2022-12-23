@@ -164,6 +164,26 @@ LOGGING = {
             filename=PROJECT_DIR.joinpath("logs/sql.log"),
             level="WARNING",
         ),
+        "file_exceptions": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/exceptions.log"),
+            level="WARNING",
+        ),
+        "file_views_exceptions": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/views_exceptions.log"),
+            level="WARNING",
+        ),
+        "file_emails": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/emails.log"),
+            level="INFO",
+        ),
+        "file_markdown": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/markdown.log"),
+            level="WARNING",
+        ),
     },
     "loggers": {
         "django": {"handlers": ["file_django"], "level": "WARNING"},
@@ -173,6 +193,22 @@ LOGGING = {
         },
         "django.db.backends": {
             "handlers": ["file_sql"],
+            "level": "WARNING",
+        },
+        "exceptions": {
+            "handlers": ["file_exceptions"],
+            "level": "WARNING",
+        },
+        "views.exceptions": {
+            "handlers": ["file_views_exceptions"],
+            "level": "WARNING",
+        },
+        "emails": {
+            "handlers": ["file_emails"],
+            "level": "INFO",
+        },
+        "markdown": {
+            "handlers": ["file_markdown"],
             "level": "WARNING",
         },
     },

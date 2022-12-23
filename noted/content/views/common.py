@@ -6,8 +6,10 @@ from django.utils.translation import gettext_lazy as _
 
 from content.models import Note, Source
 from users.models import User
+from common.logging import logging_view
 
 
+@logging_view
 def search(request, type):
     """Search by notes, sources, tags, users."""
     query = request.GET.get("query")

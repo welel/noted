@@ -39,10 +39,11 @@ from wsgiref.util import FileWrapper
 from content.forms import NoteForm
 from content.models import Note, Source
 from common import ajax_required
+from common.logging import LoggingView, logging_view
 from users.models import User
 
 
-class NoteList(ListView):
+class NoteList(LoggingView, ListView):
     """Base display list of :model:`Note`.
 
     Uses as a superclass for other specific notes listings.
@@ -234,7 +235,7 @@ class NoteDraftMixin:
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(NoteDraftMixin, CreateView):
+class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
     """Handels the note create form."""
 
     model = Note
@@ -300,19 +301,19 @@ class NoteForkView(NoteCreateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(NoteDraftMixin, UpdateView):
+class NoteUpdateView(NoteDraftMixin, LoggingView, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteDeleteView(DeleteView):
+class NoteDeleteView(LoggingView, DeleteView):
     model = Note
     success_url = reverse_lazy("content:home")
 
 
-class NoteDetailsView(DetailView):
+class NoteDetailsView(LoggingView, DetailView):
     """Display details of a :model:`Note` instance.
 
     **Context**
@@ -338,7 +339,7 @@ class NoteDetailsView(DetailView):
         return note
 
 
-class NoteView(View):
+class NoteView(LoggingView, View):
     """Choose a view based on a request method (GET/POST).
 
     For future: it will choose between GET - the details view and
@@ -350,6 +351,7 @@ class NoteView(View):
         return view(request, *args, **kwargs)
 
 
+@logging_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -362,6 +364,7 @@ def pin_note(request, slug):
     return JsonResponse({"pin": note.pin})
 
 
+@logging_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -375,6 +378,7 @@ def like_note(request, slug):
         return JsonResponse({"liked": True})
 
 
+@logging_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -388,6 +392,7 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": True})
 
 
+@logging_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):

@@ -3,7 +3,10 @@ import uuid
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.text import slugify
 
+from common.logging import logging
 
+
+@logging
 def generate_unique_slug(
     instance, from_field: str = "title", for_field: str = "slug"
 ) -> str:

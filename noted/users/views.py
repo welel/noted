@@ -16,8 +16,10 @@ from users.auth import send_signup_link, signer
 from users.forms import SignupForm
 from users.models import SignupToken, User
 from common.decorators import ajax_required
+from common.logging import logging_view
 
 
+@logging_view
 @ajax_required
 def send_singup_email(request):
     """Send sing up email to a client with the link to the sign up form."""
@@ -34,6 +36,7 @@ def send_singup_email(request):
     return JsonResponse({"msg": "error"}, status=200)
 
 
+@logging_view
 @ajax_required
 def validate_email(request):
     """Check if a user with a given email already exists in the database."""
@@ -47,6 +50,7 @@ def validate_email(request):
     return JsonResponse({"is_taken": "error"}, status=200)
 
 
+@logging_view
 def signup(request, token):
     """Sign up process.
 
@@ -105,6 +109,7 @@ def signup(request, token):
             return render(request, template_name, context)
 
 
+@logging_view
 @ajax_required
 def signin(request):
     """Sign in a user via ajax request."""
@@ -143,6 +148,7 @@ def signin(request):
     return HttpResponseBadRequest()
 
 
+@logging_view
 def signout(request):
     logout(request)
     return redirect(reverse("content:home"))
