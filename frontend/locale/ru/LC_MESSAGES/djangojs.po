@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-18 22:28+0300\n"
+"POT-Creation-Date: 2022-12-23 14:09+0300\n"
 "PO-Revision-Date: 2022-12-18 19:33+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: static/js/auth.js:6
@@ -34,15 +36,6 @@ msgstr "Этот email адрес уже занят."
 #: static/js/auth.js:9
 msgid "Enter password."
 msgstr "Введите пароль."
-
-#: static/js/common.js:48 static/js/common.js:49 static/js/common.js:64
-#: static/js/common.js:65
-msgid "Light theme"
-msgstr "Светлая тема"
-
-#: static/js/common.js:54 static/js/common.js:55
-msgid "Dark theme"
-msgstr "Тёмная тема"
 
 #: static/js/note_display.js:37 static/js/note_display.js:38
 msgid "Unpin"
@@ -63,3 +56,12 @@ msgstr "Отписаться"
 #: static/js/tag_details.js:12
 msgid "Follow"
 msgstr "Подписаться"
+
+#: static/js/theme_switch.js:10 static/js/theme_switch.js:11
+#: static/js/theme_switch.js:26 static/js/theme_switch.js:27
+msgid "Light theme"
+msgstr "Светлая тема"
+
+#: static/js/theme_switch.js:16 static/js/theme_switch.js:17
+msgid "Dark theme"
+msgstr "Тёмная тема"

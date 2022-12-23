@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "taggit",
     "simplemde",
     "rosetta",
+    "common.apps.CommonConfig",
     "users.apps.UsersConfig",
     "content.apps.ContentConfig",
     "tags.apps.TagsConfig",
@@ -69,6 +70,15 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = "core.urls"
 
@@ -122,6 +132,51 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+FILE_HANDLER = {
+    "class": "logging.handlers.RotatingFileHandler",
+    "maxBytes": 1048576,
+    "backupCount": 10,
+    "formatter": "verbose",
+}
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "\n\n{levelname}\n{asctime}\n{name} {module} on line: {lineno}\n{message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "file_django": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/django.log"),
+            level="WARNING",
+        ),
+        "file_request": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/request.log"),
+            level="DEBUG",
+        ),
+        "file_sql": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/sql.log"),
+            level="WARNING",
+        ),
+    },
+    "loggers": {
+        "django": {"handlers": ["file_django"], "level": "WARNING"},
+        "django.request": {
+            "handlers": ["file_request"],
+            "level": "DEBUG",
+        },
+        "django.db.backends": {
+            "handlers": ["file_sql"],
+            "level": "WARNING",
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

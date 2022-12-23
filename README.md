@@ -136,16 +136,17 @@ In future:
 
 4. Fill `env_sample` file with required data and rename it to `.env`.
 
-5. Make migrations and migrate.
+5. Make migrations and migrate with a custom command.
 
 ```
-python manage.py makemigrations tags
-python manage.py makemigrations users
-python manage.py makemigrations content
-python manage.py migrate
+python manage.py makemigrate
 ```
 
-6. Run the server `python manage.py runserver`.
+6. Run the development server.
+
+```
+python manage.py runserver
+```
 
 
 </br>

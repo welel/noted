@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-20 12:58+0300\n"
+"POT-Creation-Date: 2022-12-23 14:02+0300\n"
 "PO-Revision-Date: 2022-12-20 10:02+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: noted/common/apps.py:7
+msgid "Common Functionality"
+msgstr ""
 
 #: noted/content/apps.py:8
 msgid "Content"
@@ -53,11 +59,15 @@ msgstr "Название"
 msgid "Summary"
 msgstr "Краткое изложение"
 
-#: noted/content/forms.py:92
+#: noted/content/forms.py:87
+msgid "Note text can't be empty."
+msgstr ""
+
+#: noted/content/forms.py:98
 msgid "You can add only 3 tags."
 msgstr "Вы можете добавить только 3 тега."
 
-#: noted/content/forms.py:97
+#: noted/content/forms.py:103
 msgid ""
 "Length of {i+1} tag should be                             less than 25 "
 "symbols."
@@ -125,7 +135,9 @@ msgid "HTML body"
 msgstr "HTML разметка"
 
 #: noted/content/models.py:245
-msgid "Write summary on the note in 100 symbols."
+#, fuzzy
+#| msgid "Write summary on the note in 100 symbols."
+msgid "Write summary on the note in 250 symbols."
 msgstr "Напишите краткое изложение в 100 символов."
 
 #: noted/content/models.py:248
@@ -136,7 +148,7 @@ msgstr "Черновик"
 msgid "Only you can see the note."
 msgstr "Только вы сможете просматривать эту запись."
 
-#: noted/content/models.py:251 templates/content/note_display.html:28
+#: noted/content/models.py:251 templates/content/note_display.html:33
 #: templates/content/note_list_layout.html:15
 #: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:70
 #: templates/welcome.html:102 templates/welcome.html:136
@@ -149,8 +161,8 @@ msgstr "Анонимно"
 msgid "Others won't see that the note is yours."
 msgstr "Ваше авторство у этой записи не будет указано."
 
-#: noted/content/models.py:256 templates/content/note_display.html:73
-#: templates/content/note_display.html:145
+#: noted/content/models.py:256 templates/content/note_display.html:78
+#: templates/content/note_display.html:150
 msgid "Pin"
 msgstr "Прикреплен"
 
@@ -170,24 +182,25 @@ msgstr "Изменен"
 msgid "Views"
 msgstr "Просмотров"
 
-#: noted/content/models.py:267 templates/content/note_display.html:93
+#: noted/content/models.py:267 templates/content/note_display.html:98
 msgid "Parent"
 msgstr "Родитель"
 
 #: noted/content/models.py:281
 msgid ""
 "Add tags. Separate tags by using \"Enter\" or comma.\n"
-"        You can add maximum 3 tags, and length of tags should be less than 25\n"
+"        You can add maximum 3 tags, and length of tags should be less than "
+"25\n"
 "        symbols."
 msgstr ""
 "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". Вы "
 "можете добавить не более 3 тегов с именем длинной до 25 символов. "
 
-#: noted/core/settings.py:134
+#: noted/core/settings.py:135
 msgid "English"
 msgstr "Английский"
 
-#: noted/core/settings.py:135
+#: noted/core/settings.py:136
 msgid "Russian"
 msgstr "Русский"
 
@@ -290,13 +303,40 @@ msgstr ""
 
 #: noted/users/views.py:120
 msgid ""
-"Sorry, but we could not find a user account with"
-"                             that email."
+"Sorry, but we could not find a user account with                             "
+"that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
 #: noted/users/views.py:130
 msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
+
+#: templates/404.html:7
+msgid "Couldn't find page"
+msgstr ""
+
+#: templates/404.html:25 templates/layouts/sidebar/footer.html:7
+#: templates/welcome.html:22
+msgid "About"
+msgstr "О нас"
+
+#: templates/404.html:28 templates/welcome.html:25
+msgid "Contact"
+msgstr "Связаться"
+
+#: templates/404.html:31 templates/welcome.html:31
+msgid "Start writing"
+msgstr "Начать писать"
+
+#: templates/404.html:37
+msgid "We couldn't find this page."
+msgstr ""
+
+#: templates/404.html:38
+#, fuzzy
+#| msgid "Home"
+msgid "Go Home"
+msgstr "Главная"
 
 #: templates/account/base.html:32
 msgid "Change E-mail"
@@ -315,11 +355,15 @@ msgstr "Изменить Пароль"
 
 #: templates/account/email/password_reset_key_message.html:6
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the button below to reset your password."
+"You're receiving this e-mail because you or someone else has requested a "
+"password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"button below to reset your password."
 msgstr ""
-"Вы получили это электронное письмо, потому что вы или кто-то другой запросили пароль для вашей учетной записи пользователя.\n"
-"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите кнопку ниже, чтобы сбросить пароль."
+"Вы получили это электронное письмо, потому что вы или кто-то другой "
+"запросили пароль для вашей учетной записи пользователя.\n"
+"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите "
+"кнопку ниже, чтобы сбросить пароль."
 
 #: templates/account/email/password_reset_key_message.html:9
 msgid "Reset password"
@@ -347,8 +391,8 @@ msgstr "Ваше имя пользователя - %(username)s."
 
 #: templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you"
-" an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
 msgstr ""
 "Забыли свой пароль? Введите адрес электронной почты внизу, и мы вышлем вам "
 "электронное письмо  с инструкцией для сброса пароля. "
@@ -360,8 +404,7 @@ msgstr "Изменить Пароль"
 #: templates/account/password_reset.html:24
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
-"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом "
-"пароля."
+"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом пароля."
 
 #: templates/account/password_reset_from_key.html:5
 #: templates/account/password_reset_from_key.html:8
@@ -377,8 +420,8 @@ msgstr "Испорченный Токен"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-"reset</a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
 msgstr ""
 "Ссылка для смены пароля не рабочая, возможно она была уже использована. "
 "Пожалуйста, запросите <a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
@@ -501,11 +544,11 @@ msgstr "строка кода"
 msgid "code block"
 msgstr "блок кода"
 
-#: templates/content/note_display.html:44
+#: templates/content/note_display.html:49
 msgid "Posted on"
 msgstr "Опубликовано"
 
-#: templates/content/note_display.html:44
+#: templates/content/note_display.html:49
 #: templates/content/note_list_layout.html:20
 #: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:78
 #: templates/welcome.html:110 templates/welcome.html:144
@@ -514,42 +557,42 @@ msgstr "Опубликовано"
 msgid "Updated"
 msgstr "Обновлен"
 
-#: templates/content/note_display.html:71
-#: templates/content/note_display.html:143
+#: templates/content/note_display.html:76
+#: templates/content/note_display.html:148
 msgid "Unpin"
 msgstr "Открепить"
 
-#: templates/content/note_display.html:75
-#: templates/content/note_display.html:147
+#: templates/content/note_display.html:80
+#: templates/content/note_display.html:152
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/content/note_display.html:80
-#: templates/content/note_display.html:152
+#: templates/content/note_display.html:85
+#: templates/content/note_display.html:157
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/content/note_display.html:85
-#: templates/content/note_display.html:157
+#: templates/content/note_display.html:90
+#: templates/content/note_display.html:162
 msgid "Download"
 msgstr "Скачать"
 
-#: templates/content/note_display.html:86
-#: templates/content/note_display.html:158
+#: templates/content/note_display.html:91
+#: templates/content/note_display.html:163
 msgid "Fork"
 msgstr "Копировать"
 
-#: templates/content/note_display.html:129
+#: templates/content/note_display.html:134
 msgid "Copy link"
 msgstr "Скопировать ссылку"
 
-#: templates/content/note_display.html:172 templates/content/search.html:7
+#: templates/content/note_display.html:177 templates/content/search.html:7
 #: templates/content/search.html:17 templates/content/search.html:74
 #: templates/layouts/sidebar/search_form.html:8
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/content/note_display.html:190
+#: templates/content/note_display.html:195
 msgid "Download Note"
 msgstr "Скачать Запись"
 
@@ -739,8 +782,7 @@ msgid "Sign in with email"
 msgstr "Вход через email"
 
 #: templates/layouts/auth_modals.html:36
-msgid ""
-"Enter the email address associated with your account and your password."
+msgid "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
 #: templates/layouts/auth_modals.html:39 templates/users/signup.html:44
@@ -824,10 +866,6 @@ msgstr "Популярные"
 msgid "Most liked"
 msgstr "По лайкам"
 
-#: templates/layouts/sidebar/footer.html:7 templates/welcome.html:22
-msgid "About"
-msgstr "О нас"
-
 #: templates/layouts/sidebar/footer.html:8
 msgid "Contacts"
 msgstr "Контакты"
@@ -856,8 +894,7 @@ msgstr "Ошибка при входе через социальную сеть"
 #: templates/socialaccount/authentication_error.html:10
 msgid ""
 "An error occurred while attempting to login via your social network account."
-msgstr ""
-"Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
+msgstr "Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
 
 #: templates/socialaccount/signup.html:5
 msgid "Signup"
@@ -871,7 +908,8 @@ msgstr "Регистрация"
 #, python-format
 msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
-"  %(site_name)s. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one."
+"  %(site_name)s. The email associated with your account already exists on "
+"NoteD. Please login with your existing email or register with a new one."
 msgstr ""
 "Вы пытаетесь зарегистрироваться на сайте через %(provider_name)s. Адрес "
 "электронной почты привязанный к этому аккаунту уже существует на NoteD. "
@@ -921,17 +959,9 @@ msgstr ""
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/welcome.html:25
-msgid "Contact"
-msgstr "Связаться"
-
 #: templates/welcome.html:28
 msgid "Sing In"
 msgstr "Вход"
-
-#: templates/welcome.html:31
-msgid "Start writing"
-msgstr "Начать писать"
 
 #: templates/welcome.html:36
 msgid "Stay curious."
@@ -945,7 +975,6 @@ msgstr ""
 "своими записями с остальными на любые темы."
 
 #: templates/welcome.html:38
-#| msgid "Start writing"
 msgid "Start reading"
 msgstr "Начать читать"
 

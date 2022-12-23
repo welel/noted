@@ -418,7 +418,7 @@ class Note(models.Model):
         )
         similar_notes = similar_notes.annotate(
             same_tags=Count("tags")
-        ).order_by("-same_tags", "-datetime_created")
+        ).order_by("-same_tags", "-created")
         return similar_notes
 
     @property
@@ -438,5 +438,6 @@ class Note(models.Model):
         Average ru word length = 7,2
         Average en word length = 5,2
         Average wpm reading speed = 150
+        min = (len(`self.body_raw`) + 1) / ((7.2 + 5.2) / 2) / 150 =
         """
-        return int((len(self.body_raw) + 1) / ((7.2 + 5.2) / 2) // 150)
+        return round((len(self.body_raw) + 1) / 6.2 / 150)

@@ -333,7 +333,7 @@ class NoteDetailsView(DetailView):
 
     def get_object(self):
         note = super().get_object()
-        if note:
+        if note and self.request.user != note.author:
             Note.objects.filter(pk=note.pk).update(views=F("views") + 1)
         return note
 

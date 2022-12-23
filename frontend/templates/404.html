@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{% trans "Couldn't find page" %}{% endblock %}
+
+{% block nav %}{% endblock %}
+
+{% block main %}
+
+<div id="body" style="position: absolute; height: 100%; border-bottom: 1px solid black; width: 100%;">
+<div id="welcome-anhor" class="container">
+<div class="row">
+<div class="col" style="max-width: 1100px; margin: auto;">
+    <nav class="navbar mt-2">
+        <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="{% static 'img/logo.png' %}" alt="NoteD." width="30" height="30" class="d-inline-block align-text-top">
+            <span class="text-white fw-bold">NoteD.</span>
+        </a>
+        <ul class="nav justify-content-end">
+            <li class="nav-item d-sm-block d-none">
+            <a class="nav-link active text-white fw-bold fs-6" target="_blank" aria-current="page" href="https://github.com/welel/noted">{% trans "About" %}</a>
+            </li>
+            <li class="nav-item d-sm-block d-none">
+            <a class="nav-link text-white fw-bold fs-6" target="_blank" href="mailto:pavel.loginov.dev@gmail.com">{% trans "Contact" %}</a>
+            </li>
+            <li class="nav-item ms-2">
+            <a class="btn btn-success nav-link text-white rounded-pill" href="{% url 'content:home' %}">{% trans "Start writing" %}</a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    <h1 class="text-white text-left" style=" margin-top: 150px; font-size: 92px;" >404</h1>
+    <p class="text-white fs-5 mt-2" >{% trans "We couldn't find this page." %}</p>
+    <a id="welcome-header-btn" class="btn btn-success rounded-pill fs-5 mt-3" href="{% url 'content:home' %}">{% trans "Go Home" %}</a> 
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script type="text/javascript" src="{% static 'js/welcome.js' %}"></script>
+{% endblock %}

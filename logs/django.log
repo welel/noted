@@ -1,0 +1,24 @@
+
+
+WARNING
+2022-12-23 17:44:22,761
+django.request log on line: 241
+Not Found: /en/unittest_fixtures.jpeg
+
+
+WARNING
+2022-12-23 17:44:22,762
+django.server basehttp on line: 187
+"GET /en/unittest_fixtures.jpeg HTTP/1.1" 404 7266
+
+
+WARNING
+2022-12-23 17:44:26,475
+django.request log on line: 241
+Not Found: /en/unittest_fixtures.jpeg
+
+
+WARNING
+2022-12-23 17:44:26,476
+django.server basehttp on line: 187
+"GET /en/unittest_fixtures.jpeg HTTP/1.1" 404 7266
