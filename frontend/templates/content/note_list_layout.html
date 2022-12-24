@@ -6,7 +6,7 @@
         <div class="col">
             {% if not note.anonymous %}
             <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
-            <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="24" height="24"></span>
+            <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="24" height="24"></span>
             <span class="col">{{ note.author.full_name }}</span>
             </a>
             {% else %}
@@ -58,7 +58,7 @@
         {% if note.first_image_url %}
         </div>
         <div class="col-2 d-md-block d-none">
-            <img src="{{ note.first_image_url }}" style="object-fit: cover;" width="112px;" height="112px;"/>
+            <img src="{{ note.first_image_url }}" alt="first note image" style="object-fit: cover;" width="112px;" height="112px;"/>
         </div>
         {% endif %}
     </div>

@@ -1,6 +1,6 @@
 <!-- List of notes for a sidebar. -->
 {% load i18n %}
-<div class="mt-5">
+<aside class="mt-5">
     <h5 style="font-size: 16px;">{% trans "More from NoteD." %}</h5>
     <div class="mt-4">
         {% for note in sidenotes|slice:":5" %}
@@ -24,4 +24,4 @@
         </a>
         {% endfor %}
     </div>
-</div>
+</aside>

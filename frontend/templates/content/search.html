@@ -4,7 +4,7 @@
 {% load i18n %}
 
 
-{% block title %}{% trans "Search" %}{% endblock %}
+{% block title %}{% trans "Search" %} - NoteD{% endblock %}
 
 
 {% block main %}
@@ -44,7 +44,7 @@
                 {% for user in users %}
                 <div class="row mt-3 mb-3 d-flex align-items-center">
                     <div class="col-2 text-center d-sm-inline d-none">
-                        <div><img src="{{ user.avatar.url }}" class="rounded-circle" alt="A" width="60" height="60"></div>
+                        <div><img src="{{ user.avatar.url }}" class="rounded-circle" alt="Avatar" width="60" height="60"></div>
                     </div>
                     <div class="col">
                         <a href="{{ user.get_absolute_url }}" class="fw-bold text-dark text-decoration-none" style="font-size: 1.1rem;">{{ user.full_name }}</a>

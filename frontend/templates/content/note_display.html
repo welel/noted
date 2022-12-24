@@ -4,7 +4,28 @@
 {% load i18n %}
 
 
-{% block title %}{{ note.title }}{% endblock %}
+{% block title %}{{ note.title }} - NoteD{% endblock %}
+
+
+{% block extra_meta %}
+{% with summary=note.summary tags=note.tags.all source=note.source %}
+
+{% if summary or source %}
+<meta name="description" content="{% if summary %}{{ summary }}{% elif source %}{% trans "Summary on " %}{{ source.title }}{% endif %}">
+{% endif %}
+
+{% if summary %}
+<meta name="summary" content="{{ summary }}">
+{% endif %}
+
+{% if tags %}
+<meta name="keywords" content="{% for tag in tags %}{{ tag }}, {% endfor %}">
+{% endif %}
+
+<meta name="author" content="{{ note.author.full_name }}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endwith %}
+{% endblock %}
 
 
 {% block extra_head %}
@@ -17,7 +38,7 @@
     <div class="row">
         <div class="col-lg-1 col-0"></div>
         <div class="col-lg-8 col-12 mx-lg-0 mx-2">
-            <div class="container-fluid" style="max-width: 700px;">
+            <article class="container-fluid" style="max-width: 700px;" itemscope itemtype="https://schema.org/Blog">
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto me-auto">
                         <table>
@@ -37,16 +58,16 @@
                             <tr>
                                 <td class="pe-3" rowspan="2">
                                     <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="45" height="45">
+                                    <img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="45" height="45">
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a  href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" itemprop="author" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
                             {% endif %}
                             <tr>
-                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {% if note.is_modified %}{% trans "Updated" %}{% endif %} {{ note.modified|date:"M j" }} {% if not note.this_year %}, {{ note.modified|date:"Y" }}{% endif %}</td>
+                                <td class="text-secondary" style="font-size: 0.8rem;">{% trans "Posted on" %} {% if note.is_modified %}{% trans "Updated" %}{% endif %} <time itemprop="dateModified" datetime="{{ note.modified|date:"Y-m-d" }}">{{ note.modified|date:"M j" }} {% if not note.this_year %}, {{ note.modified|date:"Y" }}{% endif %}</time></td>
                             </tr>
                             </tbody>
 
@@ -93,10 +114,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <h2>{{ note.title }}</h2>
-                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Parent" %}: {{ note.fork.title }}</i></a>{% endif %} 
-                </div>
+                <header class="row mt-5">
+                    <h1 itemprop="headline" class="fs-2">{{ note.title }}</h1>
+                    <summary itemprop="abstract" hidden>{{ note.summary }}</summary>
+                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Parent" %}: <span itemprop="alternativeHeadline">{{ note.fork.title }}</span></i></a>{% endif %} 
+                </header>
                 <hr>
                 {% if note.source %}
                 <div class="row">
@@ -110,7 +132,7 @@
                     </div>
                 </div>
                 {% endif %}
-                <div id="note-body" class="row mt-4" style="font-size: 19px; line-height: 33px;">
+                <div id="note-body" class="row mt-4" style="font-size: 19px; line-height: 33px;" itemprop="text">
                     {{ note.body_html|safe }}
                 </div>
                 <div class="row row-cols-auto d-flex justify-content-between mt-5">
@@ -123,7 +145,7 @@
                         </a>
                         {% for tag in note.tags.all %}
                         <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
-                        <span class="badge tag rounded-pill text-bg-secondary mx-1">{{ tag }}</span>
+                        <span class="badge tag rounded-pill text-bg-secondary mx-1" itemprop="keywords">{{ tag }}</span>
                         </a>
                         {% endfor %}
                     </div>
@@ -166,7 +188,7 @@
                     </div>
                 </div>
                 <hr class="mt-4">
-            </div>
+            </article>
         </div>
         <div class="col-lg-3 col-12 px-4">
             <div class="input-group rounded mt-0">
@@ -192,7 +214,7 @@
 <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
     <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans "Download Note" %}</h1>
+        <p class="modal-title fs-5 fw-bold" id="exampleModalLabel">{% trans "Download Note" %}</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">

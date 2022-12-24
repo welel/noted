@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load filtersourcetags %}
 
-<div class="mt-5">
+<aside class="mt-5">
     <h6 style="margin-bottom: -15px;">{% trans "More for" %} {{ source.type|readabletype }}</h6>
     {% for note in sidenotes|slice:":5" %}
     <div class="mt-4">
@@ -19,4 +19,4 @@
         </a>
     </div>
     {% endfor %}
-</div>
+</aside>

@@ -4,7 +4,12 @@
 {% load filtersourcetags %}
 
 
-{% block title %}{{ type }}{% endblock %}
+{% block title %}{{ type }} - NoteD{% endblock %}
+
+
+{% block extra_meta %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
 
 {% block center %}
 <div class="container-fluid mt-4" style="max-width:770px;">

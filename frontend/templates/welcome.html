@@ -3,7 +3,12 @@
 {% load static %}
 {% load i18n %}
 
+
+{% block title %}NoteD - {% trans "Where knowledge is open" %}{% endblock %}
+
+
 {% block nav %}{% endblock %}
+
 
 {% block main %}
 
@@ -14,7 +19,7 @@
     <nav class="navbar mt-2">
         <div class="container-fluid">
         <a class="navbar-brand">
-            <img src="{% static 'img/logo.png' %}" alt="NoteD." width="30" height="30" class="d-inline-block align-text-top">
+            <img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="30" height="30" class="d-inline-block align-text-top">
             <span class="text-white fw-bold">NoteD.</span>
         </a>
         <ul class="nav justify-content-end">
@@ -61,7 +66,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.0.anonymous %}
                         <a href="{{ trends.0.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.0.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.0.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.0.author.full_name }}</span>
                         </a>
                         {% else %}
@@ -93,7 +98,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.1.anonymous %}
                         <a href="{{ trends.1.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.1.author.full_name }}</span>
                         </a>
                         {% else %}
@@ -127,7 +132,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.2.anonymous %}
                         <a href="{{ trends.2.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.2.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.2.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.2.author.full_name }}</span>
                         </a>
                         {% else %}
@@ -159,7 +164,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.3.anonymous %}
                         <a href="{{ trends.3.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.3.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.3.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.3.author.full_name }}</span>
                         </a>
                         {% else %}
@@ -193,7 +198,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.4.anonymous %}
                         <a href="{{ trends.4.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.4.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.4.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.4.author.full_name }}</span>
                         </a>
                         {% else %}
@@ -225,7 +230,7 @@
                     <div class="d-flex align-items-center" style="font-size: 13px;">
                         {% if not trends.5.anonymous %}
                         <a href="{{ trends.5.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+                        <span><img src="{{ trends.1.author.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
                         <span>{{ trends.5.author.full_name }}</span>
                         </a>
                         {% else %}

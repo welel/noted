@@ -32,7 +32,7 @@ DEBUG = os.getenv("DEBUG_SET")
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = ["welel-noted.site"]
+ALLOWED_HOSTS = ["welel-noted.site", "www.welel-noted.site"]
 ALLOWED_HOSTS.append(os.getenv("IP"))
 if DEBUG:
     ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
