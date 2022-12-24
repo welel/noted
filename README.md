@@ -7,9 +7,9 @@
   <img src="https://img.shields.io/badge/code%20style-black-black">
 </p>
 
-<h3 align="center">This is a web service that helps to make, store and share notes.</h3>
+<h3 align="center">The website helps to make, store, search and share notes.</h3>
 
-This website helps to create personal notes, share them public, search notes for interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes, but has a practical application.
+This website helps to create personal notes, share them public, search for notes on a specific information source or interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes, but has a practical application.
 
 <p align="center"><a href="https://welel-noted.site/"><img src="https://i.ibb.co/JxX9Tqm/screely-1671564299536.png" alt="NoteD."  border="0" /></a></p>
 

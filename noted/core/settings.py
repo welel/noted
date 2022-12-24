@@ -39,6 +39,8 @@ if DEBUG:
 
 CSRF_TRUSTED_ORIGINS = ["https://welel-noted.site", "http://welel-noted.site"]
 
+ADMINS = [(os.getenv("ADMIN_NAME"), os.getenv("ADMIN_EMAIL"))]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "common.middleware.WwwRedirectMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -152,6 +155,11 @@ LOGGING = {
         }
     },
     "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,
+        },
         "file_django": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/django.log"),
@@ -187,6 +195,16 @@ LOGGING = {
             filename=PROJECT_DIR.joinpath("logs/markdown.log"),
             level="WARNING",
         ),
+        "file_content_views": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/content_views.log"),
+            level="INFO",
+        ),
+        "file_users_views": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/users_views.log"),
+            level="INFO",
+        ),
     },
     "loggers": {
         "django": {"handlers": ["file_django"], "level": "WARNING"},
@@ -213,6 +231,14 @@ LOGGING = {
         "markdown": {
             "handlers": ["file_markdown"],
             "level": "WARNING",
+        },
+        "content.views.note": {
+            "handlers": ["file_content_views"],
+            "level": "INFO",
+        },
+        "users.views": {
+            "handlers": ["file_users_views"],
+            "level": "INFO",
         },
     },
 }
@@ -252,6 +278,7 @@ EMAIL_USE_SSL = True
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+SERVER_EMAIL = os.getenv("EMAIL_HOST_USER")
 DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 EMAIL_PORT = 465
 

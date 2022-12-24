@@ -1,3 +1,4 @@
+import logging as log
 import json
 
 from allauth.account.models import EmailAddress
@@ -16,7 +17,10 @@ from users.auth import send_signup_link, signer
 from users.forms import SignupForm
 from users.models import SignupToken, User
 from common.decorators import ajax_required
-from common.logging import logging_view
+from common.logging import logging_view, VIEW_LOG_TEMPLATE
+
+
+logger = log.getLogger(__name__)
 
 
 @logging_view
@@ -83,6 +87,16 @@ def signup(request, token):
         return render(request, template_name, {"error": "Signature Expired"})
     except BadSignature:
         return render(request, template_name, {"error": "Bad Signature"})
+    finally:
+        logger.warning(
+            VIEW_LOG_TEMPLATE.format(
+                view=fn.__name__,
+                user=request.user,
+                method=request.method,
+                path=request.path,
+            )
+            + f"User have problems with sign up signature: token id {token.pk}"
+        )
 
     if request.method == "GET":
         form = SignupForm()
@@ -103,6 +117,7 @@ def signup(request, token):
                     user,
                     backend="django.contrib.auth.backends.ModelBackend",
                 )
+            logger.info("New user sign up:" + str(user))
             return redirect(reverse("content:home"))
         else:
             context["form"] = form

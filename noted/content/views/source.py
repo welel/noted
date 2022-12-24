@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from content.models import Note, Source
 from common import ajax_required
-from common.logging import LoggingView, logging_view
+from common.logging import LoggingView, logging_view, logging
 
 
 class SourceDetailsView(LoggingView, DetailView):
@@ -25,6 +25,7 @@ class SourceDetailsView(LoggingView, DetailView):
     model = Source
     template_name = "content/source_display.html"
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["notes"] = self.get_object().notes.filter(draft=False)
@@ -51,6 +52,7 @@ class SourceTypeDetailsView(LoggingView, View):
 
     """
 
+    @logging_view
     def get(self, request, code):
         try:
             type = Source.TYPES[int(code)]

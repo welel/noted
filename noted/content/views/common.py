@@ -1,3 +1,5 @@
+import logging as log
+
 from taggit.models import Tag
 
 from django.contrib.postgres.search import TrigramSimilarity, SearchVector
@@ -7,6 +9,9 @@ from django.utils.translation import gettext_lazy as _
 from content.models import Note, Source
 from users.models import User
 from common.logging import logging_view
+
+
+logger = log.getLogger("django.request")
 
 
 @logging_view
@@ -33,6 +38,11 @@ def search(request, type):
         vector = SearchVector("full_name", "username")
         context["users"] = User.objects.annotate(search=vector).filter(
             search=query
+        )
+
+    else:
+        logger.warning(
+            f"Bad search request {type} not in [notes, sources, tags, people]"
         )
 
     return render(request, "content/search.html", context)

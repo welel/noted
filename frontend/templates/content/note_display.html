@@ -8,7 +8,7 @@
 
 
 {% block extra_meta %}
-{% with summary=note.summary tags=note.tags.all source=note.source %}
+{% with summary=note.summary tags=note.tags.all source=note.source image_url=note.first_image_url %}
 
 {% if summary or source %}
 <meta name="description" content="{% if summary %}{{ summary }}{% elif source %}{% trans "Summary on " %}{{ source.title }}{% endif %}">
@@ -16,6 +16,7 @@
 
 {% if summary %}
 <meta name="summary" content="{{ summary }}">
+<meta itemprop="abstract"  content="{{ note.summary }}">
 {% endif %}
 
 {% if tags %}
@@ -24,6 +25,10 @@
 
 <meta name="author" content="{{ note.author.full_name }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+{% if image_url %}
+<link itemprop="thumbnailUrl" href="{{ image_url }}" />
+{% endif %}
 {% endwith %}
 {% endblock %}
 
@@ -62,7 +67,7 @@
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" itemprop="author" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
                             {% endif %}
@@ -109,25 +114,24 @@
                                     </li>
                                 {% endif %}
                                 <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
-                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <header class="row mt-5">
-                    <h1 itemprop="headline" class="fs-2">{{ note.title }}</h1>
-                    <summary itemprop="abstract" hidden>{{ note.summary }}</summary>
-                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h">{% trans "Parent" %}: <span itemprop="alternativeHeadline">{{ note.fork.title }}</span></i></a>{% endif %} 
+                    <h1 itemprop="headline" style="font-size: 32px;">{{ note.title }}</h1>
+                    {% if note.fork %}<a href={{ note.fork.get_absolute_url }} class="text-secondary text-decoration-none" style="font-size: 0.7rem;"><i class="github-h"><i class="bi bi-box-arrow-in-up-right me-1"></i>{% trans "Copy of" %} <span itemprop="alternativeHeadline">"{{ note.fork.title }}"</span></i></a>{% endif %} 
                 </header>
                 <hr>
                 {% if note.source %}
                 <div class="row">
                     <div class="col">
                         <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
-                        <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.verbose_type }}</span>
+                            <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.verbose_type }}</span>
                         </a>
                         <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
+                            <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
                         </a>
                     </div>
                 </div>
@@ -182,7 +186,7 @@
                                     </li>
                                 {% endif %}
                                 <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
-                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-bezier"></i> {% trans "Fork" %}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
                             </ul>
                         </div>
                     </div>

@@ -208,7 +208,24 @@ pre:hover button {
 #note-body h6 + p {
     margin-top: 0.5rem !important;
 }
-
+#note-body h1 {
+    font-size: 32px;
+}
+#note-body h2 {
+    font-size: 30px;
+}
+#note-body h3 {
+    font-size: 28px;
+}
+#note-body h4 {
+    font-size: 26px;
+}
+#note-body h5 {
+    font-size: 24px;
+}
+#note-body h6 {
+    font-size: 22px;
+}
 /* paragraphs */
 #note-body p {
     margin-top: 1.8rem;

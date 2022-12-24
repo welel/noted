@@ -20,6 +20,8 @@
     download_note: download a note as a file.
 
 """
+import logging as log
+
 from taggit.models import Tag
 
 from django.contrib.auth.decorators import login_required
@@ -39,8 +41,16 @@ from wsgiref.util import FileWrapper
 from content.forms import NoteForm
 from content.models import Note, Source
 from common import ajax_required
-from common.logging import LoggingView, logging_view
+from common.logging import (
+    LoggingView,
+    logging_view,
+    logging,
+    VIEW_LOG_TEMPLATE,
+)
 from users.models import User
+
+
+logger = log.getLogger(__name__)
 
 
 class NoteList(LoggingView, ListView):
@@ -70,9 +80,11 @@ class NoteList(LoggingView, ListView):
     context_object_name = "notes"
     paginate_by = 100
 
+    @logging
     def get_ordering(self) -> str:
         return self.request.GET.get("order", default="-datetime_created")
 
+    @logging
     def get_ordered_queryset(self) -> QuerySet:
         """Order a queryset by GET param `order`."""
         order = self.get_ordering()
@@ -94,15 +106,18 @@ class WelcomeNoteList(NoteList):
 
     template_name = "welcome.html"
 
+    @logging_view
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("content:home")
         else:
             return super().get(request, *args, **kwargs)
 
+    @logging
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -134,9 +149,11 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     login_url = "content:welcome"
     redirect_field_name = "content:home"
 
+    @logging
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -168,11 +185,13 @@ class ProfileNoteList(NoteList):
 
     template_name = "content/note_list_profile.html"
 
+    @logging_view
     def get(self, request, user_pk, *args, **kwargs):
         if request.user.pk == user_pk:
             return redirect("content:personal_notes", *args, **kwargs)
         return super().get(request, user_pk, *args, **kwargs)
 
+    @logging
     def get_queryset(self):
         user = get_object_or_404(User, pk=self.kwargs.get("user_pk"))
         return (
@@ -181,6 +200,7 @@ class ProfileNoteList(NoteList):
             .filter(author=user, draft=False, anonymous=False)
         )
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs.get("user_pk")
@@ -207,9 +227,11 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
     template_name = "content/note_list_personal.html"
 
+    @logging
     def get_queryset(self):
         return super().get_ordered_queryset().filter(author=self.request.user)
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
@@ -225,23 +247,26 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 class NoteDraftMixin:
     """Manages saving of a note based on pressed button (publish or draft)."""
 
+    @logging
     def form_valid(self, form):
         form.instance.draft = self.draft
         return super().form_valid(form)
 
+    @logging_view
     def post(self, request, *args, **kwargs):
         self.draft = "savedraft" in request.POST
         return super().post(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
+class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
     """Handels the note create form."""
 
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
+    @logging
     def add_initial_source(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with `Source` data."""
         try:
@@ -258,6 +283,7 @@ class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
         )
         return initial
 
+    @logging
     def add_initial_tag(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with a tag."""
         try:
@@ -267,6 +293,7 @@ class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
         initial["tags"] = tag.name
         return initial
 
+    @logging
     def get_initial(self):
         initial = super().get_initial()
         source_slug = self.request.GET.get("source")
@@ -277,6 +304,7 @@ class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
             initial = self.add_initial_tag(tag_slug, initial)
         return initial
 
+    @logging
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -286,6 +314,7 @@ class NoteCreateView(NoteDraftMixin, LoggingView, CreateView):
 class NoteForkView(NoteCreateView):
     """Handles the create note form (for forked note)."""
 
+    @logging
     def get_initial(self):
         initial = super().get_initial()
         try:
@@ -294,7 +323,7 @@ class NoteForkView(NoteCreateView):
             return initial
         self.object = note.get_fork()
         if note.source:
-            initial = super().get_initial_source(note.source.slug, initial)
+            initial = super().add_initial_source(note.source.slug, initial)
         if note.tags:
             initial["tags"] = note.tags.all()
         return initial
@@ -327,11 +356,13 @@ class NoteDetailsView(LoggingView, DetailView):
     model = Note
     template_name = "content/note_display.html"
 
+    @logging
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["sidenotes"] = Note.objects.public()[:5]
         return context
 
+    @logging
     def get_object(self):
         note = super().get_object()
         if note and self.request.user != note.author:
@@ -339,13 +370,14 @@ class NoteDetailsView(LoggingView, DetailView):
         return note
 
 
-class NoteView(LoggingView, View):
+class NoteView(View):
     """Choose a view based on a request method (GET/POST).
 
     For future: it will choose between GET - the details view and
     POST - the comment form handler.
     """
 
+    @logging_view
     def get(self, request, *args, **kwargs):
         view = NoteDetailsView.as_view()
         return view(request, *args, **kwargs)
@@ -399,6 +431,15 @@ def download_note(request, filetype: str, slug: str):
     note = get_object_or_404(Note, slug=slug)
     file = note.generate_file_to_response(filetype=filetype)
     if not file or (note.draft and request.user != note.author):
+        logger.error(
+            VIEW_LOG_TEMPLATE.format(
+                view=download_note.__name__,
+                user=request.user,
+                method=request.method,
+                path=request.path,
+            )
+            + "Can't generate a file."
+        )
         return HttpResponseBadRequest()
     response = HttpResponse(
         FileWrapper(file["file"]), content_type=file["content_type"]
