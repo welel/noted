@@ -7,6 +7,11 @@
 {% block title %}{{ note.title }} - NoteD{% endblock %}
 
 
+{% block itemscope %}
+itemscope itemtype="https://schema.org/Blog"
+{% endblock %}
+
+
 {% block extra_meta %}
 {% with summary=note.summary tags=note.tags.all source=note.source image_url=note.first_image_url %}
 
@@ -43,7 +48,7 @@
     <div class="row">
         <div class="col-lg-1 col-0"></div>
         <div class="col-lg-8 col-12 mx-lg-0 mx-2">
-            <article class="container-fluid" style="max-width: 700px;" itemscope itemtype="https://schema.org/Blog">
+            <article class="container-fluid" style="max-width: 700px;">
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto me-auto">
                         <table>

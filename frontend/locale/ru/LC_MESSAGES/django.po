@@ -8,22 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 14:02+0300\n"
-"PO-Revision-Date: 2022-12-20 10:02+0000\n"
+"POT-Creation-Date: 2022-12-25 15:02+0300\n"
+"PO-Revision-Date: 2022-12-25 12:14+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: noted/common/apps.py:7
 msgid "Common Functionality"
-msgstr ""
+msgstr "Общий функционал"
 
 #: noted/content/apps.py:8
 msgid "Content"
@@ -61,7 +59,7 @@ msgstr "Краткое изложение"
 
 #: noted/content/forms.py:87
 msgid "Note text can't be empty."
-msgstr ""
+msgstr "Тело записи не может быть пусто."
 
 #: noted/content/forms.py:98
 msgid "You can add only 3 tags."
@@ -135,10 +133,9 @@ msgid "HTML body"
 msgstr "HTML разметка"
 
 #: noted/content/models.py:245
-#, fuzzy
 #| msgid "Write summary on the note in 100 symbols."
 msgid "Write summary on the note in 250 symbols."
-msgstr "Напишите краткое изложение в 100 символов."
+msgstr "Напишите краткое изложение в 150 символов."
 
 #: noted/content/models.py:248
 msgid "Draft"
@@ -148,12 +145,12 @@ msgstr "Черновик"
 msgid "Only you can see the note."
 msgstr "Только вы сможете просматривать эту запись."
 
-#: noted/content/models.py:251 templates/content/note_display.html:33
+#: noted/content/models.py:251 templates/content/note_display.html:64
 #: templates/content/note_list_layout.html:15
-#: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:70
-#: templates/welcome.html:102 templates/welcome.html:136
-#: templates/welcome.html:168 templates/welcome.html:202
-#: templates/welcome.html:234
+#: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:75
+#: templates/welcome.html:107 templates/welcome.html:141
+#: templates/welcome.html:173 templates/welcome.html:207
+#: templates/welcome.html:239
 msgid "Anonymous"
 msgstr "Анонимно"
 
@@ -161,8 +158,8 @@ msgstr "Анонимно"
 msgid "Others won't see that the note is yours."
 msgstr "Ваше авторство у этой записи не будет указано."
 
-#: noted/content/models.py:256 templates/content/note_display.html:78
-#: templates/content/note_display.html:150
+#: noted/content/models.py:256 templates/content/note_display.html:109
+#: templates/content/note_display.html:181
 msgid "Pin"
 msgstr "Прикреплен"
 
@@ -182,25 +179,24 @@ msgstr "Изменен"
 msgid "Views"
 msgstr "Просмотров"
 
-#: noted/content/models.py:267 templates/content/note_display.html:98
+#: noted/content/models.py:267
 msgid "Parent"
 msgstr "Родитель"
 
 #: noted/content/models.py:281
 msgid ""
 "Add tags. Separate tags by using \"Enter\" or comma.\n"
-"        You can add maximum 3 tags, and length of tags should be less than "
-"25\n"
+"        You can add maximum 3 tags, and length of tags should be less than 25\n"
 "        symbols."
 msgstr ""
 "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". Вы "
 "можете добавить не более 3 тегов с именем длинной до 25 символов. "
 
-#: noted/core/settings.py:135
+#: noted/core/settings.py:256
 msgid "English"
 msgstr "Английский"
 
-#: noted/core/settings.py:136
+#: noted/core/settings.py:257
 msgid "Russian"
 msgstr "Русский"
 
@@ -216,7 +212,7 @@ msgstr "Имя Пользователя"
 msgid "User Accounts"
 msgstr "Аккаунты пользователя"
 
-#: noted/users/auth.py:35
+#: noted/users/auth.py:40
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
@@ -293,7 +289,7 @@ msgstr "Подписки на теги"
 msgid "Token"
 msgstr "Токен"
 
-#: noted/users/views.py:70
+#: noted/users/views.py:78
 msgid ""
 "You already registered. If you didn't register, request              for "
 "another link!"
@@ -301,42 +297,41 @@ msgstr ""
 "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 "регистрации."
 
-#: noted/users/views.py:120
+#: noted/users/views.py:140
 msgid ""
-"Sorry, but we could not find a user account with                             "
-"that email."
+"Sorry, but we could not find a user account with"
+"                             that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
-#: noted/users/views.py:130
+#: noted/users/views.py:150
 msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
 
 #: templates/404.html:7
 msgid "Couldn't find page"
-msgstr ""
+msgstr "Страница не найдена."
 
-#: templates/404.html:25 templates/layouts/sidebar/footer.html:7
-#: templates/welcome.html:22
+#: templates/404.html:25 templates/layouts/sidebar/footer.html:8
+#: templates/welcome.html:27
 msgid "About"
 msgstr "О нас"
 
-#: templates/404.html:28 templates/welcome.html:25
+#: templates/404.html:28 templates/welcome.html:30
 msgid "Contact"
 msgstr "Связаться"
 
-#: templates/404.html:31 templates/welcome.html:31
+#: templates/404.html:31 templates/welcome.html:36
 msgid "Start writing"
 msgstr "Начать писать"
 
 #: templates/404.html:37
 msgid "We couldn't find this page."
-msgstr ""
+msgstr "Страница не найдена."
 
 #: templates/404.html:38
-#, fuzzy
 #| msgid "Home"
 msgid "Go Home"
-msgstr "Главная"
+msgstr "На главную"
 
 #: templates/account/base.html:32
 msgid "Change E-mail"
@@ -355,15 +350,11 @@ msgstr "Изменить Пароль"
 
 #: templates/account/email/password_reset_key_message.html:6
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"button below to reset your password."
+"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the button below to reset your password."
 msgstr ""
-"Вы получили это электронное письмо, потому что вы или кто-то другой "
-"запросили пароль для вашей учетной записи пользователя.\n"
-"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите "
-"кнопку ниже, чтобы сбросить пароль."
+"Вы получили это электронное письмо, потому что вы или кто-то другой запросили пароль для вашей учетной записи пользователя.\n"
+"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите кнопку ниже, чтобы сбросить пароль."
 
 #: templates/account/email/password_reset_key_message.html:9
 msgid "Reset password"
@@ -391,8 +382,8 @@ msgstr "Ваше имя пользователя - %(username)s."
 
 #: templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
 msgstr ""
 "Забыли свой пароль? Введите адрес электронной почты внизу, и мы вышлем вам "
 "электронное письмо  с инструкцией для сброса пароля. "
@@ -404,7 +395,8 @@ msgstr "Изменить Пароль"
 #: templates/account/password_reset.html:24
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
-"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом пароля."
+"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом "
+"пароля."
 
 #: templates/account/password_reset_from_key.html:5
 #: templates/account/password_reset_from_key.html:8
@@ -420,14 +412,15 @@ msgstr "Испорченный Токен"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
 "Ссылка для смены пароля не рабочая, возможно она была уже использована. "
 "Пожалуйста, запросите <a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
 
 #: templates/content/note_create.html:8
-msgid "New Note"
+#| msgid "New Note"
+msgid "New note"
 msgstr "Новая запись"
 
 #: templates/content/note_create.html:26
@@ -544,66 +537,76 @@ msgstr "строка кода"
 msgid "code block"
 msgstr "блок кода"
 
-#: templates/content/note_display.html:49
+#: templates/content/note_display.html:19
+#| msgid "Summary"
+msgid "Summary on "
+msgstr "Краткое изложение"
+
+#: templates/content/note_display.html:80
 msgid "Posted on"
 msgstr "Опубликовано"
 
-#: templates/content/note_display.html:49
+#: templates/content/note_display.html:80
 #: templates/content/note_list_layout.html:20
-#: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:78
-#: templates/welcome.html:110 templates/welcome.html:144
-#: templates/welcome.html:176 templates/welcome.html:210
-#: templates/welcome.html:242
+#: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:83
+#: templates/welcome.html:115 templates/welcome.html:149
+#: templates/welcome.html:181 templates/welcome.html:215
+#: templates/welcome.html:247
 msgid "Updated"
 msgstr "Обновлен"
 
-#: templates/content/note_display.html:76
-#: templates/content/note_display.html:148
+#: templates/content/note_display.html:107
+#: templates/content/note_display.html:179
 msgid "Unpin"
 msgstr "Открепить"
 
-#: templates/content/note_display.html:80
-#: templates/content/note_display.html:152
+#: templates/content/note_display.html:111
+#: templates/content/note_display.html:183
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/content/note_display.html:85
-#: templates/content/note_display.html:157
+#: templates/content/note_display.html:116
+#: templates/content/note_display.html:188
 msgid "Delete"
 msgstr "Удалить"
 
-#: templates/content/note_display.html:90
-#: templates/content/note_display.html:162
+#: templates/content/note_display.html:121
+#: templates/content/note_display.html:193
 msgid "Download"
 msgstr "Скачать"
 
-#: templates/content/note_display.html:91
-#: templates/content/note_display.html:163
-msgid "Fork"
-msgstr "Копировать"
+#: templates/content/note_display.html:122
+#: templates/content/note_display.html:194
+msgid "Copy to your"
+msgstr "Копировать к себе"
 
-#: templates/content/note_display.html:134
+#: templates/content/note_display.html:129
+#| msgid "Copy link"
+msgid "Copy of"
+msgstr "Копия "
+
+#: templates/content/note_display.html:165
 msgid "Copy link"
 msgstr "Скопировать ссылку"
 
-#: templates/content/note_display.html:177 templates/content/search.html:7
+#: templates/content/note_display.html:208 templates/content/search.html:7
 #: templates/content/search.html:17 templates/content/search.html:74
 #: templates/layouts/sidebar/search_form.html:8
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/content/note_display.html:195
+#: templates/content/note_display.html:226
 msgid "Download Note"
 msgstr "Скачать Запись"
 
-#: templates/content/note_list_layout.html:68
+#: templates/content/note_list_layout.html:68 templates/welcome.html:285
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Сохраняйте"
 
-#: templates/content/note_list_layout.html:77 templates/welcome.html:81
-#: templates/welcome.html:113 templates/welcome.html:147
-#: templates/welcome.html:179 templates/welcome.html:213
-#: templates/welcome.html:245
+#: templates/content/note_list_layout.html:77 templates/welcome.html:86
+#: templates/welcome.html:118 templates/welcome.html:152
+#: templates/welcome.html:184 templates/welcome.html:218
+#: templates/welcome.html:250
 msgid "min read"
 msgstr "мин читать"
 
@@ -616,9 +619,9 @@ msgid "views"
 msgstr "просмотров"
 
 #: templates/content/note_list_personal.html:8
-#: templates/content/note_list_profile.html:8
-msgid "notes"
-msgstr "записи"
+#| msgid "notes"
+msgid "Your notes"
+msgstr "Ваши записи"
 
 #: templates/content/note_list_personal.html:18
 #: templates/content/note_list_profile.html:18 templates/index.html:15
@@ -662,13 +665,13 @@ msgid "Results for"
 msgstr "Результаты для"
 
 #: templates/content/search.html:23
-#: templates/content/source_type_details.html:22
-#: templates/layouts/navigation.html:33 templates/tags/tag_details.html:25
+#: templates/content/source_type_details.html:27
+#: templates/layouts/navigation.html:33 templates/tags/tag_details.html:32
 msgid "Notes"
 msgstr "Записи"
 
 #: templates/content/search.html:26
-#: templates/content/source_type_details.html:25
+#: templates/content/source_type_details.html:30
 msgid "Sources"
 msgstr "Источники"
 
@@ -676,7 +679,7 @@ msgstr "Источники"
 msgid "People"
 msgstr "Люди"
 
-#: templates/content/search.html:54 templates/tags/tag_details.html:18
+#: templates/content/search.html:54 templates/tags/tag_details.html:25
 #: templates/users/profile_sidebar_layout.html:22
 msgid "Follow"
 msgstr "Подписаться"
@@ -693,13 +696,13 @@ msgstr "Попробуйте другие ключевые слова."
 msgid "Try more general keywords."
 msgstr "Попробуйте больше ключевых слов."
 
-#: templates/content/source_display.html:19
+#: templates/content/source_display.html:29
 #: templates/content/source_list_layout.html:16
-#: templates/tags/tag_details.html:19
+#: templates/tags/tag_details.html:26
 msgid "Add Note"
 msgstr "Добавить запись"
 
-#: templates/content/source_display.html:21
+#: templates/content/source_display.html:31
 msgid "External Link"
 msgstr "Внешняя ссылка"
 
@@ -737,7 +740,7 @@ msgstr "Вставьте эту ссылку в ваш браузер:"
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
-#: templates/index.html:45 templates/welcome.html:259
+#: templates/index.html:44 templates/welcome.html:309
 msgid "Recommended topics"
 msgstr "Рекомендуемые темы"
 
@@ -782,7 +785,8 @@ msgid "Sign in with email"
 msgstr "Вход через email"
 
 #: templates/layouts/auth_modals.html:36
-msgid "Enter the email address associated with your account and your password."
+msgid ""
+"Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
 #: templates/layouts/auth_modals.html:39 templates/users/signup.html:44
@@ -866,11 +870,11 @@ msgstr "Популярные"
 msgid "Most liked"
 msgstr "По лайкам"
 
-#: templates/layouts/sidebar/footer.html:8
+#: templates/layouts/sidebar/footer.html:9
 msgid "Contacts"
 msgstr "Контакты"
 
-#: templates/layouts/sidebar/footer.html:9
+#: templates/layouts/sidebar/footer.html:10
 msgid "Privacy Policy"
 msgstr "Политика конфиденциальности"
 
@@ -894,7 +898,8 @@ msgstr "Ошибка при входе через социальную сеть"
 #: templates/socialaccount/authentication_error.html:10
 msgid ""
 "An error occurred while attempting to login via your social network account."
-msgstr "Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
+msgstr ""
+"Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
 
 #: templates/socialaccount/signup.html:5
 msgid "Signup"
@@ -908,15 +913,18 @@ msgstr "Регистрация"
 #, python-format
 msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
-"  %(site_name)s. The email associated with your account already exists on "
-"NoteD. Please login with your existing email or register with a new one."
+"  %(site_name)s. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one."
 msgstr ""
 "Вы пытаетесь зарегистрироваться на сайте через %(provider_name)s. Адрес "
 "электронной почты привязанный к этому аккаунту уже существует на NoteD. "
 "Пожалуйста, войдите с помощью существующей электронной почты или "
 "зарегистрируйте новую. "
 
-#: templates/tags/tag_details.html:18
+#: templates/tags/tag_details.html:8
+msgid "The notes about"
+msgstr "Запись о "
+
+#: templates/tags/tag_details.html:25
 msgid "Unfollow"
 msgstr "Отписаться"
 
@@ -959,28 +967,102 @@ msgstr ""
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/welcome.html:28
+#: templates/welcome.html:7
+msgid "Where knowledge is open"
+msgstr "Где знания доступны"
+
+#: templates/welcome.html:33
 msgid "Sing In"
 msgstr "Вход"
 
-#: templates/welcome.html:36
+#: templates/welcome.html:41
 msgid "Stay curious."
 msgstr "Делись знаниями."
 
-#: templates/welcome.html:37
+#: templates/welcome.html:42
 msgid ""
 "Discover notes, sources, and share your notes and knowleadge on any topic."
 msgstr ""
 "Изучай записи людей на книги, статьи, курсы и другие источники, делись "
 "своими записями с остальными на любые темы."
 
-#: templates/welcome.html:38
+#: templates/welcome.html:43
 msgid "Start reading"
 msgstr "Начать читать"
 
-#: templates/welcome.html:48
+#: templates/welcome.html:53
 msgid "trending on noted"
 msgstr "записи набирающие популярность"
+
+#: templates/welcome.html:265
+#| msgid "Write note"
+msgid "Write"
+msgstr "Пишите"
+
+#: templates/welcome.html:266
+msgid ""
+"Create private, public and anonymous notes. Help people and add the source "
+"of information (book, article, etc.) to your note and tags so that others "
+"can easily find it."
+msgstr ""
+"Создавайте личные, публичные и анонимные записи. Помогайте людям и "
+"добавляйте источник информации (книгу, статью и т. д.) к своим заметкам и "
+"теги, чтобы другие могли легко их найти."
+
+#: templates/welcome.html:269
+msgid "Explore"
+msgstr "Исследуйте"
+
+#: templates/welcome.html:270
+msgid ""
+"Search notes by title and text of the note, notes on specific sources and "
+"topics of interest."
+msgstr ""
+"Ищите записи по названию и тексту записи, по конкретным источникам и "
+"интересующим темам."
+
+#: templates/welcome.html:275
+#| msgid "Copy link"
+msgid "Copy"
+msgstr "Копируйте"
+
+#: templates/welcome.html:276
+msgid ""
+"Start creating a note based on other people's notes. Copy the note to "
+"yourself and edit as you wish."
+msgstr ""
+"Создавайте заметки на основе заметок других людей. Скопируйте заметку себе и"
+" редактируйте как пожелаете."
+
+#: templates/welcome.html:279
+#| msgid "Sources"
+msgid "Search sources"
+msgstr "Ищите источники"
+
+#: templates/welcome.html:280
+msgid ""
+"Search for the desired source and find existing notes on this source. For "
+"example: find a book and view all notes related to it."
+msgstr ""
+"Ищите нужный источник и найдёте все существующие заметки на этот источник. "
+"Например: найдите книгу и увидите все заметки, связанные с ней."
+
+#: templates/welcome.html:286
+msgid "Download notes in markdown, html and pdf formats or bookmark notes."
+msgstr ""
+"Скачивайте заметки в форматах markdown, html и pdf или добавляйте заметки в "
+"закладки своего профиля."
+
+#: templates/welcome.html:289
+msgid "Subscribe"
+msgstr "Следите"
+
+#: templates/welcome.html:290
+msgid "Subscribe to interesting topics and people."
+msgstr "Подписывайтесь на интересующие темы и людей."
+
+#~ msgid "Fork"
+#~ msgstr "Копировать"
 
 #~ msgid "Link to the source"
 #~ msgstr "Ссылка на источник"

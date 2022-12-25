@@ -1,7 +1,7 @@
 <!doctype html>
 <!-- Root template for all templates -->
 {% load static %}
-<html>
+<html {% block itemscope %}{% endblock %}>
 <head>
     <title>{% block title %}NoteD.{% endblock %}</title>
     <meta charset="utf-8">

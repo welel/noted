@@ -53,9 +53,21 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
             + traceback.print_tb(erorr.__traceback__)
         )
     logger.warning(
-        "Markdown API request is failed:\nStatus code: {code}".format(
+        "Markdown API request is failed:\nStatus code: {code}\n".format(
             code=response.status_code
         )
+        + "HEADERS:"
+        + str(response.headers)
+        + "\n"
+        + "JSON:"
+        + str(response.json)
+        + "\n"
+        + "RAW:"
+        + str(response.raw)
+        + "\n"
+        + "TEXT:"
+        + str(response.text)
+        + "\n"
     )
     return text, False
 

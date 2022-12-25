@@ -74,6 +74,17 @@ h1, h2, h3, h4, h5, h6 {
 #welcome-anhor button:hover {
     background-color: rgba(0, 138, 74, 1);
 }
+#machine-img {
+    width: 300px;
+    margin-bottom: -50px;
+    z-index: 2;
+    position: relative;
+}
+#note-screen-triangle-img {
+    width: 440px;
+    box-shadow: -45px 0px 15px -30px rgba(0,0,0,0.25);
+}
+
 
 /* BADGES & TAGS */
 .badge {

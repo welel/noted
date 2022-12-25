@@ -46,7 +46,7 @@
 </div>
 </div>
 
-<div class="container" style="position: absolute; top: 500px; text-align: left;">
+<div class="container-fluid" style="position: absolute; top: 500px; text-align: left;">
     <div class="row" style="max-width: 1100px; margin: auto;" >
         <div class="row mt-5">
             <div class="col d-flex justify-content-start">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3" style="max-width: 1100px; margin: auto;">
+    <div class="row mt-3 pb-4" style="max-width: 1100px; margin: auto;">
         <div class="col-lg-4 col-sm-6 col-12">
             <div class="row">
                 <div class="col-2">
@@ -252,6 +252,51 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row mt-4" style="background-image: linear-gradient(to right bottom, #003173, #004984, #005f8d, #007390, #028791);border-top: 1px solid black;border-bottom: 1px solid black;">
+        <div class="col-1"></div>
+        <div class="col-lg-6 col-12">
+            <div class="row" style="margin-top: 82px;">
+                <p class="fw-bold text-white" style="font-size: 5rem;">Note<span><img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="80" height="80"></span></p>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-pencil-square"></i>&nbsp; {% trans "Write" %}</p>
+                    <p class="fs-5" style="color: rgb(240,240,240);">{% trans "Create private, public and anonymous notes. Help people and add the source of information (book, article, etc.) to your note and tags so that others can easily find it." %}</p>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-search"></i>&nbsp; {% trans "Explore" %}</p>
+                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Search notes by title and text of the note, notes on specific sources and topics of interest." %}</p>
+                </div>
+            </div>
+            <div class="row mt-sm-5 mt-0">
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-clipboard2-plus"></i>&nbsp; {% trans "Copy" %}</p>
+                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Start creating a note based on other people's notes. Copy the note to yourself and edit as you wish." %}</p>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-search"></i>&nbsp; {% trans "Search sources" %}</p>
+                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Search for the desired source and find existing notes on this source. For example: find a book and view all notes related to it." %}</p>
+                </div>
+            </div>
+            <div class="row mt-sm-5 mt-0 pb-4">
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-download"></i>&nbsp; {% trans "Save" %}</p>
+                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Download notes in markdown, html and pdf formats or bookmark notes." %}</p>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-tags"></i>&nbsp; {% trans "Subscribe" %}</p>
+                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Subscribe to interesting topics and people." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-0 d-lg-block d-none mt-5">
+            <img id="machine-img" src="{% static 'img/machine.png' %}">
+            <img id="note-screen-triangle-img" src="{% static 'img/note_screenshot_triangle.png' %}">
+        </div>
+        <div class="col-1">
+
         </div>
     </div>
     <div class="row mt-5">
