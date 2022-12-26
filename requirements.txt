@@ -28,6 +28,7 @@ Pillow==9.3.0
 platformdirs==2.5.4
 polib==1.1.1
 psycopg2==2.9.5
+pycld2==0.41
 pycparser==2.21
 PyJWT==2.6.0
 python-dotenv==0.21.0
