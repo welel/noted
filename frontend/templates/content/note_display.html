@@ -6,14 +6,10 @@
 
 {% block title %}{{ note.title }} - NoteD{% endblock %}
 
-
-{% block itemscope %}
-itemscope itemtype="https://schema.org/Blog"
-{% endblock %}
-
+description
 
 {% block extra_meta %}
-{% with summary=note.summary tags=note.tags.all source=note.source image_url=note.first_image_url %}
+{% with summary=note.summary tags=note.tags.all source=note.source %}
 
 {% if summary or source %}
 <meta name="description" content="{% if summary %}{{ summary }}{% elif source %}{% trans "Summary on " %}{{ source.title }}{% endif %}">
@@ -21,19 +17,13 @@ itemscope itemtype="https://schema.org/Blog"
 
 {% if summary %}
 <meta name="summary" content="{{ summary }}">
-<meta itemprop="abstract"  content="{{ note.summary }}">
 {% endif %}
 
 {% if tags %}
 <meta name="keywords" content="{% for tag in tags %}{{ tag }}, {% endfor %}">
 {% endif %}
 
-<meta name="author" content="{{ note.author.full_name }}">
 <link rel="canonical" href="{{ request.build_absolute_uri }}">
-
-{% if image_url %}
-<link itemprop="thumbnailUrl" href="{{ image_url }}" />
-{% endif %}
 {% endwith %}
 {% endblock %}
 
@@ -48,7 +38,31 @@ itemscope itemtype="https://schema.org/Blog"
     <div class="row">
         <div class="col-lg-1 col-0"></div>
         <div class="col-lg-8 col-12 mx-lg-0 mx-2">
-            <article class="container-fluid" style="max-width: 700px;">
+            <article class="container-fluid" style="max-width: 700px;" itemscope itemtype="https://schema.org/Blog">
+                <!-- Meta -->
+                {% with image_url=note.first_image_url summary=note.summary %}
+                {% if image_url %}
+                    <link itemprop="thumbnailUrl" href="{{ image_url }}" src="{{ image_url }}" />
+                    <meta itemprop="thumbnailUrl" content="{{ image_url }}" />
+                    <!-- image https://schema.org/image -->
+                    <meta itemprop="image" src="{{ image_url }}" />
+                    <!-- url https://schema.org/url -->
+                    <link itemprop="url" href="{{ note.get_absolute_url }}">
+                    <!-- Add Language https://schema.org/Language -->
+                    <div itemprop="Language" itemscope itemtype="https://schema.org/Language">
+                        <meta itemprop="inLanguage" content="{{ note.lang }}">
+                    </div>
+                    <!-- Add source/fork  https://schema.org/isBasedOn https://schema.org/isBasedOnUrl alternateName https://schema.org/alternateName -->
+                    <!-- Add timeRequired https://schema.org/timeRequired -->
+                    <meta itemprop="timeRequired" content="PT{{ note.min_read }}M">
+                    <!-- identifier https://schema.org/identifier -->
+                    <link itemprop="identifier" href="{{ note.get_absolute_url }}">
+                    <!-- dateCreated https://schema.org/dateCreated datePublished https://schema.org/datePublished -->
+                    <meta itemprop="dateCreated" datetime="{{ note.created|date:"Y-m-d" }}">
+                {% endif %}
+                <meta itemprop="abstract"  content="{% if summary %}{{ summary }}{% else %}{{ note.get_preview_text }}{% endif %}">
+                {% endwith %}
+                <!-- End Meta -->
                 <div class="row d-flex justify-content-between">
                     <div class="col-auto me-auto">
                         <table>
@@ -72,7 +86,7 @@ itemscope itemtype="https://schema.org/Blog"
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark" itemprop="author" itemscope itemtype="https://schema.org/Person" itemid="{{ note.author.get_absolute_url }}">{{ note.author.full_name }}</a>
                                 </td>
                             </tr>
                             {% endif %}
@@ -130,14 +144,15 @@ itemscope itemtype="https://schema.org/Blog"
                 </header>
                 <hr>
                 {% if note.source %}
-                <div class="row">
+                <div class="row" itemprop="isBasedOn" itemscope itemtype="https://schema.org/CreativeWork">
                     <div class="col">
                         <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
                             <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.verbose_type }}</span>
                         </a>
                         <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
-                            <span class="fw-bold text-secondary source-title" >{{ note.source.title }}</span>
+                            <span class="fw-bold text-secondary source-title" itemprop="name">{{ note.source.title }}</span>
                         </a>
+                        <link itemprop="url" href="{{ note.source.get_absolute_url }}" />
                     </div>
                 </div>
                 {% endif %}

@@ -207,9 +207,18 @@ class Note(models.Model):
         likes: a m2m field for note likes.
         bookmarked: a m2m field for bookmarks for user.
         tags: tags of a note (max tags - 3, max length - 24 symbols).
+        lang: language body text code (detects via `polyglot`)
 
     """
 
+    EN = "en"
+    RU = "ru"
+    ER = "er"
+    LANGS = (
+        (EN, _("English")),
+        (RU, _("Russian")),
+        (ER, _("Undetected")),
+    )
     title = models.CharField(
         _("Title"), max_length=100, null=False, blank=False, db_index=True
     )
@@ -282,6 +291,9 @@ class Note(models.Model):
         You can add maximum 3 tags, and length of tags should be less than 25
         symbols."""
         ),
+    )
+    lang = models.CharField(
+        _("Language"), max_length=2, choices=LANGS, default=ER
     )
     objects = NoteManager()
 
