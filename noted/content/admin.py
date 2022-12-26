@@ -6,7 +6,7 @@ from content.models import Source, Note
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "draft", "anonymous", "created")
-    list_filter = ("draft", "anonymous", "pin", "created", "modified")
+    list_filter = ("draft", "anonymous", "pin", "created", "modified", "lang")
     search_fields = ("title", "body_raw", "summary")
     raw_id_fields = ("author", "source", "fork")
     date_hierarchy = "created"

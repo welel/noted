@@ -161,6 +161,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return reverse("content:profile_notes", args=[self.slug])
 
+    @property
+    def first_name(self) -> str:
+        name = self.full_name.split()
+        if len(name) == 2:
+            return name[0]
+        return name
+
+    @property
+    def second_name(self) -> str:
+        name = self.full_name.split()
+        if len(name) == 2:
+            return name[1]
+        return name
+
 
 class SignupToken(models.Model):
     """A token used for authentication and sign up process.

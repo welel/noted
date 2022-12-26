@@ -2,11 +2,12 @@
 
 {% load static %}
 {% load i18n %}
+{% load filtermetatags %}
+{% load filtersourcetags %}
 
 
 {% block title %}{{ note.title }} - NoteD{% endblock %}
 
-description
 
 {% block extra_meta %}
 {% with summary=note.summary tags=note.tags.all source=note.source %}
@@ -43,24 +44,24 @@ description
                 {% with image_url=note.first_image_url summary=note.summary %}
                 {% if image_url %}
                     <link itemprop="thumbnailUrl" href="{{ image_url }}" src="{{ image_url }}" />
-                    <meta itemprop="thumbnailUrl" content="{{ image_url }}" />
+                    {% comment %} <meta itemprop="thumbnailUrl" content="{{ image_url }}" /> {% endcomment %}
                     <!-- image https://schema.org/image -->
                     <meta itemprop="image" src="{{ image_url }}" />
                     <!-- url https://schema.org/url -->
-                    <link itemprop="url" href="{{ note.get_absolute_url }}">
+                    <link itemprop="url" href="{{ note.get_absolute_url|full_url }}">
                     <!-- Add Language https://schema.org/Language -->
-                    <div itemprop="Language" itemscope itemtype="https://schema.org/Language">
-                        <meta itemprop="inLanguage" content="{{ note.lang }}">
-                    </div>
+                    {% comment %} <div itemprop="Language" itemscope itemtype="https://schema.org/Language"> {% endcomment %}
+                     <meta itemprop="inLanguage" content="{{ note.lang }}">
+                    {% comment %} </div> {% endcomment %}
                     <!-- Add source/fork  https://schema.org/isBasedOn https://schema.org/isBasedOnUrl alternateName https://schema.org/alternateName -->
                     <!-- Add timeRequired https://schema.org/timeRequired -->
-                    <meta itemprop="timeRequired" content="PT{{ note.min_read }}M">
+                    <meta itemprop="timeRequired" content="{{ note.min_read|min_required }}">
                     <!-- identifier https://schema.org/identifier -->
-                    <link itemprop="identifier" href="{{ note.get_absolute_url }}">
+                    <link itemprop="identifier" href="{{ note.get_absolute_url|full_url }}">
                     <!-- dateCreated https://schema.org/dateCreated datePublished https://schema.org/datePublished -->
                     <meta itemprop="dateCreated" datetime="{{ note.created|date:"Y-m-d" }}">
                 {% endif %}
-                <meta itemprop="abstract"  content="{% if summary %}{{ summary }}{% else %}{{ note.get_preview_text }}{% endif %}">
+                <meta itemprop="description"  content="{% if summary %}{{ summary }}{% else %}{{ note.get_preview_text }}{% endif %}">
                 {% endwith %}
                 <!-- End Meta -->
                 <div class="row d-flex justify-content-between">
@@ -86,7 +87,10 @@ description
                                     </a>
                                 </td>
                                 <td class="fw-bold">
-                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark" itemprop="author" itemscope itemtype="https://schema.org/Person" itemid="{{ note.author.get_absolute_url }}">{{ note.author.full_name }}</a>
+                                    <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark" itemprop="author" itemscope itemtype="https://schema.org/Person" itemid="{{ note.author.get_absolute_url|full_url }}">
+                                        <span itemprop="givenName" >{{ note.author.first_name }}</span> <span itemprop="familyName" >{{ note.author.second_name }}</span>
+                                        <link itemprop="url" href="{{ note.author.get_absolute_url|full_url }}">
+                                    </a>
                                 </td>
                             </tr>
                             {% endif %}
@@ -152,7 +156,8 @@ description
                         <a  href="{{ note.source.get_absolute_url }}" class="text-decoration-none text-dark">
                             <span class="fw-bold text-secondary source-title" itemprop="name">{{ note.source.title }}</span>
                         </a>
-                        <link itemprop="url" href="{{ note.source.get_absolute_url }}" />
+                        <link itemprop="url" href="{{ note.source.get_absolute_url|full_url }}" />
+                        <meta itemprop="description"  content="{% if note.source.description %}{{ note.source.description }}{% else %}{{ note.source.type|readabletype }}{% endif %}">
                     </div>
                 </div>
                 {% endif %}
