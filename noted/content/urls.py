@@ -30,7 +30,7 @@ urlpatterns = [
         name="download_note",
     ),
     path(
-        "u/notes/<int:user_pk>/",
+        "u/notes/<str:slug>/",
         views.ProfileNoteList.as_view(),
         name="profile_notes",
     ),

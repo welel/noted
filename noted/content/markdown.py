@@ -1,6 +1,7 @@
 """The module provides functions for transfering Markdown to HTML.
 
 **Functions**
+    check_remainig_api_ratelimit: log how many API requests left.
     markdown_to_html: transfers Markdown text into HTML via GitHub API.
     pick_markdown_to_html: transfer Markdown text into HTML (2 methods).
 """
@@ -12,16 +13,35 @@ import requests
 
 from markdown2 import markdown
 
-from common.logging import logging
+from django.conf import settings
+
+from common.logging import logit
 
 
 logger = log.getLogger("markdown")
 
 API_URL = "https://api.github.com/markdown/raw"
-HEADERS = {"Content-Type": "text/plain"}
+HEADERS = {
+    "Content-Type": "text/plain",
+    "Accept": "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+}
 
 
-@logging
+@logit
+def check_remainig_api_ratelimit(response):
+    """Check GitHub API response on remaning requests and log it."""
+    try:
+        limit = int(response.headers.get("X-RateLimit-Limit"))
+        remaining = int(response.headers.get("X-RateLimit-Remaining"))
+    except ValueError:
+        logger.warning("Bad ratelimit headers.")
+    if remaining < 20:
+        logger.warning("Left less that 20 requests: " + str(remaining))
+    logger.info(f"Limit: {limit} | Left: {remaining}")
+
+
+@logit
 def markdown_to_html(text: str) -> Tuple[str, bool]:
     """Transfer Markdown text into HTML via GitHub API.
 
@@ -46,33 +66,26 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
             API_URL, data=text_encoded, headers=HEADERS, timeout=10
         )
         if response.status_code == 200:
+            check_remainig_api_ratelimit(response)
             return response.text, True
     except requests.exceptions.ConnectionError as erorr:
         logger.error(
-            "Markdown API request is failed:\n"
-            + traceback.print_tb(erorr.__traceback__)
+            "Markdown API request is failed:\n" + traceback.format_exc()
         )
     logger.warning(
-        "Markdown API request is failed:\nStatus code: {code}\n".format(
-            code=response.status_code
+        "Markdown API request is failed:\nStatus code: {code}\nHEADERS: \
+            {headers}\nJSON: {json}\nRAW: {raw}\nTEXT: {text}\n".format(
+            code=response.status_code,
+            headers=response.headers,
+            json=response.json,
+            raw=response.raw,
+            text=response.text,
         )
-        + "HEADERS:"
-        + str(response.headers)
-        + "\n"
-        + "JSON:"
-        + str(response.json)
-        + "\n"
-        + "RAW:"
-        + str(response.raw)
-        + "\n"
-        + "TEXT:"
-        + str(response.text)
-        + "\n"
     )
     return text, False
 
 
-@logging
+@logit
 def pick_markdown_to_html(text: str) -> str:
     """Transfer Markdown text into HTML.
 
@@ -85,7 +98,8 @@ def pick_markdown_to_html(text: str) -> str:
     Returns:
         The rendered HTML code.
     """
-    html, success = markdown_to_html(text)
-    if success:
-        return html
+    if not settings.TEST_MODE:
+        html, success = markdown_to_html(text)
+        if success:
+            return html
     return markdown(text=text)

@@ -1,9 +1,10 @@
 from django.core.exceptions import FieldDoesNotExist
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpRequest
 from django.test import TestCase
 
 from content.models import Source
 from common import generate_unique_slug, ajax_required
+from users.models import User
 
 
 class Tests(TestCase):
@@ -46,6 +47,6 @@ class Tests(TestCase):
         def view(request):
             return True
 
-        request = Source()
-        request.headers = {}
+        request = HttpRequest()
+        request.user = User.objects.first()
         self.assertIsInstance(view(request), HttpResponseBadRequest)

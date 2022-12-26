@@ -10,10 +10,10 @@ from django.urls import reverse_lazy
 
 from content.models import Note
 from common import ajax_required
-from common.logging import LoggingView, logging_view, logging
+from common import logging as log
 
 
-class TagList(LoggingView, ListView):
+class TagList(log.LoggingView, ListView):
     """Display a annotated list of :model:`taggit.Tag`.
 
     It displays tags, each tag has a number of its' notes.
@@ -30,7 +30,7 @@ class TagList(LoggingView, ListView):
     context_object_name = "tags"
     template_name = "tags/list.html"
 
-    @logging
+    @log.logit_class_method
     def get_queryset(self):
         queryset = Tag.objects.annotate(
             num_times=Count("notes", filter=Q(notes__private=False))
@@ -38,13 +38,13 @@ class TagList(LoggingView, ListView):
         return queryset
 
 
-class TagDetails(LoggingView, DetailView):
+class TagDetails(log.LoggingView, DetailView):
     """Tag details with a list of notes of the current tag."""
 
     model = Tag
     template_name = "tags/tag_details.html"
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["notes"] = Note.objects.public().filter(
@@ -54,7 +54,7 @@ class TagDetails(LoggingView, DetailView):
         return context
 
 
-@logging_view
+@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required

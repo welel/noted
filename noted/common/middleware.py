@@ -1,5 +1,7 @@
 from django.http import HttpResponsePermanentRedirect
 
+from common.logging import logit_class_method
+
 
 class WwwRedirectMiddleware:
     """Redirects www.welel-noted.site to welel-noted.site
@@ -11,6 +13,7 @@ class WwwRedirectMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
+    @logit_class_method
     def __call__(self, request):
         host = request.get_host().partition(":")[0]
         if host == "www.welel-noted.site":

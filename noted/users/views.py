@@ -1,4 +1,4 @@
-import logging as log
+import logging
 import json
 
 from allauth.account.models import EmailAddress
@@ -17,13 +17,13 @@ from users.auth import send_signup_link, signer
 from users.forms import SignupForm
 from users.models import SignupToken, User
 from common.decorators import ajax_required
-from common.logging import logging_view, VIEW_LOG_TEMPLATE
+from common import logging as log
 
 
-logger = log.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-@logging_view
+@log.logit_view
 @ajax_required
 def send_singup_email(request):
     """Send sing up email to a client with the link to the sign up form."""
@@ -40,7 +40,7 @@ def send_singup_email(request):
     return JsonResponse({"msg": "error"}, status=200)
 
 
-@logging_view
+@log.logit_view
 @ajax_required
 def validate_email(request):
     """Check if a user with a given email already exists in the database."""
@@ -54,7 +54,7 @@ def validate_email(request):
     return JsonResponse({"is_taken": "error"}, status=200)
 
 
-@logging_view
+@log.logit_view
 def signup(request, token):
     """Sign up process.
 
@@ -89,8 +89,8 @@ def signup(request, token):
         return render(request, template_name, {"error": "Bad Signature"})
     finally:
         logger.warning(
-            VIEW_LOG_TEMPLATE.format(
-                view=fn.__name__,
+            log.VIEW_LOG_TEMPLATE.format(
+                name=signup.__name__,
                 user=request.user,
                 method=request.method,
                 path=request.path,
@@ -124,7 +124,7 @@ def signup(request, token):
             return render(request, template_name, context)
 
 
-@logging_view
+@log.logit_view
 @ajax_required
 def signin(request):
     """Sign in a user via ajax request."""
@@ -163,7 +163,7 @@ def signin(request):
     return HttpResponseBadRequest()
 
 
-@logging_view
+@log.logit_view
 def signout(request):
     logout(request)
     return redirect(reverse("content:home"))

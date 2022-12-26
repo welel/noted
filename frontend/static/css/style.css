@@ -172,6 +172,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 15px 3px 15px 20px;
     font-size: 16px;
     position: relative;
+    line-height: 21px;
 }
 #note-body code {
     color: #009339;

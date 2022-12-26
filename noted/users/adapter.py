@@ -2,10 +2,12 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from django.utils.translation import gettext_lazy as _
 
+from common.logging import logit_generic_view_request
 from users.models import User
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    @logit_generic_view_request
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)
         if (

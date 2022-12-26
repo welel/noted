@@ -149,8 +149,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.username}"
 
+    @classmethod
+    def unslugify(cls, slug: str) -> str:
+        """Returns `username` for slug."""
+        return "@" + slug.replace("-", ".")
+
+    @property
+    def slug(self) -> str:
+        return self.username[1:].replace(".", "-")
+
     def get_absolute_url(self):
-        return reverse("content:profile_notes", args=[self.pk])
+        return reverse("content:profile_notes", args=[self.slug])
 
 
 class SignupToken(models.Model):

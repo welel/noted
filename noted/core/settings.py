@@ -156,9 +156,15 @@ LOGGING = {
             "style": "{",
         }
     },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
     "handlers": {
         "mail_admins": {
             "level": "ERROR",
+            "filters": ["require_debug_true"],
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
         },
@@ -195,7 +201,7 @@ LOGGING = {
         "file_markdown": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/markdown.log"),
-            level="WARNING",
+            level="INFO",
         ),
         "file_content_views": dict(
             FILE_HANDLER,
@@ -211,35 +217,35 @@ LOGGING = {
     "loggers": {
         "django": {"handlers": ["file_django"], "level": "WARNING"},
         "django.request": {
-            "handlers": ["file_request"],
+            "handlers": ["file_request", "mail_admins"],
             "level": "DEBUG",
         },
         "django.db.backends": {
-            "handlers": ["file_sql"],
+            "handlers": ["file_sql", "mail_admins"],
             "level": "WARNING",
         },
         "exceptions": {
-            "handlers": ["file_exceptions"],
+            "handlers": ["file_exceptions", "mail_admins"],
             "level": "WARNING",
         },
         "views.exceptions": {
-            "handlers": ["file_views_exceptions"],
+            "handlers": ["file_views_exceptions", "mail_admins"],
             "level": "WARNING",
         },
         "emails": {
-            "handlers": ["file_emails"],
+            "handlers": ["file_emails", "mail_admins"],
             "level": "INFO",
         },
         "markdown": {
-            "handlers": ["file_markdown"],
-            "level": "WARNING",
+            "handlers": ["file_markdown", "mail_admins"],
+            "level": "INFO",
         },
         "content.views.note": {
-            "handlers": ["file_content_views"],
+            "handlers": ["file_content_views", "mail_admins"],
             "level": "INFO",
         },
         "users.views": {
-            "handlers": ["file_users_views"],
+            "handlers": ["file_users_views", "mail_admins"],
             "level": "INFO",
         },
     },
@@ -332,3 +338,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"
+
+TEST_RUNNER = "common.test_runner.NotedDiscoverRunner"
+TEST_MODE = False

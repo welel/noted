@@ -17,7 +17,7 @@ def ajax_required(f):
         if not request.headers.get("X-Requested-With") == "XMLHttpRequest":
             logger.error(
                 VIEW_LOG_TEMPLATE.format(
-                    view=f.__name__,
+                    name=f.__name__,
                     user=request.user,
                     method=request.method,
                     path=request.path,

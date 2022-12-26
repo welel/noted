@@ -1,3 +1,7 @@
+from common.logging import logit
+
+
+@logit
 def custom_tag_string(tag_string: str) -> list:
     """Parses tag string to list of tags."""
     if not tag_string:

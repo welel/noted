@@ -155,10 +155,12 @@ class UserModelTests(TestCase):
         )
 
     def test_user_str(self):
-        self.assertEqual(str(self.mark), "@mark.watney / watney@nasa.us")
+        self.assertEqual(str(self.mark), "@mark.watney")
 
     def test_user_url(self):
-        self.assertEqual(self.mark.get_absolute_url(), "/users/mark-watney/")
+        self.assertEqual(
+            self.mark.get_absolute_url(), "/en/u/notes/mark-watney/"
+        )
 
     def test_user_default_avatar_path(self):
         self.assertEqual(self.mark.avatar, settings.DEFAULT_USER_AVATAR_PATH)

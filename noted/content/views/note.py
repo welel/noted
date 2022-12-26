@@ -20,7 +20,7 @@
     download_note: download a note as a file.
 
 """
-import logging as log
+import logging
 
 from taggit.models import Tag
 
@@ -40,20 +40,14 @@ from wsgiref.util import FileWrapper
 
 from content.forms import NoteForm
 from content.models import Note, Source
-from common import ajax_required
-from common.logging import (
-    LoggingView,
-    logging_view,
-    logging,
-    VIEW_LOG_TEMPLATE,
-)
+from common import ajax_required, logging as log
 from users.models import User
 
 
-logger = log.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-class NoteList(LoggingView, ListView):
+class NoteList(log.LoggingView, ListView):
     """Base display list of :model:`Note`.
 
     Uses as a superclass for other specific notes listings.
@@ -80,11 +74,11 @@ class NoteList(LoggingView, ListView):
     context_object_name = "notes"
     paginate_by = 100
 
-    @logging
+    @log.logit_class_method
     def get_ordering(self) -> str:
         return self.request.GET.get("order", default="-datetime_created")
 
-    @logging
+    @log.logit_class_method
     def get_ordered_queryset(self) -> QuerySet:
         """Order a queryset by GET param `order`."""
         order = self.get_ordering()
@@ -106,18 +100,18 @@ class WelcomeNoteList(NoteList):
 
     template_name = "welcome.html"
 
-    @logging_view
+    @log.logit_generic_view_request
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("content:home")
         else:
             return super().get(request, *args, **kwargs)
 
-    @logging
+    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -149,11 +143,11 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     login_url = "content:welcome"
     redirect_field_name = "content:home"
 
-    @logging
+    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -185,26 +179,27 @@ class ProfileNoteList(NoteList):
 
     template_name = "content/note_list_profile.html"
 
-    @logging_view
-    def get(self, request, user_pk, *args, **kwargs):
-        if request.user.pk == user_pk:
+    @log.logit_generic_view_request
+    def get(self, request, slug, *args, **kwargs):
+        if request.user.is_authenticated and request.user.slug == slug:
             return redirect("content:personal_notes", *args, **kwargs)
-        return super().get(request, user_pk, *args, **kwargs)
+        return super().get(request, slug, *args, **kwargs)
 
-    @logging
+    @log.logit_class_method
     def get_queryset(self):
-        user = get_object_or_404(User, pk=self.kwargs.get("user_pk"))
+        username = User.unslugify(self.kwargs.get("slug"))
+        user = get_object_or_404(User, username=username)
         return (
             super()
             .get_ordered_queryset()
             .filter(author=user, draft=False, anonymous=False)
         )
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pk = self.kwargs.get("user_pk")
-        context["user"] = get_object_or_404(User, pk=pk)
+        username = User.unslugify(self.kwargs.get("slug"))
+        context["user"] = get_object_or_404(User, username=username)
         context["pins"] = self.get_queryset().filter(pin=True)
         context["sidenotes"] = Note.objects.public()[:5]
         return context
@@ -227,11 +222,11 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
     template_name = "content/note_list_personal.html"
 
-    @logging
+    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(author=self.request.user)
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = self.request.user
@@ -247,26 +242,26 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 class NoteDraftMixin:
     """Manages saving of a note based on pressed button (publish or draft)."""
 
-    @logging
+    @log.logit_class_method
     def form_valid(self, form):
         form.instance.draft = self.draft
         return super().form_valid(form)
 
-    @logging_view
+    @log.logit_class_method
     def post(self, request, *args, **kwargs):
         self.draft = "savedraft" in request.POST
         return super().post(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
+class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
     """Handels the note create form."""
 
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
-    @logging
+    @log.logit_class_method
     def add_initial_source(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with `Source` data."""
         try:
@@ -283,7 +278,7 @@ class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
         )
         return initial
 
-    @logging
+    @log.logit_class_method
     def add_initial_tag(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with a tag."""
         try:
@@ -293,7 +288,7 @@ class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
         initial["tags"] = tag.name
         return initial
 
-    @logging
+    @log.logit_class_method
     def get_initial(self):
         initial = super().get_initial()
         source_slug = self.request.GET.get("source")
@@ -304,7 +299,7 @@ class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
             initial = self.add_initial_tag(tag_slug, initial)
         return initial
 
-    @logging
+    @log.logit_class_method
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -314,7 +309,7 @@ class NoteCreateView(LoggingView, NoteDraftMixin, CreateView):
 class NoteForkView(NoteCreateView):
     """Handles the create note form (for forked note)."""
 
-    @logging
+    @log.logit_class_method
     def get_initial(self):
         initial = super().get_initial()
         try:
@@ -330,19 +325,19 @@ class NoteForkView(NoteCreateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(NoteDraftMixin, LoggingView, UpdateView):
+class NoteUpdateView(NoteDraftMixin, log.LoggingView, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteDeleteView(LoggingView, DeleteView):
+class NoteDeleteView(log.LoggingView, DeleteView):
     model = Note
     success_url = reverse_lazy("content:home")
 
 
-class NoteDetailsView(LoggingView, DetailView):
+class NoteDetailsView(log.LoggingView, DetailView):
     """Display details of a :model:`Note` instance.
 
     **Context**
@@ -356,13 +351,13 @@ class NoteDetailsView(LoggingView, DetailView):
     model = Note
     template_name = "content/note_display.html"
 
-    @logging
+    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["sidenotes"] = Note.objects.public()[:5]
         return context
 
-    @logging
+    @log.logit_class_method
     def get_object(self):
         note = super().get_object()
         if note and self.request.user != note.author:
@@ -377,13 +372,13 @@ class NoteView(View):
     POST - the comment form handler.
     """
 
-    @logging_view
+    @log.logit_generic_view_request
     def get(self, request, *args, **kwargs):
         view = NoteDetailsView.as_view()
         return view(request, *args, **kwargs)
 
 
-@logging_view
+@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -396,7 +391,7 @@ def pin_note(request, slug):
     return JsonResponse({"pin": note.pin})
 
 
-@logging_view
+@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -410,7 +405,7 @@ def like_note(request, slug):
         return JsonResponse({"liked": True})
 
 
-@logging_view
+@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -424,7 +419,7 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": True})
 
 
-@logging_view
+@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):
