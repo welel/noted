@@ -28,6 +28,7 @@ PROJECT_DIR = BASE_DIR.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 DEBUG_SET = os.getenv("DEBUG_SET")
 if DEBUG_SET == "True":
     DEBUG = True
@@ -89,8 +90,8 @@ SECURE_HSTS_SECONDS = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+# if not DEBUG:
+#     SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = "core.urls"
 
