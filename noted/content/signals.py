@@ -53,5 +53,5 @@ def set_lang(sender, instance, **kwargs):
     else:
         instance.lang = Note.ER
         logger.warning(
-            f"Language is not detected ({lang_code}\nNote body:{instance.bory_raw}"
+            f"Language is not detected ({lang_code}\nNote body:{instance.body_raw}"
         )

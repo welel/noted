@@ -88,7 +88,7 @@
                                 </td>
                                 <td class="fw-bold">
                                     <a  href="{{ note.author.get_absolute_url }}" rel="author" class="text-decoration-none text-dark" itemprop="author" itemscope itemtype="https://schema.org/Person" itemid="{{ note.author.get_absolute_url|full_url }}">
-                                        <span itemprop="givenName" >{{ note.author.first_name }}</span> <span itemprop="familyName" >{{ note.author.second_name }}</span>
+                                        <span itemprop="givenName" >{{ note.author.given_name }}</span> <span itemprop="familyName" >{{ note.author.family_name }}</span>
                                         <link itemprop="url" href="{{ note.author.get_absolute_url|full_url }}">
                                     </a>
                                 </td>
@@ -136,8 +136,8 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
-                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}data-bs-toggle="modal" data-bs-target="#downloadModal"{% endif %}><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
+                                <li><a class="dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}href="{% url 'content:fork' slug=note.slug %}"{% endif %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -210,8 +210,8 @@
                                         </form>
                                     </li>
                                 {% endif %}
-                                <li><button class="btn btn-link dropdown-item" data-bs-toggle="modal" data-bs-target="#downloadModal"><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
-                                <li><a class="dropdown-item" href="{% url 'content:fork' slug=note.slug %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
+                                <li><button class="btn btn-link dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}data-bs-toggle="modal" data-bs-target="#downloadModal"{% endif %}><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
+                                <li><a class="dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}href="{% url 'content:fork' slug=note.slug %}"{% endif %}><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
                             </ul>
                         </div>
                     </div>

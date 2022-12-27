@@ -26,7 +26,7 @@
         <div class="col-11">
             <h1 class="fw-bold">{{ source.title }}</h1>
             <p class="text-secondary fs-5">{{ source.description }}</p>
-            <a href="{% url 'content:create_note' %}?source={{ source.slug }}" class="btn btn-sm btn-success rounded-pill mt-2">{% trans "Add Note" %}</a>
+            <a class="btn btn-sm btn-success rounded-pill mt-2" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}href="{% url 'content:create_note' %}?source={{ source.slug }}"{% endif %}>{% trans "Add Note" %}</a>
             {% if source.link %}
             <a href="{{ source.link }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill mt-2 ms-1">{% trans "External Link" %}</a>
             {% endif %}

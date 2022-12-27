@@ -162,14 +162,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return reverse("content:profile_notes", args=[self.slug])
 
     @property
-    def first_name(self) -> str:
+    def given_name(self) -> str:
         name = self.full_name.split()
         if len(name) == 2:
             return name[0]
         return name
 
     @property
-    def second_name(self) -> str:
+    def family_name(self) -> str:
         name = self.full_name.split()
         if len(name) == 2:
             return name[1]
