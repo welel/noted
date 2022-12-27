@@ -28,7 +28,11 @@ PROJECT_DIR = BASE_DIR.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG_SET")
+DEBUG_SET = os.getenv("DEBUG_SET")
+if DEBUG_SET == "True":
+    DEBUG = True
+else:
+    DEBUG = False
 
 SITE_ID = 1
 
@@ -157,14 +161,14 @@ LOGGING = {
         }
     },
     "filters": {
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
         },
     },
     "handlers": {
         "mail_admins": {
             "level": "ERROR",
-            "filters": ["require_debug_true"],
+            "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
         },

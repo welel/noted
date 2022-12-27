@@ -4,7 +4,7 @@
 {% load i18n %}
 
 
-{% block title %}{% trans "Couldn't find page" %}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block nav %}{% endblock %}
 
@@ -33,8 +33,8 @@
         </ul>
         </div>
     </nav>
-    <h1 class="text-white text-left" style=" margin-top: 150px; font-size: 92px;" >404</h1>
-    <p class="text-white fs-5 mt-2" >{% trans "We couldn't find this page." %}</p>
+    <h1 class="text-white text-left" style=" margin-top: 150px; font-size: 92px;" >{{ status_code }}</h1>
+    <p class="text-white fs-5 mt-2" >{{ message }}</p>
     <a id="welcome-header-btn" class="btn btn-success rounded-pill fs-5 mt-3" href="{% url 'content:home' %}">{% trans "Go Home" %}</a> 
 </div>
 </div>

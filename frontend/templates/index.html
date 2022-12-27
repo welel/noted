@@ -6,7 +6,55 @@
 
 
 {% block center %}
-<div style="max-width: 700px; margin: auto;">
+<style>
+    .garland-new-year {
+ position:absolute;
+ z-index:-1;
+ top:0;
+ left:6.5rem;
+ right:8.5rem;
+ margin:0 auto;
+ max-width:77rem;
+ cursor:pointer;
+ background-size:cover;
+ background-repeat:no-repeat;
+ background-image:url(https://yastatic.net/s3/home-static/_/5/T/l4Tgv-zPh16ik4G3yCzAVfprk.jpg)
+}
+.document_dark_yes .garland-new-year {
+ background-image:url(https://yastatic.net/s3/home-static/_/d/C/IToQCabrvA0ygG7VzyY75Hq7o.jpg)
+}
+.garland-new-year_hidden_yes {
+ opacity:0;
+ cursor:default
+}
+.garland-new-year_animate_yes {
+ opacity:1;
+ cursor:pointer;
+ animation:garland-new-year 2s steps(4) infinite;
+}
+.garland-new-year:before {
+ content:'';
+ display:block;
+ width:100%;
+ padding-top:9.89%
+}
+@keyframes garland-new-year {
+ 0% {
+  background-position:0 25%
+ }
+ to {
+  background-position:0 125%
+ }
+}
+</style>
+<div id="gerland" class="garland-new-year i-bem garland-new-year_js_inited" data-bem="{&quot;garland-new-year&quot;:{}}" onclick="toggleGerland();"></div>
+<script>
+    function toggleGerland() {
+        document.getElementById('gerland').classList.toggle("garland-new-year_animate_yes");
+    }
+</script>
+<!-- new year margin -->
+<div class="mt-2" style="max-width: 700px; margin: auto;">
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
         {% include 'layouts/note_order.html' %}
@@ -37,6 +85,7 @@
 
 
 {% block sidebar %}
+<div id="new-year" style="height: 50px; cursor: pointer;" onclick="toggleGerland();"></div>
 {% include 'layouts/sidebar/search_form.html' %}
 {% include 'layouts/sidebar/source_types.html' %}
 {% include 'layouts/sidebar/more_from_noted.html' %}

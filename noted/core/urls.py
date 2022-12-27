@@ -30,7 +30,10 @@ urlpatterns = i18n_patterns(
     path("", include(("content.urls", "content"), namespace="content")),
 )
 
+handler400 = "core.views.handler400"
+handler403 = "core.views.handler403"
 handler404 = "core.views.handler404"
+handler500 = "core.views.handler500"
 
 if "rosetta" in settings.INSTALLED_APPS:
     urlpatterns.insert(1, path("rosetta/", include("rosetta.urls")))
