@@ -26,9 +26,10 @@ from taggit.models import Tag
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import F, QuerySet, Count, Q
+from django.db.models import F, QuerySet
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_GET
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 from django.views.generic.edit import DeleteView
@@ -41,6 +42,8 @@ from wsgiref.util import FileWrapper
 from content.forms import NoteForm
 from content.models import Note, Source
 from common import ajax_required, logging as log
+from common.cache import cache_queryset
+from tags.models import get_top_tags
 from users.models import User
 
 
@@ -85,6 +88,7 @@ class NoteList(log.LoggingView, ListView):
         return self.SORTING_FUNCS_MAPPING[order]()
 
 
+@method_decorator(cache_page(60 * 60), name="dispatch")
 class WelcomeNoteList(NoteList):
     """Welcome page for unlogged users.
 
@@ -115,10 +119,8 @@ class WelcomeNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        context["trends"] = Note.objects.popular()[:6]
-        context["tags"] = Tag.objects.annotate(
-            num_times=Count("notes", filter=Q(notes__draft=False))
-        ).filter(num_times__gt=0)[:7]
+        context["trends"] = cache_queryset(259200)(Note.objects.popular)()[:6]
+        context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         return context
 
 
@@ -145,16 +147,18 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
 
     @log.logit_class_method
     def get_queryset(self):
-        return super().get_ordered_queryset().filter(draft=False)
+        return cache_queryset(60 * 60 * 24)(
+            super().get_ordered_queryset().filter
+        )(draft=False)
 
     @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        context["sidenotes"] = Note.objects.popular()[:5]
-        context["tags"] = Tag.objects.annotate(
-            num_times=Count("notes", filter=Q(notes__draft=False))
-        ).filter(num_times__gt=0)[:7]
+        context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
+            :5
+        ]
+        context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         if self.request.user.is_authenticated:
             context["tags_notes"] = Note.objects.tags_in(
                 self.request.user.tags.names()
@@ -201,7 +205,9 @@ class ProfileNoteList(NoteList):
         username = User.unslugify(self.kwargs.get("slug"))
         context["user"] = get_object_or_404(User, username=username)
         context["pins"] = self.get_queryset().filter(pin=True)
-        context["sidenotes"] = Note.objects.public()[:5]
+        context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
+            :5
+        ]
         return context
 
 
@@ -235,7 +241,9 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
         context["pins"] = qs.filter(pin=True)
         context["drafts"] = qs.filter(draft=True)
         context["bookmarks"] = self.request.user.bookmarked_notes.all()
-        context["sidenotes"] = Note.objects.public()[:5]
+        context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
+            :5
+        ]
         return context
 
 
@@ -354,7 +362,9 @@ class NoteDetailsView(log.LoggingView, DetailView):
     @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["sidenotes"] = Note.objects.public()[:5]
+        context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
+            :5
+        ]
         return context
 
     @log.logit_class_method
@@ -427,7 +437,7 @@ def download_note(request, filetype: str, slug: str):
     file = note.generate_file_to_response(filetype=filetype)
     if not file or (note.draft and request.user != note.author):
         logger.error(
-            VIEW_LOG_TEMPLATE.format(
+            log.VIEW_LOG_TEMPLATE.format(
                 view=download_note.__name__,
                 user=request.user,
                 method=request.method,

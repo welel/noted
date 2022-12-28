@@ -127,6 +127,15 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "{}:{}".format(
+            os.getenv("CACHE_IP"), os.getenv("CACHE_PORT")
+        ),
+    }
+}
+
 AUTH_USER_MODEL = "users.User"
 
 # Password validation

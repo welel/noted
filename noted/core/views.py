@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 from django.utils.translation import gettext_lazy as _
 
 from common.logging import logit_view
 
 
 @logit_view
+@cache_page(60 * 60 * 24 * 30)
 def handler400(request, *args, **kwargs):
     return render(
         request,
@@ -19,6 +21,7 @@ def handler400(request, *args, **kwargs):
 
 
 @logit_view
+@cache_page(60 * 60 * 24 * 30)
 def handler403(request, *args, **kwargs):
     return render(
         request,
@@ -33,6 +36,7 @@ def handler403(request, *args, **kwargs):
 
 
 @logit_view
+@cache_page(60 * 60 * 24 * 30)
 def handler404(request, *args, **kwargs):
     return render(
         request,
@@ -47,6 +51,7 @@ def handler404(request, *args, **kwargs):
 
 
 @logit_view
+@cache_page(60 * 60 * 24 * 30)
 def handler500(request, *args, **kwargs):
     return render(
         request,

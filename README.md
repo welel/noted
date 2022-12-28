@@ -142,7 +142,9 @@ In future:
 python manage.py makemigrate
 ```
 
-6. Run the development server.
+6. [Set up a cache backend.](https://docs.djangoproject.com/en/4.1/topics/cache/)
+
+7. Run the development server.
 
 ```
 python manage.py runserver

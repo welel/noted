@@ -4,6 +4,7 @@ from taggit.models import Tag
 
 from django.contrib.postgres.search import TrigramSimilarity, SearchVector
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 from django.utils.translation import gettext_lazy as _
 
 from content.models import Note, Source
@@ -15,6 +16,7 @@ logger = log.getLogger("django.request")
 
 
 @logit_view
+@cache_page(60 * 3)
 def search(request, type):
     """Search by notes, sources, tags, users."""
     query = request.GET.get("query")

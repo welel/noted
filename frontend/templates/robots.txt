@@ -1,0 +1,8 @@
+User-Agent: *
+Disallow: /en/admin/
+Disallow: /ru/admin/
+Disallow: /en/accounts/
+Disallow: /ru/accounts/
+Disallow: /en/jsi18n/
+Disallow: /ru/jsi18n/
+Disallow: /jsi18n/

@@ -151,6 +151,12 @@ h1, h2, h3, h4, h5, h6 {
 #md-syntax-table tr {
     border-bottom-width: 1px;
 }
+#draft-btn {
+    background-color: var(--bs-gray-200);
+}
+#draft-btn:hover {
+    background-color: var(--bs-gray-400);
+}
 
 
 /* SEARCH */

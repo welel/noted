@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.sitemaps.views import sitemap
 from django.contrib import admin
+from django.views.generic.base import TemplateView
 from django.views.i18n import JavaScriptCatalog
 from django.urls import path, include
 
@@ -25,6 +26,13 @@ urlpatterns = i18n_patterns(
         sitemap,
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
+    ),
+    # TODO: test https://adamj.eu/tech/2020/02/10/robots-txt/
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="robots.txt", content_type="text/plain"
+        ),
     ),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", include(("content.urls", "content"), namespace="content")),
