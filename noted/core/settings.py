@@ -35,6 +35,9 @@ if DEBUG_SET == "True":
 else:
     DEBUG = False
 
+TEST_RUNNER = "common.test_runner.NotedDiscoverRunner"
+TEST_MODE = False
+
 SITE_ID = 1
 
 ALLOWED_HOSTS = ["welel-noted.site", "www.welel-noted.site"]
@@ -90,6 +93,7 @@ SECURE_HSTS_SECONDS = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# Handles via nginx
 # if not DEBUG:
 #     SECURE_SSL_REDIRECT = True
 
@@ -352,6 +356,3 @@ SOCIALACCOUNT_PROVIDERS = {
 
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"
-
-TEST_RUNNER = "common.test_runner.NotedDiscoverRunner"
-TEST_MODE = False
