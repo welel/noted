@@ -12,12 +12,16 @@ services:
       - DATABASE_PASSWORD=
       - DATABASE_HOST=
       - DATABASE_PORT=
+      - CACHE_IP=
+      - CACHE_PORT=
       - EMAIL_HOST_USER=
       - EMAIL_HOST_PASSWORD=
       - YANDEX_CLIENT_ID=
       - YANDEX_SECRET=
       - GITHUB_ID=
       - GITHUB_SECRET=
+      - ADMIN_NAME=
+      - ADMIN_EMAIL=
     volumes:
       - site:/noted
       - static:/noted/frontend/collected_static
