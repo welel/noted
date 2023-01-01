@@ -1,0 +1,82 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{{ user.username }} ({{ user.full_name }}){% endblock %}
+
+
+{% block center %}
+<div class="container" style="max-width: 800px;">
+<div class="row">
+    <p class="fs-3">{% trans "Profile settings" %}</p>
+    <hr>
+</div>
+<form class="row flex-column-reverse flex-md-row mb-5" method="POST" action="{% url 'users:settings' %}" enctype="multipart/form-data">
+    <div class="col-md-7 col-12">
+        <div class="row">
+            {% csrf_token %}
+            <label for="id_full_name" class="form-label fw-bold ps-1 mb-1" >{% trans "Full name" %}</label>
+            {{ user_form.full_name }}
+            <div class="form-text ps-1">{{ user_form.full_name.help_text }}</div>
+            <div class="form-text ps-1 text-danger">{{ user_form.full_name.errors }}</div>
+            <label for="id_username" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Username" %}</label>
+            <div class="input-group mb-3 ps-0">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                {{ user_form.username }}
+                <div class="form-text ps-1">{{ user_form.username.help_text }}</div>
+                <div id="invalid-username-message" class="invalid-feedback fw-bold"></div>
+                <div class="form-text ps-1 text-danger">{{ user_form.username.errors }}</div>
+            </div>
+            <div class="row mt-4 d-block">
+                <label class="form-label fw-bold ps-1 mb-1" >{% trans "Email address" %}</label>
+                <div class="ps-1 mb-2">{{ user.email }}</div>
+                <a class="btn btn-sm d-inline btn-success rounded-pill disabled">{% trans "Change email" %}</a>
+            </div>
+            <div class="row mt-4 d-block">
+                <label class="form-label fw-bold ps-1 mb-1" >{% trans "Password" %}</label>
+                <a class="btn btn-sm d-inline btn-success rounded-pill disabled">{% trans "Change password" %}</a>
+            </div>
+            <label for="id_bio" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Bio" %}</label>
+            {{ profile_form.bio }}
+            <label for="id_location" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Location" %}</label>
+            <div class="form-text ps-1 text-danger">{{ profile_form.bio.errors }}</div>
+            {{ profile_form.location }}
+            <div class="form-text ps-1 text-danger">{{ profile_form.location.errors }}</div>
+            <hr class="mt-5">
+            <label for="id_twitter" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Twitter username" %}</label>
+            {{ profile_form.twitter }}
+            <div class="form-text ps-1 text-danger">{{ profile_form.twitter.errors }}</div>
+            <label for="id_github" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Github username" %}</label>
+            {{ profile_form.github }}
+            <div class="form-text ps-1 text-danger">{{ profile_form.github.errors }}</div>
+            <label for="id_facebook" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Facebook username" %}</label>
+            {{ profile_form.facebook }}
+            <div class="form-text ps-1 text-danger">{{ profile_form.facebook.errors }}</div>
+
+            <div class="mt-5 ps-0">
+                <button type="submit" class="btn btn-success rounded-pill">{% trans "Update profile" %}</button>
+                <button type="button" class="btn btn-danger rounded-pill ms-2 disabled">{% trans "Delete profile" %}</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 col-12 ps-md-5 ps-0 mb-md-0 mb-3">
+        <div class="row">
+            <label for="" class="form-label fw-bold ps-4 mb-1" >{% trans "Profile picture" %}</label>
+        </div>
+        <img class="rounded-circle mt-4 ava" src="{{ user.profile.avatar.url }}" width="200" height="200" >
+        <br>
+        <input type="file" name="avatar" accept="image/*" id="id_avatar" class="form-control mt-3">
+    </div>
+</form>
+<div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script>
+    const usernameValidationUrl = "{% url 'users:validate_username' %}";
+</script>
+<script type="text/javascript" src="{% static 'js/profile_settings.js' %}"></script>
+{% endblock %}

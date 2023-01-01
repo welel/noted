@@ -1,6 +1,9 @@
 #decor-sep {
     background-color: #e6e6e6;
 }
+#gerland {
+    visibility: visible;
+}
 
 
 /* BADGES & TAGS */
@@ -140,4 +143,28 @@
 }
 .source-table-row:hover {
     background-color: #ececec;
+}
+
+
+/* TABS */
+#myTab li {
+    border-bottom: 1px solid rgba(0,0,0,0);
+}
+#myTab li:hover {
+    color: black;
+    border-bottom: 1px solid black;
+}
+#myTab button {
+    border-bottom: 1px solid rgba(0,0,0,0);
+}
+#myTab button.active {
+    background-color: rgba(0,0,0,0);
+    border-bottom: 1px solid black;
+    color: rgb(36, 36, 36) !important;
+}
+#myTab button.active:hover {
+    color: black !important;
+}
+#myTab button:hover {
+    color: black !important;
 }

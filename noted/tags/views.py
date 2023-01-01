@@ -61,9 +61,9 @@ class TagDetails(log.LoggingView, DetailView):
 def subscribe(request, slug):
     """Starts/ends following a tag."""
     tag = get_object_or_404(Tag, slug=slug)
-    if tag in request.user.tags.all():
-        request.user.tags.remove(tag.name)
+    if tag in request.user.profile.tags.all():
+        request.user.profile.tags.remove(tag.name)
         return JsonResponse({"result": "removed"})
     else:
-        request.user.tags.add(tag.name)
+        request.user.profile.tags.add(tag.name)
         return JsonResponse({"result": "added"})

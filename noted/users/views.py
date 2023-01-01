@@ -5,19 +5,26 @@ from allauth.account.models import EmailAddress
 
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, SignatureExpired
 from django.core.validators import validate_email as _validate_email
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views import generic
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from users.auth import send_signup_link, signer
-from users.forms import SignupForm
-from users.models import SignupToken, User
-from common.decorators import ajax_required
 from common import logging as log
+from common.decorators import ajax_required
+from users.auth import send_signup_link, signer
+from users.forms import (
+    SignupForm,
+    UpdateUserForm,
+    UserProfileForm,
+    validate_username as val_username,
+)
+from users.models import SignupToken, User
 
 
 logger = logging.getLogger(__name__)
@@ -50,6 +57,27 @@ def validate_email(request):
             "is_taken": EmailAddress.objects.filter(email=email).exists()
             or User.objects.filter(email=email).exists()
         }
+        return JsonResponse(response, status=200)
+    return JsonResponse({"is_taken": "error"}, status=200)
+
+
+@log.logit_view
+@ajax_required
+def validate_username(request):
+    """Check if a user with a given username already exists in the database."""
+    if request.method == "GET":
+        username = request.GET.get("username", None)
+        try:
+            if isinstance(username, str):
+                username = "@" + username
+                val_username(username)
+        except ValidationError as e:
+            return JsonResponse({"invalid": str(e.message)}, status=200)
+        else:
+            response = {
+                "is_taken": User.objects.filter(username=username).exists()
+                and not username == request.user.username
+            }
         return JsonResponse(response, status=200)
     return JsonResponse({"is_taken": "error"}, status=200)
 
@@ -167,3 +195,42 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect(reverse("content:home"))
+
+
+class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
+    template_name = "users/profile_settings.html"
+
+    @log.logit_generic_view_request
+    def get(self, request, *args, **kwargs):
+        user_form = UpdateUserForm(instance=request.user)
+        # Cut '@' sign.
+        user_form.initial["username"] = user_form.initial["username"][1:]
+        profile_form = UserProfileForm(instance=request.user.profile)
+        profile_form.initial.update(request.user.profile.get_socials())
+        self.extra_context = {
+            "user_form": user_form,
+            "profile_form": profile_form,
+            "user": get_object_or_404(User, pk=request.user.pk),
+        }
+        return super().get(self, request, *args, **kwargs)
+
+    @log.logit_generic_view_request
+    def post(self, request, *args, **kwargs):
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(
+            request.POST, request.FILES, instance=request.user.profile
+        )
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+        else:
+            return render(
+                request,
+                self.template_name,
+                {
+                    "user_form": user_form,
+                    "profile_form": profile_form,
+                    "user": get_object_or_404(User, pk=request.user.pk),
+                },
+            )
+        return redirect("users:settings")

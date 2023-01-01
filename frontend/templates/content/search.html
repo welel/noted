@@ -44,11 +44,11 @@
                 {% for user in users %}
                 <div class="row mt-3 mb-3 d-flex align-items-center">
                     <div class="col-2 text-center d-sm-inline d-none">
-                        <div><img src="{{ user.avatar.url }}" class="rounded-circle" alt="Avatar" width="60" height="60"></div>
+                        <div><img src="{{ user.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="60" height="60"></div>
                     </div>
                     <div class="col">
                         <a href="{{ user.get_absolute_url }}" class="fw-bold text-dark text-decoration-none" style="font-size: 1.1rem;">{{ user.full_name }}</a>
-                        {% if user.bio %}<div class="text-secondary">{{ user.bio }}</div>{% endif %}
+                        {% if user.profile.bio %}<div class="text-secondary">{{ user.profile.bio }}</div>{% endif %}
                     </div>
                     <div class="col-2">
                         <a href="#" id="source-add-note-btn" class="btn btn-outline-success rounded-pill disabled">{% trans "Follow" %}</a>

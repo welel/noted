@@ -1,15 +1,17 @@
 {% load static %}
 {% load i18n %}
+{% load filtersocialtags %}
 
 <div class="row mt-5 ps-2">
     <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="{{ user.avatar.url }}" class="rounded-circle" alt="A" width="80" height="80">
+        <img src="{{ user.profile.avatar.url }}" class="rounded-circle ava" alt="A" width="80" height="80">
     </a>
 </div>
 <div class="row mt-3">
-    <h5>{{ user.full_name }}</h5>
+    <h5 class="mb-0">{{ user.full_name }}</h5>
+    <i class="text-secondary" style="font-size: 0.9rem;">{{ user.username }}</i>
 </div>
-<div class="row">
+<div class="row mt-2">
     <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
 </div>
 {% if user.bio %}
@@ -17,8 +19,31 @@
     <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ user.bio }}</p>
 </div>
 {% endif %}
+{% if user.profile.bio %}
+<div class="row mt-3 pe-5">
+    <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ user.profile.bio }}</p>
+</div>
+{% endif %}
+{% if user.profile.location %}
+<div class="row color-grey {% if not user.profile.bio %}mt-3{% endif %}">
+    <p style="font-size: 0.9rem;"><i class="bi bi-geo-alt"></i> {{ user.profile.location }}</p>
+</div>
+{% endif %}
+{% if user.profile.is_socials %}
+<div class="mt-3 text-center pe-5" style="font-size: 1.2rem;">
+    {% if user.profile.twitter %}
+    <a href="{{ user.profile.twitter|twitter_url }}" target="_blank" class="text-decoration-none text-secondary mx-2"><i class="bi bi-twitter telegram-h"></i></a>
+    {% endif %}
+    {% if user.profile.github %}
+    <a href="{{ user.profile.github|github_url }}" target="_blank" class="text-decoration-none text-secondary mx-2"><i class="bi bi-github github-h"></i></a>
+    {% endif %}
+    {% if user.profile.facebook %}
+    <a href="{{ user.profile.facebook|facebook_url }}" target="_blank" class="text-decoration-none text-secondary mx-2"><i class="bi bi-facebook telegram-h"></i></a>
+    {% endif %}
+</div>
+{% endif %}
 <div class="row mt-3">
     <div class="d-grid gap-2 d-md-block">
-        <button class="btn btn-sm btn-success rounded-pill" type="button" disabled>{% trans "Edit profile" %}</button>
+        <a href="{% url 'users:settings' %}" class="btn btn-sm btn-success rounded-pill" >{% trans "Edit profile" %}</a>
     </div>
 </div>

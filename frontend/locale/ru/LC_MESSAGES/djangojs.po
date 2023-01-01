@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 14:09+0300\n"
-"PO-Revision-Date: 2022-12-18 19:33+0000\n"
+"POT-Creation-Date: 2023-01-01 13:49+0300\n"
+"PO-Revision-Date: 2023-01-01 11:01+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: static/js/auth.js:6
@@ -44,6 +42,17 @@ msgstr "Открепить"
 #: static/js/note_display.js:43 static/js/note_display.js:44
 msgid "Pin"
 msgstr "Прикрепить"
+
+#: static/js/profile_settings.js:14
+#| msgid "This email is already taken."
+msgid "Username is already taken."
+msgstr "Это имя пользователя уже занято."
+
+#: static/js/profile_settings.js:22
+msgid "Sorry, we can't change username now. Try later."
+msgstr ""
+"Простите, мы не можем изменить имя пользователя на данный момент. Попробуйте"
+" позже."
 
 #: static/js/simplemde.js:70
 msgid "Write your note here..."

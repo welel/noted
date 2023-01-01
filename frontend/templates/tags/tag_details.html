@@ -22,7 +22,7 @@
         </div>
         <div class="col-11">
             <h1 class="fw-bold">{{ tag }}</h1>
-            <button id="follow-tag" class="btn btn-sm btn-success rounded-pill mt-2" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}>{% if tag in request.user.tags.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}</button>
+            <button id="follow-tag" class="btn btn-sm btn-success rounded-pill mt-2" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}>{% if tag in request.user.profile.tags.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}</button>
             <a class="btn btn-sm btn-outline-success rounded-pill mt-2 ms-1" {% if request.user.is_authenticated %}href="{% url 'content:create_note' %}?tag={{ tag }}" target="_blank"{% else %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}>{% trans "Add Note" %}</a>
         </div>
     </div>

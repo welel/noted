@@ -147,9 +147,9 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
 
     @log.logit_class_method
     def get_queryset(self):
-        return cache_queryset(60 * 60 * 24)(
-            super().get_ordered_queryset().filter
-        )(draft=False)
+        return cache_queryset(60 * 5)(super().get_ordered_queryset().filter)(
+            draft=False
+        )
 
     @log.logit_class_method
     def get_context_data(self, **kwargs):
@@ -161,7 +161,7 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
         context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         if self.request.user.is_authenticated:
             context["tags_notes"] = Note.objects.tags_in(
-                self.request.user.tags.names()
+                self.request.user.profile.tags.names()
             )
         return context
 

@@ -6,6 +6,10 @@
     --dr-ac: #4ECCA3;
 }
 
+#gerland {
+    visibility: hidden;
+}
+
 body {
     background-color: var(--dr-bg);
     color: var(--dr-cl);
@@ -142,24 +146,30 @@ hr {
 }
 
 /* TABS */
-.nav-tabs {
-    border-color: var(--dr-sl);
+#myTab {
+    border-bottom: 1px solid var(--dr-sl);
 }
-.nav-link {
-    transition: none;
+#myTab li {
+    border-bottom: 1px solid var(--dr-sl);
 }
-.nav-link.active {
-    background-color: var(--dr-bg) !important;
+#myTab li:hover {
+    color: black;
+    border-bottom: 1px solid black;
 }
-.tablink.active {
+#myTab button {
+    border-bottom: 1px solid rgba(0,0,0,0);
+}
+#myTab button.active {
+    background-color: rgba(0,0,0,0);
     border-bottom: 1px solid var(--dr-cl) !important;
-    border: var(--dr-bg);
     color: var(--dr-cl) !important;
 }
-.tablink:hover {
-    border-bottom: 1px solid var(--dr-cl) !important;
-    border: var(--dr-bg);
+#myTab button.active:hover {
     color: var(--dr-cl) !important;
+}
+#myTab button:hover {
+    color: var(--dr-cl) !important;
+    border-bottom: 1px solid var(--dr-cl) !important;
 }
 
 

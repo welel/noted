@@ -7,7 +7,7 @@
         <div class="d-flex align-items-center mt-3" style="font-size: 13px;">
             {% if not note.anonymous %}
             <a href="{{ note.author.get_absolute_url }}" class="text-decoration-none text-dark">
-            <span><img src="{{ note.author.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
+            <span><img src="{{ note.author.profile.avatar.url }}" class="rounded-circle" alt="A" width="16" height="16"></span>
             <span>{{ note.author.full_name }}</span>
             </a>
             {% else %}
