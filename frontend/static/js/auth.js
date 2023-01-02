@@ -86,7 +86,7 @@ function isEmailAvailable(email) {
                 emailInputField.classList.add('is-invalid');
             } else {
                 // free
-                feedbackMessageElement.innerHTML = ''
+                feedbackMessageElement.innerHTML = '';
                 emailInputField.classList.remove('is-invalid');
                 sendSignupEmail(email);
             }

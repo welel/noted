@@ -55,3 +55,17 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+
+function setValid(element, feedback) {
+    feedback.innerHTML = '';
+    element.classList.remove('is-invalid');
+    element.classList.add('is-valid');
+}
+
+
+function setInvalid(element, feedback, message) {
+    feedback.innerHTML = message;
+    element.classList.remove('is-valid');
+    element.classList.add('is-invalid');
+}

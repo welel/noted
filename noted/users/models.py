@@ -112,7 +112,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         help_text=_(
             "Username should include only latin letters, digits and dots. \
-            Username can't start and end with a dot or don't contain letters."
+            Username can't start and end with a dot or don't contain letters. \
+            Digits can be added only at the end."
         ),
     )
     full_name = models.CharField(
@@ -236,6 +237,17 @@ class SignupToken(models.Model):
 
     Created when sign up email was sent to a client. Deleted when a client
     registered on the website.
+    """
+
+    token = models.CharField(_("Token"), max_length=255, unique=True)
+    created = models.DateTimeField(_("Created"), auto_now_add=True)
+
+
+class ChangeEmailToken(models.Model):
+    """A token used for changing email.
+
+    Created when the request on change was created. Deleted when a client
+    pass by the link from email to the website.
     """
 
     token = models.CharField(_("Token"), max_length=255, unique=True)

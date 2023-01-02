@@ -1,0 +1,17 @@
+{% load i18n %}
+
+NoteD.
+
+{% trans "You’re almost there." %}
+
+{% trans "Click the link below to confirm your email and finish changing your NoteD email." %}
+{% trans "This link will expire in 2 hours and can only be used once." %}
+        
+{% trans "Paste this link into your web browser:" %}
+{{ host }}{% url 'users:change_email' token=token %}
+
+
+{% trans "If you did not make this request, you can safely ignore this email." %}
+
+{% trans "Check our website:" %}
+{{ host }}

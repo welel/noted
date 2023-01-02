@@ -29,15 +29,59 @@
                 <div id="invalid-username-message" class="invalid-feedback fw-bold"></div>
                 <div class="form-text ps-1 text-danger">{{ user_form.username.errors }}</div>
             </div>
-            <div class="row mt-4 d-block">
+            <div class="row mt-4">
                 <label class="form-label fw-bold ps-1 mb-1" >{% trans "Email address" %}</label>
                 <div class="ps-1 mb-2">{{ user.email }}</div>
-                <a class="btn btn-sm d-inline btn-success rounded-pill disabled">{% trans "Change email" %}</a>
+                {% if not social_account %}
+                <span class="ps-0">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#change-email-modal" class="btn btn-sm btn-success rounded-pill">{% trans "Change email" %}</button>
+                </span>
+                {% endif %}
             </div>
+            {% if not social_account %}
+            <!-- Modal: change email-->
+            <div class="modal fade" id="change-email-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+                        <div class="container-fluid mb-5" style="max-width: 300px;">
+                            <div class="row">
+                                <p class="text-center fs-3 mt-5">{% trans "Change email" %}</p>
+                                <p class="text-center mt-4">{% trans "Enter new email address. We will send to you confirmation message." %}</p>
+                                <input id="user-email" class="form-control form-control-sm mt-5" placeholder="{% trans "Email" %}" type="email" name="email" autocomplete="on" />
+                                <div id="user-email-feedback" class="invalid-feedback">
+                                    {% trans "Enter a valid email." %}
+                                </div>                      
+                                <button id="submit-email" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- Modal: change email end -->
+            <div class="modal fade" id="change-email-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+                        <div class="container-fluid mb-5" style="max-width: 300px;">
+                            <div class="row">
+                                <p class="text-center fs-3 mt-5">{% trans "Check your inbox" %}</p>
+                                <p class="text-center mt-4">{% trans "We sent confirmation message on your new email. Pass by the link in email message." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- End modals -->
             <div class="row mt-4 d-block">
                 <label class="form-label fw-bold ps-1 mb-1" >{% trans "Password" %}</label>
                 <a class="btn btn-sm d-inline btn-success rounded-pill disabled">{% trans "Change password" %}</a>
             </div>
+            {% endif %}
             <label for="id_bio" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Bio" %}</label>
             {{ profile_form.bio }}
             <label for="id_location" class="form-label fw-bold ps-1 mb-1 mt-4" >{% trans "Location" %}</label>
@@ -77,6 +121,8 @@
 {% block extra_scripts %}
 <script>
     const usernameValidationUrl = "{% url 'users:validate_username' %}";
+    const emailValidationUrl = "{% url 'users:validate_email' %}";
+    const changeEmailRequestUrl = "{% url 'users:change_email_request' %}";
 </script>
 <script type="text/javascript" src="{% static 'js/profile_settings.js' %}"></script>
 {% endblock %}

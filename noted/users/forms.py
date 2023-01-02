@@ -25,12 +25,13 @@ def validate_username(username: str):
         )
     if username[0] != "@":
         raise ValidationError(_("Username should start with '@' sign."))
-    # TODO: add digits
-    if not re.fullmatch(r"^([a-zA-Z]+.[a-zA-Z]+.?)+[a-zA-Z]$", username[1:]):
+    if not re.fullmatch(
+        r"^@([a-zA-Z]+\.[a-zA-Z]+\.?)+[a-zA-Z]+\d*$", username
+    ):
         raise ValidationError(
             _(
                 "Username can't start or end with a dot. Two dots can't be \
-                next to each other."
+                next to each other. Digits can be added only at the end."
             )
         )
 

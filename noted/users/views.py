@@ -5,6 +5,7 @@ from allauth.account.models import EmailAddress
 
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, SignatureExpired
@@ -17,14 +18,14 @@ from django.utils.translation import gettext as _
 
 from common import logging as log
 from common.decorators import ajax_required
-from users.auth import send_signup_link, signer
+from users.auth import send_signup_link, signer, send_change_email_link
 from users.forms import (
     SignupForm,
     UpdateUserForm,
     UserProfileForm,
     validate_username as val_username,
 )
-from users.models import SignupToken, User
+from users.models import SignupToken, User, ChangeEmailToken
 
 
 logger = logging.getLogger(__name__)
@@ -41,10 +42,77 @@ def send_singup_email(request):
         except ValidationError:
             return JsonResponse({"msg": "invalid"}, status=200)
         else:
-            success = send_signup_link(email)
-            if success:
+            if send_signup_link(email):
                 return JsonResponse({"msg": "sent"}, status=200)
     return JsonResponse({"msg": "error"}, status=200)
+
+
+@log.logit_view
+@ajax_required
+def send_change_email(request):
+    """Send change email message to a client with the link to the change view."""
+    if request.method == "POST":
+        email = json.load(request).get("email")
+        try:
+            _validate_email(email)
+        except ValidationError:
+            return JsonResponse({"msg": "invalid"}, status=200)
+        else:
+            if send_change_email_link(email):
+                return JsonResponse({"msg": "sent"}, status=200)
+    return JsonResponse({"msg": "error"}, status=200)
+
+
+@log.logit_view
+@login_required
+def change_email(request, token):
+
+    try:
+        token = ChangeEmailToken.objects.get(token=token)
+    except ChangeEmailToken.DoesNotExist:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            _("You already changed email. If you didn't, make request again!"),
+        )
+        return redirect(reverse("content:home"))
+
+    try:
+        email = signer.unsign(token.token, max_age=7200)
+    except SignatureExpired:
+        return render(
+            request,
+            "error.html",
+            {"message": "Signature Expired", "title": "Signature Expired"},
+        )
+    except BadSignature:
+        return render(
+            request,
+            "error.html",
+            {"message": "Bad Signature", "title": "Bad Signature"},
+        )
+    finally:
+        logger.warning(
+            log.VIEW_LOG_TEMPLATE.format(
+                name=change_email.__name__,
+                user=request.user,
+                method=request.method,
+                path=request.path,
+            )
+            + f"User have problems with changing email signature: token id {token.pk}"
+        )
+    if EmailAddress.objetcs.filter(email=email).exists():
+        messages.add_message(
+            request, messages.WARNING, _("You can't change your email.")
+        )
+        return redirect(reverse("content:home"))
+    request.user.email = email
+    request.user.save()
+    messages.add_message(
+        request, messages.INFO, _("The email successfully changed.")
+    )
+    token.delete()
+    return redirect(reverse("content:home"))
 
 
 @log.logit_view
@@ -211,6 +279,9 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
             "user_form": user_form,
             "profile_form": profile_form,
             "user": get_object_or_404(User, pk=request.user.pk),
+            "social_account": EmailAddress.objects.filter(
+                email=request.user.email
+            ).exists(),
         }
         return super().get(self, request, *args, **kwargs)
 
@@ -231,6 +302,9 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
                     "user_form": user_form,
                     "profile_form": profile_form,
                     "user": get_object_or_404(User, pk=request.user.pk),
+                    "social_account": EmailAddress.objects.filter(
+                        email=request.user.email
+                    ).exists(),
                 },
             )
         return redirect("users:settings")
