@@ -86,7 +86,7 @@ Require script `js/auth.js`
     </li>
     <li class="nav-item px-2">
         <a class="nav-link" href="{% url 'content:personal_notes' %}?bookmark=open">
-            <i class="bi bi-bookmark-star" style="font-size: 1.5rem;"></i>
+            <i class="bi bi-bookmark-star" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
         </a>
     </li>
     <li class="nav-item px-2">
@@ -96,7 +96,7 @@ Require script `js/auth.js`
     </li>
     <li class="nav-item px-2">
         <a class="nav-link" href="{% url 'content:personal_notes' %}">
-            <i class="bi bi-journals" style="font-size: 1.5rem;"></i>
+            <i class="bi bi-journals" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
         </a>
     </li>
     {% if not request.user.is_authenticated %}

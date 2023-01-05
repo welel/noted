@@ -8,11 +8,13 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from django.db.models.signals import pre_delete
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.conf import settings
 
+# from content.models import make_all_notes_anonymous
 from tags.models import UnicodeTaggedItem
 
 
@@ -230,6 +232,25 @@ class UserProfile(models.Model):
     @property
     def is_socials(self) -> bool:
         return self.twitter or self.facebook or self.github
+
+
+class Following(models.Model):
+    follower = models.ForeignKey(
+        User,
+        related_name="subscriptions",
+        db_index=True,
+        on_delete=models.CASCADE,
+    )
+    followed = models.ForeignKey(
+        User, related_name="followers", db_index=True, on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ("-created",)
+
+    def __str__(self):
+        return f"{self.follower} follows {self.followed}"
 
 
 class SignupToken(models.Model):

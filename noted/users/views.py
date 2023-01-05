@@ -13,19 +13,22 @@ from django.core.validators import validate_email as _validate_email
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
-from django.urls import reverse
+from django.views.decorators.http import require_POST
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
 
 from common import logging as log
 from common.decorators import ajax_required
+from content.models import Note
 from users.auth import send_signup_link, signer, send_change_email_link
 from users.forms import (
     SignupForm,
     UpdateUserForm,
     UserProfileForm,
     validate_username as val_username,
+    DeleteAccount,
 )
-from users.models import SignupToken, User, ChangeEmailToken
+from users.models import SignupToken, User, ChangeEmailToken, Following
 
 
 logger = logging.getLogger(__name__)
@@ -265,6 +268,28 @@ def signout(request):
     return redirect(reverse("content:home"))
 
 
+@log.logit_view
+def delete_account(request):
+    if request.method == "GET":
+        form = DeleteAccount()
+        return render(request, "users/delete_account.html", {"form": form})
+    elif request.method == "POST":
+        form = DeleteAccount(request.POST)
+        if form.is_valid():
+            method = form.cleaned_data.get("method_select")
+            if method == "save":
+                for note in Note.objects.filter(author=request.user):
+                    note.anonymous = True
+                    note.save()
+            elif method == "delete":
+                for note in Note.objects.filter(author=request.user):
+                    note.delete()
+            request.user.delete()
+            return redirect("content:welcome")
+        return render(request, "users/delete_account.html", {"form": form})
+    return HttpResponseBadRequest()
+
+
 class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
     template_name = "users/profile_settings.html"
 
@@ -308,3 +333,32 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
                 },
             )
         return redirect("users:settings")
+
+
+@ajax_required
+@require_POST
+@login_required
+def user_follow(request):
+    """Handle ajax request - follow/unfollow a user.
+
+    **Post params**
+        id: id of a user is going to be followed.
+        action: follow/unfollow.
+    """
+    user_id = request.POST.get("id")
+    action = request.POST.get("action")
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id)
+            if action == "follow":
+                Following.objects.get_or_create(
+                    followed=user, follower=request.user
+                ),
+            else:
+                Following.objects.filter(
+                    followed=user, follower=request.user
+                ).delete(),
+            return JsonResponse({"status": "ok"})
+        except User.DoesNotExist:
+            return JsonResponse({"status": "error"})
+    return JsonResponse({"status": "error"})

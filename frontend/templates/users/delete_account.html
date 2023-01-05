@@ -1,0 +1,17 @@
+{% extends 'account/base.html' %}
+
+{% load i18n %}
+
+
+{% block main %}
+<div class="container d-flex justify-content-around mt-5">
+    <form class="row" method="POST" action="{% url 'users:delete_account' %}" style="max-width: 700px;">
+        {% csrf_token %}
+        <h2>{% trans "Delete account" %}</h2>
+        <p>{% trans "Your profile will be deleted completely and cannot be recovered. However, you may choose to keep all of your public entries available under an anonymous author." %}</p>
+        <label class="fw-bold mt-3">{% trans "Choose an option:" %}</label>
+        {{ form.method_select }}
+        <button class="btn btn-danger rounded-pill mt-5">{% trans "Delete Account" %}</button>
+    </form>
+</div>
+{% endblock %}

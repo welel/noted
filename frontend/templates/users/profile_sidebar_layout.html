@@ -11,8 +11,43 @@
     <h5>{{ user.full_name }}</h5>
 </div>
 <div class="row">
-    <a class="text-decoration-none fs-6 link-h color-grey">0 {% trans "Followers" %}</a>
+    <button class="btn btn-link text-decoration-none fs-6 link-h color-grey d-flex" data-bs-toggle="modal" data-bs-target="#followers-modal">
+        <span id="followers-counter">{{ followers|length }}</span>&nbsp;{% trans "Followers" %}
+    </button>
 </div>
+<!-- Modal: followers-->
+<div class="modal fade" id="followers-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            {% if followers %}
+                <h3 class="mb-5">{% trans "Followers" %}</h3>
+                {% for user in followers %}
+                    <div class="row mt-3 mb-3 d-flex align-items-center">
+                        <div class="col-lg-2 col-2 text-center d-sm-inline d-none">
+                            <div><img src="{{ user.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="60" height="60"></div>
+                        </div>
+                        <div class="col-lg col-6">
+                            <a href="{{ user.get_absolute_url }}" class="fw-bold text-dark text-decoration-none" style="font-size: 1.1rem;">{{ user.full_name }}</a>
+                            {% if user.profile.bio %}<div class="text-secondary">{{ user.profile.bio }}</div>{% endif %}
+                        </div>
+                        <div class="col-lg-2 col">
+                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn" user-id="{{ user.id }}" action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
+                                {% if request.user in user.followers.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p class="text-secondary">{{ user.full_name }} {% trans "has no followers." %}</p>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+<!-- End modal -->
 {% if user.profile.bio %}
 <div class="row mt-3 pe-5">
     <p class="color-grey mb-0" style="font-size: 0.9rem;">{{ user.profile.bio }}</p>
@@ -38,7 +73,11 @@
 {% endif %}
 <div class="row mt-3">
     <div class="d-grid gap-2 d-md-block">
-        <button class="btn btn-success rounded-pill" type="button" disabled>{% trans "Follow" %}</button>
+        <button id="follow-btn" class="btn btn-success rounded-pill" type="button" user-id={{ user.id }} action="{% if request.user in followers %}unfollow{% else %}follow{% endif %}">
+            {% if request.user in followers %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
+        </button>
         <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
     </div>
+    <link id="follow-url" href="{% url 'users:follow' %}">
 </div>
+<script type="text/javascript" src="{% static 'js/profile_list.js' %}"></script>

@@ -177,3 +177,16 @@ class UserProfileForm(forms.ModelForm):
             twitter,
             github,
         )
+
+
+class DeleteAccount(forms.Form):
+    METHOD = (
+        (
+            "save",
+            _("Leave all my public notes as anonymous and delete account."),
+        ),
+        ("delete", _("Delete all my notes and delete account.")),
+    )
+    method_select = forms.ChoiceField(
+        choices=METHOD, widget=forms.Select(attrs={"class": "form-control"})
+    )

@@ -44,7 +44,7 @@ from content.models import Note, Source
 from common import ajax_required, logging as log
 from common.cache import cache_queryset
 from tags.models import get_top_tags
-from users.models import User
+from users.models import User, Following
 
 
 logger = logging.getLogger(__name__)
@@ -203,10 +203,19 @@ class ProfileNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         username = User.unslugify(self.kwargs.get("slug"))
-        context["user"] = get_object_or_404(User, username=username)
+        user = get_object_or_404(User, username=username)
+        context["user"] = user
         context["pins"] = self.get_queryset().filter(pin=True)
         context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
             :5
+        ]
+        context["followers"] = [
+            contact.follower
+            for contact in Following.objects.filter(followed=user)
+        ]
+        context["following"] = [
+            contact.followed
+            for contact in Following.objects.filter(follower=user)
         ]
         return context
 

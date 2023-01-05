@@ -101,7 +101,7 @@
 
             <div class="mt-5 ps-0">
                 <button type="submit" class="btn btn-success rounded-pill">{% trans "Update profile" %}</button>
-                <button type="button" class="btn btn-danger rounded-pill ms-2 disabled">{% trans "Delete profile" %}</button>
+                <a href="{% url 'users:delete_account' %}" class="btn btn-danger rounded-pill ms-2">{% trans "Delete profile" %}</a>
             </div>
         </div>
     </div>
@@ -125,4 +125,7 @@
     const changeEmailRequestUrl = "{% url 'users:change_email_request' %}";
 </script>
 <script type="text/javascript" src="{% static 'js/profile_settings.js' %}"></script>
+{% if not social_account %}
+<script type="text/javascript" src="{% static 'js/profile_settings_not_social.js' %}"></script>
+{% endif %}
 {% endblock %}
