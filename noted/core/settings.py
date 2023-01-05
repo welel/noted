@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.yandex",
+    "django_social_share",
     "taggit",
     "simplemde",
     "rosetta",

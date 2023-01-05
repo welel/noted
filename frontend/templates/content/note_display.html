@@ -2,8 +2,12 @@
 
 {% load static %}
 {% load i18n %}
+{% load social_share %}
 {% load filtermetatags %}
 {% load filtersourcetags %}
+
+
+{% block itemscope %}prefix="og: http://ogp.me/ns#"{% endblock %}
 
 
 {% block title %}{{ note.title }} - NoteD{% endblock %}
@@ -13,7 +17,7 @@
 {% if note.draft %}
 <meta name="robots" content="noindex" />
 {% endif %}
-{% with summary=note.summary tags=note.tags.all source=note.source %}
+{% with summary=note.summary tags=note.tags.all source=note.source image=note.first_image_url %}
 {% if summary or source %}
     <meta name="description" content="{% if summary %}{{ summary }}{% elif source %}{% trans "Summary on " %}{{ source.title }}{% endif %}">
 {% endif %}
@@ -24,6 +28,18 @@
     <meta name="keywords" content="{% for tag in tags %}{{ tag }}, {% endfor %}">
 {% endif %}
 <link rel="canonical" href="{{ note.get_absolute_url|full_url }}">
+
+<!-- Open Graphs -->
+<meta property="og:title" content="{{ note.title }} - NoteD">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ note.get_absolute_url|full_url }}">
+{% if image %}
+<meta property="og:image" content="{{ image }}">
+{% endif %}
+{% if summary %}
+<meta property="og:description" content="{{ summary }}">
+{% endif %}
+<meta property="og:site_name" content="NoteD - {% trans "Where knowledge is open" %}">
 {% endwith %}
 {% endblock %}
 
@@ -91,15 +107,9 @@
                         </table>
                     </div>
                     <div class="col-auto d-flex align-items-center text-secondary">
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-twitter twitter-h px-2 color-grey" style="font-size: 1.1rem;"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-whatsapp whatsapp-h px-2 color-grey" style="font-size: 1.1rem;"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none text-dark">
-                        <i class="bi bi-telegram telegram-h px-2 color-grey" style="font-size: 1.1rem;"></i>
-                        </a>
+                        {% post_to_twitter '{{note.title}}' note '<i class="bi bi-twitter twitter-h px-2 color-grey" style="font-size: 1.1rem;"></i>' 'text-decoration-none text-dark' %}
+                        {% post_to_whatsapp note '<i class="bi bi-whatsapp whatsapp-h px-2 color-grey" style="font-size: 1.1rem;"></i>' 'text-decoration-none text-dark' %}
+                        {% post_to_telegram '{{note.title}} - NoteD' note '<i class="bi bi-telegram telegram-h px-2 color-grey" style="font-size: 1.1rem;"></i>' 'text-decoration-none text-dark' %}
                         <button id="copy-note-link" class="btn btn-link text-decoration-none text-dark px-0">
                         <i class="bi bi-link-45deg link-h px-2 color-grey" style="font-size: 1.1rem;"></i>
                         </button>
@@ -126,7 +136,7 @@
                                     </li>
                                 {% endif %}
                                 <li><button class="btn btn-link dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}data-bs-toggle="modal" data-bs-target="#downloadModal"{% endif %}><i class="bi bi-arrow-down-square"></i> {% trans "Download" %}</button></li>
-                                <li><a class="dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}href="{% url 'content:fork' slug=note.slug %}"{% endif %}"><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
+                                <li><a class="dropdown-item" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}href="{% url 'content:fork' slug=note.slug %}"{% endif %}><i class="bi bi-node-plus"></i> {% trans "Copy to your" %}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -172,9 +182,9 @@
                             <a class="text-secondary" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share ps-4 color-grey link-h" style="font-size: 1.2rem;"></i></a>
                             <ul class="dropdown-menu">
                                 <li><button id="copy-note-link2" class="btn btn-link dropdown-item"><i class="bi bi-link-45deg"></i> {% trans "Copy link" %}</button></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-twitter"></i> Twitter</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-telegram"></i> Telegram</a></li>
+                                <li>{% post_to_twitter '{{note.title}} - NoteD' note '<i class="bi bi-twitter"></i> Twitter</a>' 'dropdown-item' %}</li>
+                                <li>{% post_to_whatsapp note '<i class="bi bi-whatsapp"></i> WhatsApp' 'dropdown-item'  %}</li>
+                                <li>{% post_to_telegram '{{note.title}} - NoteD' note '<i class="bi bi-telegram"></i> Telegram' 'dropdown-item' %}</li>
                             </ul>
                         </div>
                         <button id="bookmark-btn-2" class="btn btn-link text-decoration-none text-dark pt-0" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}>
