@@ -4,7 +4,7 @@ from common.logging import logit_class_method
 
 
 class WwwRedirectMiddleware:
-    """Redirects www.welel-noted.site to welel-noted.site
+    """Redirects `www.welel-noted.site` to `welel-noted.site`.
 
     Add tests:
     https://adamj.eu/tech/2020/03/02/how-to-make-django-redirect-www-to-your-bare-domain/

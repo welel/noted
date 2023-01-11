@@ -1,3 +1,5 @@
+"""Loggining system for general, views and generic functions."""
+
 import functools
 import logging
 import traceback
@@ -15,7 +17,7 @@ view_logger = logging.getLogger("views.exceptions")
 
 
 def logit(fn):
-    """Logging decorator for any function."""
+    """Logging decorator for general functions."""
 
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
@@ -37,7 +39,7 @@ def logit(fn):
 
 
 def logit_view(fn):
-    """Logging decorator for a view get/post function."""
+    """Logging decorator for a view function."""
 
     @functools.wraps(fn)
     def wrapper(request, *args, **kwargs):
@@ -65,7 +67,7 @@ def logit_view(fn):
 
 
 def logit_class_method(fn):
-    """Logging decorator for any class method."""
+    """Logging decorator for general class methods."""
 
     @functools.wraps(fn)
     def wrapper(instance, *args, **kwargs):
@@ -87,7 +89,7 @@ def logit_class_method(fn):
 
 
 def logit_generic_view_request(fn):
-    """Logging decorator for a generic view's get/post function."""
+    """Logging decorator for a generic view function."""
 
     @functools.wraps(fn)
     def wrapper(view, request, *args, **kwargs):
@@ -115,6 +117,8 @@ def logit_generic_view_request(fn):
 
 
 class LoggingView(View):
+    """A mixin that wraps a dispatch function of generic view with logging."""
+
     def dispatch(self, request, *args, **kwargs):
         try:
             with transaction.atomic():

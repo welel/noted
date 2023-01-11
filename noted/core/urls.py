@@ -21,6 +21,11 @@ urlpatterns = i18n_patterns(
     path("accounts/", include("allauth.urls")),
     path("users/", include(("users.urls", "users"), namespace="users")),
     path("tags/", include(("tags.urls", "tags"), namespace="tags")),
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path("", include(("content.urls", "content"), namespace="content")),
+)
+
+urlpatterns += [
     path(
         "sitemap.xml",
         sitemap,
@@ -34,9 +39,8 @@ urlpatterns = i18n_patterns(
             template_name="robots.txt", content_type="text/plain"
         ),
     ),
-    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
-    path("", include(("content.urls", "content"), namespace="content")),
-)
+]
+
 
 handler400 = "core.views.handler400"
 handler403 = "core.views.handler403"

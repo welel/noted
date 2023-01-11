@@ -3,7 +3,13 @@ from django.core.management import call_command
 
 
 class Command(BaseCommand):
-    help = "Make migrations and migrate all apps."
+    """Make migrations and migrate in a right order.
+
+    Usage in the terminal:
+        > python manage.py makemigrate
+    """
+
+    help = "Make migrations and migrate for all apps."
 
     def handle(self, *args, **options):
         call_command("makemigrations", "tags")

@@ -1,14 +1,18 @@
 import functools
 
 from django.core.cache import cache
-from django.conf import settings
 from django.db.models import QuerySet
-from django.http import HttpRequest
-from django.utils.cache import get_cache_key
-from django.urls import reverse
 
 
 def cache_queryset(time: int) -> QuerySet:
+    """A decorator for caching function result by a function name as a key.
+
+    Caches result a function by a function name.
+
+    Attrs:
+        time: time in seconds for caching result.
+    """
+
     def decorator(fn):
         @functools.wraps(fn)
         def wrapper(*args, **kwargs):

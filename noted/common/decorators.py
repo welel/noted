@@ -1,5 +1,6 @@
 """Common decorators for all applications."""
 
+import functools
 import logging
 
 from django.http import HttpResponseBadRequest
@@ -11,8 +12,13 @@ logger = logging.getLogger("django.request")
 
 
 def ajax_required(f):
-    """AJAX request required decorator, allow only ajax requests."""
+    """AJAX request required decorator, allow only ajax requests.
 
+    The decorator for views functions that require "X-Requested-With" header
+    to be "XMLHttpRequest".
+    """
+
+    @functools.wraps(f)
     def wrap(request, *args, **kwargs):
         if not request.headers.get("X-Requested-With") == "XMLHttpRequest":
             logger.error(
@@ -27,6 +33,4 @@ def ajax_required(f):
             return HttpResponseBadRequest()
         return f(request, *args, **kwargs)
 
-    wrap.__doc__ = f.__doc__
-    wrap.__name__ = f.__name__
     return wrap
