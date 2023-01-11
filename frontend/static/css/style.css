@@ -116,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.8rem !important;
     }
 }
-#myTab li {
+#myTab .nav-item {
     position: relative;
     top: 1px;
     transition: 0.4s ease;

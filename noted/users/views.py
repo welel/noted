@@ -350,6 +350,8 @@ def user_follow(request):
     if user_id and action:
         try:
             user = User.objects.get(id=user_id)
+            if request.user == user:
+                return JsonResponse({"status": "error"})
             if action == "follow":
                 Following.objects.get_or_create(
                     followed=user, follower=request.user

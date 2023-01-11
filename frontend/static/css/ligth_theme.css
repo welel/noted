@@ -1,10 +1,6 @@
 #decor-sep {
     background-color: #e6e6e6;
 }
-#gerland {
-    visibility: visible;
-}
-
 
 /* BADGES & TAGS */
 .badge-h:hover {
@@ -147,10 +143,10 @@
 
 
 /* TABS */
-#myTab li {
+#myTab .nav-item {
     border-bottom: 1px solid rgba(0,0,0,0);
 }
-#myTab li:hover {
+#myTab .nav-item:hover {
     color: black;
     border-bottom: 1px solid black;
 }

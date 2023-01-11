@@ -6,10 +6,6 @@
     --dr-ac: #4ECCA3;
 }
 
-#gerland {
-    visibility: hidden;
-}
-
 body {
     background-color: var(--dr-bg);
     color: var(--dr-cl);

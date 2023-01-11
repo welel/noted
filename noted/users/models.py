@@ -8,7 +8,6 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
-from django.db.models.signals import pre_delete
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -234,6 +233,11 @@ class UserProfile(models.Model):
         return self.twitter or self.facebook or self.github
 
 
+class FollowingManager(models.Manager):
+    def get_following(self, user: User) -> list:
+        return [following.followed for following in self.filter(follower=user)]
+
+
 class Following(models.Model):
     follower = models.ForeignKey(
         User,
@@ -245,6 +249,7 @@ class Following(models.Model):
         User, related_name="followers", db_index=True, on_delete=models.CASCADE
     )
     created = models.DateTimeField(auto_now_add=True, db_index=True)
+    objects = FollowingManager()
 
     class Meta:
         ordering = ("-created",)

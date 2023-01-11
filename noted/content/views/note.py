@@ -160,6 +160,12 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
         ]
         context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         if self.request.user.is_authenticated:
+            print(Following.objects.get_following(self.request.user))
+            context["following_notes"] = Note.objects.filter(
+                author__in=Following.objects.get_following(self.request.user),
+                draft=False,
+                anonymous=False,
+            )
             context["tags_notes"] = Note.objects.tags_in(
                 self.request.user.profile.tags.names()
             )
@@ -217,6 +223,9 @@ class ProfileNoteList(NoteList):
             contact.followed
             for contact in Following.objects.filter(follower=user)
         ]
+        context["total_user_likes"] = sum(
+            [note.likes.all().count() for note in self.get_queryset()]
+        )
         return context
 
 
