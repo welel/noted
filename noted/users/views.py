@@ -69,7 +69,11 @@ def send_change_email(request):
 @log.logit_view
 @login_required
 def change_email(request, token):
+    """Handles change email request (works by the link from an email message).
 
+    Args:
+        token (str): a unique token of a client for chaning email.
+    """
     try:
         token = ChangeEmailToken.objects.get(token=token)
     except ChangeEmailToken.DoesNotExist:

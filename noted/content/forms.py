@@ -11,6 +11,7 @@ class NoteForm(forms.ModelForm):
     """A form for creating/updating :model:`Note` and :model:`Source`.
 
     A note can have a source. The form handles creating a note and a source.
+
     """
 
     source_type = forms.ChoiceField(
@@ -74,12 +75,14 @@ class NoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.source:
-            self.initial["source"] = self.instance.source.title
-            self.initial["source_type"] = self.instance.source.type
-            self.initial["source_link"] = self.instance.source.link
-            self.initial[
-                "source_description"
-            ] = self.instance.source.description
+            self.initial.update(
+                {
+                    "source": self.instance.source.title,
+                    "source_type": self.instance.source.type,
+                    "source_link": self.instance.source.link,
+                    "source_description": self.instance.source.description,
+                }
+            )
 
     def clean_body_raw(self):
         body_raw = self.cleaned_data.get("body_raw")

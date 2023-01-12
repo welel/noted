@@ -39,7 +39,16 @@ class TagList(log.LoggingView, ListView):
 
 
 class TagDetails(log.LoggingView, DetailView):
-    """Tag details with a list of notes of the current tag."""
+    """Tag details with a list of notes of the current tag.
+
+    **Context**
+        sidenotes: suggested notes on a sidebar.
+        notes: a queryset of notes of the current tag.
+
+    **Template**
+        :template:`frontend/templates/tags/tag_details.html`
+
+    """
 
     model = Tag
     template_name = "tags/tag_details.html"

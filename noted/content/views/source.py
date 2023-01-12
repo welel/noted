@@ -72,7 +72,10 @@ class SourceTypeDetailsView(log.LoggingView, View):
 @log.logit_view
 @ajax_required
 def search_sources_select(request):
-    """Search for sources by title and return JSON results."""
+    """Search for sources by title and return JSON results.
+
+    TODO: reduce given data and handle it in the template.
+    """
     query = request.GET.get("query", "")
     data = Source.objects.search(query)
     data = [

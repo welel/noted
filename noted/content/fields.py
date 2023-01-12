@@ -6,7 +6,7 @@ from content.markdown import pick_markdown_to_html
 
 
 class RenderedMarkdownField(TextField):
-    """This is just html code in plain/text format."""
+    """This is a field for html code in plain/text format."""
 
     def __init__(self, *args, **kwargs):
         kwargs["editable"] = False

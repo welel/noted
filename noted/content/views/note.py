@@ -79,13 +79,13 @@ class NoteList(log.LoggingView, ListView):
 
     @log.logit_class_method
     def get_ordering(self) -> str:
+        """Gets a `order` option from GET params and returns it."""
         return self.request.GET.get("order", default="-datetime_created")
 
     @log.logit_class_method
     def get_ordered_queryset(self) -> QuerySet:
-        """Order a queryset by GET param `order`."""
-        order = self.get_ordering()
-        return self.SORTING_FUNCS_MAPPING[order]()
+        """Orders a queryset by a order option."""
+        return self.SORTING_FUNCS_MAPPING[self.get_ordering()]()
 
 
 @method_decorator(cache_page(60 * 60), name="dispatch")
@@ -131,10 +131,11 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     except drafts.
 
     **Context**
-        tags_notes: a note list with tags to which the user is subscribed.
         source_types: all source types.
         sidenotes: a recommended note list.
         tags: top 7 tags (by number of notes).
+        tags_notes: a note list with tags to which the user is subscribed.
+        following_notes: a note list of users to which the user is subscribed.
 
     **Template**
         :template:`frontend/templates/index.html`
@@ -160,7 +161,6 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
         ]
         context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         if self.request.user.is_authenticated:
-            print(Following.objects.get_following(self.request.user))
             context["following_notes"] = Note.objects.filter(
                 author__in=Following.objects.get_following(self.request.user),
                 draft=False,
@@ -181,6 +181,8 @@ class ProfileNoteList(NoteList):
         user: the selected user.
         pins: user's pins (note list).
         sidenotes: a recommended note list.
+        followers: user's followers.
+        total_user_likes: total like number of all user's notes.
 
     **Template**
         :template:`frontend/templates/content/note_list_profile.html`
@@ -219,10 +221,6 @@ class ProfileNoteList(NoteList):
             contact.follower
             for contact in Following.objects.filter(followed=user)
         ]
-        context["following"] = [
-            contact.followed
-            for contact in Following.objects.filter(follower=user)
-        ]
         context["total_user_likes"] = sum(
             [note.likes.all().count() for note in self.get_queryset()]
         )
@@ -253,20 +251,28 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
     @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user"] = self.request.user
         qs = self.get_queryset()
-        context["notes"] = qs.filter(draft=False)
-        context["pins"] = qs.filter(pin=True)
-        context["drafts"] = qs.filter(draft=True)
-        context["bookmarks"] = self.request.user.bookmarked_notes.all()
-        context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
-            :5
-        ]
+        context.update(
+            {
+                "user": self.request.user,
+                "notes": qs.filter(draft=False),
+                "pins": qs.filter(pin=True),
+                "drafts": qs.filter(draft=True),
+                "bookmarks": self.request.user.bookmarked_notes.all(),
+                "sidenotes": cache_queryset(259200)(Note.objects.popular)()[
+                    :5
+                ],
+            }
+        )
         return context
 
 
 class NoteDraftMixin:
-    """Manages saving of a note based on pressed button (publish or draft)."""
+    """Manages saving of a note based on pressed button (publish or draft).
+
+    The form has 2 butons - publish, draft. If the draft button was pressed
+    the `draft` note field sets as True, else as False.
+    """
 
     @log.logit_class_method
     def form_valid(self, form):
@@ -411,6 +417,7 @@ class NoteView(View):
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def pin_note(request, slug):
+    """Sets `pin` note field via an ajax request."""
     note = get_object_or_404(Note, slug=slug)
     if note.author != request.user:
         return HttpResponseBadRequest()
@@ -424,6 +431,7 @@ def pin_note(request, slug):
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def like_note(request, slug):
+    """Adds/removes a like to/from a note."""
     note = get_object_or_404(Note, slug=slug)
     if request.user in note.likes.all():
         note.likes.remove(request.user)
@@ -438,6 +446,7 @@ def like_note(request, slug):
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def bookmark_note(request, slug):
+    """Adds/removes a like a note to/from user's bookmarks."""
     note = get_object_or_404(Note, slug=slug)
     if request.user in note.bookmarks.all():
         note.bookmarks.remove(request.user)
@@ -451,6 +460,12 @@ def bookmark_note(request, slug):
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):
+    """Download a note as a file.
+
+    Attrs:
+        filetype: an extension of a required file (md, html, pdf).
+        slug: a slug of a note.
+    """
     note = get_object_or_404(Note, slug=slug)
     file = note.generate_file_to_response(filetype=filetype)
     if not file or (note.draft and request.user != note.author):

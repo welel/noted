@@ -13,7 +13,6 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.conf import settings
 
-# from content.models import make_all_notes_anonymous
 from tags.models import UnicodeTaggedItem
 
 
@@ -212,29 +211,43 @@ class UserProfile(models.Model):
         return f"Profile: {self.user.username}"
 
     def get_socials(self) -> dict:
+        """Gets a dict with social media usernames.
+
+        Structure:
+            {"name of social name": "username"}
+        """
         if isinstance(self.socials, str):
             return json.loads(self.socials)
         return self.socials
 
     @property
     def twitter(self) -> str:
+        """Returns twitter username."""
         return self.get_socials()["twitter"]
 
     @property
     def facebook(self) -> str:
+        """Returns facebook username."""
         return self.get_socials()["facebook"]
 
     @property
     def github(self) -> str:
+        """Returns github username."""
         return self.get_socials()["github"]
 
     @property
     def is_socials(self) -> bool:
+        """Checks does an user have social media."""
         return self.twitter or self.facebook or self.github
 
 
 class FollowingManager(models.Manager):
     def get_following(self, user: User) -> list:
+        """Return list of users that follow a required user.
+
+        Attrs:
+            user: a required user.
+        """
         return [following.followed for following in self.filter(follower=user)]
 
 

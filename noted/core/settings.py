@@ -21,6 +21,7 @@ from django.utils.translation import gettext_lazy as _
 # Parse a `.env` file and load the variables inside into environment variables
 load_dotenv()
 
+# BASE_DIR: a directory where `manage.py` file.
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR.parent
 

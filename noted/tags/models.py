@@ -22,6 +22,11 @@ class UnicodeTaggedItem(TaggedItem):
 
 
 def get_top_tags(top_num: int = 7) -> QuerySet:
+    """Gets tags with most number of notes.
+
+    Attrs:
+        top_num: a slice size from the top.
+    """
     return (
         Tag.objects.annotate(
             num_times=Count("notes", filter=Q(notes__draft=False))

@@ -17,8 +17,12 @@ logger = log.getLogger("django.request")
 
 @logit_view
 @cache_page(60 * 3)
-def search(request, type):
-    """Search by notes, sources, tags, users."""
+def search(request, type: str):
+    """Search by notes, sources, tags, users.
+
+    Attrs:
+        type: a type of searching (notes/sources/tags/people).
+    """
     query = request.GET.get("query")
     context = {"query": query, "type": type}
 

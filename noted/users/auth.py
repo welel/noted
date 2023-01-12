@@ -20,6 +20,7 @@ logger = logging.getLogger("emails")
 
 @logit
 def get_host() -> str:
+    """Gets current host (schema + domain)."""
     protocol = settings.ACCOUNT_DEFAULT_HTTP_PROTOCOL
     if "localhost" in settings.ALLOWED_HOSTS:
         return protocol + "://localhost:8000"
@@ -31,6 +32,17 @@ def get_host() -> str:
 def send_email(
     email_to: str, email_from: str, subject: str, text: str, html: str = ""
 ) -> bool:
+    """Sends email to an user.
+
+    Args:
+        email_to: where to send a letter.
+        email_from: from whom the letter will be sent.
+        subject: a letter subject.
+        text: a plain/text of the letter.
+        html: html version of the letter.
+    Returns:
+        Success or failure ending boolean flag.
+    """
     try:
         msg = EmailMultiAlternatives(
             subject=subject,
