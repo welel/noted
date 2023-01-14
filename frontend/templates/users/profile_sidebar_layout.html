@@ -36,7 +36,7 @@
                             {% if user.profile.bio %}<div class="text-secondary">{{ user.profile.bio }}</div>{% endif %}
                         </div>
                         <div class="col-lg-2 col">
-                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn" user-id="{{ user.id }}" action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
+                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn {% if not request.user.is_authenticated %}disabled{% endif %}" user-id="{{ user.id }}" action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
                                 {% if request.user in user.followers.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
                             </button>
                         </div>
@@ -76,7 +76,7 @@
 {% endif %}
 <div class="row mt-3">
     <div class="d-grid gap-2 d-md-block">
-        <button id="follow-btn" class="btn btn-success rounded-pill" type="button" user-id={{ user.id }} action="{% if request.user in followers %}unfollow{% else %}follow{% endif %}">
+        <button id="follow-btn" class="btn btn-success rounded-pill {% if not request.user.is_authenticated %}disabled{% endif %}" type="button" user-id={{ user.id }} action="{% if request.user in followers %}unfollow{% else %}follow{% endif %}">
             {% if request.user in followers %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
         </button>
         <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>

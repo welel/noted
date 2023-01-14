@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-11 20:20+0300\n"
-"PO-Revision-Date: 2023-01-01 11:01+0000\n"
+"POT-Creation-Date: 2023-01-14 15:09+0300\n"
+"PO-Revision-Date: 2023-01-14 12:08+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -45,6 +45,15 @@ msgstr "Открепить"
 msgid "Pin"
 msgstr "Прикрепить"
 
+#: static/js/profile_follow.js:21 static/js/profile_list.js:21
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+#: static/js/profile_follow.js:21 static/js/profile_list.js:21
+#: static/js/tag_details.js:12
+msgid "Follow"
+msgstr "Подписаться"
+
 #: static/js/profile_settings.js:14
 msgid "Username is already taken."
 msgstr "Это имя пользователя уже занято."
@@ -62,10 +71,6 @@ msgstr "Начните писать свою запись..."
 #: static/js/tag_details.js:10
 msgid "Unfollow"
 msgstr "Отписаться"
-
-#: static/js/tag_details.js:12
-msgid "Follow"
-msgstr "Подписаться"
 
 #: static/js/theme_switch.js:10 static/js/theme_switch.js:11
 #: static/js/theme_switch.js:26 static/js/theme_switch.js:27

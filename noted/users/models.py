@@ -7,12 +7,14 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.conf import settings
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
-from django.conf import settings
 
+from common.text import is_latin
 from tags.models import UnicodeTaggedItem
 
 
@@ -31,6 +33,8 @@ class UserManager(BaseUserManager):
         """
         if not full_name:
             raise ValueError("Full name is empty or None.")
+        if not is_latin(full_name.replace(" ", "")):
+            full_name = "New User"
         username = "@" + full_name.replace(" ", ".").lower()
         if not self.filter(username=username).exists():
             return username

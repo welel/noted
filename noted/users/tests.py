@@ -115,7 +115,7 @@ class ModelsTests(TestCase):
         pass
 
 
-class UserModelTests(TestCase):
+class UserModelTest(TestCase):
     def setUp(self):
         self.mark = User.objects.create(
             email="watney@nasa.us",
@@ -147,6 +147,18 @@ class UserModelTests(TestCase):
     def test_username_generator_empty_str(self):
         self.assertRaises(ValueError, User.objects._generate_username, "")
 
+    def test_username_generator_latin(self):
+        self.assertEqual(
+            User.objects._generate_username("Jordan Piterson"),
+            "@jordan.piterson",
+        )
+
+    def test_username_generator_slav(self):
+        self.assertEqual(
+            User.objects._generate_username("Лев Толстой"),
+            "@new.user",
+        )
+
     def test_email_exists(self):
         self.assertRaises(
             django.db.utils.IntegrityError,
@@ -162,13 +174,24 @@ class UserModelTests(TestCase):
             self.mark.get_absolute_url(), "/en/u/notes/mark-watney/"
         )
 
-    def test_user_default_avatar_path(self):
-        self.assertEqual(self.mark.avatar, settings.DEFAULT_USER_AVATAR_PATH)
+
+class UserProfileModelTest(TestCase):
+    def setUp(self):
+        self.mark = User.objects.create(
+            email="watney@nasa.us",
+            full_name="Mark Watney",
+            password="spacepirate543",
+        )
 
     def test_user_default_avatar_exists(self):
-        self.assertTrue(Path(self.mark.avatar.path).is_file())
+        self.assertTrue(Path(self.mark.profile.avatar.path).is_file())
+
+    def test_user_default_avatar_path(self):
+        self.assertEqual(
+            self.mark.profile.avatar, settings.DEFAULT_USER_AVATAR_PATH
+        )
 
     def test_user_default_socials(self):
-        instance_socials = list(self.mark.socials.keys())
-        default_socials = ["instagram", "twitter", "github", "vk"]
+        instance_socials = list(self.mark.profile.socials.keys())
+        default_socials = ["facebook", "twitter", "github"]
         self.assertListEqual(instance_socials, default_socials)

@@ -18,7 +18,7 @@ followBtn.onclick = (event) => {
             followBtn.setAttribute('action',
                 previous_action == 'follow' ? 'unfollow': 'follow');
             // toggle link text
-            followBtn.innerText = previous_action == 'follow' ? 'Unsubscribe' : 'Follow';
+            followBtn.innerText = previous_action == 'follow' ? gettext('Unsubscribe') : gettext('Follow');
 
             // update total followers
             let previous_followers = parseInt(document.getElementById('followers-counter').innerText);

@@ -1,3 +1,4 @@
+import unicodedata as ud
 import uuid
 
 from django.core.exceptions import FieldDoesNotExist
@@ -41,3 +42,7 @@ def generate_unique_slug(
     if model.objects.filter(**{for_field: slug}).exists():
         return slug + "-" + str(uuid.uuid1())[:8]
     return slug
+
+
+def is_latin(word):
+    return all(["LATIN" in ud.name(c) for c in word])

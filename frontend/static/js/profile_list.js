@@ -18,7 +18,7 @@ function follow(event) {
             followBtn.setAttribute('action',
                 previous_action == 'follow' ? 'unfollow': 'follow');
             // toggle link text
-            followBtn.innerText = previous_action == 'follow' ? 'Unsubscribe' : 'Follow';
+            followBtn.innerText = previous_action == 'follow' ? gettext('Unsubscribe') : gettext('Follow');
         },
         error: (res) => {
             console.log('Bad Request: unable to follow.');
