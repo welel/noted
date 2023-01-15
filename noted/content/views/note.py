@@ -39,6 +39,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from wsgiref.util import FileWrapper
 
+from actions.models import Action
 from content.forms import NoteForm
 from content.models import Note, Source
 from common import ajax_required, logging as log
@@ -148,9 +149,7 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
 
     @log.logit_class_method
     def get_queryset(self):
-        return cache_queryset(60 * 5)(super().get_ordered_queryset().filter)(
-            draft=False
-        )
+        return super().get_ordered_queryset().filter(draft=False)
 
     @log.logit_class_method
     def get_context_data(self, **kwargs):
@@ -438,6 +437,7 @@ def like_note(request, slug):
         return JsonResponse({"liked": False})
     else:
         note.likes.add(request.user)
+        Action.objects.create_action(request.user, Action.LIKE, note)
         return JsonResponse({"liked": True})
 
 
@@ -453,6 +453,7 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": False})
     else:
         note.bookmarks.add(request.user)
+        Action.objects.create_action(request.user, Action.BOOKMARK, note)
         return JsonResponse({"bookmarked": True})
 
 
@@ -485,4 +486,5 @@ def download_note(request, filetype: str, slug: str):
     response[
         "Content-Disposition"
     ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
+    Action.objects.create_action(request.user, Action.DOWNLOAD, note)
     return response

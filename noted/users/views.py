@@ -17,6 +17,7 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
 
+from actions.models import Action
 from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note
@@ -359,11 +360,14 @@ def user_follow(request):
             if action == "follow":
                 Following.objects.get_or_create(
                     followed=user, follower=request.user
-                ),
+                )
+                Action.objects.create_action(
+                    request.user, Action.FOLLOW_USER, user
+                )
             else:
                 Following.objects.filter(
                     followed=user, follower=request.user
-                ).delete(),
+                ).delete()
             return JsonResponse({"status": "ok"})
         except User.DoesNotExist:
             return JsonResponse({"status": "error"})

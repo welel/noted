@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "content.apps.ContentConfig",
     "tags.apps.TagsConfig",
+    "actions.apps.ActionsConfig",
 ]
 
 MIDDLEWARE = [
