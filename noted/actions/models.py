@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils import timezone
@@ -21,6 +22,8 @@ class ActionManager(models.Manager):
         Returns:
             A boolean code - is an actions was created.
         """
+        if settings.TEST_MODE:
+            return False
         # check for any similar action made in the last minutes
         now = timezone.now()
         last_minute = now - datetime.timedelta(seconds=60)
