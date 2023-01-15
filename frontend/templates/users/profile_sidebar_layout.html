@@ -36,9 +36,9 @@
                             {% if user.profile.bio %}<div class="text-secondary">{{ user.profile.bio }}</div>{% endif %}
                         </div>
                         <div class="col-lg-2 col">
-                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn {% if not request.user.is_authenticated %}disabled{% endif %}" user-id="{{ user.id }}" action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
-                                {% if request.user in user.followers.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
-                            </button>
+                            <a href="{{ user.get_absolute_url }}" class="btn btn-outline-success rounded-pill">
+                               {% trans "Visit" %}
+                            </a>
                         </div>
                     </div>
                     <hr>
