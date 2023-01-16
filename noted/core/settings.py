@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "django_social_share",
     "taggit",
     "simplemde",
+    "notifications",
     "rosetta",
     "common.apps.CommonConfig",
     "users.apps.UsersConfig",

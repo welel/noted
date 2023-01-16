@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from notifications.models import Notification
 
-# Create your views here.
+from django.views.generic import ListView
+
+
+class NotificationList(ListView):
+    model = Notification
+    context_object_name = "notifications"
+    template_name = "actions/notifications.html"

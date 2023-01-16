@@ -3,14 +3,17 @@ import traceback
 
 import pycld2 as cld2
 from taggit.models import Tag
+from notifications.signals import notify
 
 from django.db.models import Count
 from django.db.models.signals import post_delete, pre_save, post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 from actions.models import Action
-from content.models import Note, Source
+from content.models import Note
 from common.logging import EXCEPTION_TEMPLATE
+from users.models import Following
 
 
 logger = logging.getLogger("exceptions")
@@ -64,4 +67,11 @@ def note_created_action(sender, instance, created, **kwargs):
     if created:
         Action.objects.create_action(
             instance.author, Action.NEW_NOTE, target=instance
+        )
+        notify.send(
+            instance.author,
+            recipient=Following.objects.get_follower(instance.author),
+            verb="note_created",
+            target=instance,
+            description=_("created new note"),
         )

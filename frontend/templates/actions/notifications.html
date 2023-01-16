@@ -1,0 +1,49 @@
+{% extends 'layouts/base_cols.html'  %}
+
+
+{% load i18n %}
+{% load notifications_tags %} 
+
+
+{% block title %}{% trans "Notifications" %}{% endblock %}
+
+
+
+{% block center %}
+<div class="container" style="max-width: 700px;">
+<h1>Notifications</h1>
+<div class="mt-5">
+{% for notification in notifications %}
+<div class="row mt-2">
+    {% if notification.verb == "note_created" %}
+    <div class="col-1 d-flex flex-row-reverse pe-0">
+        <img src="{{ notification.actor.profile.avatar.url }}" class="rounded-circle ava" width="30" height="30">
+    </div>
+    <div class="col-11">
+        <div>
+            <b>{{ notification.actor.full_name }}</b>
+            <span class="text-secondary">{{ notification.description }} {{ notification.timestamp|timesince }} {% trans "ago" %}</span>
+        </div>
+        <div class="mt-2 fs-5">
+            <b>{{ notification.target }}</b>
+        </div>
+        <div class="mt-3 mb-2">
+            <a class="text-decoration-none" href="{{ notification.target.get_absolute_url }}">{% trans "See the note" %}</a>
+            <button class="btn btn-link pe-0" >
+                <i class="bi bi-check-lg color-grey ms-4 github-h" style="font-size: 1.3rem;"></i>
+            </button>
+            <button class="btn btn-link ps-1" >
+                <i class="bi bi-trash3 color-grey google-h"></i>
+            </button>
+        </div>
+    </div>
+    <hr>
+    {% endif %}
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% for notification in notifications %}
+{{ notification }} | {{ notification.actor }} {{ notification.verb }} {{ notification.target }} {{ notification.timestamp }}
+{% endfor %}

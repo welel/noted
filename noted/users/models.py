@@ -254,6 +254,14 @@ class FollowingManager(models.Manager):
         """
         return [following.followed for following in self.filter(follower=user)]
 
+    def get_follower(self, user: User) -> list:
+        """
+
+        Attrs:
+            user: a required user.
+        """
+        return [following.follower for following in self.filter(followed=user)]
+
 
 class Following(models.Model):
     follower = models.ForeignKey(
