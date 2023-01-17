@@ -23,6 +23,7 @@
 import logging
 
 from taggit.models import Tag
+from notifications.signals import notify
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -438,6 +439,13 @@ def like_note(request, slug):
     else:
         note.likes.add(request.user)
         Action.objects.create_action(request.user, Action.LIKE, note)
+        notify.send(
+            request.user,
+            verb="user_liked_note",
+            recipient=note.author,
+            target=note,
+            description=_("liked your note"),
+        )
         return JsonResponse({"liked": True})
 
 
