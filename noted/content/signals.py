@@ -10,6 +10,7 @@ from django.db.models.signals import post_delete, pre_save, post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
+from actions import base as act
 from actions.models import Action
 from content.models import Note
 from common.logging import EXCEPTION_TEMPLATE
@@ -62,16 +63,9 @@ def set_lang(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Note)
-def note_created_action(sender, instance, created, **kwargs):
-    """Create an action (:model:`Action`) if a note instance was created."""
+def note_created_actions(sender, instance, created, **kwargs):
+    """Create actions if a note instance was created."""
     if created:
         Action.objects.create_action(
-            instance.author, Action.NEW_NOTE, target=instance
-        )
-        notify.send(
-            instance.author,
-            recipient=Following.objects.get_follower(instance.author),
-            verb="note_created",
-            target=instance,
-            description=_("created new note"),
+            instance.author, act.CREATE, target=instance, notify=True
         )

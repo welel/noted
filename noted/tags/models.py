@@ -4,8 +4,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q, Count, QuerySet
 from django.utils.text import slugify
 
-from django.contrib.auth import get_user_model
-
 
 class UnicodeTag(Tag):
     class Meta:
@@ -40,6 +38,6 @@ def get_top_tags(top_num: int = 7) -> QuerySet:
 
 
 def get_tag_followers(tag: Tag) -> list:
-    ctype = ContentType.objects.get(model="userprofile")
-    items = UnicodeTaggedItem.objects.filter(tag=tag, content_type=ctype)
+    profile_ct = ContentType.objects.get(model="userprofile")
+    items = UnicodeTaggedItem.objects.filter(tag=tag, content_type=profile_ct)
     return list([item.content_object.user for item in items])

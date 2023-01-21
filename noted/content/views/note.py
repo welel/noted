@@ -40,6 +40,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from wsgiref.util import FileWrapper
 
+from actions import base as act
 from actions.models import Action
 from content.forms import NoteForm
 from content.models import Note, Source
@@ -438,14 +439,7 @@ def like_note(request, slug):
         return JsonResponse({"liked": False})
     else:
         note.likes.add(request.user)
-        Action.objects.create_action(request.user, Action.LIKE, note)
-        notify.send(
-            request.user,
-            verb="user_liked_note",
-            recipient=note.author,
-            target=note,
-            description=_("liked your note"),
-        )
+        Action.objects.create_action(request.user, act.LIKE, note, notify=True)
         return JsonResponse({"liked": True})
 
 
@@ -461,7 +455,7 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": False})
     else:
         note.bookmarks.add(request.user)
-        Action.objects.create_action(request.user, Action.BOOKMARK, note)
+        Action.objects.create_action(request.user, act.BOOKMARK, note)
         return JsonResponse({"bookmarked": True})
 
 
@@ -494,5 +488,5 @@ def download_note(request, filetype: str, slug: str):
     response[
         "Content-Disposition"
     ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
-    Action.objects.create_action(request.user, Action.DOWNLOAD, note)
+    Action.objects.create_action(request.user, act.DOWNLOAD, note)
     return response

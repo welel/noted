@@ -8,6 +8,7 @@ from django.views.decorators.http import require_GET
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 
+from actions import base as act
 from actions.models import Action
 from content.models import Note
 from common import ajax_required
@@ -76,5 +77,5 @@ def subscribe(request, slug):
         return JsonResponse({"result": "removed"})
     else:
         request.user.profile.tags.add(tag.name)
-        Action.objects.create_action(request.user, Action.FOLLOW_TAG, tag)
+        Action.objects.create_action(request.user, act.FOLLOW, tag)
         return JsonResponse({"result": "added"})
