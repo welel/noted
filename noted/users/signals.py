@@ -1,9 +1,12 @@
-from django.db.models.signals import post_save, pre_delete
-from django.dispatch import receiver
+from notifications.signals import notify
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
+
+from actions import base as act
 from actions.models import Action
-from content.models import Note
-from users.models import UserProfile, User
+from users.models import UserProfile, User, Following
 
 
 @receiver(post_save, sender=User)
@@ -17,4 +20,12 @@ def create_user_profile(sender, instance, created, **kwargs):
 def user_created_action(sender, instance, created, **kwargs):
     """Create an action (:model:`Action`) if a user was created."""
     if created:
-        Action.objects.create_action(instance, Action.NEW_USER)
+        Action.objects.create_action(instance, act.NEW)
+
+
+@receiver(post_save, sender=Following)
+def following_created_action(sender, instance, created, **kwargs):
+    if created:
+        Action.objects.create_action(
+            instance.follower, act.FOLLOW, instance.followed, notify=True
+        )

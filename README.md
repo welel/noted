@@ -77,27 +77,21 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 * Registration, authentication, authorization
   * with socials (google, github, yandex)
-* WYSIWYG editing
-* Markdown editor
-* GitHub API Integration (markdown)
-* Internationalization (2 languages: en, ru)
+* WYSIWYG Markdown editing
+* Internationalization (English, Russian)
+* User profile
+* Following system
 * Tagging
 * Search
 * Bookmarks
 * Likes
+* Sharing content (twitter, whatsapp, telegram)
+* Download posts (md, pdf, html)
 * Twitter Bootstrap integration
 * Responsive (modile) design
-* Code documentation
 * Dark mode
-* Download posts (md, pdf, html)
-
-In future:
-
-* User profile
-* Following system
-* Sharing content (facebook, twitter)
-* Recommendations
-* Tree comments
+* Code documentation
+* GitHub API Integration (markdown)
 
 </br>
 

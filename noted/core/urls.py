@@ -1,3 +1,5 @@
+import notifications.urls
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
@@ -21,6 +23,13 @@ urlpatterns = i18n_patterns(
     path("accounts/", include("allauth.urls")),
     path("users/", include(("users.urls", "users"), namespace="users")),
     path("tags/", include(("tags.urls", "tags"), namespace="tags")),
+    path(
+        "actions/", include(("actions.urls", "actions"), namespace="actions")
+    ),
+    path(
+        "inbox/notifications/",
+        include(notifications.urls, namespace="notifications"),
+    ),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", include(("content.urls", "content"), namespace="content")),
 )

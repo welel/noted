@@ -1,3 +1,59 @@
-from django.shortcuts import render
+from notifications.models import Notification
+from notifications import settings as notification_settings
 
-# Create your views here.
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET
+from django.views.generic import ListView
+from notifications.utils import slug2id
+
+from actions.models import Action
+from common import ajax_required, logging as log
+
+
+class NotificationList(ListView):
+    model = Notification
+    context_object_name = "notifications"
+    template_name = "actions/notifications.html"
+
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(recipient=self.request.user)
+            .order_by("-unread", "-timestamp")
+        )
+
+
+@log.logit_view
+@require_GET
+@login_required
+@ajax_required
+def mark_as_read(request):
+    slug = request.GET.get("slug")
+    notification_id = slug2id(slug)
+    notification = get_object_or_404(
+        Notification, recipient=request.user, id=notification_id
+    )
+    notification.mark_as_read()
+    return JsonResponse({"read": True})
+
+
+@log.logit_view
+@require_GET
+@login_required
+@ajax_required
+def delete_notification(request):
+    slug = request.GET.get("slug")
+    notification_id = slug2id(slug)
+    notification = get_object_or_404(
+        Notification, recipient=request.user, id=notification_id
+    )
+    if notification_settings.get_config()["SOFT_DELETE"]:
+        notification.deleted = True
+        notification.save()
+    else:
+        notification.delete()
+
+    return JsonResponse({"deleted": True})

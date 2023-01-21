@@ -9,7 +9,6 @@ from django.contrib.auth.models import (
 )
 from django.conf import settings
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -253,6 +252,14 @@ class FollowingManager(models.Manager):
             user: a required user.
         """
         return [following.followed for following in self.filter(follower=user)]
+
+    def get_follower(self, user: User) -> list:
+        """
+
+        Attrs:
+            user: a required user.
+        """
+        return [following.follower for following in self.filter(followed=user)]
 
 
 class Following(models.Model):

@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "django_social_share",
     "taggit",
     "simplemde",
+    "notifications",
     "rosetta",
     "common.apps.CommonConfig",
     "users.apps.UsersConfig",
@@ -80,7 +81,8 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
-    "common.middleware.WwwRedirectMiddleware",
+    # TODO: check is it handles via Nginx
+    # "common.middleware.WwwRedirectMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

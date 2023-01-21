@@ -14,7 +14,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.views.decorators.http import require_POST
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from actions.models import Action
@@ -350,25 +350,19 @@ def user_follow(request):
         id: id of a user is going to be followed.
         action: follow/unfollow.
     """
-    user_id = request.POST.get("id")
+    try:
+        user_id = int(request.POST.get("id"))
+    except TypeError:
+        user_id = 0
     action = request.POST.get("action")
-    if user_id and action:
-        try:
-            user = User.objects.get(id=user_id)
-            if request.user == user:
-                return JsonResponse({"status": "error"})
-            if action == "follow":
-                Following.objects.get_or_create(
-                    followed=user, follower=request.user
-                )
-                Action.objects.create_action(
-                    request.user, Action.FOLLOW_USER, user
-                )
-            else:
-                Following.objects.filter(
-                    followed=user, follower=request.user
-                ).delete()
-            return JsonResponse({"status": "ok"})
-        except User.DoesNotExist:
-            return JsonResponse({"status": "error"})
+
+    if user_id and action and request.user.id != user_id:
+        user = get_object_or_404(User, id=user_id)
+        following, _ = Following.objects.get_or_create(
+            followed=user, follower=request.user
+        )
+        if action == "unfollow":
+            following.delete()
+        return JsonResponse({"status": "ok"})
+
     return JsonResponse({"status": "error"})

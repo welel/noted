@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from users.models import User, SignupToken, UserProfile
+from users.models import (
+    User,
+    SignupToken,
+    UserProfile,
+    Following,
+    ChangeEmailToken,
+)
 
 
 class UserAdmin(BaseUserAdmin):
@@ -60,4 +66,6 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Following, admin.ModelAdmin)
 admin.site.register(SignupToken, admin.ModelAdmin)
+admin.site.register(ChangeEmailToken, admin.ModelAdmin)
