@@ -44,5 +44,13 @@ def generate_unique_slug(
     return slug
 
 
-def is_latin(word):
+def is_latin(word: str) -> bool:
+    """Checks if a word is written in Latin script.
+
+    Args:
+        word: The word to check.
+
+    Returns:
+        True if the word is written in Latin script, False otherwise.
+    """
     return all(["LATIN" in ud.name(c) for c in word])

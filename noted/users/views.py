@@ -17,7 +17,6 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from actions.models import Action
 from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note

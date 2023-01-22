@@ -38,6 +38,14 @@ def get_top_tags(top_num: int = 7) -> QuerySet:
 
 
 def get_tag_followers(tag: Tag) -> list:
+    """Gets a list of users who follow the given tag
+
+    Args:
+        tag: A Tag object.
+
+    Returns:
+        A list of users who follow the given tag.
+    """
     profile_ct = ContentType.objects.get(model="userprofile")
     items = UnicodeTaggedItem.objects.filter(tag=tag, content_type=profile_ct)
     return list([item.content_object.user for item in items])

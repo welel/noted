@@ -8,7 +8,6 @@ import logging
 import traceback
 
 from django.db import transaction
-from django.http import HttpRequest
 from django.views import View
 
 

@@ -23,6 +23,7 @@ class ActionManager(models.Manager):
             verb: describing the action.
             target: any model instance to which the action is directed.
             notify: if true creates `Notification` of the action.
+
         Returns:
             A boolean code - is an actions was created.
         """
@@ -52,7 +53,7 @@ class ActionManager(models.Manager):
 
 
 class Action(models.Model):
-    """Store users actions on the site.
+    """Represents an action that a user can take in the website.
 
     **Fields**
         actor: an object that initiacte an action.

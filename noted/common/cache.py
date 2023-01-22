@@ -9,7 +9,7 @@ def cache_queryset(time: int) -> QuerySet:
 
     Caches result a function by a function name.
 
-    Attrs:
+    Args:
         time: time in seconds for caching result.
     """
 

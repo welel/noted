@@ -11,3 +11,5 @@ Disallow: /jsi18n/
 Disallow: /rosetta/
 Disallow: /en/rosetta/
 Disallow: /ru/rosetta/
+Disallow: /ru/note/download/
+Disallow: /en/note/download/
