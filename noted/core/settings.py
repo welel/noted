@@ -295,7 +295,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = PROJECT_DIR.joinpath("frontend/media")
+MEDIA_ROOT = PROJECT_DIR.joinpath("media")
 DEFAULT_USER_AVATAR_PATH = "user/default_avatar.jpg"
 
 # Default primary key field type

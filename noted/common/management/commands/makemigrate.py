@@ -15,4 +15,5 @@ class Command(BaseCommand):
         call_command("makemigrations", "tags")
         call_command("makemigrations", "users")
         call_command("makemigrations", "content")
+        call_command("makemigrations", "actions")
         call_command("migrate")
