@@ -1,0 +1,42 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{% trans "About Us" %}{% endblock %}
+
+
+{% block center %}
+<div class="container" style="max-width: 700px; font-size: 1.2rem;">
+    <h1 class="mb-4">{% trans "About Us" %}</h1>
+
+    <p>{% trans "Welcome to NoteD, the online platform for keeping all of your notes organized and easily accessible." %}</p>
+
+    <p>{% trans "Our mission is to provide a simple and intuitive way for individuals to find notes and summaries on different topics and for specific sources of information. And to help people to keep track of their thoughts and ideas and share them public. We believe that sharing and disseminating knowledge and information is important and beneficial." %}</p>
+    
+    <p>{% trans "Founded in 2022, NoteD. Behind the scenes, our dedicated team of developers, consisting of just two highly skilled individuals, works tirelessly to bring you a seamless and reliable user experience. Our platform is designed to be easy to use, while still offering powerful features such as the ability to create both public and private notes (drafts), tag and search functionality, and the ability to share notes with others." %}</p>
+    
+    <p>{% trans "In addition to our core note-taking features, we also offer a variety of other tools to help you stay organized. Some of these include:" %}</p>
+    
+    <ul>
+        <li>{% trans "Search and filter through your notes by title, text, sources, and topics of interest." %}</li>
+        <li>{% trans "Easily build upon the work of others by copying and editing notes to suit your needs." %}</li>
+        <li>{% trans "Discover existing notes on specific sources, such as books, articles, lectures and so on, and view all related notes." %}</li>
+        <li>{% trans "Download and export your notes in a variety of formats, including markdown, html, and pdf, or bookmark them for easy reference." %}</li>
+        <li>{% trans "Stay up to date with topics and people of interest by subscribing to them." %}</li>
+    </ul>
+
+    <p>{% trans "Whether you're a student, a professional, or a business owner, NoteD has something to offer. Our platform is perfect for anyone looking to stay organized, and we're constantly working to improve and add new features." %}</p>
+    
+    <h4 id="contacts">{% trans "Contacts" %}</h4>
+
+    <p>{% trans "If you have any questions or feedback, please don't hesitate to contact us. You can reach us via email at" %} <a href="mailto:pavel.loginov.dev@gmail.com" target="_blank">pavel.loginov.dev@gmail.com</a> {% trans "or connect with us on Telegram" %} <a href="https://t.me/weleldev" target="_blank">@weleldev</a>. {% trans "Thank you for choosing NoteD as your note-taking solution. We're confident that you'll find our platform to be intuitive, powerful, and most importantly, helpful in your daily life and work." %}</p>
+</div>
+{% endblock %}
+
+
+{% block sidebar %}
+<img id="machine-img" src="{% static 'img/machine.png' %}">
+<img id="note-screen-triangle-img" src="{% static 'img/note_screenshot_triangle.png' %}">
+{% endblock %}

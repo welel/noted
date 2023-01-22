@@ -31,6 +31,16 @@ urlpatterns = i18n_patterns(
         include(notifications.urls, namespace="notifications"),
     ),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path(
+        "about/",
+        TemplateView.as_view(template_name="about.html"),
+        name="about",
+    ),
+    path(
+        "privacy-policy/",
+        TemplateView.as_view(template_name="privacy_policy.html"),
+        name="privacy_policy",
+    ),
     path("", include(("content.urls", "content"), namespace="content")),
 )
 
