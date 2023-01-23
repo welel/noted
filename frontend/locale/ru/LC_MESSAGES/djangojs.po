@@ -80,3 +80,4 @@ msgstr "Светлая тема"
 #: static/js/theme_switch.js:16 static/js/theme_switch.js:17
 msgid "Dark theme"
 msgstr "Тёмная тема"
+
