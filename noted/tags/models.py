@@ -1,16 +1,33 @@
+import uuid
+
 from taggit.models import Tag, TaggedItem
 
+from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q, Count, QuerySet
 from django.utils.text import slugify
 
+from common.text import transcript_ru2en
+
+
+class TagManager(models.Manager):
+    def _generate_unique_slug(self, object) -> str:
+        """Generates a unique slug based on an object name."""
+        name = transcript_ru2en(object.name)
+        slug = slugify(name, allow_unicode=True)[:128]
+        if self.filter(slug=slug).exists():
+            slug += str(uuid.uuid4())[:8]
+        return slug
+
 
 class UnicodeTag(Tag):
+    objects = TagManager()
+
     class Meta:
         proxy = True
 
-    def slugify(self, tag, i=None):
-        return slugify(self.name, allow_unicode=True)[:128]
+    def slugify(self, *args):
+        return UnicodeTag.objects._generate_unique_slug(self)
 
 
 class UnicodeTaggedItem(TaggedItem):

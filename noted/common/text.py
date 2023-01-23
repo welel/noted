@@ -54,3 +54,27 @@ def is_latin(word: str) -> bool:
         True if the word is written in Latin script, False otherwise.
     """
     return all(["LATIN" in ud.name(c) for c in word])
+
+
+"abvgdeejziiklmnoprstufhcchhieua".upper()
+
+
+def transcript_ru2en(text: str) -> str:
+    """Makes phonetic transcription of Russian text to English.
+
+    Args:
+        text: The Russian text to be translated.
+
+    Returns:
+        The translated text in English.
+
+    Example:
+    transcript_ru2en("Привет, миръ!")
+    >>> "Privet, mir!"
+    """
+    trans_dict = str.maketrans(
+        "абвгдеёжзийклмнопрстуфхцчшщыэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ",
+        "abvgdeejziiklmnoprstufhcchhieuaABVGDEEJZIIKLMNOPRSTUFHCCHHIEUA",
+        "ъьЪЬ",
+    )
+    return text.translate(trans_dict)

@@ -1,4 +1,4 @@
-{% extends 'layouts/base_cols.html' %}
+{% extends 'layouts/base.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -7,121 +7,127 @@
 {% block title %}{% trans "Privacy Policy" %}{% endblock %}
 
 
-{% block center %}
-<div class="container" style="max-width: 700px; font-size: 1.2rem;">
-    <h1 class="mb-4">{% trans "Privacy Policy" %}</h1>
 
-    <p>{% trans "At NoteD, we take the privacy of our users very seriously. We understand that the information you entrust to us is personal and sensitive, and we are committed to protecting it. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website and services." %}</p>
-
-    <h3 class="pt-3">{% trans "Information Collection and Use:" %}</h3>
-
-    <p>{% trans "When you use our website, we collect certain information from you, including your name, email address, and any other information you choose to provide. We use this information to provide you with the services you request and to improve our website and services. We may also use this information to contact you in the future to provide you with information about our products and services or to ask for your feedback." %}</p>
-
-    <p>{% trans "We also use third-party services such as Google and Yandex metric tags to collect information about the usage of our website, including which pages are visited, how often, and for how long. This depersonalized information is used to help us understand how our website is being used and to improve it." %}</p>
-
-    <h5>{% trans "NoteD servers collect the following information:" %}</h5>
-
-    <ul>
-        <li>{% trans "Internet Protocol (IP) address of computer being used" %}</li>
-        <li>{% trans "Web pages requested" %}</li>
-        <li>{% trans "Referring web page" %}</li>
-        <li>{% trans "Browser used" %}</li>
-        <li>{% trans "Date and time" %}</li>
-    </ul>
-
-    <p>{% trans "NoteD does not associate this data to individual user identities. In addition to the IP address/browser information collected from anonymous visitors to the site, other information is collected and stored when users log in to view restricted content or submit forms. Specifically, the following information is collected and mapped to a locally created account:" %}</p>
-
-    <ul>
-        <li>{% trans "Email address" %}</li>
-        <li>{% trans "Username" %}</li>
-        <li>{% trans "First name" %}</li>
-        <li>{% trans "Last name" %}</li>
-        <li>{% trans "Date and time when joined NoteD" %}</li>
-        <li>{% trans "Date and time last log in" %}</li>
-        <li>{% trans "Actions on the website" %}</li>
-    </ul>
-
-    <h3 class="pt-3">{% trans "Authentication" %}:</h3>
-
-    <p>{% trans "We use allauth authentication services such as GitHub, Google and Yandex to allow you to sign in to our website using your existing accounts. When you sign in using these services, we may collect certain information from your account, such as your name and email address. We will never post to your account or share your information with any other party without your express consent." %}</p>
-
-    <p><b>{% trans "Additional information if you have signed up via Google:" %}</b></p>
-
-    <ul>
-        <li>id - {% trans "the unique identifier of the Google user" %}</li>
-        <li>email</li>
-        <li>{% trans "is email verified" %}</li>
-        <li>{% trans "profile picture" %}</li>
-    </ul>
-
-    <p><b>{% trans "Additional information if you have signed up via Yandex" %}:</b></p>
-
-    <ul>
-        <li>Uid/id - {% trans "the unique identifier of the Yandex user" %}.</li>
-        <li>{% trans "Primary email" %}</li>
-        <li>Login - {% trans "User login on Yandex" %}.</li>
-        <li>Client id - {% trans "the ID of the OAuth application for which the OAuth token passed in the request was issued" %}.</li>
-        <li>Display name - {% trans "the name that is displayed for this account in the Yandex interface" %}.</li>
-        <li>Real name - {% trans "first and last name of the user specified by him in Yandex ID" %}.</li>
-        <li>First name - {% trans "the username specified by him in Yandex ID" %}.</li>
-        <li>Last name - {% trans "last name of the user specified by him in Yandex ID" %}.</li>
-        <li>Sex - {% trans "user Gender" %}.</li>
-        <li>Default email / emails - {% trans "the default email address for contacting the user" %}.</li>
-        <li>Psuid - {% trans "ID of an authorized user in Yandex. It is formed on the Yandex side based on the client_id and user_id pair" %}.</li>
-    </ul>
-
-    <p><b>{% trans "Additional information if you have signed up via GitHub" %}:</b></p>
-    
-    <ul>
-        <li>Id</li>
-        <li>Login</li>
-        <li>Node_id</li>
-        <li>{% trans "Profile picture" %}</li>
-        <li>Gravatar id</li>
-        <li>{% trans "Open GitHub User URLs: profile, followers, following, gists, starred, subscriptions, organizations, repos, events, received events" %}.</li>
-        <li>{% trans "User type" %}</li>
-        <li>Site_admin availability</li>
-        <li>{% trans "Name" %}</li>
-        <li>{% trans "Company" %}</li>
-        <li>{% trans "Blog" %}</li>
-        <li>{% trans "GitHub Location" %}</li>
-        <li>Email</li>
-        <li>{% trans "Hireable" %}</li>
-        <li>{% trans "Bio" %}</li>
-        <li>Twitter {% trans "username" %}</li>
-        <li>{% trans "Public repos number" %}</li>
-        <li>{% trans "Public gists number" %}</li>
-        <li>{% trans "Followers number" %}</li>
-        <li>{% trans "Following number" %}</li>
-        <li>{% trans "Created at" %}</li>
-        <li>{% trans "Updated at" %}</li>
-    </ul>
-
-    <h3 class="pt-3">{% trans "Information Sharing and Disclosure" %}:</h3>
-
-    {% trans "We do not share your personal information with third parties. We will never sell or rent your personal information to any third party." %}
-
-    <h3 class="pt-3">{% trans "Security:" %}</h3>
-
-    <p>{% trans "We use a variety of security measures to protect your personal information, including encryption and secure servers. However, please note that no method of transmitting or storing data is completely secure. We cannot guarantee the absolute security of your personal information." %}</p>
-
-    <h3 class="pt-3">{% trans "Accessing and Changing Your Personal Information:" %}</h3>
-
-    <p>{% trans "You can access, change and delete your personal information at any time by logging in to your account on our website. If you have any questions or concerns about your personal information or this Privacy Policy, please contact us at " %}<a href="mailto:pavel.loginov.dev@gmail.com">pavel.loginov.dev@gmail.com</a></p>
-
-    <h3 class="pt-3">{% trans "Changes to this Privacy Policy" %}:</h3>
-
-    <p>{% trans "We may update this Privacy Policy from time to time. If we make any changes to this policy, we will post the updated policy on this page and indicate the date it was last updated. Your continued use of our website and services constitutes your acceptance of any changes to this policy." %}</p>
-
-    <p><b>{% trans "Last Updated" %}:</b> 23 {% trans "January" %} 2023</p>
-
-    <p>{% trans "If you have any questions or concerns about this Privacy Policy or our handling of your personal information, please contact us at " %}<a href="mailto:pavel.loginov.dev@gmail.com">pavel.loginov.dev@gmail.com</a>.</p>
-
+{% block main %}
+<div class="container-fluid mt-sm-5 mt-2">
+    <div class="row">
+        <div class="col-1 d-lg-block d-none"></div>
+        <main class="col-lg-7 col-12">
+            <div class="container" style="max-width: 700px; font-size: 1.2rem;">
+                <h1 class="mb-4">{% trans "Privacy Policy" %}</h1>
+            
+                <p>{% trans "At NoteD, we take the privacy of our users very seriously. We understand that the information you entrust to us is personal and sensitive, and we are committed to protecting it. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website and services." %}</p>
+            
+                <h3 class="pt-3">{% trans "Information Collection and Use:" %}</h3>
+            
+                <p>{% trans "When you use our website, we collect certain information from you, including your name, email address, and any other information you choose to provide. We use this information to provide you with the services you request and to improve our website and services. We may also use this information to contact you in the future to provide you with information about our products and services or to ask for your feedback." %}</p>
+            
+                <p>{% trans "We also use third-party services such as Google and Yandex metric tags to collect information about the usage of our website, including which pages are visited, how often, and for how long. This depersonalized information is used to help us understand how our website is being used and to improve it." %}</p>
+            
+                <h5>{% trans "NoteD servers collect the following information:" %}</h5>
+            
+                <ul>
+                    <li>{% trans "Internet Protocol (IP) address of computer being used" %}</li>
+                    <li>{% trans "Web pages requested" %}</li>
+                    <li>{% trans "Referring web page" %}</li>
+                    <li>{% trans "Browser used" %}</li>
+                    <li>{% trans "Date and time" %}</li>
+                </ul>
+            
+                <p>{% trans "NoteD does not associate this data to individual user identities. In addition to the IP address/browser information collected from anonymous visitors to the site, other information is collected and stored when users log in to view restricted content or submit forms. Specifically, the following information is collected and mapped to a locally created account:" %}</p>
+            
+                <ul>
+                    <li>{% trans "Email address" %}</li>
+                    <li>{% trans "Username" %}</li>
+                    <li>{% trans "First name" %}</li>
+                    <li>{% trans "Last name" %}</li>
+                    <li>{% trans "Date and time when joined NoteD" %}</li>
+                    <li>{% trans "Date and time last log in" %}</li>
+                    <li>{% trans "Actions on the website" %}</li>
+                </ul>
+            
+                <h3 class="pt-3">{% trans "Authentication" %}:</h3>
+            
+                <p>{% trans "We use allauth authentication services such as GitHub, Google and Yandex to allow you to sign in to our website using your existing accounts. When you sign in using these services, we may collect certain information from your account, such as your name and email address. We will never post to your account or share your information with any other party without your express consent." %}</p>
+            
+                <p><b>{% trans "Additional information if you have signed up via Google:" %}</b></p>
+            
+                <ul>
+                    <li>id - {% trans "the unique identifier of the Google user" %}</li>
+                    <li>email</li>
+                    <li>{% trans "is email verified" %}</li>
+                    <li>{% trans "profile picture" %}</li>
+                </ul>
+            
+                <p><b>{% trans "Additional information if you have signed up via Yandex" %}:</b></p>
+            
+                <ul>
+                    <li>Uid/id - {% trans "the unique identifier of the Yandex user" %}.</li>
+                    <li>{% trans "Primary email" %}</li>
+                    <li>Login - {% trans "User login on Yandex" %}.</li>
+                    <li>Client id - {% trans "the ID of the OAuth application for which the OAuth token passed in the request was issued" %}.</li>
+                    <li>Display name - {% trans "the name that is displayed for this account in the Yandex interface" %}.</li>
+                    <li>Real name - {% trans "first and last name of the user specified by him in Yandex ID" %}.</li>
+                    <li>First name - {% trans "the username specified by him in Yandex ID" %}.</li>
+                    <li>Last name - {% trans "last name of the user specified by him in Yandex ID" %}.</li>
+                    <li>Sex - {% trans "user Gender" %}.</li>
+                    <li>Default email / emails - {% trans "the default email address for contacting the user" %}.</li>
+                    <li>Psuid - {% trans "ID of an authorized user in Yandex. It is formed on the Yandex side based on the client_id and user_id pair" %}.</li>
+                </ul>
+            
+                <p><b>{% trans "Additional information if you have signed up via GitHub" %}:</b></p>
+                
+                <ul>
+                    <li>Id</li>
+                    <li>Login</li>
+                    <li>Node_id</li>
+                    <li>{% trans "Profile picture" %}</li>
+                    <li>Gravatar id</li>
+                    <li>{% trans "Open GitHub User URLs: profile, followers, following, gists, starred, subscriptions, organizations, repos, events, received events" %}.</li>
+                    <li>{% trans "User type" %}</li>
+                    <li>Site_admin availability</li>
+                    <li>{% trans "Name" %}</li>
+                    <li>{% trans "Company" %}</li>
+                    <li>{% trans "Blog" %}</li>
+                    <li>{% trans "GitHub Location" %}</li>
+                    <li>Email</li>
+                    <li>{% trans "Hireable" %}</li>
+                    <li>{% trans "Bio" %}</li>
+                    <li>Twitter {% trans "username" %}</li>
+                    <li>{% trans "Public repos number" %}</li>
+                    <li>{% trans "Public gists number" %}</li>
+                    <li>{% trans "Followers number" %}</li>
+                    <li>{% trans "Following number" %}</li>
+                    <li>{% trans "Created at" %}</li>
+                    <li>{% trans "Updated at" %}</li>
+                </ul>
+            
+                <h3 class="pt-3">{% trans "Information Sharing and Disclosure" %}:</h3>
+            
+                {% trans "We do not share your personal information with third parties. We will never sell or rent your personal information to any third party." %}
+            
+                <h3 class="pt-3">{% trans "Security:" %}</h3>
+            
+                <p>{% trans "We use a variety of security measures to protect your personal information, including encryption and secure servers. However, please note that no method of transmitting or storing data is completely secure. We cannot guarantee the absolute security of your personal information." %}</p>
+            
+                <h3 class="pt-3">{% trans "Accessing and Changing Your Personal Information:" %}</h3>
+            
+                <p>{% trans "You can access, change and delete your personal information at any time by logging in to your account on our website. If you have any questions or concerns about your personal information or this Privacy Policy, please contact us at " %}<a href="mailto:pavel.loginov.dev@gmail.com">pavel.loginov.dev@gmail.com</a></p>
+            
+                <h3 class="pt-3">{% trans "Changes to this Privacy Policy" %}:</h3>
+            
+                <p>{% trans "We may update this Privacy Policy from time to time. If we make any changes to this policy, we will post the updated policy on this page and indicate the date it was last updated. Your continued use of our website and services constitutes your acceptance of any changes to this policy." %}</p>
+            
+                <p><b>{% trans "Last Updated" %}:</b> 23 {% trans "January" %} 2023</p>
+            
+                <p class="pb-5">{% trans "If you have any questions or concerns about this Privacy Policy or our handling of your personal information, please contact us at " %}<a href="mailto:pavel.loginov.dev@gmail.com">pavel.loginov.dev@gmail.com</a>.</p>
+            
+            </div>
+        </main>
+        <div class="col-lg-4 col-12 px-4">
+            <img class="d-lg-block d-none w-75" id="machine-img" src="{% static 'img/machine.png' %}">
+            <img class="d-lg-block d-none w-75" id="note-screen-triangle-img" src="{% static 'img/note_screenshot_triangle.png' %}">
+        </div>
+    </div>
 </div>
-{% endblock %}
-
-
-{% block sidebar %}
-<img id="machine-img" src="{% static 'img/machine.png' %}">
-<img id="note-screen-triangle-img" src="{% static 'img/note_screenshot_triangle.png' %}">
 {% endblock %}

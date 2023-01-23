@@ -19,7 +19,6 @@ sitemaps = {
 
 
 urlpatterns = i18n_patterns(
-    path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("users/", include(("users.urls", "users"), namespace="users")),
     path("tags/", include(("tags.urls", "tags"), namespace="tags")),
@@ -60,16 +59,18 @@ urlpatterns += [
     ),
 ]
 
-
 handler400 = "core.views.handler400"
 handler403 = "core.views.handler403"
 handler404 = "core.views.handler404"
 handler500 = "core.views.handler500"
 
-if "rosetta" in settings.INSTALLED_APPS:
+if "rosetta" in settings.INSTALLED_APPS and settings.DEBUG:
     urlpatterns.insert(1, path("rosetta/", include("rosetta.urls")))
 
 if settings.DEBUG:
+    urlpatterns += i18n_patterns(
+        path("admin/", admin.site.urls),
+    )
     urlpatterns += static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT
     )
