@@ -12,5 +12,6 @@
     {% trans "If the button above doesn’t work, paste this link into your web browser:" %}<br>
     <a href="{{ host }}{% url 'users:signup' token=token %}" target="_blank">{{ host }}{% url 'users:signup' token=token %}</a>
 </p>
-<p class="text-secondary mt-5">{% trans "If you did not make this request, you can safely ignore this email." %}</p>
+<p class="text-secondary mt-1">{% trans "If you did not make this request, you can safely ignore this email." %}</p>
+<p class="mt-5">{% trans "By signing up, you agree to our Privacy Policy and the collection, storage, and use of your personal information in accordance with its terms. Our Privacy Policy can be found at" %} <a href="{{ host }}{% url 'privacy_policy' %}" target="_blank">{{ host }}{% url 'privacy_policy' %}</a>.</p>
 {% endblock %}

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-22 21:53+0300\n"
-"PO-Revision-Date: 2023-01-22 19:41+0000\n"
+"POT-Creation-Date: 2023-01-23 13:19+0300\n"
+"PO-Revision-Date: 2023-01-23 10:21+0000\n"
 "Last-Translator: Anonymous User <pavel.loginov.dev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -20,7 +20,6 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: noted/actions/apps.py:8
-#| msgid "User Accounts"
 msgid "Users' actions"
 msgstr "Действия пользователя"
 
@@ -442,16 +441,18 @@ msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
 
 #: templates/about.html:7 templates/about.html:12
-#| msgid "About"
 msgid "About Us"
 msgstr "О нас"
 
 #: templates/about.html:14
+#| msgid ""
+#| "Welcome to NoteD, the premier online platform for keeping all of your notes "
+#| "organized and easily accessible."
 msgid ""
-"Welcome to NoteD, the premier online platform for keeping all of your notes "
+"Welcome to NoteD, the online platform for keeping all of your notes "
 "organized and easily accessible."
 msgstr ""
-"Добро пожаловать на NoteD, онлайн-сервис для упорядочивания, ведения ваших "
+"Добро пожаловать на NoteD, онлайн-сервис для ведения, организации ваших "
 "записей и поиска чужих."
 
 #: templates/about.html:16
@@ -494,9 +495,6 @@ msgstr ""
 "Некоторые из них включают:"
 
 #: templates/about.html:23
-#| msgid ""
-#| "Search notes by title and text of the note, notes on specific sources and "
-#| "topics of interest."
 msgid ""
 "Search and filter through your notes by title, text, sources, and topics of "
 "interest."
@@ -606,7 +604,7 @@ msgstr ""
 
 #: templates/account/email/password_reset_key_message.html:15
 #: templates/emails/change_email.html:15 templates/emails/change_email.txt:14
-#: templates/emails/signup_email.html:15 templates/emails/signup_email.txt:14
+#: templates/emails/signup_email.html:15 templates/emails/signup_email.txt:13
 msgid "If you did not make this request, you can safely ignore this email."
 msgstr ""
 "Если вы не делали запроса на регистрацию, вы можете спокойно игнорировать "
@@ -696,7 +694,6 @@ msgid "Notifications"
 msgstr "Уведомления"
 
 #: templates/actions/notifications.html:27
-#| msgid "Has created an account."
 msgid "has created a new note"
 msgstr "создал новую запись"
 
@@ -710,7 +707,6 @@ msgstr "назад"
 #: templates/actions/notifications.html:33
 #: templates/actions/notifications.html:59
 #: templates/actions/notifications.html:106
-#| msgid "Write note"
 msgid "See the note"
 msgstr "Смотреть запись"
 
@@ -723,12 +719,10 @@ msgid "has subscribed to you"
 msgstr "подписался(ась) на вас"
 
 #: templates/actions/notifications.html:81
-#| msgid "Delete profile"
 msgid "See the profile"
 msgstr "Смотреть профиль"
 
 #: templates/actions/notifications.html:100
-#| msgid "Your notes"
 msgid "liked your note"
 msgstr "понравилась ваша запись"
 
@@ -1041,7 +1035,7 @@ msgstr "Изменить Email"
 msgid "Paste this link into your web browser:"
 msgstr "Вставьте эту ссылку в ваш браузер:"
 
-#: templates/emails/change_email.txt:16 templates/emails/signup_email.txt:16
+#: templates/emails/change_email.txt:16 templates/emails/signup_email.txt:17
 msgid "Check our website:"
 msgstr "Заглядывайте к нам:"
 
@@ -1056,6 +1050,28 @@ msgstr ""
 #: templates/emails/signup_email.html:10
 msgid "Create your account"
 msgstr "Создать аккаунт"
+
+#: templates/emails/signup_email.html:16
+msgid ""
+"By signing up, you agree to our Privacy Policy and the collection, storage, "
+"and use of your personal information in accordance with its terms. Our "
+"Privacy Policy can be found at"
+msgstr ""
+"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также"
+" со сбором, хранением и использованием вашей личной информации в "
+"соответствии с ее условиями. С нашей Политикой конфиденциальности можно "
+"ознакомиться по адресу"
+
+#: templates/emails/signup_email.txt:15
+msgid ""
+"By signing up, you agree to our Privacy Policy and the collection, storage, "
+"and use of your personal information in accordance with its terms. Our "
+"Privacy Policy can be found at "
+msgstr ""
+"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также"
+" со сбором, хранением и использованием вашей личной информации в "
+"соответствии с ее условиями. С нашей Политикой конфиденциальности можно "
+"ознакомиться по адресу"
 
 #: templates/error.html:25 templates/layouts/sidebar/footer.html:8
 #: templates/welcome.html:27
@@ -1115,12 +1131,15 @@ msgid "Create one."
 msgstr "Тогда создайте."
 
 #: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
-msgid "Forgot password?"
-msgstr "Забыли пароль?"
+msgid "By signing in, you agree to our "
+msgstr "Входя на сайт, вы соглашаетесь с нашей "
 
 #: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
-msgid "Get help."
-msgstr "Вспомнить."
+#: templates/layouts/auth_modals.html:65
+#: templates/layouts/sidebar/footer.html:10 templates/privacy_policy.html:7
+#: templates/privacy_policy.html:12
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
 
 #: templates/layouts/auth_modals.html:35
 msgid "Sign in with email"
@@ -1137,10 +1156,18 @@ msgid "Password"
 msgstr "Пароль"
 
 #: templates/layouts/auth_modals.html:42 templates/layouts/auth_modals.html:64
-#: templates/layouts/auth_modals.html:97
+#: templates/layouts/auth_modals.html:98
 #: templates/users/profile_settings.html:56 templates/users/signup.html:55
 msgid "Continue"
 msgstr "Продолжить"
+
+#: templates/layouts/auth_modals.html:43
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: templates/layouts/auth_modals.html:43
+msgid "Get help."
+msgstr "Вспомнить."
 
 #: templates/layouts/auth_modals.html:58
 msgid "Sign up with email"
@@ -1155,23 +1182,27 @@ msgstr "Введите ваш email адрес и создайте аккаун�
 msgid "Enter a valid email."
 msgstr "Введите корректный email адрес."
 
-#: templates/layouts/auth_modals.html:79
+#: templates/layouts/auth_modals.html:65
+msgid "By signing up, you agree to our "
+msgstr "Регистрируясь, вы соглашаетесь с нашей"
+
+#: templates/layouts/auth_modals.html:80
 msgid "Check your inbox."
 msgstr "Проверьте ваш почтовый ящик."
 
-#: templates/layouts/auth_modals.html:80
+#: templates/layouts/auth_modals.html:81
 msgid "Click the link we sent to"
 msgstr "Перейдите по ссылке, которую мы вам прислали на "
 
-#: templates/layouts/auth_modals.html:80
+#: templates/layouts/auth_modals.html:81
 msgid "to complete your account set-up."
 msgstr "для завершения регистрации."
 
-#: templates/layouts/auth_modals.html:81
+#: templates/layouts/auth_modals.html:82
 msgid "OK"
 msgstr "ОК"
 
-#: templates/layouts/auth_modals.html:96
+#: templates/layouts/auth_modals.html:97
 msgid "Are you sure you want to sign out?"
 msgstr "Вы уверены, что хотите выйти из аккаунта?"
 
@@ -1207,11 +1238,6 @@ msgstr "Популярные"
 #: templates/layouts/note_order.html:9
 msgid "Most liked"
 msgstr "По лайкам"
-
-#: templates/layouts/sidebar/footer.html:10 templates/privacy_policy.html:7
-#: templates/privacy_policy.html:12
-msgid "Privacy Policy"
-msgstr "Политика конфиденциальности"
 
 #: templates/layouts/sidebar/more_for_source_type.html:6
 msgid "More for"
@@ -1318,12 +1344,10 @@ msgid "Email address"
 msgstr "Email адрес"
 
 #: templates/privacy_policy.html:37
-#| msgid "Full name"
 msgid "First name"
 msgstr "Имя"
 
 #: templates/privacy_policy.html:38
-#| msgid "Last Login"
 msgid "Last name"
 msgstr "Фамилия"
 
@@ -1373,7 +1397,6 @@ msgid "is email verified"
 msgstr "подтвержден ли email"
 
 #: templates/privacy_policy.html:54
-#| msgid "Profile picture"
 msgid "profile picture"
 msgstr "Изображение пользователя"
 
@@ -1447,12 +1470,10 @@ msgstr ""
 "события."
 
 #: templates/privacy_policy.html:82
-#| msgid "User Name"
 msgid "User type"
 msgstr "Тип пользователя"
 
 #: templates/privacy_policy.html:84
-#| msgid "User Name"
 msgid "Name"
 msgstr "Имя"
 
@@ -1465,7 +1486,6 @@ msgid "Blog"
 msgstr "Блог"
 
 #: templates/privacy_policy.html:87
-#| msgid "Location"
 msgid "GitHub Location"
 msgstr "Местонахождение"
 
@@ -1474,7 +1494,6 @@ msgid "Hireable"
 msgstr "Открыт ли для найма"
 
 #: templates/privacy_policy.html:91
-#| msgid "Username"
 msgid "username"
 msgstr "имя пользователя"
 
@@ -1487,22 +1506,18 @@ msgid "Public gists number"
 msgstr "Номер публичных гистов"
 
 #: templates/privacy_policy.html:94
-#| msgid "Followers"
 msgid "Followers number"
 msgstr "Количество подписчиков"
 
 #: templates/privacy_policy.html:95
-#| msgid "Following"
 msgid "Following number"
 msgstr "Количество подписок"
 
 #: templates/privacy_policy.html:96
-#| msgid "Created"
 msgid "Created at"
 msgstr "Создано в (время)"
 
 #: templates/privacy_policy.html:97
-#| msgid "Updated"
 msgid "Updated at"
 msgstr "Обновлен в (время)"
 
@@ -1553,7 +1568,6 @@ msgstr ""
 "настоящей Политики конфиденциальности, свяжитесь с нами по адресу "
 
 #: templates/privacy_policy.html:112
-#| msgid "Privacy Policy"
 msgid "Changes to this Privacy Policy"
 msgstr "Изменения в Политике конфиденциальности"
 
@@ -1571,7 +1585,6 @@ msgstr ""
 "согласие с любыми изменениями в этой политике."
 
 #: templates/privacy_policy.html:116
-#| msgid "Updated"
 msgid "Last Updated"
 msgstr "Последнее обновление"
 

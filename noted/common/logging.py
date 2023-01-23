@@ -1,7 +1,4 @@
-"""Loggining system for general, views and generic functions.
-
-TODO: create format a log message funcitons.
-"""
+"""Loggining system for general, views and generic functions."""
 
 import functools
 import logging

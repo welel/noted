@@ -20,8 +20,8 @@ Require script `js/auth.js`
             </a>
         </li>
         <li class="nav-item px-2 py-1">
-            <a href="{% url 'actions:notifications' %}" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notifications" %}">
-                <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+            <a href="{% if request.user.is_authenticated %}{% url 'actions:notifications' %}{% else %}#{% endif %}" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{% trans "Notifications" %}">
+                <i class="bi bi-bell" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}></i>
             </a>
         </li>
         <li class="nav-item px-2 py-1">
@@ -85,18 +85,18 @@ Require script `js/auth.js`
         </a>
     </li>
     <li class="nav-item px-2">
-        <a class="nav-link" href="{% url 'content:personal_notes' %}?bookmark=open">
-            <i class="bi bi-bookmark-star" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
+        <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:personal_notes' %}?bookmark=open{% else %}#{% endif %}">
+            <i class="bi bi-bookmark-star" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}></i>
         </a>
     </li>
     <li class="nav-item px-2">
         <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:create_note' %}{% else %}#{% endif %}">
-            <i class="bi bi-pencil-square" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
+            <i class="bi bi-pencil-square" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}></i>
         </a>
     </li>
     <li class="nav-item px-2">
-        <a class="nav-link" href="{% url 'content:personal_notes' %}">
-            <i class="bi bi-journals" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% else %}{% endif %}></i>
+        <a class="nav-link" href="{% if request.user.is_authenticated %}{% url 'content:personal_notes' %}{% else %}#{% endif %}">
+            <i class="bi bi-journals" style="font-size: 1.5rem;" {% if not request.user.is_authenticated %}data-bs-toggle="modal" data-bs-target="#signin"{% endif %}></i>
         </a>
     </li>
     {% if not request.user.is_authenticated %}

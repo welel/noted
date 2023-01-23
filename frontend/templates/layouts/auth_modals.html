@@ -17,7 +17,7 @@
                     <a href="{% provider_login_url 'yandex' %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-red">{% trans "Sign in with Yandex" %}</a>
                     <button type="button" class="btn btn-outline-dark rounded-pill mt-3  social-sign-black" data-bs-toggle="modal" data-bs-target="#signin-email" data-bs-dismiss="modal">{% trans "Sign in with Email" %}</button>                   
                     <p class="text-center mt-5">{% trans "No account?" %} <a href="#" class="fw-bold text-success text-decoration-none" data-bs-toggle="modal" data-bs-target="#signup" data-bs-dismiss="modal">{% trans "Create one." %}</a></p>
-                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot password?" %} <a href="{% url 'account_reset_password' %}">{% trans "Get help." %}</a></p>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "By signing in, you agree to our " %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}.</a></p>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     <div id="signin_password_feedback" class="invalid-feedback"></div> 
                     <div id="signin_feedback" class="mt-2 text-danger"></div>
                     <button id="signin_submit" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
-                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot password?" %} <a href="{% url 'account_reset_password' %}">{% trans "Get help." %}</a></p>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "Forgot password?" %} <a href="{% url 'account_reset_password' %}">{% trans "Get help." %}</a> {% trans "By signing in, you agree to our " %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}.</a></p>
                 </div>
             </div>
         </div>
@@ -62,6 +62,7 @@
                         {% trans "Enter a valid email." %}
                     </div>                      
                     <button id="submit_email" type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center">{% trans "Continue" %}</button>
+                    <p class="color-grey mt-4 text-center" style="font-size: 12px;">{% trans "By signing up, you agree to our " %} <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}.</a></p>
                 </div>
             </div>
         </div>

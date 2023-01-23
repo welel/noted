@@ -10,8 +10,9 @@ NoteD.
 {% trans "Paste this link into your web browser:" %}
 {{ host }}{% url 'users:signup' token=token %}
 
-
 {% trans "If you did not make this request, you can safely ignore this email." %}
+
+{% trans "By signing up, you agree to our Privacy Policy and the collection, storage, and use of your personal information in accordance with its terms. Our Privacy Policy can be found at " %} {{ host }}{% url 'privacy_policy' %}.
 
 {% trans "Check our website:" %}
 {{ host }}
