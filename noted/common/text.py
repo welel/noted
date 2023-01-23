@@ -8,57 +8,6 @@ from common.logging import logit
 
 
 @logit
-def generate_unique_slug(
-    instance, from_field: str = "title", for_field: str = "slug"
-) -> str:
-    """Generate unique slug for model based on another field.
-
-    The method slugifys value of one field and adds random symbols
-    at the end if slug isn't unique for the databse.
-
-    Args:
-        instance: a model instance.
-        from_field: the name of a field where take a the value for generating.
-        for_field: a name of slug field, for the uniqueness check.
-    Returns:
-        A generated unique slug.
-    """
-    model = type(instance)
-    try:
-        model._meta.get_field(from_field)
-    except FieldDoesNotExist:
-        raise FieldDoesNotExist(f"Model must have `{from_field}` field.")
-    try:
-        model._meta.get_field(for_field)
-    except FieldDoesNotExist:
-        raise FieldDoesNotExist(f"Model must have slug field - `{for_field}`.")
-
-    from_field_val = getattr(instance, from_field)
-    if not from_field_val:
-        raise ValueError(
-            f"Cannot generate `slug`, because `{from_field}` is empty."
-        )
-    slug = slugify(from_field_val, allow_unicode=True)[:245]
-    if model.objects.filter(**{for_field: slug}).exists():
-        return slug + "-" + str(uuid.uuid1())[:8]
-    return slug
-
-
-def is_latin(word: str) -> bool:
-    """Checks if a word is written in Latin script.
-
-    Args:
-        word: The word to check.
-
-    Returns:
-        True if the word is written in Latin script, False otherwise.
-    """
-    return all(["LATIN" in ud.name(c) for c in word])
-
-
-"abvgdeejziiklmnoprstufhcchhieua".upper()
-
-
 def transcript_ru2en(text: str) -> str:
     """Makes phonetic transcription of Russian text to English.
 
@@ -78,3 +27,61 @@ def transcript_ru2en(text: str) -> str:
         "ъьЪЬ",
     )
     return text.translate(trans_dict)
+
+
+@logit
+def generate_unique_slug(
+    instance,
+    from_field: str = "title",
+    for_field: str = "slug",
+    latin: bool = False,
+) -> str:
+    """Generate unique slug for model based on another field.
+
+    The method slugifys value of one field and adds random symbols
+    at the end if slug isn't unique for the databse.
+
+    Args:
+        instance: a model instance.
+        from_field: the name of a field where take a the value for generating.
+        for_field: a name of slug field, for the uniqueness check.
+        latin: if True translates Russian letters to Latin.
+    Returns:
+        A generated unique slug.
+    """
+    model = type(instance)
+    try:
+        model._meta.get_field(from_field)
+    except FieldDoesNotExist:
+        raise FieldDoesNotExist(f"Model must have `{from_field}` field.")
+    try:
+        model._meta.get_field(for_field)
+    except FieldDoesNotExist:
+        raise FieldDoesNotExist(f"Model must have slug field - `{for_field}`.")
+
+    from_field_val = getattr(instance, from_field)
+    if not from_field_val:
+        raise ValueError(
+            f"Cannot generate `slug`, because `{from_field}` is empty."
+        )
+
+    if latin:
+        from_field_val = transcript_ru2en(from_field_val)
+
+    slug = slugify(from_field_val, allow_unicode=True)[:245]
+    if model.objects.filter(**{for_field: slug}).exists() or not slug:
+        return slug + "-" + str(uuid.uuid1())[:8]
+    return slug
+
+
+@logit
+def is_latin(word: str) -> bool:
+    """Checks if a word is written in Latin script.
+
+    Args:
+        word: The word to check.
+
+    Returns:
+        True if the word is written in Latin script, False otherwise.
+    """
+    return all(["LATIN" in ud.name(c) for c in word])

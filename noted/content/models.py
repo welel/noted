@@ -93,7 +93,7 @@ class Source(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_unique_slug(self)
+            self.slug = generate_unique_slug(self, latin=True)
         return super().save(*args, **kwargs)
 
     @classmethod
@@ -305,7 +305,7 @@ class Note(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_unique_slug(self)
+            self.slug = generate_unique_slug(self, latin=True)
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):

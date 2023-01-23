@@ -9,4 +9,5 @@ ENV PYTHONUNBUFFERED=1
 RUN pip install -r requirements.txt \
     && apt-get update \
     && apt-get -y install wkhtmltopdf \
+    && apt-get -y install gettext \
     && apt-get -y autoclean
