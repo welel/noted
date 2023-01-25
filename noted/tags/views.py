@@ -1,18 +1,17 @@
-from taggit.models import Tag
-
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET
-from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_GET
+from django.views.generic import DetailView, ListView
+
+from taggit.models import Tag
 
 from actions import base as act
 from actions.models import Action
+from common import ajax_required, logging as log
 from content.models import Note
-from common import ajax_required
-from common import logging as log
 
 
 class TagList(log.LoggingView, ListView):

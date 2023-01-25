@@ -1,10 +1,11 @@
 from django.core.exceptions import FieldDoesNotExist
-from django.http import HttpResponseBadRequest, HttpRequest
+from django.http import HttpRequest, HttpResponseBadRequest
 from django.test import TestCase
 
 from content.models import Source
-from common import generate_unique_slug, ajax_required
 from users.models import User
+
+from . import ajax_required, generate_unique_slug
 
 
 class Tests(TestCase):

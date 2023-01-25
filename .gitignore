@@ -21,3 +21,4 @@ noted/htmlcov/
 noted/.coverage
 dev/
 *.log
+.isort.cfg

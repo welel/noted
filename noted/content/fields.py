@@ -1,8 +1,8 @@
-from simplemde.fields import SimpleMDEField
-
 from django.db.models import TextField
 
-from content.markdown import pick_markdown_to_html
+from simplemde.fields import SimpleMDEField
+
+from .markdown import pick_markdown_to_html
 
 
 class RenderedMarkdownField(TextField):

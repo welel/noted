@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from content.models import Source, Note
+from .models import Note, Source
 
 
 @admin.register(Note)

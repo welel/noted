@@ -4,7 +4,7 @@ import uuid
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.text import slugify
 
-from common.logging import logit
+from .logging import logit
 
 
 @logit

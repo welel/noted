@@ -1,6 +1,6 @@
 from django.http import HttpResponsePermanentRedirect
 
-from common.logging import logit_class_method
+from .logging import logit_class_method
 
 
 class WwwRedirectMiddleware:

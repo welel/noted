@@ -13,10 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
 from django.utils.translation import gettext_lazy as _
 
+from dotenv import load_dotenv
 
 # Parse a `.env` file and load the variables inside into environment variables
 load_dotenv()

@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 
-from content.models import Source, Note
+from .models import Note, Source
 
 
 class NoteSitemap(Sitemap):

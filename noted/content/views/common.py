@@ -1,15 +1,15 @@
 import logging as log
 
+from django.contrib.postgres.search import SearchVector, TrigramSimilarity
+from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import cache_page
+
 from taggit.models import Tag
 
-from django.contrib.postgres.search import TrigramSimilarity, SearchVector
-from django.shortcuts import render
-from django.views.decorators.cache import cache_page
-from django.utils.translation import gettext_lazy as _
-
+from common.logging import logit_view
 from content.models import Note, Source
 from users.models import User
-from common.logging import logit_view
 
 
 logger = log.getLogger("django.request")

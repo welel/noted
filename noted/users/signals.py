@@ -1,12 +1,11 @@
-from notifications.signals import notify
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 from actions import base as act
 from actions.models import Action
-from users.models import UserProfile, User, Following
+
+from .models import Following, User, UserProfile
 
 
 @receiver(post_save, sender=User)

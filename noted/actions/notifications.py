@@ -1,13 +1,14 @@
-from typing import Union, List
-
-from notifications.signals import notify
+from typing import List, Union
 
 from django.utils.functional import SimpleLazyObject
 
-from actions.base import CREATE, FOLLOW, LIKE
+from notifications.signals import notify
+
 from content.models import Note
-from tags.models import get_tag_followers, UnicodeTag
-from users.models import User, Following
+from tags.models import UnicodeTag, get_tag_followers
+from users.models import Following, User
+
+from .base import CREATE, FOLLOW, LIKE
 
 
 RECIPIENTS_GETTERS = {

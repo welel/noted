@@ -1,17 +1,18 @@
 """Authentication, Authorization, Registration functions and utilities.
 
 """
-import smtplib
 import logging
+import smtplib
 
-from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.core.signing import TimestampSigner
+from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from core import settings
 from common.logging import logit
-from users.models import SignupToken, ChangeEmailToken
+from core import settings
+
+from .models import ChangeEmailToken, SignupToken
 
 
 signer = TimestampSigner()

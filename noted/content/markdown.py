@@ -6,14 +6,14 @@
     pick_markdown_to_html: transfer Markdown text into HTML (2 methods).
 """
 
-import traceback
-from typing import Tuple
 import logging as log
 import requests
-
-from markdown2 import markdown
+import traceback
+from typing import Tuple
 
 from django.conf import settings
+
+from markdown2 import markdown
 
 from common.logging import logit
 

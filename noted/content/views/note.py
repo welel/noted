@@ -21,33 +21,32 @@
 
 """
 import logging
-
-from taggit.models import Tag
-from notifications.signals import notify
+from wsgiref.util import FileWrapper
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
-from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.decorators.cache import cache_page
-from django.views.decorators.http import require_GET
-from django.views.generic import DetailView, CreateView, UpdateView, ListView
-from django.views.generic.edit import DeleteView
-from django.views import View
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from wsgiref.util import FileWrapper
+from django.views import View
+from django.views.decorators.cache import cache_page
+from django.views.decorators.http import require_GET
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic.edit import DeleteView
+
+from taggit.models import Tag
 
 from actions import base as act
 from actions.models import Action
-from content.forms import NoteForm
-from content.models import Note, Source
 from common import ajax_required, logging as log
 from common.cache import cache_queryset
+from content.forms import NoteForm
+from content.models import Note, Source
 from tags.models import get_top_tags
-from users.models import User, Following
+from users.models import Following, User
 
 
 logger = logging.getLogger(__name__)

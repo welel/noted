@@ -1,35 +1,30 @@
-import logging
 import json
-
-from allauth.account.models import EmailAddress
+import logging
 
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.signing import BadSignature, SignatureExpired
 from django.core.validators import validate_email as _validate_email
-from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import redirect, render, get_object_or_404
-from django.views import generic
-from django.views.decorators.http import require_POST
+from django.http import HttpResponseBadRequest, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.views import generic
+from django.views.decorators.http import require_POST
+
+from allauth.account.models import EmailAddress
 
 from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note
-from users.auth import send_signup_link, signer, send_change_email_link
-from users.forms import (
-    SignupForm,
-    UpdateUserForm,
-    UserProfileForm,
-    validate_username as val_username,
-    DeleteAccount,
-)
-from users.models import SignupToken, User, ChangeEmailToken, Following
 
+from .auth import send_change_email_link, send_signup_link, signer
+from .forms import DeleteAccount, SignupForm, UpdateUserForm, UserProfileForm
+from .forms import validate_username as val_username
+from .models import ChangeEmailToken, Following, SignupToken, User
 
 logger = logging.getLogger(__name__)
 

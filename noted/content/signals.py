@@ -1,20 +1,19 @@
 import logging
 import traceback
 
-import pycld2 as cld2
-from taggit.models import Tag
-from notifications.signals import notify
-
 from django.db.models import Count
-from django.db.models.signals import post_delete, pre_save, post_save
+from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
+import pycld2 as cld2
+from taggit.models import Tag
+
 from actions import base as act
 from actions.models import Action
-from content.models import Note
 from common.logging import EXCEPTION_TEMPLATE
-from users.models import Following
+
+from .models import Note
 
 
 logger = logging.getLogger("exceptions")

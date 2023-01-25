@@ -1,11 +1,11 @@
 import uuid
 
-from taggit.models import Tag, TaggedItem
-
-from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q, Count, QuerySet
+from django.db import models
+from django.db.models import Count, Q, QuerySet
 from django.utils.text import slugify
+
+from taggit.models import Tag, TaggedItem
 
 from common.text import transcript_ru2en
 

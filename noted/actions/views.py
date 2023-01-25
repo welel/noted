@@ -1,11 +1,11 @@
-from notifications.models import Notification
-from notifications import settings as notification_settings
-
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 from django.views.generic import ListView
+
+from notifications import settings as notification_settings
+from notifications.models import Notification
 from notifications.utils import slug2id
 
 from common import ajax_required, logging as log

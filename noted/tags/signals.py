@@ -1,9 +1,11 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from actions import base as act
 from actions.notifications import create_notification
 from content.models import Note
-from tags.models import UnicodeTaggedItem
+
+from .models import UnicodeTaggedItem
 
 
 @receiver(post_save, sender=UnicodeTaggedItem)

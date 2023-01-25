@@ -1,12 +1,11 @@
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import DetailView
-from django.utils.translation import gettext_lazy as _
 
+from common import ajax_required, logging as log
 from content.models import Note, Source
-from common import ajax_required
-from common import logging as log
 
 
 class SourceDetailsView(log.LoggingView, DetailView):

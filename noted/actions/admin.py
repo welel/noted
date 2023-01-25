@@ -1,9 +1,9 @@
+from django.contrib import admin
+
 from notifications.admin import NotificationAdmin
 from notifications.models import Notification
 
-from django.contrib import admin
-
-from actions.models import Action
+from .models import Action
 
 
 @admin.register(Action)

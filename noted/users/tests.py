@@ -2,11 +2,11 @@ import json
 from pathlib import Path
 
 import django
+from django.conf import settings
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
-from django.conf import settings
 
-from users.models import User, SignupToken, UserManager
+from .models import SignupToken, User, UserManager
 
 
 class URLTests(TestCase):

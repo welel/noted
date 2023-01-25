@@ -5,7 +5,7 @@ import logging
 
 from django.http import HttpResponseBadRequest
 
-from common.logging import VIEW_LOG_TEMPLATE
+from .logging import VIEW_LOG_TEMPLATE
 
 
 logger = logging.getLogger("django.request")

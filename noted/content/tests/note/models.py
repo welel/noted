@@ -1,9 +1,9 @@
 import datetime
 
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import reverse
 
-from content.models import Source, Note
+from content.models import Note, Source
 from users.models import User
 
 

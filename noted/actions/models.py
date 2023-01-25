@@ -1,14 +1,14 @@
 import datetime
 
-from django.db import models
 from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from actions.base import NEW, CREATE, FOLLOW, DOWNLOAD, BOOKMARK, LIKE
-from actions.notifications import create_notification
+from .base import BOOKMARK, CREATE, DOWNLOAD, FOLLOW, LIKE, NEW
+from .notifications import create_notification
 
 
 class ActionManager(models.Manager):

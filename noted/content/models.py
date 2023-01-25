@@ -5,30 +5,31 @@
     Note (Model): a Markdown text with a list of attributes.
 
 """
-from datetime import date
 import io
+from datetime import date
 from typing import Optional
 
-from bs4 import BeautifulSoup
-from taggit.managers import TaggableManager
-import pdfkit
-
 from django.contrib.postgres.search import (
-    SearchVector,
+    SearchHeadline,
     SearchQuery,
     SearchRank,
+    SearchVector,
     TrigramSimilarity,
-    SearchHeadline,
 )
 from django.db import models
-from django.db.models import QuerySet, Count, Q
+from django.db.models import Count, Q, QuerySet
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from content.fields import MarkdownField, RenderedMarkdownField
+import pdfkit
+from bs4 import BeautifulSoup
+from taggit.managers import TaggableManager
+
 from common import generate_unique_slug
 from tags.models import UnicodeTaggedItem
 from users.models import User
+
+from .fields import MarkdownField, RenderedMarkdownField
 
 
 class SourceManager(models.Manager):
