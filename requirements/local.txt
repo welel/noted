@@ -1,0 +1,5 @@
+-r base.txt
+
+black==22.12.0
+coverage==6.5.0
+django-rosetta==0.9.8

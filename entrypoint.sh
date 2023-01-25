@@ -2,7 +2,7 @@
  
 sleep 5
 cd noted
-python manage.py makemigrate
-python manage.py collectstatic --noinput
+python manage.py makemigrate --settings=core.settings.prodaction
+python manage.py collectstatic --noinput --settings=core.settings.prodaction
 gunicorn core.wsgi:application --bind 172.18.1.3:8000
 

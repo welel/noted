@@ -4,13 +4,13 @@
 import logging
 import smtplib
 
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.signing import TimestampSigner
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from common.logging import logit
-from core import settings
 
 from .models import ChangeEmailToken, SignupToken
 

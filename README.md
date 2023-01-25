@@ -126,9 +126,9 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 2. Clone or download the repository.
    
-3. Create [virtual environment and install requirements](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) from `requirements.txt`.
+3. Create [virtual environment and install requirements](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) from `requirements/local.txt`.
 
-4. Fill `env_sample` file with required data and rename it to `.env`.
+4. Fill `.env.gist` file with required data and rename it to `.env`.
 
 5. Make migrations and migrate with a custom command.
 
@@ -136,12 +136,20 @@ Dark mode / code highlight / code full-screen / mobile version.
 python manage.py makemigrate
 ```
 
-6. [Set up a cache backend.](https://docs.djangoproject.com/en/4.1/topics/cache/)
+6. [Set up a cache backend.](https://docs.djangoproject.com/en/4.1/topics/cache/) or set a cache backend with following code in `core/settings/local.py`:
+
+```python
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
+}
+```
 
 7. Run the development server.
 
 ```
-python manage.py runserver
+python manage.py runserver --settings=core.settings.local
 ```
 
 
