@@ -206,7 +206,7 @@ class Note(models.Model):
         views: a counter of visit number.
         fork: a link to :model:`Note` if a note forked from another.
         likes: a m2m field for note likes.
-        bookmarked: a m2m field for bookmarks for user.
+        bookmarks: a m2m field for bookmarks for user.
         tags: tags of a note (max tags - 3, max length - 24 symbols).
         lang: language body text code (detects via `polyglot`)
 

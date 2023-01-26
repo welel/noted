@@ -57,6 +57,15 @@ urlpatterns += [
             template_name="robots.txt", content_type="text/plain"
         ),
     ),
+    path("api-auth/", include("rest_framework.urls")),
+    path(
+        "api/",
+        include(("content.api.urls", "content_api"), namespace="content_api"),
+    ),
+    path("api/", include(("tags.api.urls", "tags_api"), namespace="tags_api")),
+    path(
+        "api/", include(("users.api.urls", "users_api"), namespace="users_api")
+    ),
 ]
 
 handler400 = "core.views.handler400"

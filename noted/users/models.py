@@ -213,6 +213,11 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"Profile: {self.user.username}"
 
+    def get_absolute_url(self):
+        return reverse(
+            "content:profile_notes", kwargs={"slug": self.user.slug}
+        )
+
     def get_socials(self) -> dict:
         """Gets a dict with social media usernames.
 

@@ -3,6 +3,7 @@ import uuid
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Count, Q, QuerySet
+from django.urls import reverse
 from django.utils.text import slugify
 
 from taggit.models import Tag, TaggedItem
@@ -28,6 +29,9 @@ class UnicodeTag(Tag):
 
     def slugify(self, *args):
         return UnicodeTag.objects._generate_unique_slug(self)
+
+    def get_absolute_url(self):
+        return reverse("tags:tag", kwargs={"slug": self.slug})
 
 
 class UnicodeTaggedItem(TaggedItem):
