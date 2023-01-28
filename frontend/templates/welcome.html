@@ -7,47 +7,100 @@
 {% block title %}NoteD - {% trans "Where knowledge is open" %}{% endblock %}
 
 
+<!-- Override navbar -->
 {% block nav %}{% endblock %}
 
 
 {% block main %}
-
-<div id="body" style="position: absolute; height: 500px; border-bottom: 1px solid black; width: 100%;">
-<div id="welcome-anhor" class="container">
-<div class="row">
-<div class="col" style="max-width: 1100px; margin: auto;">
-    <nav class="navbar mt-2">
-        <div class="container-fluid">
-        <a class="navbar-brand">
-            <img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="30" height="30" class="d-inline-block align-text-top">
-            <span class="text-white fw-bold">NoteD.</span>
-        </a>
-        <ul class="nav justify-content-end">
-            <li class="nav-item d-sm-block d-none">
-            <a class="nav-link active text-white fw-bold fs-6" target="_blank" aria-current="page" href="https://github.com/welel/noted">{% trans "About" %}</a>
-            </li>
-            <li class="nav-item d-sm-block d-none">
-            <a class="nav-link text-white fw-bold fs-6" target="_blank" href="mailto:pavel.loginov.dev@gmail.com">{% trans "Contact" %}</a>
-            </li>
-            <li class="nav-item d-sm-block d-none">
-            <a class="nav-link btn btn-link text-white fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Sing In" %}</a>
-            </li>
-            <li class="nav-item ms-2">
-            <button class="btn btn-success nav-link text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Start writing" %}</button>
-            </li>
-        </ul>
+<div class="header-wrapper pb-5">
+<div class="withd-wrapper" style="max-width: 1200px; margin: auto;">
+<div class="row mx-0">
+    <div class="col">
+        <nav class="navbar mt-2">
+            <div class="container-fluid">
+            <a class="navbar-brand">
+                <span class="text-white fw-bold" style="font-size: 25px;">Note</span><img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="40" height="40" class="d-inline-block align-text-top" style="margin-top: -8px;">
+            </a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item d-sm-block d-none">
+                <a class="nav-link active text-white fw-bold fs-6" target="_blank" aria-current="page" href="{% url 'about' %}">{% trans "About" %}</a>
+                </li>
+                <li class="nav-item d-sm-block d-none">
+                <a class="nav-link text-white fw-bold fs-6" target="_blank" href="{% url 'about' %}#contacts">{% trans "Contact" %}</a>
+                </li>
+                <li class="nav-item d-sm-block d-none">
+                <a class="nav-link btn btn-link text-white fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Sing In" %}</a>
+                </li>
+                <li class="nav-item ms-2">
+                <a href="#trending" class="btn btn-success nav-link text-white rounded-pill">{% trans "Start reading" %}</a>
+                </li>
+            </ul>
+            </div>
+        </nav>
+        <h1 id="header-title" class="text-white text-center header-title">{% trans "Stay curious" %}</h1>
+        <h1 class="text-white text-center fw-normal header-title" style="font-size: 5rem; text-shadow: 0px 0px 100px #60bb52;" >{% trans "share knowledge" %}</h1>
+        <p class="text-white mt-lg-5 mt-3 text-center header-p" style="font-size: 1.8rem;" >{% trans "Transform your notes into a valuable resource for others," %}<br> {% trans "elevate your knowledge and share it with the world." %}</p>
+        <div class="text-center d-flex justify-content-center">
+            <div>
+                <a class="btn btn-success rounded-pill fs-5 mt-3" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Start writing" %}</a> 
+            </div>
+            <div style="max-width: 400px;">
+                <p class="text-start ms-3 mt-3 d-sm-block d-none" style="color: #4d8c57;">{% trans "Don't miss out on the opportunity to share your thoughts and ideas with the community" %}</p>
+            </div>
         </div>
-    </nav>
-    <h1 class="text-white mt-5 text-left" style="font-size: 67px;" >{% trans "Stay curious." %}</h1>
-    <p class="text-white fs-5 mt-2" >{% trans "Discover notes, sources, and share your notes and knowleadge on any topic." %}</p>
-    <a id="welcome-header-btn" class="btn btn-success rounded-pill fs-5 mt-3" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Start reading" %}</a> 
+        
+    </div>
 </div>
+
+<div class="row mx-0 mx-4 mt-5 pb-5 header-card header-card-red">
+    <div class="col-md-6 col-12 text-white ps-5 mt-5">
+        <i class="bi bi-search" style="font-size: 2.5rem; background-color: rgba(242, 222, 56, 0.7) !important;"></i>
+        <h3 class="mt-3">{% trans "Explore notes and sources" %}</h3>
+        <p class="fs-5 mt-3">{% trans "Easily find notes by title and text, specific sources and topics of interest. Discover existing notes on your desired source. Explore now and never miss a valuable information again!" %}</p>
+        <a href="{% url 'content:search' type='notes' %}?query={% trans "Explore" %}" class="btn btn-outline-light rounded-pill">{% trans "Search" %}</a>
+    </div>
+    <div class="col-md-6 col-12">
+        <img id="search-screenshot" src="{% static 'img/search_screenshot.png' %}" style="width: 600px; margin-top: 100px; border-radius: 15px; background: linear-gradient(to right, #0040ff, #37a975); padding: 0.3rem;" />
+    </div>
+</div>
+
+<div class="row mx-0 mt-4 mx-4">
+    <div class="col-md-5 col-12 text-white ps-5 py-5 pe-2 header-card header-card-dark">
+        <i class="bi bi-pencil-square" style="font-size: 2.5rem;"></i>
+        <h3 class="mt-3">{% trans "Share your notes" %}</h3>
+        <p class="fs-5 mt-3">{% trans "Easily create private, public, and anonymous notes and help others by adding sources and tags. Make information discoverable and accessible to all. Start now!" %}</p>
+        <a class="btn btn-outline-light rounded-pill" data-bs-toggle="modal" data-bs-target="#signin">{% trans "Write" %}</a><br>
+        <img class="mt-5" src="{% static 'img/note_screenshot_triangle.png' %}" style="width: 400px; border-radius: 15px; background: linear-gradient(to right, #0040ff, #37a975); padding: 0.3rem;" />
+    </div>
+    <div class="col-md-7 col-12 pe-0 mt-md-0 mt-4 ps-md-0 ps-1">
+        <div class="ms-md-3 md-0 text-white ps-5 py-5 pe-2 header-card header-card-dark" style="height: 100%;">
+            
+            <i class="bi bi-clipboard2-plus" style="font-size: 2.5rem;"></i>
+            <h3 class="mt-3">{% trans "Copy notes" %}</h3>
+            <p class="fs-5 mt-3">{% trans "Unleash the power of collective knowledge. Start creating your own notes based on others' insights. Copy, edit and make it your own." %}</p>
+
+            <div class="mt-5"></div>
+            <i class="bi bi-download" style="font-size: 2.5rem;"></i>
+            <h3 class="mt-3">{% trans "Save and download" %}</h3>
+            <p class="fs-5 mt-3">{% trans "Get the most out of your notes. Download them in Markdown, HTML, and PDF formats or simply bookmark them for easy access." %}</p>
+
+            <div class="mt-5"></div>
+            <i class="bi bi-tags" style="font-size: 2.5rem;"></i>
+            <h3 class="mt-3">{% trans "Subscribe" %}</h3>
+            <p class="fs-5 mt-3">{% trans "Stay on top of the latest insights and ideas by subscribing to interesting topics and people. Never miss a beat and stay informed." %}</p>
+
+            <div class="mt-5"></div>
+            <i class="bi bi-markdown" style="font-size: 2.5rem;"></i>
+            <h3 class="mt-3">{% trans "Markdown editor" %}</h3>
+            <p class="fs-5 mt-3">{% trans "Elevate your note-taking experience with our powerful markdown editor. Enjoy features like preview, split editing, full-screen editing, and hotkeys. Start writing now!" %}</p>
+        </div>
+    </div>
 </div>
 </div>
 </div>
 
-<div class="container-fluid" style="position: absolute; top: 500px; text-align: left;">
-    <div class="row" style="max-width: 1100px; margin: auto;" >
+<div class="section-wrapper">
+    <div id="trending" class="row" style="max-width: 1100px; margin: auto;" >
         <div class="row mt-5">
             <div class="col d-flex justify-content-start">
             <i class="bi bi-graph-up"></i> <span class="ms-2 fs-6 fw-bold text-uppercase">{% trans "trending on noted" %}
@@ -58,7 +111,7 @@
         <div class="col-lg-4 col-sm-6 col-12">
             <div class="row">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     01
                     </h2>
                 </div>
@@ -90,7 +143,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     02
                     </h2>
                 </div>
@@ -124,7 +177,7 @@
         <div class="col-lg-4 col-sm-6 col-12 mt-sm-0 mt-4">
             <div class="row">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     03
                     </h2>
                 </div>
@@ -156,7 +209,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     04
                     </h2>
                 </div>
@@ -190,7 +243,7 @@
         <div class="col-4 d-lg-block d-none">
             <div class="row">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     05
                     </h2>
                 </div>
@@ -222,7 +275,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-2">
-                    <h2 style="margin-top: -4px; color: var(--lt-color-gray-400);">
+                    <h2 style="margin-top: -4px; color: lightgray;">
                     06
                     </h2>
                 </div>
@@ -254,73 +307,29 @@
             </div>
         </div>
     </div>
-    <div class="row mt-4" style="background-image: linear-gradient(to right bottom, #003173, #004984, #005f8d, #007390, #028791);border-top: 1px solid black;border-bottom: 1px solid black;">
-        <div class="col-1"></div>
-        <div class="col-lg-6 col-12">
-            <div class="row" style="margin-top: 82px;">
-                <p class="fw-bold text-white" style="font-size: 5rem;">Note<span><img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="80" height="80"></span></p>
-            </div>
-            <div class="row mt-4">
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-pencil-square"></i>&nbsp; {% trans "Write" %}</p>
-                    <p class="fs-5" style="color: rgb(240,240,240);">{% trans "Create private, public and anonymous notes. Help people and add the source of information (book, article, etc.) to your note and tags so that others can easily find it." %}</p>
-                </div>
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-search"></i>&nbsp; {% trans "Explore" %}</p>
-                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Search notes by title and text of the note, notes on specific sources and topics of interest." %}</p>
-                </div>
-            </div>
-            <div class="row mt-sm-5 mt-0">
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-clipboard2-plus"></i>&nbsp; {% trans "Copy" %}</p>
-                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Start creating a note based on other people's notes. Copy the note to yourself and edit as you wish." %}</p>
-                </div>
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-search"></i>&nbsp; {% trans "Search sources" %}</p>
-                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Search for the desired source and find existing notes on this source. For example: find a book and view all notes related to it." %}</p>
-                </div>
-            </div>
-            <div class="row mt-sm-5 mt-0 pb-4">
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-download"></i>&nbsp; {% trans "Save" %}</p>
-                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Download notes in markdown, html and pdf formats or bookmark notes." %}</p>
-                </div>
-                <div class="col-sm-6 col-12">
-                    <p class="text-white fw-bold fs-5 text-uppercase"><i class="bi bi-tags"></i>&nbsp; {% trans "Subscribe" %}</p>
-                    <p class="fs-5" style="color: rgb(230,230,230);">{% trans "Subscribe to interesting topics and people." %}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-0 d-lg-block d-none mt-5">
-            <img id="machine-img" src="{% static 'img/machine.png' %}">
-            <img id="note-screen-triangle-img" src="{% static 'img/note_screenshot_triangle.png' %}">
-        </div>
-        <div class="col-1">
+</div>
 
-        </div>
+<div class="row mt-lg-5 mt-3 px-3 flex-lg-row flex-column-reverse" style="max-width: 1200px; margin: auto;">
+    <div class="col-lg-8 col-12">
+        {% include 'content/note_list_for_layout.html' %}
     </div>
-    <div class="row mt-5">
-        <div class="col-lg-9 col-12">
-            {% include 'content/note_list_for_layout.html' %}
-        </div>
-        <div class="col-lg-3 col-12">
-            {% include 'layouts/sidebar/source_types.html' %}
-            <div class="mt-5">
-                <h6 style="font-size: 16px;">{% trans "Recommended topics" %}</h6>
-                <div class="mt-3">
-                    {% for tag in tags %}
-                    <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
-                    <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
-                    </a>
-                    {% endfor %}
-                </div>
+    <div class="col-lg-4 col-12">
+        {% include 'layouts/sidebar/source_types.html' %}
+        <div class="mt-5">
+            <h6 style="font-size: 16px;">{% trans "Discover more of what matters to you" %}</h6>
+            <div class="mt-3 pb-4">
+                {% for tag in tags %}
+                <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">
+                <span class="badge tag rounded-pill text-bg-secondary p-2 m-1 fs-6 fw-normal">{{ tag }}</span>
+                </a>
+                {% endfor %}
             </div>
         </div>
+        {% include 'layouts/sidebar/footer.html' %}
     </div>
 </div>
-        
-{% include 'layouts/auth_modals.html' %}
 
+{% include 'layouts/auth_modals.html' %}
 {% endblock %}
 
 
