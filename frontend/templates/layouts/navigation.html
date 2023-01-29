@@ -56,7 +56,7 @@ Require script `js/auth.js`
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
             <li><a href="{% url 'content:personal_notes' %}" class="dropdown-item" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
-            <li><a class="dropdown-item" href="{% url 'users:settings' %}"><i class="bi bi-gear-fill px-2"></i>{% trans "Profile settings" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:settings' %}"><i class="bi bi-gear-fill px-2"></i>{% trans "Settings" %}</a></li>
             <li>
                 {% get_current_language as CURRENT_LANGUAGE %}
                 <a class="dropdown-item" href="{% if CURRENT_LANGUAGE == 'ru' %}/en/{{request.get_full_path|slice:"4:"}}{% else %}/ru/{{request.get_full_path|slice:"4:"}}{% endif %}">
@@ -112,7 +112,7 @@ Require script `js/auth.js`
             </a>
             <ul class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark">
                 <li><a class="dropdown-item" href="{% url 'content:personal_notes' %}"><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
-                <li><a class="dropdown-item" href="{% url 'users:settings' %}"><i class="bi bi-gear-fill px-2"></i>{% trans "Profile settings" %}</a></li>
+                <li><a class="dropdown-item" href="{% url 'users:settings' %}"><i class="bi bi-gear-fill px-2"></i>{% trans "Settings" %}</a></li>
                 <li>
                     {% get_current_language as CURRENT_LANGUAGE %}
                     <a class="dropdown-item" href="{% if CURRENT_LANGUAGE == 'ru' %}/en/{{request.get_full_path|slice:"4:"}}{% else %}/ru/{{request.get_full_path|slice:"4:"}}{% endif %}">

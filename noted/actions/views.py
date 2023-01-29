@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 from django.views.generic import ListView
+from django.utils.decorators import method_decorator
 
 from notifications import settings as notification_settings
 from notifications.models import Notification
@@ -11,6 +12,7 @@ from notifications.utils import slug2id
 from common import ajax_required, logging as log
 
 
+@method_decorator(login_required, name="dispatch")
 class NotificationList(ListView):
     model = Notification
     context_object_name = "notifications"

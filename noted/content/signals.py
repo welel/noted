@@ -1,6 +1,7 @@
 import logging
 import traceback
 
+from django.core.cache import cache
 from django.db.models import Count
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
@@ -68,3 +69,9 @@ def note_created_actions(sender, instance, created, **kwargs):
         Action.objects.create_action(
             instance.author, act.CREATE, target=instance, notify=True
         )
+
+
+# @receiver(post_save, sender=Note)
+# def free_cache(sender, instance, created, **kwargs):
+#     """Create actions if a note instance was created."""
+#     cache.delete_pattern("*PublicNoteList*")

@@ -10,10 +10,9 @@
 
 {% block main %}
 
-<div id="body" style="position: absolute; height: 100%; border-bottom: 1px solid black; width: 100%;">
-<div id="welcome-anhor" class="container">
+<div id="body" style="position: absolute; height: 100%; border-bottom: 1px solid black; width: 100%; background-image: url('https://uploads-ssl.webflow.com/62e3ee10882dc50bcae8d07a/631a5d4631d4c55a475f3e34_noise-50.png'), linear-gradient(#003d79, #3e9f88);">
 <div class="row">
-<div class="col" style="max-width: 1100px; margin: auto;">
+<div class="col text-center" style="max-width: 1100px; margin: auto;">
     <nav class="navbar mt-2">
         <div class="container-fluid">
         <a class="navbar-brand">
@@ -33,16 +32,11 @@
         </ul>
         </div>
     </nav>
-    <h1 class="text-white text-left" style=" margin-top: 150px; font-size: 92px;" >{{ status_code }}</h1>
+    <h1 class="text-white" style=" margin-top: 150px; font-size: 92px;" >{{ status_code }}</h1>
     <p class="text-white fs-5 mt-2" >{{ message }}</p>
-    <a id="welcome-header-btn" class="btn btn-success rounded-pill fs-5 mt-3" href="{% url 'content:home' %}">{% trans "Go Home" %}</a> 
+    <a id="welcome-header-btn m-auto" class="btn btn-success rounded-pill fs-5 mt-3" href="{% url 'content:home' %}">{% trans "Go Home" %}</a> 
 </div>
 </div>
 </div>
 </div>
-{% endblock %}
-
-
-{% block extra_scripts %}
-<script type="text/javascript" src="{% static 'js/welcome.js' %}"></script>
 {% endblock %}
