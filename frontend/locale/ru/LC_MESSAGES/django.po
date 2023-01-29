@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 13:19+0300\n"
-"PO-Revision-Date: 2023-01-23 10:21+0000\n"
+"POT-Creation-Date: 2023-01-28 14:02+0300\n"
+"PO-Revision-Date: 2023-01-28 11:18+0000\n"
 "Last-Translator: Anonymous User <pavel.loginov.dev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,175 +31,175 @@ msgstr "Общий функционал"
 msgid "Content"
 msgstr "Контент"
 
-#: noted/content/forms.py:21
+#: noted/content/forms.py:20
 msgid "Source Type"
 msgstr "Тип источника"
 
-#: noted/content/forms.py:29 templates/content/note_create.html:174
+#: noted/content/forms.py:28 templates/content/note_create.html:174
 #: templates/content/note_create.html:175
 msgid "Link"
 msgstr "Ссылка"
 
-#: noted/content/forms.py:32
+#: noted/content/forms.py:31
 msgid "Source link"
 msgstr "Ссылка на источник"
 
-#: noted/content/forms.py:40
+#: noted/content/forms.py:39
 msgid "Description in 100 characters."
 msgstr "Описание в 100 символов."
 
-#: noted/content/forms.py:43
+#: noted/content/forms.py:42
 msgid "Source Description"
 msgstr "Описание источника"
 
-#: noted/content/forms.py:61 noted/content/models.py:80
-#: noted/content/models.py:223
+#: noted/content/forms.py:60 noted/content/models.py:81
+#: noted/content/models.py:224
 msgid "Title"
 msgstr "Название"
 
-#: noted/content/forms.py:68 noted/content/models.py:250
+#: noted/content/forms.py:67 noted/content/models.py:251
 msgid "Summary"
 msgstr "Краткое изложение"
 
-#: noted/content/forms.py:91
+#: noted/content/forms.py:90
 msgid "Note text can't be empty."
 msgstr "Тело записи не может быть пусто."
 
-#: noted/content/forms.py:102
+#: noted/content/forms.py:101
 msgid "You can add only 3 tags."
 msgstr "Вы можете добавить только 3 тега."
 
-#: noted/content/forms.py:107
+#: noted/content/forms.py:106
 msgid ""
 "Length of {i+1} tag should be                             less than 25 "
 "symbols."
 msgstr "Длинна тегов не должны превышать 25 символов."
 
-#: noted/content/models.py:68
+#: noted/content/models.py:69
 msgid "Other"
 msgstr "Другой"
 
-#: noted/content/models.py:69
+#: noted/content/models.py:70
 msgid "Book"
 msgstr "Книга"
 
-#: noted/content/models.py:70
+#: noted/content/models.py:71
 msgid "Course"
 msgstr "Курс"
 
-#: noted/content/models.py:71
+#: noted/content/models.py:72
 msgid "Video"
 msgstr "Видео"
 
-#: noted/content/models.py:72
+#: noted/content/models.py:73
 msgid "Article"
 msgstr "Статья"
 
-#: noted/content/models.py:73
+#: noted/content/models.py:74
 msgid "Lecture"
 msgstr "Лекция"
 
-#: noted/content/models.py:74
+#: noted/content/models.py:75
 msgid "Tutorial"
 msgstr "Руководство"
 
-#: noted/content/models.py:77 templates/content/note_create.html:100
+#: noted/content/models.py:78 templates/content/note_create.html:100
 msgid "Type"
 msgstr "Тип"
 
-#: noted/content/models.py:83
+#: noted/content/models.py:84
 msgid "External link"
 msgstr "Внешняя ссылка"
 
-#: noted/content/models.py:86
+#: noted/content/models.py:87
 msgid "Description"
 msgstr "Описание"
 
-#: noted/content/models.py:88 noted/content/models.py:226
+#: noted/content/models.py:89 noted/content/models.py:227
 msgid "Slug"
 msgstr "Ключ поиска"
 
-#: noted/content/models.py:218 noted/core/settings.py:285
+#: noted/content/models.py:219 noted/core/settings/base.py:280
 msgid "English"
 msgstr "Английский"
 
-#: noted/content/models.py:219 noted/core/settings.py:286
+#: noted/content/models.py:220 noted/core/settings/base.py:281
 msgid "Russian"
 msgstr "Русский"
 
-#: noted/content/models.py:220
+#: noted/content/models.py:221
 msgid "Undetected"
 msgstr "Не распознан"
 
-#: noted/content/models.py:233
+#: noted/content/models.py:234
 msgid "Author"
 msgstr "Автор"
 
-#: noted/content/models.py:241 templates/content/note_create.html:50
+#: noted/content/models.py:242 templates/content/note_create.html:50
 #: templates/content/note_create.html:101
 msgid "Source"
 msgstr "Источник"
 
-#: noted/content/models.py:244
+#: noted/content/models.py:245
 msgid "Markdown body"
 msgstr "Markdown текст"
 
-#: noted/content/models.py:247
+#: noted/content/models.py:248
 msgid "HTML body"
 msgstr "HTML разметка"
 
-#: noted/content/models.py:254
+#: noted/content/models.py:255
 msgid "Write summary on the note in 250 symbols."
 msgstr "Напишите краткое изложение в 150 символов."
 
-#: noted/content/models.py:257
+#: noted/content/models.py:258
 msgid "Draft"
 msgstr "Черновик"
 
-#: noted/content/models.py:257
+#: noted/content/models.py:258
 msgid "Only you can see the note."
 msgstr "Только вы сможете просматривать эту запись."
 
-#: noted/content/models.py:260 templates/content/note_display.html:84
+#: noted/content/models.py:261 templates/content/note_display.html:84
 #: templates/content/note_list_layout.html:15
-#: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:75
-#: templates/welcome.html:107 templates/welcome.html:141
-#: templates/welcome.html:173 templates/welcome.html:207
-#: templates/welcome.html:239
+#: templates/layouts/sidebar/more_from_noted.html:16
+#: templates/welcome.html:128 templates/welcome.html:160
+#: templates/welcome.html:194 templates/welcome.html:226
+#: templates/welcome.html:260 templates/welcome.html:292
 msgid "Anonymous"
 msgstr "Анонимно"
 
-#: noted/content/models.py:262
+#: noted/content/models.py:263
 msgid "Others won't see that the note is yours."
 msgstr "Ваше авторство у этой записи не будет указано."
 
-#: noted/content/models.py:265 templates/content/note_display.html:126
+#: noted/content/models.py:266 templates/content/note_display.html:126
 #: templates/content/note_display.html:200
 msgid "Pin"
 msgstr "Прикреплен"
 
-#: noted/content/models.py:267
+#: noted/content/models.py:268
 msgid "The note will appear in pin notes list."
 msgstr "Эта запись будет в списке закрепленных."
 
-#: noted/content/models.py:269 noted/users/models.py:293
+#: noted/content/models.py:270 noted/users/models.py:293
 #: noted/users/models.py:304
 msgid "Created"
 msgstr "Создано"
 
-#: noted/content/models.py:270
+#: noted/content/models.py:271
 msgid "Modified"
 msgstr "Изменен"
 
-#: noted/content/models.py:271
+#: noted/content/models.py:272
 msgid "Views"
 msgstr "Просмотров"
 
-#: noted/content/models.py:276
+#: noted/content/models.py:277
 msgid "Parent"
 msgstr "Родитель"
 
-#: noted/content/models.py:290
+#: noted/content/models.py:291
 msgid ""
 "Add tags. Separate tags by using \"Enter\" or comma.\n"
 "        You can add maximum 3 tags, and length of tags should be less than 25\n"
@@ -208,7 +208,7 @@ msgstr ""
 "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". Вы "
 "можете добавить не более 3 тегов с именем длинной до 25 символов. "
 
-#: noted/content/models.py:296
+#: noted/content/models.py:297
 msgid "Language"
 msgstr "Язык"
 
@@ -248,7 +248,7 @@ msgstr "Ошибка на сервере. Попробуйте повторит�
 msgid "Tags"
 msgstr "Теги"
 
-#: noted/users/adapter.py:27
+#: noted/users/adapter.py:28
 msgid "User Name"
 msgstr "Имя Пользователя"
 
@@ -256,11 +256,11 @@ msgstr "Имя Пользователя"
 msgid "User Accounts"
 msgstr "Аккаунты пользователя"
 
-#: noted/users/auth.py:84
+#: noted/users/auth.py:85
 msgid "Finish creating your account on NoteD."
 msgstr "Закончи регистрацию на NoteD."
 
-#: noted/users/auth.py:114
+#: noted/users/auth.py:115
 msgid "Finish changing your email on NoteD."
 msgstr "Закончи смену электронной почты на NoteD."
 
@@ -334,7 +334,7 @@ msgstr "Удалить аккаунт и все записи."
 msgid "Email"
 msgstr "Электронная почта"
 
-#: noted/users/models.py:111 templates/privacy_policy.html:36
+#: noted/users/models.py:111 templates/privacy_policy.html:41
 #: templates/users/profile_settings.html:24
 msgid "Username"
 msgstr "Имя пользователя"
@@ -382,12 +382,12 @@ msgstr "Присоединился"
 msgid "Profile"
 msgstr "Профиль"
 
-#: noted/users/models.py:197 templates/privacy_policy.html:79
+#: noted/users/models.py:197 templates/privacy_policy.html:84
 #: templates/users/profile_settings.html:110
 msgid "Profile picture"
 msgstr "Изображение пользователя"
 
-#: noted/users/models.py:201 templates/privacy_policy.html:90
+#: noted/users/models.py:201 templates/privacy_policy.html:95
 #: templates/users/profile_settings.html:85
 msgid "Bio"
 msgstr "О себе"
@@ -408,21 +408,21 @@ msgstr "Подписки на теги"
 msgid "Token"
 msgstr "Токен"
 
-#: noted/users/views.py:83
+#: noted/users/views.py:78
 msgid "You already changed email. If you didn't, make request again!"
 msgstr ""
 "Вы уже изменили адрес электронной почты. Если нет, то запросите новую ссылку"
 " для смены."
 
-#: noted/users/views.py:113
+#: noted/users/views.py:108
 msgid "You can't change your email."
 msgstr "Вы не можете поменять электронную почту."
 
-#: noted/users/views.py:119
+#: noted/users/views.py:114
 msgid "The email successfully changed."
 msgstr "Электронная почта успешно изменена."
 
-#: noted/users/views.py:181
+#: noted/users/views.py:176
 msgid ""
 "You already registered. If you didn't register, request              for "
 "another link!"
@@ -430,24 +430,21 @@ msgstr ""
 "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 "регистрации."
 
-#: noted/users/views.py:243
+#: noted/users/views.py:238
 msgid ""
 "Sorry, but we could not find a user account with"
 "                             that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
-#: noted/users/views.py:253
+#: noted/users/views.py:248
 msgid "You have entered the wrong password."
 msgstr "Вы ввели неправильный пароль."
 
-#: templates/about.html:7 templates/about.html:12
+#: templates/about.html:7 templates/about.html:18
 msgid "About Us"
 msgstr "О нас"
 
-#: templates/about.html:14
-#| msgid ""
-#| "Welcome to NoteD, the premier online platform for keeping all of your notes "
-#| "organized and easily accessible."
+#: templates/about.html:20
 msgid ""
 "Welcome to NoteD, the online platform for keeping all of your notes "
 "organized and easily accessible."
@@ -455,7 +452,7 @@ msgstr ""
 "Добро пожаловать на NoteD, онлайн-сервис для ведения, организации ваших "
 "записей и поиска чужих."
 
-#: templates/about.html:16
+#: templates/about.html:22
 msgid ""
 "Our mission is to provide a simple and intuitive way for individuals to find"
 " notes and summaries on different topics and for specific sources of "
@@ -469,7 +466,7 @@ msgstr ""
 " идеи и делиться ими с людьми. Мы считаем, что делиться и распространять "
 "знания и информацию важно и полезно."
 
-#: templates/about.html:18
+#: templates/about.html:24
 msgid ""
 "Founded in 2022, NoteD. Behind the scenes, our dedicated team of developers,"
 " consisting of just two highly skilled individuals, works tirelessly to "
@@ -485,7 +482,7 @@ msgstr ""
 "создавать общедоступные и личные заметки (черновики), добавлять теги, "
 "производить поиск, а также возможность делиться заметками с другими."
 
-#: templates/about.html:20
+#: templates/about.html:26
 msgid ""
 "In addition to our core note-taking features, we also offer a variety of "
 "other tools to help you stay organized. Some of these include:"
@@ -494,7 +491,7 @@ msgstr ""
 "множество других функций, которые помогут вам оставаться организованным. "
 "Некоторые из них включают:"
 
-#: templates/about.html:23
+#: templates/about.html:29
 msgid ""
 "Search and filter through your notes by title, text, sources, and topics of "
 "interest."
@@ -502,7 +499,7 @@ msgstr ""
 "Ищите записи по названию и тексту записи, по конкретным источникам и "
 "интересующим темам."
 
-#: templates/about.html:24
+#: templates/about.html:30
 msgid ""
 "Easily build upon the work of others by copying and editing notes to suit "
 "your needs."
@@ -510,7 +507,7 @@ msgstr ""
 "Легко развивайте записи других, пользователей копируя и редактируя заметки в"
 " соответствии с вашими потребностями."
 
-#: templates/about.html:25
+#: templates/about.html:31
 msgid ""
 "Discover existing notes on specific sources, such as books, articles, "
 "lectures and so on, and view all related notes."
@@ -519,7 +516,7 @@ msgstr ""
 "статьи, лекции и т. д., и просмотрите все связанные заметки с этими "
 "источниками."
 
-#: templates/about.html:26
+#: templates/about.html:32
 msgid ""
 "Download and export your notes in a variety of formats, including markdown, "
 "html, and pdf, or bookmark them for easy reference."
@@ -528,14 +525,14 @@ msgstr ""
 "markdown, html и pdf, или добавляйте их в закладки для быстрого доступа на "
 "сайте."
 
-#: templates/about.html:27
+#: templates/about.html:33
 msgid ""
 "Stay up to date with topics and people of interest by subscribing to them."
 msgstr ""
 "Будьте в курсе обновлений интересных тем и людей, подписавшись на них и "
 "получая уведомления."
 
-#: templates/about.html:30
+#: templates/about.html:36
 msgid ""
 "Whether you're a student, a professional, or a business owner, NoteD has "
 "something to offer. Our platform is perfect for anyone looking to stay "
@@ -545,11 +542,11 @@ msgstr ""
 "Наша платформа идеально подходит для тех, кто хочет развиваться и изучать "
 "новое, и мы постоянно работаем над улучшением и добавлением новых функций."
 
-#: templates/about.html:32 templates/layouts/sidebar/footer.html:9
+#: templates/about.html:38 templates/layouts/sidebar/footer.html:9
 msgid "Contacts"
 msgstr "Контакты"
 
-#: templates/about.html:34
+#: templates/about.html:40
 msgid ""
 "If you have any questions or feedback, please don't hesitate to contact us. "
 "You can reach us via email at"
@@ -557,11 +554,11 @@ msgstr ""
 "Если у вас есть какие-либо вопросы или отзывы, пожалуйста, не стесняйтесь "
 "обращаться к нам. Вы можете связаться с нами по электронной почте по адресу "
 
-#: templates/about.html:34
+#: templates/about.html:40
 msgid "or connect with us on Telegram"
 msgstr "или свяжитесь с нами в Телеграмме"
 
-#: templates/about.html:34
+#: templates/about.html:40
 msgid ""
 "Thank you for choosing NoteD as your note-taking solution. We're confident "
 "that you'll find our platform to be intuitive, powerful, and most "
@@ -847,10 +844,10 @@ msgstr "Опубликовано"
 
 #: templates/content/note_display.html:103
 #: templates/content/note_list_layout.html:20
-#: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:83
-#: templates/welcome.html:115 templates/welcome.html:149
-#: templates/welcome.html:181 templates/welcome.html:215
-#: templates/welcome.html:247
+#: templates/layouts/sidebar/more_from_noted.html:20
+#: templates/welcome.html:136 templates/welcome.html:168
+#: templates/welcome.html:202 templates/welcome.html:234
+#: templates/welcome.html:268 templates/welcome.html:300
 msgid "Updated"
 msgstr "Обновлен"
 
@@ -889,7 +886,7 @@ msgstr "Скопировать ссылку"
 
 #: templates/content/note_display.html:227 templates/content/search.html:7
 #: templates/content/search.html:17 templates/content/search.html:74
-#: templates/layouts/sidebar/search_form.html:8
+#: templates/layouts/sidebar/search_form.html:8 templates/welcome.html:60
 msgid "Search"
 msgstr "Поиск"
 
@@ -897,14 +894,14 @@ msgstr "Поиск"
 msgid "Download Note"
 msgstr "Скачать Запись"
 
-#: templates/content/note_list_layout.html:68 templates/welcome.html:285
+#: templates/content/note_list_layout.html:68
 msgid "Save"
 msgstr "Сохраняйте"
 
-#: templates/content/note_list_layout.html:77 templates/welcome.html:86
-#: templates/welcome.html:118 templates/welcome.html:152
-#: templates/welcome.html:184 templates/welcome.html:218
-#: templates/welcome.html:250
+#: templates/content/note_list_layout.html:77 templates/welcome.html:139
+#: templates/welcome.html:171 templates/welcome.html:205
+#: templates/welcome.html:237 templates/welcome.html:271
+#: templates/welcome.html:303
 msgid "min read"
 msgstr "мин читать"
 
@@ -1074,15 +1071,15 @@ msgstr ""
 "ознакомиться по адресу"
 
 #: templates/error.html:25 templates/layouts/sidebar/footer.html:8
-#: templates/welcome.html:27
+#: templates/welcome.html:26
 msgid "About"
 msgstr "О нас"
 
-#: templates/error.html:28 templates/welcome.html:30
+#: templates/error.html:28 templates/welcome.html:29
 msgid "Contact"
 msgstr "Связаться"
 
-#: templates/error.html:31 templates/welcome.html:36
+#: templates/error.html:31 templates/welcome.html:45
 msgid "Start writing"
 msgstr "Начать писать"
 
@@ -1098,7 +1095,7 @@ msgstr "Подписки"
 msgid "My topics"
 msgstr "Мои темы"
 
-#: templates/index.html:52 templates/welcome.html:309
+#: templates/index.html:52
 msgid "Recommended topics"
 msgstr "Рекомендуемые темы"
 
@@ -1137,7 +1134,7 @@ msgstr "Входя на сайт, вы соглашаетесь с нашей "
 #: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
 #: templates/layouts/auth_modals.html:65
 #: templates/layouts/sidebar/footer.html:10 templates/privacy_policy.html:7
-#: templates/privacy_policy.html:12
+#: templates/privacy_policy.html:17
 msgid "Privacy Policy"
 msgstr "Политика конфиденциальности"
 
@@ -1251,7 +1248,7 @@ msgstr "Больше от NoteD."
 msgid "Source types"
 msgstr "Типы источников"
 
-#: templates/privacy_policy.html:14
+#: templates/privacy_policy.html:19
 msgid ""
 "At NoteD, we take the privacy of our users very seriously. We understand "
 "that the information you entrust to us is personal and sensitive, and we are"
@@ -1266,11 +1263,11 @@ msgstr ""
 "защищаем вашу личную информацию, когда вы пользуетесь нашим веб-сайтом и "
 "услугами."
 
-#: templates/privacy_policy.html:16
+#: templates/privacy_policy.html:21
 msgid "Information Collection and Use:"
 msgstr "Сбор и Использование Информации:"
 
-#: templates/privacy_policy.html:18
+#: templates/privacy_policy.html:23
 msgid ""
 "When you use our website, we collect certain information from you, including"
 " your name, email address, and any other information you choose to provide. "
@@ -1287,7 +1284,7 @@ msgstr ""
 "будущем, чтобы предоставить вам информацию о наших продуктах и услугах или "
 "запросить от вас обратную информацию."
 
-#: templates/privacy_policy.html:20
+#: templates/privacy_policy.html:25
 msgid ""
 "We also use third-party services such as Google and Yandex metric tags to "
 "collect information about the usage of our website, including which pages "
@@ -1300,31 +1297,31 @@ msgstr ""
 "информация используется, чтобы помочь нам понять, как используется наш веб-"
 "сайт, и улучшить его."
 
-#: templates/privacy_policy.html:22
+#: templates/privacy_policy.html:27
 msgid "NoteD servers collect the following information:"
 msgstr "Серверы NoteD собирают следующую информацию:"
 
-#: templates/privacy_policy.html:25
+#: templates/privacy_policy.html:30
 msgid "Internet Protocol (IP) address of computer being used"
 msgstr "IP адрес используемого компьютера"
 
-#: templates/privacy_policy.html:26
+#: templates/privacy_policy.html:31
 msgid "Web pages requested"
 msgstr "Какая страница была запрошена"
 
-#: templates/privacy_policy.html:27
+#: templates/privacy_policy.html:32
 msgid "Referring web page"
 msgstr "Адрес предыдущей страницы"
 
-#: templates/privacy_policy.html:28
+#: templates/privacy_policy.html:33
 msgid "Browser used"
 msgstr "Какой браузер был использован"
 
-#: templates/privacy_policy.html:29
+#: templates/privacy_policy.html:34
 msgid "Date and time"
 msgstr "Дата и время обращения"
 
-#: templates/privacy_policy.html:32
+#: templates/privacy_policy.html:37
 msgid ""
 "NoteD does not associate this data to individual user identities. In "
 "addition to the IP address/browser information collected from anonymous "
@@ -1339,35 +1336,35 @@ msgstr ""
 "частности, следующая информация собирается и сопоставляется с локально "
 "созданной учетной записью:"
 
-#: templates/privacy_policy.html:35 templates/users/profile_settings.html:33
+#: templates/privacy_policy.html:40 templates/users/profile_settings.html:33
 msgid "Email address"
 msgstr "Email адрес"
 
-#: templates/privacy_policy.html:37
+#: templates/privacy_policy.html:42
 msgid "First name"
 msgstr "Имя"
 
-#: templates/privacy_policy.html:38
+#: templates/privacy_policy.html:43
 msgid "Last name"
 msgstr "Фамилия"
 
-#: templates/privacy_policy.html:39
+#: templates/privacy_policy.html:44
 msgid "Date and time when joined NoteD"
 msgstr "Дата и время регистрации"
 
-#: templates/privacy_policy.html:40
+#: templates/privacy_policy.html:45
 msgid "Date and time last log in"
 msgstr "Дата и время последнего входа"
 
-#: templates/privacy_policy.html:41
+#: templates/privacy_policy.html:46
 msgid "Actions on the website"
 msgstr "Действия пользователя на сайте"
 
-#: templates/privacy_policy.html:44
+#: templates/privacy_policy.html:49
 msgid "Authentication"
 msgstr "Аутентификация"
 
-#: templates/privacy_policy.html:46
+#: templates/privacy_policy.html:51
 msgid ""
 "We use allauth authentication services such as GitHub, Google and Yandex to "
 "allow you to sign in to our website using your existing accounts. When you "
@@ -1384,39 +1381,39 @@ msgstr ""
 "учетной записи или передавать вашу информацию какой-либо другой стороне без "
 "вашего явного согласия."
 
-#: templates/privacy_policy.html:48
+#: templates/privacy_policy.html:53
 msgid "Additional information if you have signed up via Google:"
 msgstr "Дополнительная информация, если вы зарегистрировались через Google:"
 
-#: templates/privacy_policy.html:51
+#: templates/privacy_policy.html:56
 msgid "the unique identifier of the Google user"
 msgstr "уникальный идентификатор пользователя Google"
 
-#: templates/privacy_policy.html:53
+#: templates/privacy_policy.html:58
 msgid "is email verified"
 msgstr "подтвержден ли email"
 
-#: templates/privacy_policy.html:54
+#: templates/privacy_policy.html:59
 msgid "profile picture"
 msgstr "Изображение пользователя"
 
-#: templates/privacy_policy.html:57
+#: templates/privacy_policy.html:62
 msgid "Additional information if you have signed up via Yandex"
 msgstr "Дополнительная информация, если вы зарегистрировались через Яндекс:"
 
-#: templates/privacy_policy.html:60
+#: templates/privacy_policy.html:65
 msgid "the unique identifier of the Yandex user"
 msgstr "уникальный идентификатор пользователя Яндекса"
 
-#: templates/privacy_policy.html:61
+#: templates/privacy_policy.html:66
 msgid "Primary email"
 msgstr "Главный email"
 
-#: templates/privacy_policy.html:62
+#: templates/privacy_policy.html:67
 msgid "User login on Yandex"
 msgstr "Логин пользователя на яндексе"
 
-#: templates/privacy_policy.html:63
+#: templates/privacy_policy.html:68
 msgid ""
 "the ID of the OAuth application for which the OAuth token passed in the "
 "request was issued"
@@ -1424,31 +1421,31 @@ msgstr ""
 "идентификатор приложения OAuth, для которого был выдан токен OAuth, "
 "переданный в запросе"
 
-#: templates/privacy_policy.html:64
+#: templates/privacy_policy.html:69
 msgid "the name that is displayed for this account in the Yandex interface"
 msgstr "имя, которое отображается для этого аккаунта в интерфейсе Яндекса"
 
-#: templates/privacy_policy.html:65
+#: templates/privacy_policy.html:70
 msgid "first and last name of the user specified by him in Yandex ID"
 msgstr "имя и фамилия пользователя, указанные им в Яндекс ID"
 
-#: templates/privacy_policy.html:66
+#: templates/privacy_policy.html:71
 msgid "the username specified by him in Yandex ID"
 msgstr "имя пользователя, указанное им в Яндекс ID"
 
-#: templates/privacy_policy.html:67
+#: templates/privacy_policy.html:72
 msgid "last name of the user specified by him in Yandex ID"
 msgstr "фамилия пользователя, указанное им в Яндекс ID"
 
-#: templates/privacy_policy.html:68
+#: templates/privacy_policy.html:73
 msgid "user Gender"
 msgstr "Пол/гендер"
 
-#: templates/privacy_policy.html:69
+#: templates/privacy_policy.html:74
 msgid "the default email address for contacting the user"
 msgstr "адрес электронной почты по умолчанию для связи с пользователем"
 
-#: templates/privacy_policy.html:70
+#: templates/privacy_policy.html:75
 msgid ""
 "ID of an authorized user in Yandex. It is formed on the Yandex side based on"
 " the client_id and user_id pair"
@@ -1456,11 +1453,11 @@ msgstr ""
 "ID авторизованного пользователя в Яндекс. Формируется на стороне Яндекса на "
 "основе пары client_id и user_id"
 
-#: templates/privacy_policy.html:73
+#: templates/privacy_policy.html:78
 msgid "Additional information if you have signed up via GitHub"
 msgstr "Дополнительная информация, если вы зарегистрировались через GitHub"
 
-#: templates/privacy_policy.html:81
+#: templates/privacy_policy.html:86
 msgid ""
 "Open GitHub User URLs: profile, followers, following, gists, starred, "
 "subscriptions, organizations, repos, events, received events"
@@ -1469,63 +1466,63 @@ msgstr ""
 "гисты, звезды (закладки), организации, репозитории, события, полученные "
 "события."
 
-#: templates/privacy_policy.html:82
+#: templates/privacy_policy.html:87
 msgid "User type"
 msgstr "Тип пользователя"
 
-#: templates/privacy_policy.html:84
+#: templates/privacy_policy.html:89
 msgid "Name"
 msgstr "Имя"
 
-#: templates/privacy_policy.html:85
+#: templates/privacy_policy.html:90
 msgid "Company"
 msgstr "Компания"
 
-#: templates/privacy_policy.html:86
+#: templates/privacy_policy.html:91
 msgid "Blog"
 msgstr "Блог"
 
-#: templates/privacy_policy.html:87
+#: templates/privacy_policy.html:92
 msgid "GitHub Location"
 msgstr "Местонахождение"
 
-#: templates/privacy_policy.html:89
+#: templates/privacy_policy.html:94
 msgid "Hireable"
 msgstr "Открыт ли для найма"
 
-#: templates/privacy_policy.html:91
+#: templates/privacy_policy.html:96
 msgid "username"
 msgstr "имя пользователя"
 
-#: templates/privacy_policy.html:92
+#: templates/privacy_policy.html:97
 msgid "Public repos number"
 msgstr "Номер публичных репозиториев"
 
-#: templates/privacy_policy.html:93
+#: templates/privacy_policy.html:98
 msgid "Public gists number"
 msgstr "Номер публичных гистов"
 
-#: templates/privacy_policy.html:94
+#: templates/privacy_policy.html:99
 msgid "Followers number"
 msgstr "Количество подписчиков"
 
-#: templates/privacy_policy.html:95
+#: templates/privacy_policy.html:100
 msgid "Following number"
 msgstr "Количество подписок"
 
-#: templates/privacy_policy.html:96
+#: templates/privacy_policy.html:101
 msgid "Created at"
 msgstr "Создано в (время)"
 
-#: templates/privacy_policy.html:97
+#: templates/privacy_policy.html:102
 msgid "Updated at"
 msgstr "Обновлен в (время)"
 
-#: templates/privacy_policy.html:100
+#: templates/privacy_policy.html:105
 msgid "Information Sharing and Disclosure"
 msgstr "Обмен и Раскрытие Информации"
 
-#: templates/privacy_policy.html:102
+#: templates/privacy_policy.html:107
 msgid ""
 "We do not share your personal information with third parties. We will never "
 "sell or rent your personal information to any third party."
@@ -1534,11 +1531,11 @@ msgstr ""
 "продавать или сдавать в аренду вашу личную информацию какой-либо третьей "
 "стороне."
 
-#: templates/privacy_policy.html:104
+#: templates/privacy_policy.html:109
 msgid "Security:"
 msgstr "Безопасность:"
 
-#: templates/privacy_policy.html:106
+#: templates/privacy_policy.html:111
 msgid ""
 "We use a variety of security measures to protect your personal information, "
 "including encryption and secure servers. However, please note that no method"
@@ -1551,11 +1548,11 @@ msgstr ""
 "полностью безопасным. Мы не можем гарантировать абсолютную безопасность "
 "вашей личной информации."
 
-#: templates/privacy_policy.html:108
+#: templates/privacy_policy.html:113
 msgid "Accessing and Changing Your Personal Information:"
 msgstr "Доступ и Изменение Вашей Личной Информации:"
 
-#: templates/privacy_policy.html:110
+#: templates/privacy_policy.html:115
 msgid ""
 "You can access, change and delete your personal information at any time by "
 "logging in to your account on our website. If you have any questions or "
@@ -1567,11 +1564,11 @@ msgstr ""
 "какие-либо вопросы или опасения по поводу вашей личной информации или "
 "настоящей Политики конфиденциальности, свяжитесь с нами по адресу "
 
-#: templates/privacy_policy.html:112
+#: templates/privacy_policy.html:117
 msgid "Changes to this Privacy Policy"
 msgstr "Изменения в Политике конфиденциальности"
 
-#: templates/privacy_policy.html:114
+#: templates/privacy_policy.html:119
 msgid ""
 "We may update this Privacy Policy from time to time. If we make any changes "
 "to this policy, we will post the updated policy on this page and indicate "
@@ -1584,15 +1581,15 @@ msgstr ""
 "Ваше дальнейшее использование нашего веб-сайта и услуг означает ваше "
 "согласие с любыми изменениями в этой политике."
 
-#: templates/privacy_policy.html:116
+#: templates/privacy_policy.html:121
 msgid "Last Updated"
 msgstr "Последнее обновление"
 
-#: templates/privacy_policy.html:116
+#: templates/privacy_policy.html:121
 msgid "January"
 msgstr "Январь"
 
-#: templates/privacy_policy.html:118
+#: templates/privacy_policy.html:123
 msgid ""
 "If you have any questions or concerns about this Privacy Policy or our "
 "handling of your personal information, please contact us at "
@@ -1768,92 +1765,188 @@ msgstr ""
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
-#: templates/welcome.html:33
+#: templates/welcome.html:32
 msgid "Sing In"
 msgstr "Вход"
 
-#: templates/welcome.html:41
-msgid "Stay curious."
-msgstr "Делись знаниями."
-
-#: templates/welcome.html:42
-msgid ""
-"Discover notes, sources, and share your notes and knowleadge on any topic."
-msgstr ""
-"Изучай записи людей на книги, статьи, курсы и другие источники, делись "
-"своими записями с остальными на любые темы."
-
-#: templates/welcome.html:43
+#: templates/welcome.html:35
 msgid "Start reading"
 msgstr "Начать читать"
 
-#: templates/welcome.html:53
-msgid "trending on noted"
-msgstr "записи набирающие популярность"
+#: templates/welcome.html:40
+#| msgid "Stay curious."
+msgid "Stay curious"
+msgstr "Открывай новое"
 
-#: templates/welcome.html:265
-msgid "Write"
-msgstr "Пишите"
+#: templates/welcome.html:41
+#| msgid "Where knowledge is open"
+msgid "share knowledge"
+msgstr "делись знаниями"
 
-#: templates/welcome.html:266
+#: templates/welcome.html:42
+msgid "Transform your notes into a valuable resource for others,"
+msgstr "Превратите свои записи в ценный ресурс для других,"
+
+#: templates/welcome.html:42
+msgid "elevate your knowledge and share it with the world."
+msgstr "учитесь и делитесь своими знаниями с миром."
+
+#: templates/welcome.html:48
 msgid ""
-"Create private, public and anonymous notes. Help people and add the source "
-"of information (book, article, etc.) to your note and tags so that others "
-"can easily find it."
+"Don't miss out on the opportunity to share your thoughts and ideas with the "
+"community"
 msgstr ""
-"Создавайте личные, публичные и анонимные записи. Помогайте людям и "
-"добавляйте источник информации (книгу, статью и т. д.) к своим заметкам и "
-"теги, чтобы другие могли легко их найти."
+"Не упустите возможность поделиться своими мыслями и идеями с сообществом."
 
-#: templates/welcome.html:269
+#: templates/welcome.html:58
+msgid "Explore notes and sources"
+msgstr "Исследуйте записи и источники"
+
+#: templates/welcome.html:59
+msgid ""
+"Easily find notes by title and text, specific sources and topics of "
+"interest. Discover existing notes on your desired source. Explore now and "
+"never miss a valuable information again!"
+msgstr ""
+"Легко находите записи по названию и тексту, конкретным источникам и "
+"интересующим темам. Откройте для себя существующие записи о желаемом "
+"источнике. Начните искать записи сейчас и сократите время на ведение "
+"собственных!"
+
+#: templates/welcome.html:60
 msgid "Explore"
 msgstr "Исследуйте"
 
-#: templates/welcome.html:270
+#: templates/welcome.html:70
+#| msgid "liked your note"
+msgid "Share your notes"
+msgstr "Делитесь своими записями"
+
+#: templates/welcome.html:71
 msgid ""
-"Search notes by title and text of the note, notes on specific sources and "
-"topics of interest."
+"Easily create private, public, and anonymous notes and help others by adding"
+" sources and tags. Make information discoverable and accessible to all. "
+"Start now!"
 msgstr ""
-"Ищите записи по названию и тексту записи, по конкретным источникам и "
-"интересующим темам."
+"Легко создавайте личные, публичные и анонимные записи и помогайте другим "
+"находить их, добавляя источники и теги. Сделайте информацию доступной для "
+"всех. Начните сейчас!"
 
-#: templates/welcome.html:275
-msgid "Copy"
-msgstr "Копируйте"
+#: templates/welcome.html:72
+msgid "Write"
+msgstr "Пишите"
 
-#: templates/welcome.html:276
+#: templates/welcome.html:79
+#| msgid "Copy of"
+msgid "Copy notes"
+msgstr "Копируйте записи"
+
+#: templates/welcome.html:80
 msgid ""
-"Start creating a note based on other people's notes. Copy the note to "
-"yourself and edit as you wish."
+"Unleash the power of collective knowledge. Start creating your own notes "
+"based on others' insights. Copy, edit and make it your own."
 msgstr ""
-"Создавайте заметки на основе заметок других людей. Скопируйте заметку себе и"
-" редактируйте как пожелаете."
+"Раскройте силу коллективного знания. Начните создавать свои собственные "
+"записи на основе идей других. Скопируйте нажатием кнопки, отредактируйте и "
+"сделайте запись своей."
 
-#: templates/welcome.html:279
-msgid "Search sources"
-msgstr "Ищите источники"
+#: templates/welcome.html:84
+msgid "Save and download"
+msgstr "Сохраняйте и скачивайте"
 
-#: templates/welcome.html:280
+#: templates/welcome.html:85
 msgid ""
-"Search for the desired source and find existing notes on this source. For "
-"example: find a book and view all notes related to it."
+"Get the most out of your notes. Download them in Markdown, HTML, and PDF "
+"formats or simply bookmark them for easy access."
 msgstr ""
-"Ищите нужный источник и найдёте все существующие заметки на этот источник. "
-"Например: найдите книгу и увидите все заметки, связанные с ней."
+"Получите максимум от ваших заметок. Скачивайте их в форматах Markdown, HTML "
+"и PDF или просто добавьте в закладки для быстрого доступа."
 
-#: templates/welcome.html:286
-msgid "Download notes in markdown, html and pdf formats or bookmark notes."
-msgstr ""
-"Скачивайте заметки в форматах markdown, html и pdf или добавляйте заметки в "
-"закладки своего профиля."
-
-#: templates/welcome.html:289
+#: templates/welcome.html:89
 msgid "Subscribe"
 msgstr "Следите"
 
-#: templates/welcome.html:290
-msgid "Subscribe to interesting topics and people."
-msgstr "Подписывайтесь на интересующие темы и людей."
+#: templates/welcome.html:90
+msgid ""
+"Stay on top of the latest insights and ideas by subscribing to interesting "
+"topics and people. Never miss a beat and stay informed."
+msgstr ""
+"Будьте в курсе последних записей, подписавшись на интересные темы и людей. "
+"Никогда не пропустите ни одной детали и будьте в курсе."
+
+#: templates/welcome.html:94
+#| msgid "Markdown body"
+msgid "Markdown editor"
+msgstr "Markdown редактор"
+
+#: templates/welcome.html:95
+msgid ""
+"Elevate your note-taking experience with our powerful markdown editor. Enjoy"
+" features like preview, split editing, full-screen editing, and hotkeys. "
+"Start writing now!"
+msgstr ""
+"Ведите записи с помощью нашего функционального Markdown редактора. "
+"Наслаждайтесь такими функциями, как предварительный просмотр, раздельное "
+"редактирование, полноэкранное редактирование и горячие клавиши. Начните "
+"писать прямо сейчас!"
+
+#: templates/welcome.html:106
+msgid "trending on noted"
+msgstr "записи набирающие популярность"
+
+#: templates/welcome.html:319
+msgid "Discover more of what matters to you"
+msgstr "Узнайте больше о том, что важно для вас"
+
+#~ msgid ""
+#~ "Discover notes, sources, and share your notes and knowleadge on any topic."
+#~ msgstr ""
+#~ "Изучай записи людей на книги, статьи, курсы и другие источники, делись "
+#~ "своими записями с остальными на любые темы."
+
+#~ msgid ""
+#~ "Create private, public and anonymous notes. Help people and add the source "
+#~ "of information (book, article, etc.) to your note and tags so that others "
+#~ "can easily find it."
+#~ msgstr ""
+#~ "Создавайте личные, публичные и анонимные записи. Помогайте людям и "
+#~ "добавляйте источник информации (книгу, статью и т. д.) к своим заметкам и "
+#~ "теги, чтобы другие могли легко их найти."
+
+#~ msgid ""
+#~ "Search notes by title and text of the note, notes on specific sources and "
+#~ "topics of interest."
+#~ msgstr ""
+#~ "Ищите записи по названию и тексту записи, по конкретным источникам и "
+#~ "интересующим темам."
+
+#~ msgid "Copy"
+#~ msgstr "Копируйте"
+
+#~ msgid ""
+#~ "Start creating a note based on other people's notes. Copy the note to "
+#~ "yourself and edit as you wish."
+#~ msgstr ""
+#~ "Создавайте заметки на основе заметок других людей. Скопируйте заметку себе и"
+#~ " редактируйте как пожелаете."
+
+#~ msgid "Search sources"
+#~ msgstr "Ищите источники"
+
+#~ msgid ""
+#~ "Search for the desired source and find existing notes on this source. For "
+#~ "example: find a book and view all notes related to it."
+#~ msgstr ""
+#~ "Ищите нужный источник и найдёте все существующие заметки на этот источник. "
+#~ "Например: найдите книгу и увидите все заметки, связанные с ней."
+
+#~ msgid "Download notes in markdown, html and pdf formats or bookmark notes."
+#~ msgstr ""
+#~ "Скачивайте заметки в форматах markdown, html и pdf или добавляйте заметки в "
+#~ "закладки своего профиля."
+
+#~ msgid "Subscribe to interesting topics and people."
+#~ msgstr "Подписывайтесь на интересующие темы и людей."
 
 #~ msgid "A user posted a note."
 #~ msgstr "Пользователь разместил запись."
@@ -1908,4 +2001,3 @@ msgstr "Подписывайтесь на интересующие темы и �
 
 #~ msgid "Sign in with VK"
 #~ msgstr "Вход через Вконтакте"
-

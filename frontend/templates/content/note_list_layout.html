@@ -65,7 +65,7 @@
     <div class="row row-cols-auto d-flex justify-content-between align-items-center mt-4">
         <div class="col">
             <button id="bookmark-btn-{{ note.pk }}" url="{% url 'content:bookmark_note' slug=note.slug %}" onclick="bookmarkNote({{ note.pk }});" class="btn btn-link p-0 text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                <span><i style="font-size: 1.2rem;" class="bi bi-bookmark-plus{% if note in request.user.bookmarked_notes.all %}-fill{% endif %}"></i></span>
+                <span><i style="font-size: 1.2rem;" class="bi bi-bookmark-plus{% if note in user_bookmarks %}-fill{% endif %}"></i></span>
             </button>
             {% for tag in note.tags.all %}
             <a href="{% url 'tags:tag' slug=tag.slug %}" class="text-decoration-none text-dark">

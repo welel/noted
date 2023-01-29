@@ -9,7 +9,7 @@ class NotedDiscoverRunner(DiscoverRunner):
         settings.TEST_MODE = True
         settings.CACHES = {
             "default": {
-                "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+                "BACKEND": "common.cache.RedisDummyCache",
             }
         }
         super(NotedDiscoverRunner, self).__init__(*args, **kwargs)

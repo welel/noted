@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-14 15:09+0300\n"
+"POT-Creation-Date: 2023-01-28 14:02+0300\n"
 "PO-Revision-Date: 2023-01-14 12:08+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,4 +80,3 @@ msgstr "Светлая тема"
 #: static/js/theme_switch.js:16 static/js/theme_switch.js:17
 msgid "Dark theme"
 msgstr "Тёмная тема"
-

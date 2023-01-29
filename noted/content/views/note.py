@@ -23,6 +23,7 @@
 import logging
 from wsgiref.util import FileWrapper
 
+from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
@@ -89,8 +90,17 @@ class NoteList(log.LoggingView, ListView):
         """Orders a queryset by a order option."""
         return self.SORTING_FUNCS_MAPPING[self.get_ordering()]()
 
+    @log.logit_class_method
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context[
+                "user_bookmarks"
+            ] = self.request.user.bookmarked_notes.all()
+        return context
 
-@method_decorator(cache_page(60 * 60), name="dispatch")
+
+# @method_decorator(cache_page(60 * 60 * 6), name="dispatch")
 class WelcomeNoteList(NoteList):
     """Welcome page for unlogged users.
 
@@ -121,11 +131,16 @@ class WelcomeNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        context["trends"] = cache_queryset(259200)(Note.objects.popular)()[:6]
-        context["tags"] = cache_queryset(259200)(get_top_tags)(7)
+        trends = cache_queryset(259200)(Note.objects.popular)()[:6]
+        for i, trend in enumerate(trends):
+            context[f"trend_{i+1}"] = trend
+        context["tags"] = cache_queryset(259200)(get_top_tags)(12)
         return context
 
 
+# @method_decorator(
+#     cache_page(60 * 60 * 24, key_prefix="PublicNoteList"), name="dispatch"
+# )
 class PublicNoteList(LoginRequiredMixin, NoteList):
     """Display a list of :model:`Note` available for every one.
 
@@ -161,7 +176,7 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
         ]
         context["tags"] = cache_queryset(259200)(get_top_tags)(7)
         if self.request.user.is_authenticated:
-            context["following_notes"] = Note.objects.filter(
+            context["following_notes"] = Note.objects.optimize().filter(
                 author__in=Following.objects.get_following(self.request.user),
                 draft=False,
                 anonymous=False,
@@ -447,8 +462,9 @@ def like_note(request, slug):
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
 def bookmark_note(request, slug):
-    """Adds/removes a like a note to/from user's bookmarks."""
+    """Adds/removes a note to/from user's bookmarks."""
     note = get_object_or_404(Note, slug=slug)
+    # cache.delete_pattern("*PublicNoteList*")
     if request.user in note.bookmarks.all():
         note.bookmarks.remove(request.user)
         return JsonResponse({"bookmarked": False})

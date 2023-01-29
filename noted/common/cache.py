@@ -1,7 +1,13 @@
 import functools
 
 from django.core.cache import cache
+from django.core.cache.backends.dummy import DummyCache
 from django.db.models import QuerySet
+
+
+class RedisDummyCache(DummyCache):
+    def delete_pattern(self, *args, **kwargs):
+        pass
 
 
 def cache_queryset(time: int) -> QuerySet:

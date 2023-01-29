@@ -115,6 +115,16 @@ class Source(models.Model):
 
 
 class NoteManager(models.Manager):
+    def optimize(self):
+        return self.prefetch_related(
+            "author__profile",
+            "source",
+            "fork",
+            "tags",
+            "bookmarks",
+            "likes",
+        )
+
     def personal(self, user: User) -> QuerySet:
         """Query notes for a specific user (for private list).
 
@@ -137,11 +147,11 @@ class NoteManager(models.Manager):
 
     def public(self) -> QuerySet:
         """Query public notes available for everyone."""
-        return self.filter(draft=False)
+        return self.optimize().filter(draft=False)
 
     def by_created(self) -> QuerySet:
         """Query notes ordered by creation time (latest on the top)."""
-        return self.order_by("-created")
+        return self.optimize().order_by("-created")
 
     def with_source_type(self, type_code: str) -> QuerySet:
         """Query public notes with a specific source type."""
@@ -149,19 +159,24 @@ class NoteManager(models.Manager):
 
     def popular(self) -> QuerySet:
         """Query public notes ordered by number of views."""
-        return self.filter(draft=False).order_by("-views")
+        return self.optimize().filter(draft=False).order_by("-views")
 
     def most_liked(self) -> QuerySet:
         """Query public notes ordered by number of likes."""
         return (
-            self.filter(draft=False)
+            self.optimize()
+            .filter(draft=False)
             .annotate(count=Count("likes"))
             .order_by("-count")
         )
 
     def tags_in(self, tag_names: list) -> QuerySet:
         """Query public notes that have tags from `tag_names` list."""
-        return self.filter(draft=False, tags__name__in=tag_names).distinct()
+        return (
+            self.optimize()
+            .filter(draft=False, tags__name__in=tag_names)
+            .distinct()
+        )
 
     def search(self, query: str) -> QuerySet:
         """Search public notes by `title`, `summary`, `body_raw`."""
