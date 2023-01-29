@@ -71,6 +71,7 @@ if settings.DEBUG:
     urlpatterns += i18n_patterns(
         path("admin/", admin.site.urls),
     )
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
     urlpatterns += static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT
     )

@@ -5,7 +5,11 @@ from .base import *
 
 ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
-INSTALLED_APPS += ["rosetta"]
+INTERNAL_IPS = ["127.0.0.1"]
+
+INSTALLED_APPS += ["rosetta", "debug_toolbar"]
+
+MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 CACHES = {
     "default": {

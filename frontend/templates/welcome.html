@@ -117,10 +117,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.0.anonymous %}
-                        <a href="{{ trends.0.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.0.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.0.author.full_name }}</span>
+                        {% if not trend_1.anonymous %}
+                        <a href="{{ trend_1.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_1.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_1.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -129,14 +129,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.0.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.0.title }}</div>
+                    <a href="{{ trend_1.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_1.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.0.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.0.modified|date:"M j" }} {% if not trends.0.this_year %}, {{ trends.0.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.0.min_read %}
+                        <span>{% if trend_1.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_1.modified|date:"M j" }} {% if not trend_1.this_year %}, {{ trend_1.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_1.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.0.min_read }} {% trans "min read" %}
+                        {{ trend_1.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
@@ -149,10 +149,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.1.anonymous %}
-                        <a href="{{ trends.1.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.1.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.1.author.full_name }}</span>
+                        {% if not trend_2.anonymous %}
+                        <a href="{{ trend_2.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_2.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_2.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -161,14 +161,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.1.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.1.title }}</div>
+                    <a href="{{ trend_2.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_2.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.1.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.1.modified|date:"M j" }} {% if not trends.1.this_year %}, {{ trends.1.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.1.min_read %}
+                        <span>{% if trend_2.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_2.modified|date:"M j" }} {% if not trend_2.this_year %}, {{ trend_2.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_2.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.1.min_read }} {% trans "min read" %}
+                        {{ trend_2.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
@@ -183,10 +183,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.2.anonymous %}
-                        <a href="{{ trends.2.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.2.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.2.author.full_name }}</span>
+                        {% if not trend_3.anonymous %}
+                        <a href="{{ trend_3.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_3.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_3.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -195,14 +195,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.2.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.2.title }}</div>
+                    <a href="{{ trend_3.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_3.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.2.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.2.modified|date:"M j" }} {% if not trends.2.this_year %}, {{ trends.2.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.2.min_read %}
+                        <span>{% if trend_3.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_3.modified|date:"M j" }} {% if not trend_3.this_year %}, {{ trend_3.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_3.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.2.min_read }} {% trans "min read" %}
+                        {{ trend_3.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
@@ -215,10 +215,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.3.anonymous %}
-                        <a href="{{ trends.3.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.3.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.3.author.full_name }}</span>
+                        {% if not trend_4.anonymous %}
+                        <a href="{{ trend_4.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_4.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_4.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -227,14 +227,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.3.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.3.title }}</div>
+                    <a href="{{ trend_4.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_4.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.3.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.3.modified|date:"M j" }} {% if not trends.3.this_year %}, {{ trends.3.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.3.min_read %}
+                        <span>{% if trend_4.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_4.modified|date:"M j" }} {% if not trend_4.this_year %}, {{ trend_4.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_4.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.3.min_read }} {% trans "min read" %}
+                        {{ trend_4.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
@@ -249,10 +249,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.4.anonymous %}
-                        <a href="{{ trends.4.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.4.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.4.author.full_name }}</span>
+                        {% if not trend_5.anonymous %}
+                        <a href="{{ trend_5.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_5.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_5.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -261,14 +261,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.4.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.4.title }}</div>
+                    <a href="{{ trend_5.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_5.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.4.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.4.modified|date:"M j" }} {% if not trends.4.this_year %}, {{ trends.4.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.4.min_read %}
+                        <span>{% if trend_5.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_5.modified|date:"M j" }} {% if not trend_5.this_year %}, {{ trend_5.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_5.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.4.min_read }} {% trans "min read" %}
+                        {{ trend_5.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
@@ -281,10 +281,10 @@
                 </div>
                 <div class="col-10 d-flex flex-column align-items-start">
                     <div class="d-flex align-items-center" style="font-size: 13px;">
-                        {% if not trends.5.anonymous %}
-                        <a href="{{ trends.5.author.get_absolute_url }}" class="text-decoration-none text-dark">
-                        <span><img src="{{ trends.1.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
-                        <span>{{ trends.5.author.full_name }}</span>
+                        {% if not trend_6.anonymous %}
+                        <a href="{{ trend_6.author.get_absolute_url }}" class="text-decoration-none text-dark">
+                        <span><img src="{{ trend_2.author.profile.avatar.url }}" class="rounded-circle" alt="Avatar" width="16" height="16"></span>
+                        <span>{{ trend_6.author.full_name }}</span>
                         </a>
                         {% else %}
                         <a class="text-decoration-none text-dark">
@@ -293,14 +293,14 @@
                         </a>
                         {% endif %}
                     </div>
-                    <a href="{{ trends.5.get_absolute_url }}" class="text-decoration-none text-dark">
-                    <div class="mt-2 fs-6 fw-bold">{{ trends.5.title }}</div>
+                    <a href="{{ trend_6.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="mt-2 fs-6 fw-bold">{{ trend_6.title }}</div>
                     </a>
                     <div class="d-flex align-items-center text-secondary" style="font-size: 13px;">
-                        <span>{% if trends.5.is_modified %}{% trans "Updated" %}{% endif %} {{ trends.5.modified|date:"M j" }} {% if not trends.5.this_year %}, {{ trends.5.modified|date:"Y" }}{% endif %}</span>
-                        {% if trends.5.min_read %}
+                        <span>{% if trend_6.is_modified %}{% trans "Updated" %}{% endif %} {{ trend_6.modified|date:"M j" }} {% if not trend_6.this_year %}, {{ trend_6.modified|date:"Y" }}{% endif %}</span>
+                        {% if trend_6.min_read %}
                         <span>&nbsp;&#8226;&nbsp;</span>
-                        {{ trends.5.min_read }} {% trans "min read" %}
+                        {{ trend_6.min_read }} {% trans "min read" %}
                         {% endif %}
                     </div>
                 </div>
