@@ -1,17 +1,22 @@
-<p align="center"><a href="https://welel-noted.site/"><img src="frontend/static/img/noted_logo2.png" alt="header-logo-noted" width="210" border="0"></a></p>
+<p align="center"><a href="https://welel-noted.site/"><img src="https://i.ibb.co/NjHnqXD/logo.png" alt="logo" width="110" border="0"></a></p>
 
-<hr>
-<p>
+<h2 align="center">NoteD.</h2>
+
+<p align="center">Empowering personal growth through shared knowledge.</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/python-v3.8-blue" >
   <img src="https://img.shields.io/badge/django-v4.1-blue">
   <img src="https://img.shields.io/badge/code%20style-black-black">
 </p>
 
-<h3 align="center">The website helps to make, store, search and share notes.</h3>
+<p align="center">
+  <a href="https://welel-noted.site/">
+  <img src="https://i.ibb.co/ZMj9tvr/output-onlinepngtools.png" alt="NoteD."  border="0" />
+  </a>
+</p>
 
 This website helps to create personal notes, share them public, search for notes on a specific information source or interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes, but has a practical application.
-
-<p align="center"><a href="https://welel-noted.site/"><img src="https://i.ibb.co/JxX9Tqm/screely-1671564299536.png" alt="NoteD."  border="0" /></a></p>
 
 **Link on the website:** https://welel-noted.site/
 
@@ -101,15 +106,20 @@ Dark mode / code highlight / code full-screen / mobile version.
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/python/python-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/djangoproject/djangoproject-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-ar21.svg"></code><br/>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/netlifyapp_watercss/netlifyapp_watercss-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/redis/redis-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/linux/linux-ar21.svg"></code></br>
+  <br/>
+  
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/nginx/nginx-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/gunicorn/gunicorn-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/docker/docker-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-ar21.svg"></code><br/>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/linux/linux-ar21.svg"></code>
+  </br>
+  
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/netlifyapp_watercss/netlifyapp_watercss-ar21.svg"></code>
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg"></code>
 </p>
 </br>
 
@@ -141,7 +151,7 @@ python manage.py makemigrate
 ```python
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "BACKEND": "common.cache.RedisDummyCache",
     }
 }
 ```
@@ -159,3 +169,4 @@ python manage.py runserver --settings=core.settings.local
 
 - [Pavel Loginov](https://github.com/welel) (Backend/Frontend)
 - [Eduard Antadze](https://github.com/eantdz) (DevOps)
+
