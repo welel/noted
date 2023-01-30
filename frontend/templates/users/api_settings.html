@@ -1,0 +1,35 @@
+{% extends 'layouts/base_cols.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{% trans "API Credentials" %}{% endblock %}
+
+
+{% block center %}
+<div class="container" style="max-width: 800px;">
+    <h1>{% trans "API Credentials" %}</h1>
+    <h4 class="mt-5">{% trans "User Access Tokens" %}</h4>
+    <p class="text-secondary">Access tokens programmatically authenticate your identity to the Hugging Face Hub, allowing applications to perform specific actions specified by the scope of permissions (read, write, or admin) granted. Visit the documentation to discover how to use them. </p>
+    <div class="container pt-1 pb-3" style="background-color: lightgrey; border-radius: 5px;">
+        <b class="ps-2">Token name</b>
+        <div class="row mt-1 mx-2" style="background-color: white; border-radius: 5px;">
+            <div class="col-10">
+                <p class="p-2 m-0">d9u239d3-23u293djjaldkj2390du-23d203dklkaj</p>
+            </div>
+            <div class="col-1">
+                <p class="p-2 m-0">Hide</p>
+            </div>
+            <div class="col-1">
+                <p class="p-2 m-0"><i class="bi bi-back"></i></p>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-secondary rounded-pill mt-3">New token</button>
+</div>
+{% endblock %}
+
+
+{% block extra_scripts %}
+{% endblock %}

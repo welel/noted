@@ -289,6 +289,10 @@ def delete_account(request):
     return HttpResponseBadRequest()
 
 
+class CredentialsView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "users/api_settings.html"
+
+
 class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
     template_name = "users/profile_settings.html"
 

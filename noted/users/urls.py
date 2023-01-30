@@ -19,6 +19,7 @@ urlpatterns = [
     path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("settings/", views.UpdateUserProfile.as_view(), name="settings"),
+    path("credentials/", views.CredentialsView.as_view(), name="credentials"),
     path("delete-account/", views.delete_account, name="delete_account"),
     path("follow/", views.user_follow, name="follow"),
 ]
