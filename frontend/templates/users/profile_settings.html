@@ -112,6 +112,7 @@
         <img class="rounded-circle mt-4 ava" src="{{ user.profile.avatar.url }}" width="200" height="200" >
         <br>
         <input type="file" name="avatar" accept="image/*" id="id_avatar" class="form-control mt-3">
+        <div class="form-text ps-1 text-danger">{{ profile_form.avatar.errors }}</div>
     </div>
 </form>
 <div>
