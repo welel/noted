@@ -1,18 +1,25 @@
 // Ajax request to add/remove the note to/from bookmarks.
 function bookmarkNote(note_pk) {
-    const bookmarkButton = document.getElementById(`bookmark-btn-${note_pk}`);
-    const bookmarkIcon = bookmarkButton.firstElementChild.firstElementChild;
-    const url = bookmarkButton.getAttribute('url');
+    const bookmarkButtons = document.getElementsByClassName(`bookmark-btn-${note_pk}`);
+    const bookmarkIcons = []
+    for (let i = 0; i < bookmarkButtons.length; i++) {
+        bookmarkIcons.push(bookmarkButtons[i].firstElementChild.firstElementChild);
+    }
+    const url = bookmarkButtons[0].getAttribute('url');
     $.ajax({
         type: 'GET',
         url: url,
         headers: {"X-Requested-With": "XMLHttpRequest"},
         success: (res) => {
             if (res.bookmarked) {
-                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus-fill');
+                for (let i = 0; i < bookmarkIcons.length; i++) {
+                    bookmarkIcons[i].setAttribute('class', 'bi bi-bookmark-plus-fill');
+                }
             }
             if (!res.bookmarked) {
-                bookmarkIcon.setAttribute('class', 'bi bi-bookmark-plus');
+                for (let i = 0; i < bookmarkIcons.length; i++) {
+                    bookmarkIcons[i].setAttribute('class', 'bi bi-bookmark-plus');
+                }
             }
         },
         error: (res) => {

@@ -265,7 +265,7 @@ pre:hover button {
 /* paragraphs */
 #note-body p {
     margin-top: 1.8rem;
-    font-size: 21px;
+    font-size: 20px;
     letter-spacing: 0rem;
     line-height: 32px;
     word-break: break-word;
@@ -298,4 +298,61 @@ pre:hover button {
     margin-top: 1rem;
     border-left: 5px solid darkgrey;
     padding-left: 25px;
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    #note-body p {
+        font-size: 18px !important;
+    }
+    #note-body h1 {
+        font-size: 30px;
+    }
+    #note-body h2 {
+        font-size: 28px;
+    }
+    #note-body h3 {
+        font-size: 26px;
+    }
+    #note-body h4 {
+        font-size: 24px;
+    }
+    #note-body h5 {
+        font-size: 22px;
+    }
+    #note-body h6 {
+        font-size: 20px;
+    }
+    #note-body ul {
+        font-size: 18px !important;
+    } 
+}
+
+@media (max-width: 768px) {
+    #note-body p {
+        font-size: 16px !important;
+    }
+    #note-body h1 {
+        font-size: 29px;
+    }
+    #note-body h2 {
+        font-size: 27px;
+    }
+    #note-body h3 {
+        font-size: 25px;
+    }
+    #note-body h4 {
+        font-size: 23px;
+    }
+    #note-body h5 {
+        font-size: 21px;
+    }
+    #note-body h6 {
+        font-size: 19px;
+    }
+    #note-body ul {
+        font-size: 16px !important;
+    } 
+    #note-body pre {
+        font-size: 14px;
+    }
 }
