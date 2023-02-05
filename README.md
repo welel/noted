@@ -138,15 +138,21 @@ Dark mode / code highlight / code full-screen / mobile version.
    
 3. Create [virtual environment and install requirements](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) from `requirements/local.txt`.
 
-4. Fill `.env.gist` file with required data and rename it to `.env`.
+4. Fill `.env.dist` file with required data and rename it to `.env`.
 
-5. Make migrations and migrate with a custom command.
+5. Make migrations and migrate with a custom command[1] or via Makefile[2].
 
 ```
-python manage.py makemigrate
+python manage.py makemigrate --settings=core.settings.local
 ```
 
-6. [Set up a cache backend.](https://docs.djangoproject.com/en/4.1/topics/cache/) or set a cache backend with following code in `core/settings/local.py`:
+or
+
+```
+make setdb
+```
+
+6. [Set up a cache backend](https://docs.djangoproject.com/en/4.1/topics/cache/) or set a cache backend with following code in `core/settings/local.py`:
 
 ```python
 CACHES = {
