@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "content.apps.ContentConfig",
     "tags.apps.TagsConfig",
     "actions.apps.ActionsConfig",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
