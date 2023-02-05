@@ -16,6 +16,8 @@ from taggit.managers import TaggableManager
 from common.text import is_latin
 from tags.models import UnicodeTaggedItem
 
+from .validators import validate_image
+
 
 class UserManager(BaseUserManager):
     def _generate_username(self, full_name: str) -> str:
@@ -197,6 +199,7 @@ class UserProfile(models.Model):
         _("Profile picture"),
         upload_to=user_avatars_path,
         default=settings.DEFAULT_USER_AVATAR_PATH,
+        validators=[validate_image],
     )
     bio = models.TextField(_("Bio"), max_length=700, blank=True)
     location = models.CharField(_("Location"), max_length=40, blank=True)

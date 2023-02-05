@@ -125,6 +125,11 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 ## 🏗️ Installation
 
+0. Prerequisites:
+
+- `apt-get install wkhtmltopdf` for PDF files generation.
+- `apt-get -y install gettext` for translation.
+
 1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
 
     To use trigrams in PostgreSQL, you will need to install the `pg_trgm`
