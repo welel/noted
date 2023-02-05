@@ -176,6 +176,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
+/* NOTES LIST LAYOUT */
+@media (max-width: 768px) {
+    .note-cover-image {
+        height: 56px !important;
+        width: 80px !important; 
+    }
+}
+
+
 /* BODY TEXT NOTE */
 
 /* code blocks */

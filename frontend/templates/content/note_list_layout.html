@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         {% if note.first_image_url %}
-        <div class="col-md-10 col-12">
+        <div class="col-md-10 col-9">
         {% endif %}
         <div class="row mt-2 mb-0">
             <a href="{{ note.get_absolute_url }}" class="text-decoration-none text-dark fs-4 fs-5 fw-bold">
@@ -33,10 +33,6 @@
         {% if note.source %}
         <div class="row mb-2">
             <div class="col d-flex align-items-center">
-                {% comment %} <a href="#" class="text-decoration-none text-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Save" %}">
-                <span><i class="bi bi-bookmark-plus" style="font-size: 1.3rem;"></i></span>
-                </a>
-                <span>&nbsp;|&nbsp;</span> {% endcomment %}
                 <a href="{% url 'content:source_type' code=note.source.type %}" class="text-decoration-none">
                 <span class="badge text-dark rounded-pill bg-source-{{ note.source.type }} mx-1">{{ note.source.verbose_type }}</span>
                 </a>
@@ -57,8 +53,8 @@
         </div>
         {% if note.first_image_url %}
         </div>
-        <div class="col-2 d-md-block d-none">
-            <img src="{{ note.first_image_url }}" alt=" " style="object-fit: cover;" width="112px;" height="112px;"/>
+        <div class="col-md-2 col-3">
+            <img class="note-cover-image" align="right" src="{{ note.first_image_url }}" alt=" " style="object-fit: cover;" width="112px;" height="112px;"/>
         </div>
         {% endif %}
     </div>
@@ -81,7 +77,6 @@
             <span class="text-secondary p-1 rounded"><i class="bi bi-heart"></i> {{ note.likes.count }} {% trans "likes" %}</span>
             <span class="text-secondary" style="font-size: 12px;">&#8226;</span>
             <span class="text-secondary p-1 rounded"><i class="bi bi-eye"></i> {{ note.views }} {% trans "views" %}</span>
-            {% comment %} <span class="text-secondary p-1 rounded"><i class="bi bi-chat ms-2"></i> 0 {% trans "Comments" %}</span> {% endcomment %}
             </a>
         </div>
     </div>
