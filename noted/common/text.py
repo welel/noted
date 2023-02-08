@@ -18,8 +18,8 @@ def transcript_ru2en(text: str) -> str:
         The translated text in English.
 
     Example:
-    transcript_ru2en("Привет, миръ!")
-    >>> "Privet, mir!"
+    >>> transcript_ru2en("Привет, миръ!")
+    "Privet, mir!"
     """
     trans_dict = str.maketrans(
         "абвгдеёжзийклмнопрстуфхцчшщыэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ",

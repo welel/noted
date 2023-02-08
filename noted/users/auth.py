@@ -1,9 +1,11 @@
 """Authentication, Authorization, Registration functions and utilities.
 
 """
+from typing import NamedTuple, Optional
 import logging
 import smtplib
 
+from django.core.signing import BadSignature, SignatureExpired
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.signing import TimestampSigner
@@ -12,11 +14,16 @@ from django.utils.translation import gettext as _
 
 from common.logging import logit
 
-from .models import ChangeEmailToken, SignupToken
+from .models import AuthToken
 
 
 signer = TimestampSigner()
 logger = logging.getLogger("emails")
+
+
+class Email(NamedTuple):
+    email: Optional[str] = None
+    error: Optional[str] = None
 
 
 @logit
@@ -36,11 +43,12 @@ def send_email(
     """Sends email to an user.
 
     Args:
-        email_to: where to send a letter.
-        email_from: from whom the letter will be sent.
-        subject: a letter subject.
-        text: a plain/text of the letter.
-        html: html version of the letter.
+        email_to: Where to send a letter.
+        email_from: From whom the letter will be sent.
+        subject: A letter subject.
+        text: A plain/text of the letter.
+        html: HTML version of the letter.
+
     Returns:
         Success or failure ending boolean flag.
     """
@@ -68,54 +76,99 @@ def send_email(
         return False
 
 
-@logit
-def send_signup_link(email_to: str) -> bool:
-    """Sends email to client with link for registration.
+def send_email_with_token(
+    email_to: str,
+    type: str,
+    subject: str,
+    text_content_path: str,
+    html_content_path: str,
+) -> bool:
+    """Sends tokenized email to the client.
 
-    Sign client's email to create the token for registration, send an email
-    to the client with token and save the token to the database.
+    Sign a client's email to create the token, send an email to the client
+    with token and save the token to the database.
 
     Args:
-        email_to: a client email.
+        email_to: A client email.
+        type: A type of a token.
+        subject: A email subject.
+        text_content_path: A relative path to the email plain/text template.
+        html_content_path: A relative path to the email plain/html template.
+
     Returns:
         Success or failure ending boolean flag.
     """
     token = signer.sign(email_to)
     context = {"host": get_host(), "token": token}
-    subject = _("Finish creating your account on NoteD.")
     email_from = settings.DEFAULT_FROM_EMAIL
-    text_content = render_to_string("emails/signup_email.txt", context)
-    html_content = render_to_string("emails/signup_email.html", context)
+    text_content = render_to_string(text_content_path, context)
+    html_content = render_to_string(html_content_path, context)
 
     if send_email(
         email_to, email_from, subject, text_content, html=html_content
     ):
-        SignupToken.objects.create(token=token)
-        return True
+        _, created = AuthToken.objects.get_or_create(token=token, type=type)
+        return created
     return False
 
 
 @logit
-def send_change_email_link(email_to: str) -> bool:
-    """Sends email to client with link for changing email.
-
-    Sign client's email to create the token for changing, send an email
-    to the client with token and save the token to the database.
+def send_signup_email(email_to: str) -> bool:
+    """Sends email to client with link for registration.
 
     Args:
         email_to: a client email.
+
     Returns:
         Success or failure ending boolean flag.
     """
-    token = signer.sign(email_to)
-    context = {"host": get_host(), "token": token}
-    if send_email(
+    subject = _("Finish creating your account on NoteD.")
+    text_content_path = "emails/signup_email.txt"
+    html_content_path = "emails/signup_email.html"
+    return send_email_with_token(
         email_to,
-        settings.DEFAULT_FROM_EMAIL,
-        _("Finish changing your email on NoteD."),
-        render_to_string("emails/change_email.txt", context),
-        html=render_to_string("emails/change_email.html", context),
-    ):
-        ChangeEmailToken.objects.create(token=token)
-        return True
-    return False
+        AuthToken.SIGNUP,
+        subject,
+        text_content_path,
+        html_content_path,
+    )
+
+
+@logit
+def send_changeemail_email(email_to: str) -> bool:
+    """Sends email to client with link for changing email.
+
+    Args:
+        email_to: A client email.
+
+    Returns:
+        Success or failure ending boolean flag.
+    """
+    subject = _("Finish changing your email on NoteD.")
+    text_content_path = "emails/change_email.txt"
+    html_content_path = "emails/change_email.html"
+    return send_email_with_token(
+        email_to,
+        AuthToken.CHANGE_EMAIL,
+        subject,
+        text_content_path,
+        html_content_path,
+    )
+
+
+def unsign_email(token: AuthToken) -> Email:
+    """Converts a signed email (token) to the email address using the signer.
+
+    Args:
+        token: a token to unsign.
+
+    Returns:
+        A email named tuple with email and error message.
+    """
+    try:
+        email = signer.unsign(token.token, max_age=7200)
+    except SignatureExpired:
+        return Email(error=_("Signature Expired"))
+    except BadSignature:
+        return Email(error=_("Bad Signature"))
+    return Email(email=email)

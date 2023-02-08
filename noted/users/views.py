@@ -1,12 +1,13 @@
 import json
 import logging
 
+from allauth.account.models import EmailAddress
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.core.signing import BadSignature, SignatureExpired
 from django.core.validators import validate_email as _validate_email
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -15,49 +16,45 @@ from django.utils.translation import gettext as _
 from django.views import generic
 from django.views.decorators.http import require_POST
 
-from allauth.account.models import EmailAddress
-
 from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note
 
-from .auth import send_change_email_link, send_signup_link, signer
+from .auth import send_changeemail_email, send_signup_email, unsign_email
 from .forms import DeleteAccount, SignupForm, UpdateUserForm, UserProfileForm
 from .forms import validate_username as val_username
-from .models import ChangeEmailToken, Following, SignupToken, User
+from .models import AuthToken, Following, User
 
 logger = logging.getLogger(__name__)
 
 
 @log.logit_view
+@require_POST
 @ajax_required
 def send_singup_email(request):
     """Send sing up email to a client with the link to the sign up form."""
-    if request.method == "POST":
-        email = json.load(request).get("email")
-        try:
-            _validate_email(email)
-        except ValidationError:
-            return JsonResponse({"msg": "invalid"}, status=200)
-        else:
-            if send_signup_link(email):
-                return JsonResponse({"msg": "sent"}, status=200)
+    email = json.load(request).get("email")
+    try:
+        _validate_email(email)
+    except ValidationError:
+        return JsonResponse({"msg": "invalid"}, status=200)
+    if send_signup_email(email):
+        return JsonResponse({"msg": "sent"}, status=200)
     return JsonResponse({"msg": "error"}, status=200)
 
 
 @log.logit_view
+@require_POST
 @ajax_required
 def send_change_email(request):
     """Send change email message to a client with the link to the change view."""
-    if request.method == "POST":
-        email = json.load(request).get("email")
-        try:
-            _validate_email(email)
-        except ValidationError:
-            return JsonResponse({"msg": "invalid"}, status=200)
-        else:
-            if send_change_email_link(email):
-                return JsonResponse({"msg": "sent"}, status=200)
+    email = json.load(request).get("email")
+    try:
+        _validate_email(email)
+    except ValidationError:
+        return JsonResponse({"msg": "invalid"}, status=200)
+    if send_changeemail_email(email):
+        return JsonResponse({"msg": "sent"}, status=200)
     return JsonResponse({"msg": "error"}, status=200)
 
 
@@ -70,30 +67,20 @@ def change_email(request, token):
         token (str): a unique token of a client for chaning email.
     """
     try:
-        token = ChangeEmailToken.objects.get(token=token)
-    except ChangeEmailToken.DoesNotExist:
+        token = AuthToken.objects.get(token=token, type=AuthToken.CHANGE_EMAIL)
+    except AuthToken.DoesNotExist:
         messages.add_message(
             request,
             messages.WARNING,
-            _("You already changed email. If you didn't, make request again!"),
+            _(
+                "You already changed email or URL link is invalid. If you"
+                " didn't, make request again!"
+            ),
         )
         return redirect(reverse("content:home"))
 
-    try:
-        email = signer.unsign(token.token, max_age=7200)
-    except SignatureExpired:
-        return render(
-            request,
-            "error.html",
-            {"message": "Signature Expired", "title": "Signature Expired"},
-        )
-    except BadSignature:
-        return render(
-            request,
-            "error.html",
-            {"message": "Bad Signature", "title": "Bad Signature"},
-        )
-    finally:
+    email, error = unsign_email(token)
+    if error:
         logger.warning(
             log.VIEW_LOG_TEMPLATE.format(
                 name=change_email.__name__,
@@ -103,11 +90,19 @@ def change_email(request, token):
             )
             + f"User have problems with changing email signature: token id {token.pk}"
         )
-    if EmailAddress.objetcs.filter(email=email).exists():
+        return render(
+            request,
+            "error.html",
+            {"message": error, "title": error},
+        )
+    ea = EmailAddress
+    # You can't change your email if you signed up via a third paty service.
+    if EmailAddress.objects.filter(email=email).exists():
         messages.add_message(
             request, messages.WARNING, _("You can't change your email.")
         )
         return redirect(reverse("content:home"))
+
     request.user.email = email
     request.user.save()
     messages.add_message(
@@ -167,25 +162,20 @@ def signup(request, token):
     context = {"token": token}
 
     try:
-        token = SignupToken.objects.get(token=token)
-    except SignupToken.DoesNotExist:
+        token = AuthToken.objects.get(token=token, type=AuthToken.SIGNUP)
+    except AuthToken.DoesNotExist:
         messages.add_message(
             request,
             messages.WARNING,
             _(
-                "You already registered. If you didn't register, request \
-             for another link!"
+                "You already registered. If you didn't register, request"
+                " for another link!"
             ),
         )
         return redirect(reverse("content:home"))
 
-    try:
-        email = signer.unsign(token.token, max_age=7200)
-    except SignatureExpired:
-        return render(request, template_name, {"error": "Signature Expired"})
-    except BadSignature:
-        return render(request, template_name, {"error": "Bad Signature"})
-    finally:
+    email, error = unsign_email(token)
+    if error:
         logger.warning(
             log.VIEW_LOG_TEMPLATE.format(
                 name=signup.__name__,
@@ -195,6 +185,7 @@ def signup(request, token):
             )
             + f"User have problems with sign up signature: token id {token.pk}"
         )
+        return render(request, template_name, {"error": error})
 
     if request.method == "GET":
         form = SignupForm()

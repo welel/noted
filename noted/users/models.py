@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 
 from taggit.managers import TaggableManager
 
-from common.text import is_latin
+from common.text import is_latin, transcript_ru2en
 from tags.models import UnicodeTaggedItem
 
 from .validators import validate_image
@@ -35,7 +35,7 @@ class UserManager(BaseUserManager):
         if not full_name:
             raise ValueError("Full name is empty or None.")
         if not is_latin(full_name.replace(" ", "")):
-            full_name = "New User"
+            full_name = transcript_ru2en(full_name)
         username = "@" + full_name.replace(" ", ".").lower()
         if not self.filter(username=username).exists():
             return username
@@ -285,23 +285,20 @@ class Following(models.Model):
         return f"{self.follower} follows {self.followed}"
 
 
-class SignupToken(models.Model):
-    """A token used for authentication and sign up process.
+class AuthToken(models.Model):
+    """A token used for authentication, sign up and change email process.
 
-    Created when sign up email was sent to a client. Deleted when a client
-    registered on the website.
+    Created when sign_up/change_email email was sent to a client.
+    Deleted when a client has done a process.
+
     """
 
+    SIGNUP = "sn"
+    CHANGE_EMAIL = "cm"
+    TYPES = (
+        (SIGNUP, _("Sign Up Token")),
+        (CHANGE_EMAIL, _("Change Email Token")),
+    )
     token = models.CharField(_("Token"), max_length=255, unique=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True)
-
-
-class ChangeEmailToken(models.Model):
-    """A token used for changing email.
-
-    Created when the request on change was created. Deleted when a client
-    pass by the link from email to the website.
-    """
-
-    token = models.CharField(_("Token"), max_length=255, unique=True)
-    created = models.DateTimeField(_("Created"), auto_now_add=True)
+    type = models.CharField(_("Type"), max_length=2, choices=TYPES)
