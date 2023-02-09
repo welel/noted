@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 from django.conf import settings
 from django.contrib.auth.models import (
@@ -304,3 +305,10 @@ class AuthToken(models.Model):
     token = models.CharField(_("Token"), max_length=255, unique=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True)
     type = models.CharField(_("Type"), max_length=2, choices=TYPES)
+
+    @classmethod
+    def get_from_str(
+        cls, token: str, type: Literal["sn", "cm"]
+    ) -> "AuthToken":
+        """Gets a token from database by the token string and the type."""
+        return cls.objects.get(token=token, type=type)

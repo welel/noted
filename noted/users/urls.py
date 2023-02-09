@@ -29,7 +29,7 @@ urlpatterns = [
         views.ChangeEmailView.as_view(),
         name="change_email",
     ),
-    path("signup/<str:token>/", views.signup, name="signup"),
+    path("signup/<str:token>/", views.SignupView.as_view(), name="signup"),
     path("signin/", views.signin, name="signin"),
     path("signout/", views.signout, name="signout"),
     path("settings/", views.UpdateUserProfile.as_view(), name="settings"),

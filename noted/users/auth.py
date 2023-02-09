@@ -1,7 +1,7 @@
 """Authentication, Authorization, Registration functions and utilities.
 
 """
-from typing import NamedTuple, Optional
+from typing import NamedTuple, Optional, Literal
 import logging
 import smtplib
 
@@ -11,6 +11,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.signing import TimestampSigner
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
+
+from common.logging import LogMessage
 
 from .models import AuthToken
 
@@ -41,6 +43,19 @@ logger = logging.getLogger("emails")
 
 
 class Email(NamedTuple):
+    email: Optional[str] = None
+    error: Optional[str] = None
+
+
+class StringToken(NamedTuple):
+    """String representation of a token."""
+
+    token: str
+    type: Literal["su", "cm"]
+
+
+class TokenData(NamedTuple):
+    token: Optional[AuthToken] = None
     email: Optional[str] = None
     error: Optional[str] = None
 
@@ -171,11 +186,19 @@ def send_changeemail_email(email_to: str) -> bool:
     )
 
 
+def get_token(token: StringToken) -> Optional[AuthToken]:
+    """Returns :model:`AuthToken` instance if exists, `None` otherwise."""
+    try:
+        return AuthToken.get_from_str(token=token.token, type=token.type)
+    except AuthToken.DoesNotExist:
+        return None
+
+
 def unsign_email(token: AuthToken) -> Email:
     """Converts a signed email (token) to the email address using the signer.
 
     Args:
-        token: a token to unsign.
+        token: a :model:`AuthToken` instance to unsign.
 
     Returns:
         A email named tuple with email and error message.
@@ -184,6 +207,11 @@ def unsign_email(token: AuthToken) -> Email:
         email = signer.unsign(token.token, max_age=7200)
     except SignatureExpired:
         return Email(error=_("Signature Expired"))
-    except BadSignature:
+    except BadSignature as error:
+        log_message = LogMessage(error, unsign_email, token)
+        logger.error(
+            f"User have problems with changing email signature: token id {token.pk}\n"
+            + str(log_message)
+        )
         return Email(error=_("Bad Signature"))
     return Email(email=email)

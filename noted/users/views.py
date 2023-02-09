@@ -3,8 +3,6 @@ import json
 import logging
 from typing import Callable
 
-from allauth.account.models import EmailAddress
-
 from django.contrib import messages as msg
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -19,8 +17,9 @@ from django.views import generic, View
 from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
 
-from common import logging as log
-from common.logging import LoggerDecorator as logg
+from allauth.account.models import EmailAddress
+
+from common.logging import LoggerDecorator as logit
 from common.decorators import ajax_required
 from content.models import Note
 
@@ -29,10 +28,19 @@ from .auth import (
     send_signup_email,
     unsign_email,
     MESSAGES,
+    StringToken,
+    TokenData,
+    get_token,
 )
-from .forms import DeleteAccount, SignupForm, UpdateUserForm, UserProfileForm
-from .forms import validate_username
+from .forms import (
+    DeleteAccount,
+    SignupForm,
+    UpdateUserForm,
+    UserProfileForm,
+    validate_username,
+)
 from .models import AuthToken, Following, User
+
 
 logger = logging.getLogger(__name__)
 
@@ -48,8 +56,9 @@ class TokenizedEmailView(ABC, View):
         The functions should take one positional argument - email (str),
         which is an addressee.
         """
-        pass
+        ...
 
+    @logit(__name__)
     def post(self, request):
         email = json.load(request).get("email")
         try:
@@ -77,7 +86,7 @@ class ChangeemailEmailView(TokenizedEmailView):
 
 @method_decorator(ajax_required, name="dispatch")
 class EmailExistanceCheckView(View):
-    @logg("view_exception")
+    @logit(__name__)
     def get(self, request):
         """Check if a user with a given email already exists in the database."""
         email = request.GET.get("email")
@@ -90,6 +99,7 @@ class EmailExistanceCheckView(View):
 
 @method_decorator(ajax_required, name="dispatch")
 class UsernameExistanceCheckView(View):
+    @logit(__name__)
     def get(self, request):
         """Check if a user with a given username already exists in the database."""
         username = request.GET.get("username")
@@ -105,42 +115,42 @@ class UsernameExistanceCheckView(View):
         return JsonResponse(response, status=200)
 
 
-class ChangeEmailView(LoginRequiredMixin, View):
+class TokenMixin:
+    token_type: str
+    token_miss_error: str
+
+    def get_token_data(self, token: str) -> TokenData:
+        token = get_token(StringToken(token=token, type=self.token_type))
+        if not token:
+            return TokenData(error=self.token_miss_error)
+
+        email, error = unsign_email(token)
+        if error:
+            return TokenData(error=error)
+
+        return TokenData(token=token, email=email)
+
+
+class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
+    token_type = AuthToken.CHANGE_EMAIL
+    token_miss_error = MESSAGES["ce_token_miss"]
+
+    @logit(__name__)
     def get(self, request, token: str):
         """Handles change email request (works by the link from an email message).
 
         Args:
             token: A unique token of a client for chaning email.
         """
-        try:
-            token = AuthToken.objects.get(
-                token=token, type=AuthToken.CHANGE_EMAIL
-            )
-        except AuthToken.DoesNotExist:
-            msg.add_message(request, msg.WARNING, MESSAGES["ce_token_miss"])
-            return redirect(reverse("content:home"))
-
-        email, error = unsign_email(token)
+        token, email, error = self.get_token_data(token)
         if error:
-            logger.warning(
-                log.VIEW_LOG_TEMPLATE.format(
-                    name=ChangeEmailView.__name__,
-                    user=request.user,
-                    method=request.method,
-                    path=request.path,
-                )
-                + f"User have problems with changing email signature: token id {token.pk}"
-            )
-            return render(
-                request,
-                "error.html",
-                {"message": error, "title": error},
-            )
+            context = {"title": _("Token Error"), "message": error}
+            return render(request, "error.html", context)
 
         # You can't change your email if you signed up via a third paty service.
         if EmailAddress.objects.filter(email=email).exists():
             msg.add_message(request, msg.WARNING, MESSAGES["signed_social"])
-            return redirect(reverse("content:home"))
+            return redirect(reverse("users:settings"))
 
         request.user.email = email
         request.user.save()
@@ -149,44 +159,41 @@ class ChangeEmailView(LoginRequiredMixin, View):
         return redirect(reverse("content:home"))
 
 
-def signup(request, token):
-    """Sign up process.
-
-    Args:
-        token (str): a unique token of a client for registration.
-
-    Validates token.
-    GET: provides the registration form.
-    POST: validates data, creates new user, deletes the token.
-    """
+class SignupView(TokenMixin, View):
     template_name = "users/signup.html"
-    context = {"token": token}
+    token_type = AuthToken.SIGNUP
+    token_miss_error = MESSAGES["su_token_miss"]
 
-    try:
-        token = AuthToken.objects.get(token=token, type=AuthToken.SIGNUP)
-    except AuthToken.DoesNotExist:
-        msg.add_message(request, msg.WARNING, MESSAGES["su_token_miss"])
-        return redirect(reverse("content:home"))
+    @logit(__name__)
+    def get(self, request, token: str):
+        """Validates a sign up token and provides the registration form.
 
-    email, error = unsign_email(token)
-    if error:
-        logger.warning(
-            log.VIEW_LOG_TEMPLATE.format(
-                name=signup.__name__,
-                user=request.user,
-                method=request.method,
-                path=request.path,
-            )
-            + f"User have problems with sign up signature: token id {token.pk}"
-        )
-        return render(request, template_name, {"error": error})
+        Args:
+            token: A unique token of a client for registration.
+        """
+        context = {"token": token}
+        __, __, error = self.get_token_data(token)
+        if error:
+            context = {"title": _("Token Error"), "message": error}
+            return render(request, "error.html", context)
 
-    if request.method == "GET":
         form = SignupForm()
         context["form"] = form
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
-    if request.method == "POST":
+    @logit(__name__)
+    def post(self, request, token: str):
+        """Validates data, creates new user, deletes the token.
+
+        Args:
+            token: A unique token of a client for registration.
+        """
+        context = {"token": token}
+        token, email, error = self.get_token_data(token)
+        if error:
+            context = {"title": _("Token Error"), "message": error}
+            return render(request, "error.html", context)
+
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -194,17 +201,16 @@ def signup(request, token):
             user.is_active = True
             user.save()
             token.delete()
-            if user:
-                login(
-                    request,
-                    user,
-                    backend="django.contrib.auth.backends.ModelBackend",
-                )
+            login(
+                request,
+                user,
+                backend="django.contrib.auth.backends.ModelBackend",
+            )
             logger.info("New user sign up:" + str(user))
             return redirect(reverse("content:home"))
         else:
             context["form"] = form
-            return render(request, template_name, context)
+            return render(request, self.template_name, context)
 
 
 @ajax_required
