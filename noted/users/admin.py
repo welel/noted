@@ -43,15 +43,9 @@ class UserAdmin(BaseUserAdmin):
 
     list_display = ("email", "full_name", "username", "last_login")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
-    search_fields = (
-        "email",
-        "full_name",
-    )
+    search_fields = ("email", "full_name")
     ordering = ("email",)
-    filter_horizontal = (
-        "groups",
-        "user_permissions",
-    )
+    filter_horizontal = ("groups", "user_permissions")
 
 
 class UserProfileAdmin(admin.ModelAdmin):

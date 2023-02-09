@@ -7,8 +7,6 @@ from django.urls import include, path
 from django.views.generic.base import TemplateView
 from django.views.i18n import JavaScriptCatalog
 
-import notifications.urls
-
 from content.sitemaps import NoteSitemap, SourceSitemap
 
 
@@ -24,10 +22,6 @@ urlpatterns = i18n_patterns(
     path("tags/", include(("tags.urls", "tags"), namespace="tags")),
     path(
         "actions/", include(("actions.urls", "actions"), namespace="actions")
-    ),
-    path(
-        "inbox/notifications/",
-        include(notifications.urls, namespace="notifications"),
     ),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path(

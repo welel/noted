@@ -41,7 +41,6 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEST_RUNNER = "common.test_runner.NotedDiscoverRunner"
 TEST_MODE = False
 
 SITE_ID = 1
@@ -81,8 +80,6 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
-    # TODO: check is it handles via Nginx
-    # "common.middleware.WwwRedirectMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -204,11 +201,6 @@ LOGGING = {
             filename=PROJECT_DIR.joinpath("logs/exceptions.log"),
             level="WARNING",
         ),
-        "file_views_exceptions": dict(
-            FILE_HANDLER,
-            filename=PROJECT_DIR.joinpath("logs/views_exceptions.log"),
-            level="WARNING",
-        ),
         "file_emails": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/emails.log"),
@@ -217,11 +209,6 @@ LOGGING = {
         "file_markdown": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/markdown.log"),
-            level="INFO",
-        ),
-        "file_content_views": dict(
-            FILE_HANDLER,
-            filename=PROJECT_DIR.joinpath("logs/content_views.log"),
             level="INFO",
         ),
         "file_users_views": dict(
@@ -244,20 +231,12 @@ LOGGING = {
             "handlers": ["file_exceptions", "mail_admins"],
             "level": "WARNING",
         },
-        "views.exceptions": {
-            "handlers": ["file_views_exceptions", "mail_admins"],
-            "level": "WARNING",
-        },
         "emails": {
             "handlers": ["file_emails", "mail_admins"],
             "level": "INFO",
         },
         "markdown": {
             "handlers": ["file_markdown", "mail_admins"],
-            "level": "INFO",
-        },
-        "content.views.note": {
-            "handlers": ["file_content_views", "mail_admins"],
             "level": "INFO",
         },
         "users.views": {

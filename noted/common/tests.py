@@ -5,7 +5,8 @@ from django.test import TestCase
 from content.models import Source
 from users.models import User
 
-from . import ajax_required, generate_unique_slug
+from .decorators import ajax_required
+from .text import generate_unique_slug
 
 
 class Tests(TestCase):

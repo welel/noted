@@ -4,8 +4,8 @@ from . import views
 
 
 urlpatterns = [
-    path("welcome/", views.WelcomeNoteList.as_view(), name="welcome"),
     path("", views.PublicNoteList.as_view(), name="home"),
+    path("welcome/", views.WelcomeNoteList.as_view(), name="welcome"),
     path("note/add/", views.NoteCreateView.as_view(), name="create_note"),
     path(
         "note/edit/<str:slug>/",

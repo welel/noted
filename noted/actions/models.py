@@ -16,12 +16,13 @@ class ActionManager(models.Manager):
         self, actor, verb: str, target=None, notify: bool = False
     ) -> bool:
         """A create instance shortcut function for :model:`Action`.
+
         Doesn't create similar actions within a minute.
 
         Args:
-            actor: initiactor .
-            verb: describing the action.
-            target: any model instance to which the action is directed.
+            actor: Initiactor of the action.
+            verb: Describing the action.
+            target: Any model instance to which the action is directed.
             notify: if true creates `Notification` of the action.
 
         Returns:
@@ -29,7 +30,7 @@ class ActionManager(models.Manager):
         """
         if settings.TEST_MODE:
             return False
-        # check for any similar action made in the last minutes
+        # Check for any similar action made in the last minutes
         last_minute = timezone.now() - datetime.timedelta(seconds=60)
         actor_ct = ContentType.objects.get_for_model(actor)
         similar_actions = self.filter(
@@ -56,14 +57,14 @@ class Action(models.Model):
     """Represents an action that a user can take in the website.
 
     **Fields**
-        actor: an object that initiacte an action.
-        actor_ct: a content type of the actor.
-        actor_id: an object id of the actor.
-        verb: an action name.
-        created: datetime of an action.
-        target_ct: an object model on which an action is directed.
-        target_id: an object id on which an action is directed.
-        target: an object on which an action is directed.
+        actor: An object that initiacte an action.
+        actor_ct: A content type of the actor.
+        actor_id: An object id of the actor.
+        verb: An action name.
+        created: Datetime of an action.
+        target_ct: An object model on which an action is directed.
+        target_id: An object id on which an action is directed.
+        target: An object on which an action is directed.
 
     """
 

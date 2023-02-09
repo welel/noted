@@ -22,3 +22,6 @@ clear: clear_migrations clear_pycache
 createsuperuser: env/bin/python noted/core/settings/local.py noted/manage.py
 	./env/bin/python noted/manage.py createsuperuser --settings=core.settings.local
 
+test: env/bin/python noted/core/settings/local.py noted/manage.py
+	./env/bin/python noted/manage.py test actions common content core tags users --settings=core.settings.test
+

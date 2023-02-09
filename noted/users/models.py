@@ -26,9 +26,11 @@ class UserManager(BaseUserManager):
         Generate unique username for the database based on `full_name` field.
 
         Args:
-            full_nmae: a full name of a user.
+            full_nmae: A full name of a user.
+
         Returns:
             The generated username.
+
         Raises:
             ValueError: if `full_name` is empty string or None.
         """
@@ -94,10 +96,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     """The main model for an account of a client.
 
     Fields:
-        email: creation of a user happens after email authentication, so the
+        email: Creation of a user happens after email authentication, so the
             `email` field is unique for users.
-        full_name: store full name of a user.
-        username: generates based on `first_name`.
+        full_name: Store full name of a user.
+        username: Generates based on `first_name`.
         ...
     """
 
@@ -184,8 +186,8 @@ class UserProfile(models.Model):
     """Additional fields for the :models:`User` model.
 
     Fields:
-        location: simple text to indicate user's location (country, city, etc.)
-                  at the discretion of the user.
+        location: Simple text to indicate user's location (country, city, etc.)
+            at the discretion of the user.
         socials: JSON with links to user's social media ({"social_name":"link"})
     """
 
@@ -251,16 +253,16 @@ class FollowingManager(models.Manager):
     def get_following(self, user: User) -> list:
         """Return list of users that follow a required user.
 
-        Attrs:
-            user: a required user.
+        Args:
+            user: A required user.
         """
         return [following.followed for following in self.filter(follower=user)]
 
     def get_follower(self, user: User) -> list:
         """
 
-        Attrs:
-            user: a required user.
+        Args:
+            user: A required user.
         """
         return [following.follower for following in self.filter(followed=user)]
 

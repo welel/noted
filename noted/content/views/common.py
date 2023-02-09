@@ -1,4 +1,4 @@
-import logging as log
+import logging
 
 from django.contrib.postgres.search import SearchVector, TrigramSimilarity
 from django.shortcuts import render
@@ -7,21 +7,19 @@ from django.views.decorators.cache import cache_page
 
 from taggit.models import Tag
 
-from common.logging import logit_view
 from content.models import Note, Source
 from users.models import User
 
 
-logger = log.getLogger("django.request")
+logger = logging.getLogger("django.request")
 
 
-@logit_view
 @cache_page(60 * 3)
 def search(request, type: str):
     """Search by notes, sources, tags, users.
 
-    Attrs:
-        type: a type of searching (notes/sources/tags/people).
+    Args:
+        type: A type of searching (notes/sources/tags/people).
     """
     query = request.GET.get("query")
     context = {"query": query, "type": type}

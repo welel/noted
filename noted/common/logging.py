@@ -3,116 +3,104 @@
 import functools
 import logging
 import traceback
+from typing import Callable, Dict, Type, Any
 
 from django.db import transaction
+from django.http import HttpRequest
 from django.views import View
+from django.views.generic.base import View
 
 
-VIEW_LOG_TEMPLATE = "{name}\n{user}\n{method}\n{path}\n"
-EXCEPTION_TEMPLATE = "{name}\n{msg}\n{args}\n{kwargs}\n{traceback}\n"
-
-logger = logging.getLogger("exceptions")
-view_logger = logging.getLogger("views.exceptions")
+request_logger = logging.getLogger("django.request")
 
 
-def logit(fn):
-    """Logging decorator for general functions."""
+class LogMessage:
+    def __init__(
+        self,
+        error: Type[Exception],
+        func: Callable,
+        *args,
+        class_view: Type[View] = None,
+        request: Type[HttpRequest] = None,
+        **kwargs,
+    ):
+        self.error = error
+        self.function = func
+        self.request = request
+        self.class_view = class_view
+        self.args = args
+        self.kwargs = kwargs
 
-    @functools.wraps(fn)
-    def wrapper(*args, **kwargs):
-        try:
-            return fn(*args, **kwargs)
-        except Exception as error:
-            logger.error(
-                EXCEPTION_TEMPLATE.format(
-                    name=fn.__name__,
-                    msg=str(error),
-                    args=str(args),
-                    kwargs=(kwargs),
-                    traceback=traceback.format_exc(),
+    def __str__(self) -> str:
+        message = []
+
+        if self.class_view:
+            message.append(f"Class view name: {self.class_view.__class__}\n")
+
+        if self.request:
+            message.append(f"Request: {repr(self.request)}\n")
+
+        message.append(
+            "Function name: {func_name}\nError message: {error_message}\n"
+            "Args: {args}\nKwargs: {kwargs}\nTraceback: \n{traceback}\n".format(
+                func_name=self.function.__name__,
+                error_message=str(self.error),
+                args=str(self.args),
+                kwargs=str(self.kwargs),
+                traceback=traceback.format_exc(),
+            )
+        )
+        return "".join(message)
+
+
+class LoggerDecorator:
+    loggers: Dict[str, logging.Logger]
+
+    def __init__(self, logger_name: str):
+        self.logger = logging.getLogger(logger_name)
+
+    def __call__(self, func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception as error:
+                log_message = self.get_log_message(
+                    error, func, *args, **kwargs
+                )
+                self.logger.error(log_message)
+                raise
+
+        return wrapper
+
+    def get_log_message(
+        self, error: Exception, func: Callable, *args, **kwargs
+    ) -> str:
+        # If Class Based View
+        if (
+            len(args) >= 2
+            and issubclass(type(args[0]), View)
+            and issubclass(type(args[1]), HttpRequest)
+        ):
+            return str(
+                LogMessage(
+                    error,
+                    func,
+                    *args,
+                    class_view=args[0],
+                    request=args[1],
+                    **kwargs,
                 )
             )
-            raise
-
-    return wrapper
-
-
-def logit_view(fn):
-    """Logging decorator for a view function."""
-
-    @functools.wraps(fn)
-    def wrapper(request, *args, **kwargs):
-        try:
-            return fn(request, *args, **kwargs)
-        except Exception as error:
-            logger.error(
-                VIEW_LOG_TEMPLATE.format(
-                    name=fn.__name__,
-                    user=request.user,
-                    method=request.method,
-                    path=request.path,
-                )
-                + EXCEPTION_TEMPLATE.format(
-                    name=fn.__name__,
-                    msg=str(error),
-                    args=str(args),
-                    kwargs=(kwargs),
-                    traceback=traceback.format_exc(),
-                )
+        # If Function Based View
+        elif len(args) >= 1 and isinstance(args[0], HttpRequest):
+            return str(
+                LogMessage(error, func, *args, request=args[0], **kwargs)
             )
-            raise
-
-    return wrapper
-
-
-def logit_class_method(fn):
-    """Logging decorator for general class methods."""
-
-    @functools.wraps(fn)
-    def wrapper(instance, *args, **kwargs):
-        try:
-            return fn(instance, *args, **kwargs)
-        except Exception as error:
-            logger.error(
-                EXCEPTION_TEMPLATE.format(
-                    name=str(instance) + ": " + fn.__name__,
-                    msg=str(error),
-                    args=str(args),
-                    kwargs=(kwargs),
-                    traceback=traceback.format_exc(),
-                )
+        else:
+            return str(
+                LogMessage(error, func, *args, request=args[0], **kwargs)
             )
-            raise
-
-    return wrapper
-
-
-def logit_generic_view_request(fn):
-    """Logging decorator for a generic view function."""
-
-    @functools.wraps(fn)
-    def wrapper(view, request, *args, **kwargs):
-        try:
-            return fn(view, request, *args, **kwargs)
-        except Exception as error:
-            logger.error(
-                VIEW_LOG_TEMPLATE.format(
-                    name=str(view) + ": " + fn.__name__,
-                    user=request.user,
-                    method=request.method,
-                    path=request.path,
-                )
-                + EXCEPTION_TEMPLATE.format(
-                    name=str(view) + ": " + fn.__name__,
-                    msg=str(error),
-                    args=str(args),
-                    kwargs=(kwargs),
-                    traceback=traceback.format_exc(),
-                )
-            )
-            raise
-
-    return wrapper
 
 
 class LoggingView(View):
@@ -123,19 +111,13 @@ class LoggingView(View):
             with transaction.atomic():
                 return super().dispatch(request, *args, **kwargs)
         except Exception as error:
-            view_logger.error(
-                VIEW_LOG_TEMPLATE.format(
-                    name=str(self.__class__),
-                    user=request.user,
-                    method=request.method,
-                    path=request.path,
-                )
-                + EXCEPTION_TEMPLATE.format(
-                    name=str(self.__class__),
-                    msg=str(error),
-                    args=str(args),
-                    kwargs=(kwargs),
-                    traceback=traceback.format_exc(),
-                )
+            log_message = LogMessage(
+                error,
+                self.dispatch,
+                *args,
+                class_view=self,
+                request=request,
+                **kwargs,
             )
+            request_logger.error(str(log_message))
             raise

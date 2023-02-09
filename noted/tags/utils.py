@@ -1,11 +1,8 @@
 from typing import List
 
-from common.logging import logit
 
-
-@logit
 def custom_tag_string(tag_string: str) -> List[str]:
-    """Parses tag string to list of tags.
+    """Parses string with tags to list of tags.
 
     Args:
         tag_string: A string of tags separated by commas or spaces.

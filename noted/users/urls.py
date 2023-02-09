@@ -4,16 +4,30 @@ from . import views
 
 
 urlpatterns = [
-    path("signup-request/", views.send_singup_email, name="signup_request"),
+    path(
+        "signup-request/",
+        views.SignupEmailView.as_view(),
+        name="signup_request",
+    ),
     path(
         "change-email-request/",
-        views.send_change_email,
+        views.ChangeemailEmailView.as_view(),
         name="change_email_request",
     ),
-    path("change-email/<str:token>/", views.change_email, name="change_email"),
-    path("validate-email/", views.validate_email, name="validate_email"),
     path(
-        "validate-username/", views.validate_username, name="validate_username"
+        "validate-email/",
+        views.EmailExistanceCheckView.as_view(),
+        name="validate_email",
+    ),
+    path(
+        "validate-username/",
+        views.UsernameExistanceCheckView.as_view(),
+        name="validate_username",
+    ),
+    path(
+        "change-email/<str:token>/",
+        views.ChangeEmailView.as_view(),
+        name="change_email",
     ),
     path("signup/<str:token>/", views.signup, name="signup"),
     path("signin/", views.signin, name="signin"),

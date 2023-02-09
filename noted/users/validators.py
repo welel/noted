@@ -20,6 +20,8 @@ def validate_username(username: str):
     Max length = 150
     Username starts with '@' sign.
     """
+    if not isinstance(username, str):
+        raise ValidationError(_("Bad username type."))
     if 5 > len(username) or len(username) > 150:
         raise ValidationError(
             _(

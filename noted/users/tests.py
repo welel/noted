@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
 
-from .models import SignupToken, User, UserManager
+from .models import AuthToken, User, UserManager
 
 
 class URLTests(TestCase):
@@ -47,7 +47,7 @@ class URLTests(TestCase):
     def test_signup_good_token(self):
         signer = TimestampSigner()
         stoken = signer.sign("some@email.qq")
-        token = SignupToken.objects.create(token=stoken)
+        token = AuthToken.objects.create(token=stoken, type=AuthToken.SIGNUP)
         response = self.ajax_client.get(f"/en/users/signup/{token.token}/")
         self.assertEqual(response.context.get("error"), None)
         self.assertEqual(response.status_code, 200)
@@ -156,7 +156,7 @@ class UserModelTest(TestCase):
     def test_username_generator_slav(self):
         self.assertEqual(
             User.objects._generate_username("Лев Толстой"),
-            "@new.user",
+            "@lev.tolstoi",
         )
 
     def test_email_exists(self):

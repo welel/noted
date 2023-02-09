@@ -16,7 +16,7 @@ def cache_queryset(time: int) -> QuerySet:
     Caches result a function by a function name.
 
     Args:
-        time: time in seconds for caching result.
+        time: Time in seconds for caching result.
     """
 
     def decorator(fn):

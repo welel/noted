@@ -4,10 +4,7 @@ import uuid
 from django.core.exceptions import FieldDoesNotExist
 from django.utils.text import slugify
 
-from .logging import logit
 
-
-@logit
 def transcript_ru2en(text: str) -> str:
     """Makes phonetic transcription of Russian text to English.
 
@@ -29,7 +26,6 @@ def transcript_ru2en(text: str) -> str:
     return text.translate(trans_dict)
 
 
-@logit
 def generate_unique_slug(
     instance,
     from_field: str = "title",
@@ -42,10 +38,11 @@ def generate_unique_slug(
     at the end if slug isn't unique for the databse.
 
     Args:
-        instance: a model instance.
-        from_field: the name of a field where take a the value for generating.
-        for_field: a name of slug field, for the uniqueness check.
-        latin: if True translates Russian letters to Latin.
+        instance: A model instance.
+        from_field: The name of a field where take a the value for generating.
+        for_field: A name of slug field, for the uniqueness check.
+        latin: If True translates Russian letters to Latin.
+
     Returns:
         A generated unique slug.
     """
@@ -74,7 +71,6 @@ def generate_unique_slug(
     return slug
 
 
-@logit
 def is_latin(word: str) -> bool:
     """Checks if a word is written in Latin script.
 
@@ -84,4 +80,4 @@ def is_latin(word: str) -> bool:
     Returns:
         True if the word is written in Latin script, False otherwise.
     """
-    return all(["LATIN" in ud.name(c) for c in word])
+    return all(["LATIN" in ud.name(char, "") for char in word])

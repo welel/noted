@@ -10,7 +10,8 @@ from taggit.models import Tag
 
 from actions import base as act
 from actions.models import Action
-from common import ajax_required, logging as log
+from common import logging as log
+from common.decorators import ajax_required
 from content.models import Note
 
 
@@ -20,7 +21,7 @@ class TagList(log.LoggingView, ListView):
     It displays tags, each tag has a number of its' notes.
 
     **Context**
-        tags: a queryset of all :model:`taggit.Tag` instances.
+        tags: A queryset of all :model:`taggit.Tag` instances.
 
     **Template**
         :template:`frontend/templates/tags/list.html`
@@ -31,7 +32,6 @@ class TagList(log.LoggingView, ListView):
     context_object_name = "tags"
     template_name = "tags/list.html"
 
-    @log.logit_class_method
     def get_queryset(self):
         queryset = Tag.objects.annotate(
             num_times=Count("notes", filter=Q(notes__private=False))
@@ -43,8 +43,8 @@ class TagDetails(log.LoggingView, DetailView):
     """Tag details with a list of notes of the current tag.
 
     **Context**
-        sidenotes: suggested notes on a sidebar.
-        notes: a queryset of notes of the current tag.
+        sidenotes: Suggested notes on a sidebar.
+        notes: A queryset of notes of the current tag.
 
     **Template**
         :template:`frontend/templates/tags/tag_details.html`
@@ -54,7 +54,6 @@ class TagDetails(log.LoggingView, DetailView):
     model = Tag
     template_name = "tags/tag_details.html"
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["notes"] = Note.objects.public().filter(
@@ -64,7 +63,6 @@ class TagDetails(log.LoggingView, DetailView):
         return context
 
 
-@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required

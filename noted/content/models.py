@@ -9,15 +9,8 @@ import io
 from datetime import date
 from typing import Optional
 
-from django.contrib.postgres.search import (
-    SearchHeadline,
-    SearchQuery,
-    SearchRank,
-    SearchVector,
-    TrigramSimilarity,
-)
 from django.db import models
-from django.db.models import Count, Q, QuerySet
+from django.db.models import Count, QuerySet
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -25,22 +18,12 @@ import pdfkit
 from bs4 import BeautifulSoup
 from taggit.managers import TaggableManager
 
-from common import generate_unique_slug
+from common.text import generate_unique_slug
 from tags.models import UnicodeTaggedItem
 from users.models import User
 
 from .fields import MarkdownField, RenderedMarkdownField
-
-
-class SourceManager(models.Manager):
-    def search(self, query: str) -> QuerySet:
-        """Search source by `title` and return results."""
-        similarity = TrigramSimilarity("title", query)
-        return (
-            self.annotate(similarity=similarity)
-            .filter(similarity__gte=0.1)
-            .order_by("-similarity")
-        )
+from .managers import SourceManager, NoteManager
 
 
 class Source(models.Model):
@@ -50,11 +33,11 @@ class Source(models.Model):
     Sources relates to notes. One note has one source.
 
     **Fields**
-        type: a source type (book, article, video etc.).
-        title: a source name.
+        type: A source type (book, article, video etc.).
+        title: A source name.
         link: URL to the source.
-        description: a description of the source.
-        slug: an unique identifier for URL.
+        description: A description of the source.
+        slug: An unique identifier for URL.
 
     """
 
@@ -114,116 +97,29 @@ class Source(models.Model):
         return reverse("content:source", args=[self.slug])
 
 
-class NoteManager(models.Manager):
-    def optimize(self):
-        return self.prefetch_related(
-            "author__profile",
-            "source",
-            "fork",
-            "tags",
-            "bookmarks",
-            "likes",
-        )
-
-    def personal(self, user: User) -> QuerySet:
-        """Query notes for a specific user (for private list).
-
-        Args:
-            user: an author of notes.
-        Returns:
-            Private notes for a specific user.
-        """
-        return self.filter(author=user)
-
-    def profile(self, user: User) -> QuerySet:
-        """Query notes for a specific user (for public list).
-
-        Args:
-            user: an author of notes.
-        Returns:
-            Public notes for a specific user.
-        """
-        return self.filter(author=user, draft=False, anonymous=False)
-
-    def public(self) -> QuerySet:
-        """Query public notes available for everyone."""
-        return self.optimize().filter(draft=False)
-
-    def by_created(self) -> QuerySet:
-        """Query notes ordered by creation time (latest on the top)."""
-        return self.optimize().order_by("-created")
-
-    def with_source_type(self, type_code: str) -> QuerySet:
-        """Query public notes with a specific source type."""
-        return self.filter(draft=False, source__type=type_code)
-
-    def popular(self) -> QuerySet:
-        """Query public notes ordered by number of views."""
-        return self.optimize().filter(draft=False).order_by("-views")
-
-    def most_liked(self) -> QuerySet:
-        """Query public notes ordered by number of likes."""
-        return (
-            self.optimize()
-            .filter(draft=False)
-            .annotate(count=Count("likes"))
-            .order_by("-count")
-        )
-
-    def tags_in(self, tag_names: list) -> QuerySet:
-        """Query public notes that have tags from `tag_names` list."""
-        return (
-            self.optimize()
-            .filter(draft=False, tags__name__in=tag_names)
-            .distinct()
-        )
-
-    def search(self, query: str) -> QuerySet:
-        """Search public notes by `title`, `summary`, `body_raw`."""
-        search_vector = (
-            SearchVector("title", weight="A")
-            + SearchVector("summary", weight="A")
-            + SearchVector("body_raw", weight="B")
-        )
-        search_query = SearchQuery(query)
-        headline = SearchHeadline(
-            "title", search_query, start_sel="<mark>", stop_sel="</mark>"
-        )
-        return (
-            self.filter(draft=False)
-            .annotate(
-                rank=SearchRank(search_vector, search_query),
-                similarity=TrigramSimilarity("title", query),
-                headline=headline,
-            )
-            .filter(Q(rank__gte=0.2) | Q(similarity__gt=0.1))
-            .order_by("-rank")
-        )
-
-
 class Note(models.Model):
     """Markdown text with a list of attributes.
 
     **Fields**
-        title: a title of a note.
-        slug: a slug of a note for URL.
-        author: a user foreign key, author of a note.
-        source: a link to a :model:`Source`.
-        body_raw: a raw Markdown text from a form.
+        title: A title of a note.
+        slug: A slug of a note for URL.
+        author: A user foreign key, author of a note.
+        source: A link to a :model:`Source`.
+        body_raw: A raw Markdown text from a form.
         body_html: HTML representation of `body_raw`, it is generated
                    based on `body_raw` via GitHub API.
-        summary: a short summary on a text of a note.
-        draft: a boolean flag makes a note private (hides from other users).
-        anonymous: a boolean flag hides an author of a note.
-        pin: a boolean flag, gives functionality to pin notes.
-        created: publish datetime of a note.
-        modified: update datetime of a note.
-        views: a counter of visit number.
-        fork: a link to :model:`Note` if a note forked from another.
-        likes: a m2m field for note likes.
-        bookmarked: a m2m field for bookmarks for user.
-        tags: tags of a note (max tags - 3, max length - 24 symbols).
-        lang: language body text code (detects via `polyglot`)
+        summary: A short summary on a text of a note.
+        draft: A boolean flag makes a note private (hides from other users).
+        anonymous: A boolean flag hides an author of a note.
+        pin: A boolean flag, gives functionality to pin notes.
+        created: Publish datetime of a note.
+        modified: Update datetime of a note.
+        views: A counter of visit number.
+        fork: A link to :model:`Note` if a note forked from another.
+        likes: A m2m field for note likes.
+        bookmarked: A m2m field for bookmarks for user.
+        tags: Tags of a note (max tags - 3, max length - 24 symbols).
+        lang: Language body text code (detects via `polyglot`)
 
     """
 
@@ -377,7 +273,7 @@ class Note(models.Model):
         """Generates a file of the note.
 
         Attrs:
-            filetype: a file extension (options: `md`, `html`, `pdf`).
+            filetype: A file extension (options: `md`, `html`, `pdf`).
         Returns:
             A generated file if success or `None`.
         """
@@ -395,15 +291,15 @@ class Note(models.Model):
         """Generates file and metadata for a HTTP response.
 
         Data Structure (dict keys, all keys are str):
-            file (io.BytesIO): a generated file.
-            filename (str): a filename generated based on `slug`.
-            content_type (str): the MIME type of a file.
+            file (io.BytesIO): A generated file.
+            filename (str): A filename generated based on `slug`.
+            content_type (str): The MIME type of a file.
 
         Attrs:
-            filetype: a file extension (options: `md`, `html`, `pdf`).
+            filetype: A file extension (options: `md`, `html`, `pdf`).
+
         Returns:
             A dict with file and metadata if success or `None`.
-
         """
         filename = self.slug[:20] + "." + filetype
         file = self.generate_file(filetype=filetype)

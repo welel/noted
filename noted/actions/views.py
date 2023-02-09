@@ -9,7 +9,7 @@ from notifications import settings as notification_settings
 from notifications.models import Notification
 from notifications.utils import slug2id
 
-from common import ajax_required, logging as log
+from common.decorators import ajax_required
 
 
 @method_decorator(login_required, name="dispatch")
@@ -27,7 +27,6 @@ class NotificationList(ListView):
         )
 
 
-@log.logit_view
 @require_GET
 @login_required
 @ajax_required
@@ -45,7 +44,6 @@ def mark_as_read(request):
     return JsonResponse({"read": True})
 
 
-@log.logit_view
 @require_GET
 @login_required
 @ajax_required

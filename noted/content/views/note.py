@@ -42,7 +42,8 @@ from taggit.models import Tag
 
 from actions import base as act
 from actions.models import Action
-from common import ajax_required, logging as log
+from common import logging as log
+from common.decorators import ajax_required
 from common.cache import cache_queryset
 from content.forms import NoteForm
 from content.models import Note, Source
@@ -59,14 +60,14 @@ class NoteList(log.LoggingView, ListView):
     Uses as a superclass for other specific notes listings.
 
     Notes order options (provides through a GET param `order`):
-        `-datetime_created`: from newest to oldest by publish date.
-        `views`: from the most viewed to the least.
-        `likes`: from the most liked to the least.
+        `-datetime_created`: From newest to oldest by publish date.
+        `views`: From the most viewed to the least.
+        `likes`: From the most liked to the least.
 
     **Context**
-        notes: a queryset of :model:`notes.Note` instances.
-        paginator: a paginator for notes list.
-        page_obj: a pagination navigator.
+        notes: A queryset of :model:`notes.Note` instances.
+        paginator: A paginator for notes list.
+        page_obj: A pagination navigator.
 
     """
 
@@ -80,17 +81,14 @@ class NoteList(log.LoggingView, ListView):
     context_object_name = "notes"
     paginate_by = 100
 
-    @log.logit_class_method
     def get_ordering(self) -> str:
         """Gets a `order` option from GET params and returns it."""
         return self.request.GET.get("order", default="-datetime_created")
 
-    @log.logit_class_method
     def get_ordered_queryset(self) -> QuerySet:
         """Orders a queryset by a order option."""
         return self.SORTING_FUNCS_MAPPING[self.get_ordering()]()
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
@@ -100,14 +98,14 @@ class NoteList(log.LoggingView, ListView):
         return context
 
 
-# @method_decorator(cache_page(60 * 60 * 6), name="dispatch")
+@method_decorator(cache_page(60 * 60), name="dispatch")
 class WelcomeNoteList(NoteList):
     """Welcome page for unlogged users.
 
     **Context**
-        source_types: all source types of `Source`.
-        trends: top 6 popular notes (by views).
-        tags: top 7 tags (by number of notes).
+        source_types: All source types of `Source`.
+        trends: Top 6 popular notes (by views).
+        tags: Top 7 tags (by number of notes).
 
     **Template**
         :template:`frontend/templates/welcome.html`
@@ -116,18 +114,15 @@ class WelcomeNoteList(NoteList):
 
     template_name = "welcome.html"
 
-    @log.logit_generic_view_request
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("content:home")
         else:
             return super().get(request, *args, **kwargs)
 
-    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -138,9 +133,6 @@ class WelcomeNoteList(NoteList):
         return context
 
 
-# @method_decorator(
-#     cache_page(60 * 60 * 24, key_prefix="PublicNoteList"), name="dispatch"
-# )
 class PublicNoteList(LoginRequiredMixin, NoteList):
     """Display a list of :model:`Note` available for every one.
 
@@ -148,11 +140,11 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     except drafts.
 
     **Context**
-        source_types: all source types.
-        sidenotes: a recommended note list.
-        tags: top 7 tags (by number of notes).
-        tags_notes: a note list with tags to which the user is subscribed.
-        following_notes: a note list of users to which the user is subscribed.
+        source_types: All source types.
+        sidenotes: A recommended note list.
+        tags: Top 7 tags (by number of notes).
+        tags_notes: A note list with tags to which the user is subscribed.
+        following_notes: A note list of users to which the user is subscribed.
 
     **Template**
         :template:`frontend/templates/index.html`
@@ -163,11 +155,9 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     login_url = "content:welcome"
     redirect_field_name = "content:home"
 
-    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
@@ -193,11 +183,11 @@ class ProfileNoteList(NoteList):
     It displays the profile page of the specifiec user (only public notes).
 
     **Context**
-        user: the selected user.
-        pins: user's pins (note list).
-        sidenotes: a recommended note list.
-        followers: user's followers.
-        total_user_likes: total like number of all user's notes.
+        user: The selected user.
+        pins: User's pins (note list).
+        sidenotes: A recommended note list.
+        followers: User's followers.
+        total_user_likes:Total like number of all user's notes.
 
     **Template**
         :template:`frontend/templates/content/note_list_profile.html`
@@ -206,13 +196,11 @@ class ProfileNoteList(NoteList):
 
     template_name = "content/note_list_profile.html"
 
-    @log.logit_generic_view_request
     def get(self, request, slug, *args, **kwargs):
         if request.user.is_authenticated and request.user.slug == slug:
             return redirect("content:personal_notes", *args, **kwargs)
         return super().get(request, slug, *args, **kwargs)
 
-    @log.logit_class_method
     def get_queryset(self):
         username = User.unslugify(self.kwargs.get("slug"))
         user = get_object_or_404(User, username=username)
@@ -222,7 +210,6 @@ class ProfileNoteList(NoteList):
             .filter(author=user, draft=False, anonymous=False)
         )
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         username = User.unslugify(self.kwargs.get("slug"))
@@ -246,11 +233,11 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
     """Display a list of all user's notes.
 
     **Context**
-        user: the selected user.
-        pins: user's pins (note list).
-        drafts: user's drafts (note list).
-        bookmarks: users's bookmarks (note list).
-        sidenotes: a recommended note list.
+        user: The selected user.
+        pins: User's pins (note list).
+        drafts: User's drafts (note list).
+        bookmarks: Users's bookmarks (note list).
+        sidenotes: A recommended note list.
 
     **Template**
         :template:`frontend/templates/content/note_list_personal.html`
@@ -259,11 +246,9 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
     template_name = "content/note_list_personal.html"
 
-    @log.logit_class_method
     def get_queryset(self):
         return super().get_ordered_queryset().filter(author=self.request.user)
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = self.get_queryset()
@@ -289,12 +274,10 @@ class NoteDraftMixin:
     the `draft` note field sets as True, else as False.
     """
 
-    @log.logit_class_method
     def form_valid(self, form):
         form.instance.draft = self.draft
         return super().form_valid(form)
 
-    @log.logit_class_method
     def post(self, request, *args, **kwargs):
         self.draft = "savedraft" in request.POST
         return super().post(request, *args, **kwargs)
@@ -308,7 +291,6 @@ class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
     form_class = NoteForm
     template_name = "content/note_create.html"
 
-    @log.logit_class_method
     def add_initial_source(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with `Source` data."""
         try:
@@ -325,7 +307,6 @@ class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
         )
         return initial
 
-    @log.logit_class_method
     def add_initial_tag(self, slug: str, initial: dict) -> dict:
         """Prepopulates the form with a tag."""
         try:
@@ -335,7 +316,6 @@ class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
         initial["tags"] = tag.name
         return initial
 
-    @log.logit_class_method
     def get_initial(self):
         initial = super().get_initial()
         source_slug = self.request.GET.get("source")
@@ -346,7 +326,6 @@ class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
             initial = self.add_initial_tag(tag_slug, initial)
         return initial
 
-    @log.logit_class_method
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -356,7 +335,6 @@ class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
 class NoteForkView(NoteCreateView):
     """Handles the create note form (for forked note)."""
 
-    @log.logit_class_method
     def get_initial(self):
         initial = super().get_initial()
         try:
@@ -388,7 +366,7 @@ class NoteDetailsView(log.LoggingView, DetailView):
     """Display details of a :model:`Note` instance.
 
     **Context**
-        sidenotes: a recommended note list.
+        sidenotes: A recommended note list.
 
     **Template**
         :template:`frontend/templates/content/note_display.html`
@@ -398,7 +376,6 @@ class NoteDetailsView(log.LoggingView, DetailView):
     model = Note
     template_name = "content/note_display.html"
 
-    @log.logit_class_method
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
@@ -406,7 +383,6 @@ class NoteDetailsView(log.LoggingView, DetailView):
         ]
         return context
 
-    @log.logit_class_method
     def get_object(self):
         note = super().get_object()
         if note and self.request.user != note.author:
@@ -421,13 +397,11 @@ class NoteView(View):
     POST - the comment form handler.
     """
 
-    @log.logit_generic_view_request
     def get(self, request, *args, **kwargs):
         view = NoteDetailsView.as_view()
         return view(request, *args, **kwargs)
 
 
-@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -441,7 +415,6 @@ def pin_note(request, slug):
     return JsonResponse({"pin": note.pin})
 
 
-@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -457,7 +430,6 @@ def like_note(request, slug):
         return JsonResponse({"liked": True})
 
 
-@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 @ajax_required
@@ -474,7 +446,6 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": True})
 
 
-@log.logit_view
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):

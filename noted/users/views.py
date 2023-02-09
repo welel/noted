@@ -1,9 +1,11 @@
+from abc import ABC, abstractclassmethod
 import json
 import logging
+from typing import Callable
 
 from allauth.account.models import EmailAddress
 
-from django.contrib import messages
+from django.contrib import messages as msg
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,141 +15,140 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
-from django.views import generic
+from django.views import generic, View
 from django.views.decorators.http import require_POST
+from django.utils.decorators import method_decorator
 
 from common import logging as log
+from common.logging import LoggerDecorator as logg
 from common.decorators import ajax_required
 from content.models import Note
 
-from .auth import send_changeemail_email, send_signup_email, unsign_email
+from .auth import (
+    send_changeemail_email,
+    send_signup_email,
+    unsign_email,
+    MESSAGES,
+)
 from .forms import DeleteAccount, SignupForm, UpdateUserForm, UserProfileForm
-from .forms import validate_username as val_username
+from .forms import validate_username
 from .models import AuthToken, Following, User
 
 logger = logging.getLogger(__name__)
 
 
-@log.logit_view
-@require_POST
-@ajax_required
-def send_singup_email(request):
+@method_decorator(ajax_required, name="dispatch")
+class TokenizedEmailView(ABC, View):
+    """An abstract view class for sending tokenized emails to a user."""
+
+    @abstractclassmethod
+    def get_send_email_function(self) -> Callable:
+        """Returns a funtion for sending emails.
+
+        The functions should take one positional argument - email (str),
+        which is an addressee.
+        """
+        pass
+
+    def post(self, request):
+        email = json.load(request).get("email")
+        try:
+            _validate_email(email)
+        except ValidationError:
+            return JsonResponse({"msg": "invalid"}, status=200)
+        if self.get_send_email_function()(email):
+            return JsonResponse({"msg": "sent"}, status=200)
+        return JsonResponse({"msg": "error"}, status=200)
+
+
+class SignupEmailView(TokenizedEmailView):
     """Send sing up email to a client with the link to the sign up form."""
-    email = json.load(request).get("email")
-    try:
-        _validate_email(email)
-    except ValidationError:
-        return JsonResponse({"msg": "invalid"}, status=200)
-    if send_signup_email(email):
-        return JsonResponse({"msg": "sent"}, status=200)
-    return JsonResponse({"msg": "error"}, status=200)
+
+    def get_send_email_function(self) -> Callable:
+        return send_signup_email
 
 
-@log.logit_view
-@require_POST
-@ajax_required
-def send_change_email(request):
+class ChangeemailEmailView(TokenizedEmailView):
     """Send change email message to a client with the link to the change view."""
-    email = json.load(request).get("email")
-    try:
-        _validate_email(email)
-    except ValidationError:
-        return JsonResponse({"msg": "invalid"}, status=200)
-    if send_changeemail_email(email):
-        return JsonResponse({"msg": "sent"}, status=200)
-    return JsonResponse({"msg": "error"}, status=200)
+
+    def get_send_email_function(self) -> Callable:
+        return send_changeemail_email
 
 
-@log.logit_view
-@login_required
-def change_email(request, token):
-    """Handles change email request (works by the link from an email message).
-
-    Args:
-        token (str): a unique token of a client for chaning email.
-    """
-    try:
-        token = AuthToken.objects.get(token=token, type=AuthToken.CHANGE_EMAIL)
-    except AuthToken.DoesNotExist:
-        messages.add_message(
-            request,
-            messages.WARNING,
-            _(
-                "You already changed email or URL link is invalid. If you"
-                " didn't, make request again!"
-            ),
-        )
-        return redirect(reverse("content:home"))
-
-    email, error = unsign_email(token)
-    if error:
-        logger.warning(
-            log.VIEW_LOG_TEMPLATE.format(
-                name=change_email.__name__,
-                user=request.user,
-                method=request.method,
-                path=request.path,
-            )
-            + f"User have problems with changing email signature: token id {token.pk}"
-        )
-        return render(
-            request,
-            "error.html",
-            {"message": error, "title": error},
-        )
-    ea = EmailAddress
-    # You can't change your email if you signed up via a third paty service.
-    if EmailAddress.objects.filter(email=email).exists():
-        messages.add_message(
-            request, messages.WARNING, _("You can't change your email.")
-        )
-        return redirect(reverse("content:home"))
-
-    request.user.email = email
-    request.user.save()
-    messages.add_message(
-        request, messages.INFO, _("The email successfully changed.")
-    )
-    token.delete()
-    return redirect(reverse("content:home"))
-
-
-@log.logit_view
-@ajax_required
-def validate_email(request):
-    """Check if a user with a given email already exists in the database."""
-    if request.method == "GET":
-        email = request.GET.get("email", None)
+@method_decorator(ajax_required, name="dispatch")
+class EmailExistanceCheckView(View):
+    @logg("view_exception")
+    def get(self, request):
+        """Check if a user with a given email already exists in the database."""
+        email = request.GET.get("email")
         response = {
             "is_taken": EmailAddress.objects.filter(email=email).exists()
             or User.objects.filter(email=email).exists()
         }
         return JsonResponse(response, status=200)
-    return JsonResponse({"is_taken": "error"}, status=200)
 
 
-@log.logit_view
-@ajax_required
-def validate_username(request):
-    """Check if a user with a given username already exists in the database."""
-    if request.method == "GET":
-        username = request.GET.get("username", None)
+@method_decorator(ajax_required, name="dispatch")
+class UsernameExistanceCheckView(View):
+    def get(self, request):
+        """Check if a user with a given username already exists in the database."""
+        username = request.GET.get("username")
+        username = "@" + username if username else None
         try:
-            if isinstance(username, str):
-                username = "@" + username
-                val_username(username)
-        except ValidationError as e:
-            return JsonResponse({"invalid": str(e.message)}, status=200)
-        else:
-            response = {
-                "is_taken": User.objects.filter(username=username).exists()
-                and not username == request.user.username
-            }
+            validate_username(username)
+        except ValidationError as error:
+            return JsonResponse({"invalid": str(error.message)}, status=200)
+        response = {
+            "is_taken": User.objects.filter(username=username).exists()
+            and not username == request.user.username
+        }
         return JsonResponse(response, status=200)
-    return JsonResponse({"is_taken": "error"}, status=200)
 
 
-@log.logit_view
+class ChangeEmailView(LoginRequiredMixin, View):
+    def get(self, request, token: str):
+        """Handles change email request (works by the link from an email message).
+
+        Args:
+            token: A unique token of a client for chaning email.
+        """
+        try:
+            token = AuthToken.objects.get(
+                token=token, type=AuthToken.CHANGE_EMAIL
+            )
+        except AuthToken.DoesNotExist:
+            msg.add_message(request, msg.WARNING, MESSAGES["ce_token_miss"])
+            return redirect(reverse("content:home"))
+
+        email, error = unsign_email(token)
+        if error:
+            logger.warning(
+                log.VIEW_LOG_TEMPLATE.format(
+                    name=ChangeEmailView.__name__,
+                    user=request.user,
+                    method=request.method,
+                    path=request.path,
+                )
+                + f"User have problems with changing email signature: token id {token.pk}"
+            )
+            return render(
+                request,
+                "error.html",
+                {"message": error, "title": error},
+            )
+
+        # You can't change your email if you signed up via a third paty service.
+        if EmailAddress.objects.filter(email=email).exists():
+            msg.add_message(request, msg.WARNING, MESSAGES["signed_social"])
+            return redirect(reverse("content:home"))
+
+        request.user.email = email
+        request.user.save()
+        msg.add_message(request, msg.INFO, MESSAGES["email_changed"])
+        token.delete()
+        return redirect(reverse("content:home"))
+
+
 def signup(request, token):
     """Sign up process.
 
@@ -164,14 +165,7 @@ def signup(request, token):
     try:
         token = AuthToken.objects.get(token=token, type=AuthToken.SIGNUP)
     except AuthToken.DoesNotExist:
-        messages.add_message(
-            request,
-            messages.WARNING,
-            _(
-                "You already registered. If you didn't register, request"
-                " for another link!"
-            ),
-        )
+        msg.add_message(request, msg.WARNING, MESSAGES["su_token_miss"])
         return redirect(reverse("content:home"))
 
     email, error = unsign_email(token)
@@ -213,7 +207,6 @@ def signup(request, token):
             return render(request, template_name, context)
 
 
-@log.logit_view
 @ajax_required
 def signin(request):
     """Sign in a user via ajax request."""
@@ -223,42 +216,28 @@ def signin(request):
         password = data.get("password")
         if not User.objects.filter(email=email).exists():
             return JsonResponse(
-                {
-                    "code": "noemail",
-                    "error_message": _(
-                        "Sorry, but we could not find a user account with \
-                            that email."
-                    ),
-                }
+                {"code": "noemail", "error_message": MESSAGES["noemail"]}
             )
         user = authenticate(email=email, password=password)
         if not user:
             return JsonResponse(
-                {
-                    "code": "badpass",
-                    "error_message": _("You have entered the wrong password."),
-                }
+                {"code": "badpass", "error_message": MESSAGES["wrong_pass"]}
             )
         login(
             request, user, backend="django.contrib.auth.backends.ModelBackend"
         )
         # TODO: redirect on referer
         return JsonResponse(
-            {
-                "code": "success",
-                "redirect_url": reverse("content:home"),
-            }
+            {"code": "success", "redirect_url": reverse("content:home")}
         )
     return HttpResponseBadRequest()
 
 
-@log.logit_view
 def signout(request):
     logout(request)
     return redirect(reverse("content:home"))
 
 
-@log.logit_view
 def delete_account(request):
     if request.method == "GET":
         form = DeleteAccount()
@@ -283,7 +262,6 @@ def delete_account(request):
 class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
     template_name = "users/profile_settings.html"
 
-    @log.logit_generic_view_request
     def get(self, request, *args, **kwargs):
         user_form = UpdateUserForm(instance=request.user)
         # Cut '@' sign.
@@ -300,7 +278,6 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
         }
         return super().get(self, request, *args, **kwargs)
 
-    @log.logit_generic_view_request
     def post(self, request, *args, **kwargs):
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(

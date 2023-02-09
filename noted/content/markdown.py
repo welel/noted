@@ -6,7 +6,7 @@
     pick_markdown_to_html: transfer Markdown text into HTML (2 methods).
 """
 
-import logging as log
+import logging
 import requests
 import traceback
 from typing import Tuple
@@ -15,10 +15,8 @@ from django.conf import settings
 
 from markdown2 import markdown
 
-from common.logging import logit
 
-
-logger = log.getLogger("markdown")
+logger = logging.getLogger("markdown")
 
 API_URL = "https://api.github.com/markdown/raw"
 HEADERS = {
@@ -28,7 +26,6 @@ HEADERS = {
 }
 
 
-@logit
 def check_remainig_api_ratelimit(response):
     """Check GitHub API response on remaning requests and log it."""
     try:
@@ -41,7 +38,6 @@ def check_remainig_api_ratelimit(response):
     logger.info(f"Limit: {limit} | Left: {remaining}")
 
 
-@logit
 def markdown_to_html(text: str) -> Tuple[str, bool]:
     """Transfer Markdown text into HTML via GitHub API.
 
@@ -85,7 +81,6 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
     return text, False
 
 
-@logit
 def pick_markdown_to_html(text: str) -> str:
     """Transfer Markdown text into HTML.
 
@@ -94,7 +89,8 @@ def pick_markdown_to_html(text: str) -> str:
     `markdown2` module. And returns first success result.
 
     Args:
-        text: the Markdown text to render in HTML.
+        text: The Markdown text to render in HTML.
+
     Returns:
         The rendered HTML code.
     """

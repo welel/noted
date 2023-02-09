@@ -12,9 +12,28 @@ from django.core.signing import TimestampSigner
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from common.logging import logit
-
 from .models import AuthToken
+
+
+MESSAGES = {
+    "su_token_miss": _(
+        "You already registered or the URL link is invalid."
+        " If you didn't register, request for another link!"
+    ),
+    "ce_token_miss": _(
+        "You already changed email or the URL link is invalid."
+        " If you didn't, make request again!"
+    ),
+    "signed_social": _(
+        "You can't change your email because you signed up via"
+        " a third paty service."
+    ),
+    "email_changed": _("The email was successfully changed."),
+    "noemail": _(
+        "Sorry, but we could not find a user account with that email."
+    ),
+    "wrong_pass": _("You have entered the wrong password."),
+}
 
 
 signer = TimestampSigner()
@@ -26,7 +45,6 @@ class Email(NamedTuple):
     error: Optional[str] = None
 
 
-@logit
 def get_host() -> str:
     """Gets current host (schema + domain)."""
     protocol = settings.ACCOUNT_DEFAULT_HTTP_PROTOCOL
@@ -36,7 +54,6 @@ def get_host() -> str:
         return protocol + "://" + settings.ALLOWED_HOSTS[0]
 
 
-@logit
 def send_email(
     email_to: str, email_from: str, subject: str, text: str, html: str = ""
 ) -> bool:
@@ -112,7 +129,6 @@ def send_email_with_token(
     return False
 
 
-@logit
 def send_signup_email(email_to: str) -> bool:
     """Sends email to client with link for registration.
 
@@ -134,7 +150,6 @@ def send_signup_email(email_to: str) -> bool:
     )
 
 
-@logit
 def send_changeemail_email(email_to: str) -> bool:
     """Sends email to client with link for changing email.
 
