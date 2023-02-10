@@ -1,12 +1,21 @@
+from dataclasses import dataclass
 import json
 from pathlib import Path
+from unittest.mock import Mock
 
 import django
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
 
-from .models import AuthToken, User, UserManager
+from .models import AuthToken, User
+from .validators import (
+    validate_image,
+    validate_username,
+    validate_full_name,
+    validate_social_username,
+)
 
 
 class URLTests(TestCase):
@@ -195,3 +204,52 @@ class UserProfileModelTest(TestCase):
         instance_socials = list(self.mark.profile.socials.keys())
         default_socials = ["facebook", "twitter", "github"]
         self.assertListEqual(instance_socials, default_socials)
+
+
+class ValidatorsTest(TestCase):
+    def test_validate_image(self):
+        image = Mock()
+        image.file.size = 513 * 1024
+        self.assertRaises(ValidationError, validate_image, image)
+
+    def test_validate_username_not_str(self):
+        self.assertRaises(ValidationError, validate_username, 12)
+
+    def test_validate_username_short_len(self):
+        self.assertRaises(ValidationError, validate_username, "@na")
+
+    def test_validate_username_long_len(self):
+        self.assertRaises(ValidationError, validate_username, "@name" * 40)
+
+    def test_validate_username_miss_sign(self):
+        self.assertRaises(ValidationError, validate_username, "mark.wantey")
+
+    def test_validate_username_next_dots(self):
+        self.assertRaises(ValidationError, validate_username, "@mark..wantey")
+
+    def test_validate_username_digit_inside(self):
+        # Allows on end `@mark.watney2`
+        self.assertRaises(ValidationError, validate_username, "@2mark.wantey")
+        self.assertRaises(ValidationError, validate_username, "@mark2.wantey")
+        self.assertRaises(ValidationError, validate_username, "@mark.2wantey")
+        self.assertRaises(ValidationError, validate_username, "@mark.wan2tey")
+
+    def test_validate_full_name_empty(self):
+        self.assertRaises(ValidationError, validate_full_name, "")
+
+    def test_validate_full_name_not_alpha(self):
+        self.assertRaises(ValidationError, validate_full_name, "Mark Watney2")
+
+    def test_validate_full_name_max_len(self):
+        # Allows 3 and less
+        self.assertRaises(
+            ValidationError, validate_full_name, "One Two Three Four"
+        )
+
+    def test_validate_social_usernames_question_sign(self):
+        self.assertRaises(
+            ValidationError, validate_social_username, "watney?q=hack"
+        )
+
+    def test_validate_social_usernames_max_len(self):
+        self.assertRaises(ValidationError, validate_social_username, "s" * 201)

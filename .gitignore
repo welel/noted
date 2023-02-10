@@ -22,3 +22,5 @@ noted/.coverage
 dev/
 *.log
 .isort.cfg
+mypy.ini
+.mypy_cache/

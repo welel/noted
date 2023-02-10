@@ -9,9 +9,6 @@ def validate_image(image):
     if image.file.size > limit_kb * 1024:
         raise ValidationError(_(f"Max size of file is {limit_kb} KB."))
 
-    if image.height > 512 or image.width > 512:
-        raise ValidationError(_(f"Max size of file is 250x250 px."))
-
 
 def validate_username(username: str):
     """Validates username.
