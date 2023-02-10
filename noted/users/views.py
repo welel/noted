@@ -1,14 +1,16 @@
 from abc import ABC, abstractclassmethod
 import json
 import logging
-from typing import Callable
+from typing import Callable, Type
 
+from django.conf import settings
 from django.contrib import messages as msg
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email as _validate_email
-from django.http import JsonResponse
+from django.db.transaction import atomic
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -149,11 +151,10 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
         if EmailAddress.objects.filter(email=email).exists():
             msg.add_message(request, msg.WARNING, MESSAGES["signed_social"])
             return redirect(reverse("users:settings"))
-
-        request.user.email = email
-        request.user.save()
+        with atomic():
+            request.user.update(email=email)
+            token.delete()
         msg.add_message(request, msg.INFO, MESSAGES["email_changed"])
-        token.delete()
         return redirect(reverse("content:home"))
 
 
@@ -193,17 +194,11 @@ class SignupView(TokenMixin, View):
 
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.email = email
-            user.is_active = True
-            user.save()
-            token.delete()
-            login(
-                request,
-                user,
-                backend="django.contrib.auth.backends.ModelBackend",
-            )
-            logger.info("New user sign up:" + str(user))
+            with atomic():
+                user = form.save(commit=False)
+                user.update(email=email, is_active=True)
+                token.delete()
+            login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
             return redirect(reverse("content:home"))
         else:
             context["form"] = form
@@ -229,13 +224,9 @@ class SigninView(View):
             return JsonResponse(
                 {"code": "badpass", "error_message": MESSAGES["wrong_pass"]}
             )
-        login(
-            request, user, backend="django.contrib.auth.backends.ModelBackend"
-        )
-        # TODO: redirect on referer
-        return JsonResponse(
-            {"code": "success", "redirect_url": reverse("content:home")}
-        )
+        login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
+        redirect_url = request.headers.get("referer", reverse("content:home"))
+        return JsonResponse({"code": "success", "redirect_url": redirect_url})
 
 
 @method_decorator(logit(__name__), name="dispatch")
@@ -251,11 +242,12 @@ class DeleteUserView(LoginRequiredMixin, View):
         if form.is_valid():
             user_notes = Note.objects.filter(author=request.user)
             method = form.cleaned_data.get("delete_method")
-            if method == DeleteUserForm.KEEP_NOTES:
-                user_notes.update(anonymous=True)
-            else:
-                user_notes.delete()
-            request.user.delete()
+            with atomic():
+                if method == DeleteUserForm.KEEP_NOTES:
+                    user_notes.update(anonymous=True)
+                else:
+                    user_notes.delete()
+                request.user.delete()
             return redirect(self.success_redirect_name)
         return render(request, self.template_name, {"form": form})
 
@@ -270,14 +262,7 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
         user_form.initial["username"] = user_form.initial["username"][1:]
         profile_form = UserProfileForm(instance=request.user.profile)
         profile_form.initial.update(request.user.profile.get_socials())
-        self.extra_context = {
-            "user_form": user_form,
-            "profile_form": profile_form,
-            "user": get_object_or_404(User, pk=request.user.pk),
-            "social_account": EmailAddress.objects.filter(
-                email=request.user.email
-            ).exists(),
-        }
+        self.set_extra_context(user_form, profile_form, request)
         return super().get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -286,22 +271,28 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
             request.POST, request.FILES, instance=request.user.profile
         )
         if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
+            with atomic():
+                user_form.save()
+                profile_form.save()
         else:
-            return render(
-                request,
-                self.template_name,
-                {
-                    "user_form": user_form,
-                    "profile_form": profile_form,
-                    "user": get_object_or_404(User, pk=request.user.pk),
-                    "social_account": EmailAddress.objects.filter(
-                        email=request.user.email
-                    ).exists(),
-                },
-            )
+            self.set_extra_context(user_form, profile_form, request)
+            return render(request, self.template_name, self.get_context_data())
         return redirect("users:settings")
+
+    def set_extra_context(
+        self,
+        user_form: UpdateUserForm,
+        profile_form: UserProfileForm,
+        request: Type[HttpRequest],
+    ) -> None:
+        self.extra_context = {
+            "user_form": user_form,
+            "profile_form": profile_form,
+            "user": get_object_or_404(User, pk=request.user.pk),
+            "social_account": EmailAddress.objects.filter(
+                email=request.user.email
+            ).exists(),
+        }
 
 
 @method_decorator(logit(__name__), name="dispatch")
