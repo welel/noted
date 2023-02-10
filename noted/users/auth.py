@@ -147,7 +147,7 @@ def send_signup_email(email_to: str) -> bool:
     """Sends email to client with link for registration.
 
     Args:
-        email_to: a client email.
+        email_to: A client email.
 
     Returns:
         Success or failure ending boolean flag.

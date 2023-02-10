@@ -1,6 +1,7 @@
 asgiref==3.6.0
 backports.zoneinfo==0.2.1
 beautifulsoup4==4.11.1
+celery==5.2.7
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==3.0.1
