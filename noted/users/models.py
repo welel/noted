@@ -1,6 +1,8 @@
 import json
 from typing import Literal
 
+from taggit.managers import TaggableManager
+
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -11,8 +13,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
-from taggit.managers import TaggableManager
 
 from common.text import is_latin, transcript_ru2en
 from tags.models import UnicodeTaggedItem

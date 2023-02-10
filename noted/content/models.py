@@ -9,21 +9,21 @@ import io
 from datetime import date
 from typing import Optional
 
+import pdfkit
+from bs4 import BeautifulSoup
+from taggit.managers import TaggableManager
+
 from django.db import models
 from django.db.models import Count, QuerySet
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
-import pdfkit
-from bs4 import BeautifulSoup
-from taggit.managers import TaggableManager
 
 from common.text import generate_unique_slug
 from tags.models import UnicodeTaggedItem
 from users.models import User
 
 from .fields import MarkdownField, RenderedMarkdownField
-from .managers import SourceManager, NoteManager
+from .managers import NoteManager, SourceManager
 
 
 class Source(models.Model):

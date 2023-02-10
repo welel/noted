@@ -1,6 +1,6 @@
-from django.db.models import TextField
-
 from simplemde.fields import SimpleMDEField
+
+from django.db.models import TextField
 
 from .markdown import pick_markdown_to_html
 

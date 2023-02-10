@@ -1,7 +1,7 @@
-from django.contrib import admin
-
 from notifications.admin import NotificationAdmin
 from notifications.models import Notification
+
+from django.contrib import admin
 
 from .models import Action
 

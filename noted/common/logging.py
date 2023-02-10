@@ -3,7 +3,7 @@
 import functools
 import logging
 import traceback
-from typing import Callable, Dict, Type, Any
+from typing import Callable, Dict, Type
 
 from django.db import transaction
 from django.http import HttpRequest

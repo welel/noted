@@ -1,7 +1,9 @@
-from abc import ABC, abstractclassmethod
 import json
 import logging
+from abc import ABC, abstractclassmethod
 from typing import Callable, Type
+
+from allauth.account.models import EmailAddress
 
 from django.conf import settings
 from django.contrib import messages as msg
@@ -13,24 +15,22 @@ from django.db.transaction import atomic
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.utils.translation import gettext as _
-from django.views import generic, View
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
+from django.views import View, generic
 
-from allauth.account.models import EmailAddress
-
-from common.logging import LoggerDecorator as logit
 from common.decorators import ajax_required
+from common.logging import LoggerDecorator as logit
 from content.models import Note
 
 from .auth import (
-    send_changeemail_email,
-    send_signup_email,
-    unsign_email,
     MESSAGES,
     StringToken,
     TokenData,
     get_token,
+    send_changeemail_email,
+    send_signup_email,
+    unsign_email,
 )
 from .forms import (
     DeleteUserForm,

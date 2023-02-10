@@ -1,12 +1,12 @@
 import logging
 
+import pycld2 as cld2
+from taggit.models import Tag
+
 from django.db.models import Count
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-
-import pycld2 as cld2
-from taggit.models import Tag
 
 from actions import base as act
 from actions.models import Action

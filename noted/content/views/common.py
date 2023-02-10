@@ -1,11 +1,11 @@
 import logging
 
+from taggit.models import Tag
+
 from django.contrib.postgres.search import SearchVector, TrigramSimilarity
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
-
-from taggit.models import Tag
 
 from content.models import Note, Source
 from users.models import User

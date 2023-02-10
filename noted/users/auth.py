@@ -1,14 +1,13 @@
 """Authentication, Authorization, Registration functions and utilities.
 
 """
-from typing import NamedTuple, Optional, Literal
 import logging
 import smtplib
+from typing import Literal, NamedTuple, Optional
 
-from django.core.signing import BadSignature, SignatureExpired
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.core.signing import TimestampSigner
+from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 

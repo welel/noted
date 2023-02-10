@@ -1,6 +1,6 @@
-from django.utils.translation import gettext_lazy as _
-
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+
+from django.utils.translation import gettext_lazy as _
 
 from .models import User
 

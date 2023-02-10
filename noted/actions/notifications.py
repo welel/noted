@@ -1,8 +1,8 @@
 from typing import List, Union
 
-from django.utils.functional import SimpleLazyObject
-
 from notifications.signals import notify
+
+from django.utils.functional import SimpleLazyObject
 
 from content.models import Note
 from tags.models import UnicodeTag, get_tag_followers

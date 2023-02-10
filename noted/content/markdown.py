@@ -7,13 +7,13 @@
 """
 
 import logging
-import requests
 import traceback
 from typing import Tuple
 
-from django.conf import settings
-
+import requests
 from markdown2 import markdown
+
+from django.conf import settings
 
 
 logger = logging.getLogger("markdown")

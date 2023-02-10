@@ -1,13 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET
-from django.views.generic import ListView
-from django.utils.decorators import method_decorator
-
 from notifications import settings as notification_settings
 from notifications.models import Notification
 from notifications.utils import slug2id
+
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_GET
+from django.views.generic import ListView
 
 from common.decorators import ajax_required
 
