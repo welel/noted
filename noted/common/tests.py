@@ -36,7 +36,7 @@ class Tests(TestCase):
         self.assertRaises(ValueError, generate_unique_slug, source)
 
     def test_ajax_required(self):
-        @ajax_required
+        @ajax_required()
         def view(request):
             return True
 
@@ -45,7 +45,7 @@ class Tests(TestCase):
         self.assertTrue(view(request))
 
     def test_ajax_required_not_ajax(self):
-        @ajax_required
+        @ajax_required()
         def view(request):
             return True
 

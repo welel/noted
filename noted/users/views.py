@@ -4,17 +4,15 @@ import logging
 from typing import Callable
 
 from django.contrib import messages as msg
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email as _validate_email
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views import generic, View
-from django.views.decorators.http import require_POST
 from django.utils.decorators import method_decorator
 
 from allauth.account.models import EmailAddress
@@ -33,7 +31,7 @@ from .auth import (
     get_token,
 )
 from .forms import (
-    DeleteAccount,
+    DeleteUserForm,
     SignupForm,
     UpdateUserForm,
     UserProfileForm,
@@ -45,7 +43,8 @@ from .models import AuthToken, Following, User
 logger = logging.getLogger(__name__)
 
 
-@method_decorator(ajax_required, name="dispatch")
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
 class TokenizedEmailView(ABC, View):
     """An abstract view class for sending tokenized emails to a user."""
 
@@ -58,7 +57,6 @@ class TokenizedEmailView(ABC, View):
         """
         ...
 
-    @logit(__name__)
     def post(self, request):
         email = json.load(request).get("email")
         try:
@@ -84,9 +82,9 @@ class ChangeemailEmailView(TokenizedEmailView):
         return send_changeemail_email
 
 
-@method_decorator(ajax_required, name="dispatch")
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(), name="dispatch")
 class EmailExistanceCheckView(View):
-    @logit(__name__)
     def get(self, request):
         """Check if a user with a given email already exists in the database."""
         email = request.GET.get("email")
@@ -97,9 +95,9 @@ class EmailExistanceCheckView(View):
         return JsonResponse(response, status=200)
 
 
-@method_decorator(ajax_required, name="dispatch")
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(), name="dispatch")
 class UsernameExistanceCheckView(View):
-    @logit(__name__)
     def get(self, request):
         """Check if a user with a given username already exists in the database."""
         username = request.GET.get("username")
@@ -131,11 +129,11 @@ class TokenMixin:
         return TokenData(token=token, email=email)
 
 
+@method_decorator(logit(__name__), name="dispatch")
 class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
     token_type = AuthToken.CHANGE_EMAIL
     token_miss_error = MESSAGES["ce_token_miss"]
 
-    @logit(__name__)
     def get(self, request, token: str):
         """Handles change email request (works by the link from an email message).
 
@@ -159,12 +157,12 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
         return redirect(reverse("content:home"))
 
 
+@method_decorator(logit(__name__), name="dispatch")
 class SignupView(TokenMixin, View):
     template_name = "users/signup.html"
     token_type = AuthToken.SIGNUP
     token_miss_error = MESSAGES["su_token_miss"]
 
-    @logit(__name__)
     def get(self, request, token: str):
         """Validates a sign up token and provides the registration form.
 
@@ -181,7 +179,6 @@ class SignupView(TokenMixin, View):
         context["form"] = form
         return render(request, self.template_name, context)
 
-    @logit(__name__)
     def post(self, request, token: str):
         """Validates data, creates new user, deletes the token.
 
@@ -213,17 +210,20 @@ class SignupView(TokenMixin, View):
             return render(request, self.template_name, context)
 
 
-@ajax_required
-def signin(request):
-    """Sign in a user via ajax request."""
-    if request.method == "POST":
+@method_decorator(logit(__name__), name="dispatch")
+class SigninView(View):
+    @ajax_required(type="method")
+    def post(self, request):
+        """Sign in a user via ajax request."""
         data = json.load(request)
         email = data.get("email")
         password = data.get("password")
+
         if not User.objects.filter(email=email).exists():
             return JsonResponse(
                 {"code": "noemail", "error_message": MESSAGES["noemail"]}
             )
+
         user = authenticate(email=email, password=password)
         if not user:
             return JsonResponse(
@@ -236,35 +236,31 @@ def signin(request):
         return JsonResponse(
             {"code": "success", "redirect_url": reverse("content:home")}
         )
-    return HttpResponseBadRequest()
 
 
-def signout(request):
-    logout(request)
-    return redirect(reverse("content:home"))
+@method_decorator(logit(__name__), name="dispatch")
+class DeleteUserView(LoginRequiredMixin, View):
+    template_name = "users/delete_account.html"
+    success_redirect_name = "content:welcome"
 
+    def get(self, request):
+        return render(request, self.template_name, {"form": DeleteUserForm()})
 
-def delete_account(request):
-    if request.method == "GET":
-        form = DeleteAccount()
-        return render(request, "users/delete_account.html", {"form": form})
-    elif request.method == "POST":
-        form = DeleteAccount(request.POST)
+    def post(self, request):
+        form = DeleteUserForm(request.POST)
         if form.is_valid():
-            method = form.cleaned_data.get("method_select")
-            if method == "save":
-                for note in Note.objects.filter(author=request.user):
-                    note.anonymous = True
-                    note.save()
-            elif method == "delete":
-                for note in Note.objects.filter(author=request.user):
-                    note.delete()
+            user_notes = Note.objects.filter(author=request.user)
+            method = form.cleaned_data.get("delete_method")
+            if method == DeleteUserForm.KEEP_NOTES:
+                user_notes.update(anonymous=True)
+            else:
+                user_notes.delete()
             request.user.delete()
-            return redirect("content:welcome")
-        return render(request, "users/delete_account.html", {"form": form})
-    return HttpResponseBadRequest()
+            return redirect(self.success_redirect_name)
+        return render(request, self.template_name, {"form": form})
 
 
+@method_decorator(logit(__name__), name="dispatch")
 class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
     template_name = "users/profile_settings.html"
 
@@ -308,29 +304,29 @@ class UpdateUserProfile(LoginRequiredMixin, generic.TemplateView):
         return redirect("users:settings")
 
 
-@ajax_required
-@require_POST
-@login_required
-def user_follow(request):
-    """Handle ajax request - follow/unfollow a user.
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
+class FollowUserView(LoginRequiredMixin, View):
+    def post(self, request):
+        """Handle ajax request - follow/unfollow a user.
 
-    **Post params**
-        id: id of a user is going to be followed.
-        action: follow/unfollow.
-    """
-    try:
-        user_id = int(request.POST.get("id"))
-    except TypeError:
-        user_id = 0
-    action = request.POST.get("action")
+        **POST params**
+            id: id of a user is going to be followed.
+            action: follow/unfollow.
+        """
+        try:
+            user_id = int(request.POST.get("id"))
+        except TypeError:
+            user_id = 0
+        action = request.POST.get("action")
 
-    if user_id and action and request.user.id != user_id:
-        user = get_object_or_404(User, id=user_id)
-        following, _ = Following.objects.get_or_create(
-            followed=user, follower=request.user
-        )
-        if action == "unfollow":
-            following.delete()
-        return JsonResponse({"status": "ok"})
+        if user_id and action and request.user.id != user_id:
+            user = get_object_or_404(User, id=user_id)
+            following, _ = Following.objects.get_or_create(
+                followed=user, follower=request.user
+            )
+            if action == "unfollow":
+                following.delete()
+            return JsonResponse({"status": "ok"})
 
-    return JsonResponse({"status": "error"})
+        return JsonResponse({"status": "error"})

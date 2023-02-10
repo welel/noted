@@ -67,7 +67,7 @@ class SourceTypeDetailsView(log.LoggingView, View):
         return render(request, "content/source_type_details.html", context)
 
 
-@ajax_required
+@ajax_required()
 def search_sources_select(request):
     """Search for sources by title and return JSON results.
 

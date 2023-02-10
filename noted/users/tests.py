@@ -42,7 +42,7 @@ class URLTests(TestCase):
 
     def test_signup_bad_token(self):
         response = self.ajax_client.get("/en/users/signup/asjdk21d/")
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_signup_good_token(self):
         signer = TimestampSigner()
@@ -94,7 +94,7 @@ class URLTests(TestCase):
 
     def test_signin_bad_request(self):
         response = self.client.get("/en/users/signin/")
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 405)
 
     def test_signout(self):
         response = self.client.get("/en/users/signout/")

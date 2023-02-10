@@ -29,7 +29,7 @@ class NotificationList(ListView):
 
 @require_GET
 @login_required
-@ajax_required
+@ajax_required()
 def mark_as_read(request):
     """This ajax view marks a notification as read.
 
@@ -46,7 +46,7 @@ def mark_as_read(request):
 
 @require_GET
 @login_required
-@ajax_required
+@ajax_required()
 def delete_notification(request):
     """This ajax view deletes a notification.
 

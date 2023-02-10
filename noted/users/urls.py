@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from . import views
@@ -29,10 +30,14 @@ urlpatterns = [
         views.ChangeEmailView.as_view(),
         name="change_email",
     ),
+    path(
+        "delete-account/",
+        views.DeleteUserView.as_view(),
+        name="delete_account",
+    ),
     path("signup/<str:token>/", views.SignupView.as_view(), name="signup"),
-    path("signin/", views.signin, name="signin"),
-    path("signout/", views.signout, name="signout"),
+    path("signin/", views.SigninView.as_view(), name="signin"),
+    path("signout/", LogoutView.as_view(), name="signout"),
     path("settings/", views.UpdateUserProfile.as_view(), name="settings"),
-    path("delete-account/", views.delete_account, name="delete_account"),
-    path("follow/", views.user_follow, name="follow"),
+    path("follow/", views.FollowUserView.as_view(), name="follow"),
 ]

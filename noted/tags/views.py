@@ -65,7 +65,7 @@ class TagDetails(log.LoggingView, DetailView):
 
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
-@ajax_required
+@ajax_required()
 def subscribe(request, slug):
     """Starts/ends following a tag."""
     tag = get_object_or_404(Tag, slug=slug)

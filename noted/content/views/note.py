@@ -404,7 +404,7 @@ class NoteView(View):
 
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
-@ajax_required
+@ajax_required()
 def pin_note(request, slug):
     """Sets `pin` note field via an ajax request."""
     note = get_object_or_404(Note, slug=slug)
@@ -417,7 +417,7 @@ def pin_note(request, slug):
 
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
-@ajax_required
+@ajax_required()
 def like_note(request, slug):
     """Adds/removes a like to/from a note."""
     note = get_object_or_404(Note, slug=slug)
@@ -432,7 +432,7 @@ def like_note(request, slug):
 
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
-@ajax_required
+@ajax_required()
 def bookmark_note(request, slug):
     """Adds/removes a note to/from user's bookmarks."""
     note = get_object_or_404(Note, slug=slug)

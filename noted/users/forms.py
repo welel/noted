@@ -134,14 +134,16 @@ class UserProfileForm(forms.ModelForm):
         )
 
 
-class DeleteAccount(forms.Form):
-    METHOD = (
+class DeleteUserForm(forms.Form):
+    KEEP_NOTES = "keep"
+    DELETE_NOTES = "delete"
+    METHODS = (
         (
-            "save",
+            KEEP_NOTES,
             _("Leave all my public notes as anonymous and delete account."),
         ),
-        ("delete", _("Delete all my notes and delete account.")),
+        (DELETE_NOTES, _("Delete all my notes and delete account.")),
     )
-    method_select = forms.ChoiceField(
-        choices=METHOD, widget=forms.Select(attrs={"class": "form-control"})
+    delete_method = forms.ChoiceField(
+        choices=METHODS, widget=forms.Select(attrs={"class": "form-control"})
     )
