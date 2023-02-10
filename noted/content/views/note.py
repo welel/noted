@@ -54,7 +54,7 @@ from users.models import Following, User
 logger = logging.getLogger(__name__)
 
 
-class NoteList(log.LoggingView, ListView):
+class NoteList(ListView):
     """Base display list of :model:`Note`.
 
     Uses as a superclass for other specific notes listings.
@@ -284,7 +284,7 @@ class NoteDraftMixin:
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(log.LoggingView, NoteDraftMixin, CreateView):
+class NoteCreateView(NoteDraftMixin, CreateView):
     """Handels the note create form."""
 
     model = Note
@@ -350,19 +350,19 @@ class NoteForkView(NoteCreateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(NoteDraftMixin, log.LoggingView, UpdateView):
+class NoteUpdateView(NoteDraftMixin, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteDeleteView(log.LoggingView, DeleteView):
+class NoteDeleteView(DeleteView):
     model = Note
     success_url = reverse_lazy("content:home")
 
 
-class NoteDetailsView(log.LoggingView, DetailView):
+class NoteDetailsView(DetailView):
     """Display details of a :model:`Note` instance.
 
     **Context**

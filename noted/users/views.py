@@ -18,6 +18,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views import View, generic
+from django.views.generic import FormView
 
 from common.decorators import ajax_required
 from common.logging import LoggerDecorator as logit
@@ -85,7 +86,7 @@ class ChangeemailEmailView(TokenizedEmailView):
 
 
 @method_decorator(logit(__name__), name="dispatch")
-@method_decorator(ajax_required(), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
 class EmailExistanceCheckView(View):
     def get(self, request):
         """Check if a user with a given email already exists in the database."""
@@ -98,7 +99,7 @@ class EmailExistanceCheckView(View):
 
 
 @method_decorator(logit(__name__), name="dispatch")
-@method_decorator(ajax_required(), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
 class UsernameExistanceCheckView(View):
     def get(self, request):
         """Check if a user with a given username already exists in the database."""
@@ -206,8 +207,8 @@ class SignupView(TokenMixin, View):
 
 
 @method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
 class SigninView(View):
-    @ajax_required(type="method")
     def post(self, request):
         """Sign in a user via ajax request."""
         data = json.load(request)
@@ -230,26 +231,21 @@ class SigninView(View):
 
 
 @method_decorator(logit(__name__), name="dispatch")
-class DeleteUserView(LoginRequiredMixin, View):
+class DeleteUserView(LoginRequiredMixin, FormView):
+    form_class = DeleteUserForm
     template_name = "users/delete_account.html"
     success_redirect_name = "content:welcome"
 
-    def get(self, request):
-        return render(request, self.template_name, {"form": DeleteUserForm()})
-
-    def post(self, request):
-        form = DeleteUserForm(request.POST)
-        if form.is_valid():
-            user_notes = Note.objects.filter(author=request.user)
-            method = form.cleaned_data.get("delete_method")
-            with atomic():
-                if method == DeleteUserForm.KEEP_NOTES:
-                    user_notes.update(anonymous=True)
-                else:
-                    user_notes.delete()
-                request.user.delete()
-            return redirect(self.success_redirect_name)
-        return render(request, self.template_name, {"form": form})
+    def form_valid(self, form: DeleteUserForm):
+        user_notes = Note.objects.filter(author=self.request.user)
+        method = form.cleaned_data.get("delete_method")
+        with atomic():
+            if method == DeleteUserForm.KEEP_NOTES:
+                user_notes.update(anonymous=True)
+            else:
+                user_notes.delete()
+            self.request.user.delete()
+        return redirect(self.success_redirect_name)
 
 
 @method_decorator(logit(__name__), name="dispatch")

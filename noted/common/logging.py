@@ -54,8 +54,6 @@ class LogMessage:
 
 
 class LoggerDecorator:
-    loggers: Dict[str, logging.Logger]
-
     def __init__(self, logger_name: str):
         self.logger = logging.getLogger(logger_name)
 
@@ -101,23 +99,3 @@ class LoggerDecorator:
             return str(
                 LogMessage(error, func, *args, request=args[0], **kwargs)
             )
-
-
-class LoggingView(View):
-    """A mixin that wraps a dispatch function of generic view with logging."""
-
-    def dispatch(self, request, *args, **kwargs):
-        try:
-            with transaction.atomic():
-                return super().dispatch(request, *args, **kwargs)
-        except Exception as error:
-            log_message = LogMessage(
-                error,
-                self.dispatch,
-                *args,
-                class_view=self,
-                request=request,
-                **kwargs,
-            )
-            request_logger.error(str(log_message))
-            raise

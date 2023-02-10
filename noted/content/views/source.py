@@ -9,7 +9,7 @@ from common.decorators import ajax_required
 from content.models import Note, Source
 
 
-class SourceDetailsView(log.LoggingView, DetailView):
+class SourceDetailsView(DetailView):
     """A source details with list of notes of the source.
 
     **Context**
@@ -35,7 +35,7 @@ class SourceDetailsView(log.LoggingView, DetailView):
         return context
 
 
-class SourceTypeDetailsView(log.LoggingView, View):
+class SourceTypeDetailsView(View):
     """A source type details with list of notes and sources of the source type.
 
     **Context**

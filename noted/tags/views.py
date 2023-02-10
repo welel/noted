@@ -15,7 +15,7 @@ from common.decorators import ajax_required
 from content.models import Note
 
 
-class TagList(log.LoggingView, ListView):
+class TagList(ListView):
     """Display a annotated list of :model:`taggit.Tag`.
 
     It displays tags, each tag has a number of its' notes.
@@ -39,7 +39,7 @@ class TagList(log.LoggingView, ListView):
         return queryset
 
 
-class TagDetails(log.LoggingView, DetailView):
+class TagDetails(DetailView):
     """Tag details with a list of notes of the current tag.
 
     **Context**
