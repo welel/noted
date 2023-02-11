@@ -81,7 +81,7 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
     return text, False
 
 
-def pick_markdown_to_html(text: str) -> str:
+def pick_markdown_to_html(raw_markdown: str) -> str:
     """Transfer Markdown text into HTML.
 
     The function transfers Markdown text into HTML using 2 independent
@@ -89,13 +89,13 @@ def pick_markdown_to_html(text: str) -> str:
     `markdown2` module. And returns first success result.
 
     Args:
-        text: The Markdown text to render in HTML.
+        raw_markdown: The Markdown text to render in HTML.
 
     Returns:
         The rendered HTML code.
     """
     if not settings.TEST_MODE:
-        html, success = markdown_to_html(text)
+        html, success = markdown_to_html(raw_markdown)
         if success:
             return html
-    return markdown(text=text)
+    return markdown(text=raw_markdown)

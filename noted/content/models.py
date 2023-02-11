@@ -6,15 +6,19 @@
 
 """
 import io
+from dataclasses import dataclass
 from datetime import date
-from typing import Optional
+from typing import Optional, Literal, Type
+import logging
 
 import pdfkit
 from bs4 import BeautifulSoup
 from taggit.managers import TaggableManager
+from wsgiref.util import FileWrapper
 
 from django.db import models
 from django.db.models import Count, QuerySet
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -23,7 +27,11 @@ from tags.models import UnicodeTaggedItem
 from users.models import User
 
 from .fields import MarkdownField, RenderedMarkdownField
+from .files import MD, PDF, HTML, CONTENT_TYPES, NoteFile, BadNoteFileExtension
 from .managers import NoteManager, SourceManager
+
+
+logger = logging.getLogger("exceptions")
 
 
 class Source(models.Model):
@@ -240,18 +248,18 @@ class Note(models.Model):
         if image:
             return image.get("src")
 
-    def generate_md_file(self) -> io.BytesIO:
-        """Generates .md file of the note."""
+    def generate_md_file_content(self) -> str:
+        """Generates .md file content of the note."""
         output = f"# {self.title}\n\n"
         if self.source and self.source.link:
             output += f"Source: [{self.source.title}]({self.source.link})\n\n"
         elif self.source:
             output += f"Source: __{self.source.title}__\n\n"
         output += self.body_raw
-        return io.BytesIO(output.encode())
+        return output
 
-    def generate_html_file(self) -> io.BytesIO:
-        """Generates .html file of the note."""
+    def generate_html_file_content(self) -> str:
+        """Generates .html file content of the note."""
         output = "<html><head><meta content='text/html;charset=UTF-8' \
             http-equiv='content-type' /></head><body>"
         output += f"<h1>{self.title}</h1>\n"
@@ -260,38 +268,40 @@ class Note(models.Model):
         elif self.source:
             output += f"<p>Source: {self.source.title}</p>\n"
         output += self.body_html + "</body></html>"
-        return io.BytesIO(output.encode())
+        return output
 
-    def generate_pdf_file(self) -> io.BytesIO:
-        """Generates .pdf file of the note."""
-        html = self.generate_html_file().read().decode(encoding="utf-8")
+    def generate_pdf_file_content(self) -> str:
+        """Generates .pdf file content of the note."""
+        html = self.generate_html_file_content()
         options = {"page-size": "Letter", "encoding": "UTF-8"}
         pdf = pdfkit.from_string(html, False, options=options)
-        return io.BytesIO(pdf)
+        return pdf
 
-    def generate_file(self, filetype: str = "md") -> Optional[io.BytesIO]:
-        """Generates a file of the note.
+    def generate_file_content(
+        self, filetype: Literal["md", "pdf", "html"] = "md"
+    ) -> Optional[str]:
+        """Generates a file content of the note.
 
         Attrs:
             filetype: A file extension (options: `md`, `html`, `pdf`).
         Returns:
             A generated file if success or `None`.
         """
-        if filetype == "md":
-            return self.generate_md_file()
-        elif filetype == "html":
-            return self.generate_html_file()
-        elif filetype == "pdf":
-            return self.generate_pdf_file()
-        return None
+        if filetype == MD:
+            return self.generate_md_file_content()
+        elif filetype == HTML:
+            return self.generate_html_file_content()
+        elif filetype == PDF:
+            return self.generate_pdf_file_content()
+        raise BadNoteFileExtension(filetype)
 
-    def generate_file_to_response(
-        self, filetype: str = "md"
-    ) -> Optional[dict]:
+    def generate_file(
+        self, filetype: Literal["md", "pdf", "html"] = "md"
+    ) -> NoteFile:
         """Generates file and metadata for a HTTP response.
 
         Data Structure (dict keys, all keys are str):
-            file (io.BytesIO): A generated file.
+            file (bytes): A generated file.
             filename (str): A filename generated based on `slug`.
             content_type (str): The MIME type of a file.
 
@@ -301,20 +311,28 @@ class Note(models.Model):
         Returns:
             A dict with file and metadata if success or `None`.
         """
+        file_content = self.generate_file_content(filetype=filetype)
         filename = self.slug[:20] + "." + filetype
-        file = self.generate_file(filetype=filetype)
-        if not file:
-            return None
-        content_type = {
-            "md": "text/markdown; charset=UTF-8",
-            "html": "text/html; charset=utf-8",
-            "pdf": "application/pdf",
-        }[filetype]
-        return {
-            "file": file,
-            "filename": filename,
-            "content_type": content_type,
-        }
+        return NoteFile(
+            content=file_content,
+            name=filename,
+            content_type=CONTENT_TYPES[filetype],
+        )
+
+    @staticmethod
+    def get_file_response(note_file: NoteFile) -> Type[HttpResponse]:
+        if note_file["content_type"] != PDF:
+            file_content = note_file["content"].encode()
+        response = HttpResponse(
+            file_content,
+            content_type=note_file["content_type"],
+        )
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{note_file["name"]}"'.encode(
+            encoding="utf-8"
+        )
+        return response
 
     def get_fork(self):
         """Generates a fork (copy) for a current note and returns."""

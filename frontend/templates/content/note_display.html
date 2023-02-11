@@ -248,9 +248,9 @@
     <div class="modal-body">
         <div class="container-fluid d-flex justify-content-center">
             <div class="row" style="max-width: 200px; text-align: left;">
-                <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> MarkDown</a>
-                <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> HTML</a>
-                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</a>
+                <button onclick="startNoteDownload('md');" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> MarkDown</button>
+                <button onclick="startNoteDownload('html');" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> HTML</button>
+                <button onclick="startNoteDownload('pdf');" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</button>
             </div>
         </div>
     </div>
@@ -261,6 +261,12 @@
 
 
 {% block extra_scripts %}
+<script>
+    const startNoteDownloadMdUrl = "{% url 'content:download_note' filetype='md' slug=note.slug %}";
+    const startNoteDownloadHtmlUrl = "{% url 'content:download_note' filetype='html' slug=note.slug %}";
+    const startNoteDownloadPdfUrl = "{% url 'content:download_note' filetype='pdf' slug=note.slug %}";
+    const noteDownloadPoolingUrl = "{% url 'content:download_note_pooling' %}";
+</script>
 <div id="pin-note-url" hidden>{% url 'content:pin_note' slug=note.slug %}</div>
 <div id="like-note-url" hidden>{% url 'content:like_note' slug=note.slug %}</div>
 <div id="bookmark-note-url" hidden>{% url 'content:bookmark_note' slug=note.slug %}</div>

@@ -26,8 +26,13 @@ urlpatterns = [
     ),
     path(
         "note/download/<str:filetype>/<str:slug>/",
-        views.download_note,
+        views.StartDownloadNoteView.as_view(),
         name="download_note",
+    ),
+    path(
+        "note/download/pooling/",
+        views.DownloadNoteView.as_view(),
+        name="download_note_pooling",
     ),
     path(
         "u/notes/<str:slug>/",

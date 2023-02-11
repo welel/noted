@@ -21,15 +21,21 @@
 
 """
 import logging
-from wsgiref.util import FileWrapper
+import io
+import json
 
+from celery.result import AsyncResult
 from taggit.models import Tag
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.cache import cache
 from django.db.models import F, QuerySet
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import (
+    HttpResponseBadRequest,
+    JsonResponse,
+    HttpResponseForbidden,
+    FileResponse,
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -42,13 +48,14 @@ from django.views.generic.edit import DeleteView
 
 from actions import base as act
 from actions.models import Action
-from common import logging as log
 from common.cache import cache_queryset
 from common.decorators import ajax_required
-from content.forms import NoteForm
-from content.models import Note, Source
 from tags.models import get_top_tags
 from users.models import Following, User
+
+from ..forms import NoteForm
+from ..models import Note, Source
+from ..tasks import generate_file_response_task
 
 
 logger = logging.getLogger(__name__)
@@ -446,6 +453,33 @@ def bookmark_note(request, slug):
         return JsonResponse({"bookmarked": True})
 
 
+@method_decorator(
+    login_required(login_url=reverse_lazy("account_login")), name="dispatch"
+)
+class StartDownloadNoteView(View):
+    def get(self, request, filetype: str, slug: str):
+        note = get_object_or_404(Note, slug=slug)
+        if note.draft and request.user != note.author:
+            return HttpResponseForbidden()
+        task = generate_file_response_task.delay(note.pk, filetype)
+        return JsonResponse({"task_id": task.id}, status=202)
+
+
+@method_decorator(
+    login_required(login_url=reverse_lazy("account_login")), name="dispatch"
+)
+class DownloadNoteView(View):
+    def get(self, request):
+        task_id = request.GET.get("task_id")
+        task = AsyncResult(task_id)
+        if task.status == "FAILURE":
+            return JsonResponse({"msg": "task faield"}, status=500)
+        if task.status == "SUCCESS":
+            file_response = Note.get_file_response(task.result)
+            return file_response
+        return FileResponse(bytes(), status=202)
+
+
 @require_GET
 @login_required(login_url=reverse_lazy("account_login"))
 def download_note(request, filetype: str, slug: str):
@@ -456,23 +490,8 @@ def download_note(request, filetype: str, slug: str):
         slug: a slug of a note.
     """
     note = get_object_or_404(Note, slug=slug)
-    file = note.generate_file_to_response(filetype=filetype)
-    if not file or (note.draft and request.user != note.author):
-        logger.error(
-            log.VIEW_LOG_TEMPLATE.format(
-                view=download_note.__name__,
-                user=request.user,
-                method=request.method,
-                path=request.path,
-            )
-            + "Can't generate a file."
-        )
-        return HttpResponseBadRequest()
-    response = HttpResponse(
-        FileWrapper(file["file"]), content_type=file["content_type"]
-    )
-    response[
-        "Content-Disposition"
-    ] = f'attachment; filename="{file["filename"]}"'.encode(encoding="utf-8")
+    if note.draft and request.user != note.author:
+        return HttpResponseForbidden()
     Action.objects.create_action(request.user, act.DOWNLOAD, note)
+    response = note.get_file_response(filetype=filetype)
     return response

@@ -76,3 +76,4 @@ function setInvalid(element, feedback, message) {
     element.classList.remove('is-valid');
     element.classList.add('is-invalid');
 }
+

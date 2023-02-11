@@ -10,6 +10,8 @@ from content.views.note import (
     ProfileNoteList,
     PublicNoteList,
     WelcomeNoteList,
+    StartDownloadNoteView,
+    DownloadNoteView,
     bookmark_note,
     download_note,
     like_note,
