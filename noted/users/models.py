@@ -306,6 +306,9 @@ class AuthToken(models.Model):
     created = models.DateTimeField(_("Created"), auto_now_add=True)
     type = models.CharField(_("Type"), max_length=2, choices=TYPES)
 
+    def __str__(self):
+        return "{token} ({type})".format(token=self.token, type=self.type)
+
     @classmethod
     def get_from_str(
         cls, token: str, type: Literal["sn", "cm"]

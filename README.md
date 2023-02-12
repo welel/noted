@@ -80,23 +80,17 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 ## 🔥 Features
 
-* Registration, authentication, authorization
-  * with socials (google, github, yandex)
-* WYSIWYG Markdown editing
-* Internationalization (English, Russian)
-* User profile
-* Following system
-* Tagging
-* Search
-* Bookmarks
-* Likes
-* Sharing content (twitter, whatsapp, telegram)
-* Download posts (md, pdf, html)
-* Twitter Bootstrap integration
-* Responsive (modile) design
-* Dark mode
-* Code documentation
-* GitHub API Integration (markdown)
+| Feature                  | Description                                                                                                                                                                                                                                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| User Accounts            | Users can create an account to access additional features, log in to their account. **Social authentication** is also supported with Google, GitHub, or Yandex accounts.                                                                                                                                                           |
+| Content Management       | Users can **create and edit** content using a user-friendly interface (WYSIWYG Markdown Editor), and content can be **tagged** for easier categorization and searching. Users can also **bookmark** posts to easily access them later and **like** posts to show their appreciation. Posts can be **downloaded** in Markdown, PDF, or HTML format. |
+| User Interaction         | Users have a **profile** page that displays their information and activity (notes). Users can **follow** other users to see their activity and **share content** on Twitter, WhatsApp, and Telegram.                                           |
+| Search                   | Users can search for content based on keywords, tags and sources.                                                                                                                                                                                                                                                              |
+| Design                   | The site uses Twitter Bootstrap for **responsive** layout and UI elements and is designed to be mobile-friendly, and the site offers a **dark mode** for users who prefer it.                                                                                                                                                          |
+| Internationalization     | Site is available in both English and Russian                                                                                                                                                                                                                                                                                  | 
+| Code Tests/Documentation | Code is documented to make it easier to understand and maintain. Automated tests are used to check for functionality, identify bugs, and ensure optimal performance.                                                                                                                                                           |
+|Caching System|Site uses caching to improve performance. **Asynchronous tasks** are used to improve responsiveness.|
+|GitHub API Integration|Site integrates with GitHub API to render markdown files in the HTML format (with code highlighting).
 
 </br>
 
@@ -107,8 +101,8 @@ Dark mode / code highlight / code full-screen / mobile version.
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/djangoproject/djangoproject-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/redis/redis-ar21.svg"></code>
-  <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
-  <br/>
+  <code><img width="10%" src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_8a31c306355eb532650043bf039d70a7/python-celery.png"></code>
+  </br>
   
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/nginx/nginx-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/gunicorn/gunicorn-ar21.svg"></code>
@@ -117,6 +111,7 @@ Dark mode / code highlight / code full-screen / mobile version.
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/linux/linux-ar21.svg"></code>
   </br>
   
+  <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/netlifyapp_watercss/netlifyapp_watercss-ar21.svg"></code>
   <code><img width="10%" src="https://www.vectorlogo.zone/logos/getbootstrap/getbootstrap-ar21.svg"></code>
@@ -124,6 +119,8 @@ Dark mode / code highlight / code full-screen / mobile version.
 </br>
 
 ## 🏗️ Installation
+
+> The instruction actual for: main - hash: 3c82f747432a25bafaad5aa07128b87f0b4e42bc
 
 0. Prerequisites:
 

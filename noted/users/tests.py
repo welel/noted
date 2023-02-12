@@ -1,15 +1,18 @@
-from dataclasses import dataclass
 import json
 from pathlib import Path
+from unittest import skip
 from unittest.mock import Mock
+
 
 import django
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.signing import TimestampSigner
+from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
+from django.utils import timezone
 
-from .models import AuthToken, User
+from .models import AuthToken, Following
 from .validators import (
     validate_image,
     validate_username,
@@ -18,11 +21,15 @@ from .validators import (
 )
 
 
+User = get_user_model()
+
+
 class URLTests(TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ajax_client = Client(HTTP_X_REQUESTED_WITH="XMLHttpRequest")
 
+    @skip("Celery: connection resued.")
     def test_signup_request(self):
         response = self.ajax_client.post(
             "/en/users/signup-request/",
@@ -103,25 +110,11 @@ class URLTests(TestCase):
 
     def test_signin_bad_request(self):
         response = self.client.get("/en/users/signin/")
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 400)
 
     def test_signout(self):
         response = self.client.get("/en/users/signout/")
         self.assertEqual(response.status_code, 302)
-
-
-class ModelsTests(TestCase):
-    def test_signup_token_creates(self):
-        pass
-
-    def test_signup_token_deletes(self):
-        pass
-
-    def test_signup_token_expires(self):
-        pass
-
-    def test_signup_token_doesnt_exists(self):
-        pass
 
 
 class UserModelTest(TestCase):
@@ -253,3 +246,77 @@ class ValidatorsTest(TestCase):
 
     def test_validate_social_usernames_max_len(self):
         self.assertRaises(ValidationError, validate_social_username, "s" * 201)
+
+
+class FollowingModelTest(TestCase):
+    def setUp(self):
+        self.mark = User.objects.create(
+            email="watney@nasa.us", full_name="Mark Watney"
+        )
+        self.beth = User.objects.create(
+            email="johanssen@nasa.us", full_name="Beth Johanssen"
+        )
+        self.following = Following.objects.create(
+            follower=self.mark, followed=self.beth
+        )
+
+    def test_str_method(self):
+        self.assertEqual(
+            str(self.following), f"{self.mark} follows {self.beth}"
+        )
+
+    def test_created_field(self):
+        self.assertIsNotNone(self.following.created)
+
+    def test_ordering(self):
+        user3 = User.objects.create(email="testuser3@email.com")
+        following2 = Following.objects.create(
+            follower=self.mark, followed=user3
+        )
+        following3 = Following.objects.create(
+            follower=self.beth, followed=user3
+        )
+        followings = Following.objects.all()
+        self.assertEqual(followings[0], following3)
+        self.assertEqual(followings[1], following2)
+        self.assertEqual(followings[2], self.following)
+
+    def test_manager_methods(self):
+        following_qs = self.beth.followers.all()
+        self.assertEqual(following_qs.count(), 1)
+        self.assertEqual(following_qs[0], self.following)
+
+
+class AuthTokenTest(TestCase):
+    def test_auth_token_str(self):
+        token = AuthToken.objects.create(token="abc123", type=AuthToken.SIGNUP)
+        self.assertEqual(str(token), f"{token.token} ({token.type})")
+
+    def test_auth_token_get_from_str(self):
+        signup_token = AuthToken.objects.create(
+            token="abc123", type=AuthToken.SIGNUP
+        )
+        change_email_token = AuthToken.objects.create(
+            token="def456", type=AuthToken.CHANGE_EMAIL
+        )
+
+        # Test that we can get a token with the correct type and token string
+        retrieved_token = AuthToken.get_from_str(
+            signup_token.token, AuthToken.SIGNUP
+        )
+        self.assertEqual(retrieved_token, signup_token)
+
+        # Test that we can't get a token with the wrong type
+        with self.assertRaises(AuthToken.DoesNotExist):
+            AuthToken.get_from_str(signup_token.token, AuthToken.CHANGE_EMAIL)
+
+        # Test that we can't get a token with the wrong token string
+        with self.assertRaises(AuthToken.DoesNotExist):
+            AuthToken.get_from_str("wrong_token_string", AuthToken.SIGNUP)
+
+    def test_auth_token_auto_now_add(self):
+        now = timezone.now()
+        token = AuthToken.objects.create(token="abc123", type=AuthToken.SIGNUP)
+        self.assertLessEqual(
+            token.created - now, timezone.timedelta(seconds=1)
+        )

@@ -2,6 +2,8 @@
 
 from .base import *
 
+from celery.schedules import crontab
+
 
 DEBUG = False
 
@@ -35,3 +37,12 @@ CACHES = {
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+CELERY_BROKER_URL = get_env_variable("REDIS_LOCATION")
+CELERY_RESULT_BACKEND = get_env_variable("REDIS_LOCATION")
+CELERY_BEAT_SCHEDULE = {
+    "telegram_report_task": {
+        "task": "common.tasks.telegram_report_task",
+        "schedule": crontab(minute=45, hour=21 - 3),
+    },
+}
