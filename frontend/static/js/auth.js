@@ -22,6 +22,31 @@ const validateEmail = (email) => {
 };
 
 
+function getStatus(taskID, successModalId) {
+    $.ajax({
+      url: taskStatusUrl,
+      data: {"task_id": taskID},
+      method: 'GET',
+      success: (res) => {
+          const taskStatus = res.task_status;
+          const taskResult = res.task_result;
+      
+          if (taskStatus === 'SUCCESS' && taskResult) {
+            $(successModalId).modal('show');
+            return false;
+          }
+          setTimeout(function() {
+            getStatus(res.task_id, successModalId);
+          }, 1000);
+      },
+      error: (res) => {
+        $('#server-error-modal').modal('show');
+        console.log("A task faield: " + res)
+      }
+    })
+  }
+
+
 /**
  *  An ajax request on sending the sing up email to a user.
  * 
@@ -46,9 +71,9 @@ function sendSignupEmail(email) {
                     emailInputField.classList.add('is-invalid');
                     feedbackMessageElement.innerHTML = EMAIL_INVALID_MESSAGE;
                     break;
-                case 'sent':
+                case 'started':
                     $('#signup').modal('hide');
-                    $('#signup-end').modal('show');
+                    getStatus(data.task_id, '#signup-end');
                     break;
                 default:
                     emailInputField.classList.add('is-invalid');

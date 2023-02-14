@@ -21,5 +21,9 @@ CACHES = {
     }
 }
 
+
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+CELERY_BROKER_URL = get_env_variable("REDIS_LOCATION")
+CELERY_RESULT_BACKEND = get_env_variable("REDIS_LOCATION")

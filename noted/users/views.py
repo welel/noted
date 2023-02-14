@@ -4,6 +4,7 @@ from abc import ABC, abstractclassmethod
 from typing import Callable, Type
 
 from allauth.account.models import EmailAddress
+from celery.result import AsyncResult
 
 from django.conf import settings
 from django.contrib import messages as msg
@@ -24,15 +25,7 @@ from common.decorators import ajax_required
 from common.logging import LoggerDecorator as logit
 from content.models import Note
 
-from .auth import (
-    MESSAGES,
-    StringToken,
-    TokenData,
-    get_token,
-    send_changeemail_email,
-    send_signup_email,
-    unsign_email,
-)
+from .auth import MESSAGES, StringToken, TokenData, get_token, unsign_email
 from .forms import (
     DeleteUserForm,
     SignupForm,
@@ -41,9 +34,26 @@ from .forms import (
     validate_username,
 )
 from .models import AuthToken, Following, User
+from .tasks import send_changeemail_email_task, send_signup_email_task
 
 
 logger = logging.getLogger(__name__)
+
+
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
+class TaskStatusView(View):
+    def get(self, request):
+        task_id = request.GET.get("task_id")
+        task = AsyncResult(task_id)
+        if task.status == "FAILURE":
+            return JsonResponse({"msg": "task faield"}, status=500)
+        response = {
+            "task_id": task.id,
+            "task_status": task.status,
+            "task_result": task.result,
+        }
+        return JsonResponse(response, status=200)
 
 
 @method_decorator(logit(__name__), name="dispatch")
@@ -52,10 +62,10 @@ class TokenizedEmailView(ABC, View):
     """An abstract view class for sending tokenized emails to a user."""
 
     @abstractclassmethod
-    def get_send_email_function(self) -> Callable:
-        """Returns a funtion for sending emails.
+    def get_send_email_task(self) -> Callable:
+        """Returns a task for sending emails.
 
-        The functions should take one positional argument - email (str),
+        The task should take one positional argument - email (str),
         which is an addressee.
         """
         ...
@@ -66,23 +76,22 @@ class TokenizedEmailView(ABC, View):
             _validate_email(email)
         except ValidationError:
             return JsonResponse({"msg": "invalid"}, status=200)
-        if self.get_send_email_function()(email):
-            return JsonResponse({"msg": "sent"}, status=200)
-        return JsonResponse({"msg": "error"}, status=200)
+        task = self.get_send_email_task().delay(email)
+        return JsonResponse({"msg": "started", "task_id": task.id}, status=202)
 
 
 class SignupEmailView(TokenizedEmailView):
     """Send sing up email to a client with the link to the sign up form."""
 
-    def get_send_email_function(self) -> Callable:
-        return send_signup_email
+    def get_send_email_task(self) -> Callable:
+        return send_signup_email_task
 
 
 class ChangeemailEmailView(TokenizedEmailView):
     """Send change email message to a client with the link to the change view."""
 
-    def get_send_email_function(self) -> Callable:
-        return send_changeemail_email
+    def get_send_email_task(self) -> Callable:
+        return send_changeemail_email_task
 
 
 @method_decorator(logit(__name__), name="dispatch")
@@ -153,7 +162,8 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
             msg.add_message(request, msg.WARNING, MESSAGES["signed_social"])
             return redirect(reverse("users:settings"))
         with atomic():
-            request.user.update(email=email)
+            request.user.email = email
+            request.user.save()
             token.delete()
         msg.add_message(request, msg.INFO, MESSAGES["email_changed"])
         return redirect(reverse("content:home"))
@@ -197,7 +207,9 @@ class SignupView(TokenMixin, View):
         if form.is_valid():
             with atomic():
                 user = form.save(commit=False)
-                user.update(email=email, is_active=True)
+                user.email = email
+                user.is_active = True
+                user.save()
                 token.delete()
             login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
             return redirect(reverse("content:home"))

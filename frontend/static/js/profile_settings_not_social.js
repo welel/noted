@@ -29,9 +29,9 @@ function sendChangeEmailToken() {
                 case 'invalid':
                     setInvalid(emailInputElement, feedbackEmailElement, EMAIL_INVALID_MESSAGE);
                     break;
-                case 'sent':
+                case 'started':
                     $('#change-email-modal').modal('hide');
-                    $('#change-email-end').modal('show');
+                    getStatus(data.task_id, '#change-email-end');
                     break;
                 default:
                     setInvalid(emailInputElement, feedbackEmailElement, SERVER_ERROR_MESSAGE);

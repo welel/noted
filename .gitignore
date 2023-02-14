@@ -24,3 +24,4 @@ dev/
 .isort.cfg
 mypy.ini
 .mypy_cache/
+celerybeat-schedule.db

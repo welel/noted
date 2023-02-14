@@ -6,7 +6,7 @@ from content.models import Source
 from users.models import User
 
 from .decorators import ajax_required
-from .text import generate_unique_slug
+from .text import generate_unique_slug, transcript_ru2en, is_latin
 
 
 class Tests(TestCase):
@@ -52,3 +52,24 @@ class Tests(TestCase):
         request = HttpRequest()
         request.user = User.objects.first()
         self.assertIsInstance(view(request), HttpResponseBadRequest)
+
+    def test_transcript_ru2en(self):
+        self.assertEqual(transcript_ru2en("Привет, миръ!"), "Privet, mir!")
+        self.assertEqual(
+            transcript_ru2en(
+                "Транслитерация русского текста на английский язык."
+            ),
+            "Transliteracia russkogo teksta na angliiskii azik.",
+        )
+
+    def test_is_latin_with_latin_word(self):
+        self.assertTrue(is_latin("Hello"))
+
+    def test_is_latin_with_non_latin_word(self):
+        self.assertFalse(is_latin("Привет"))
+
+    def test_is_latin_with_mixed_word(self):
+        self.assertFalse(is_latin("Hello мир"))
+
+    def test_is_latin_with_empty_word(self):
+        self.assertTrue(is_latin(""))

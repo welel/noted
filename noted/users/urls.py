@@ -40,4 +40,5 @@ urlpatterns = [
     path("signout/", LogoutView.as_view(), name="signout"),
     path("settings/", views.UpdateUserProfile.as_view(), name="settings"),
     path("follow/", views.FollowUserView.as_view(), name="follow"),
+    path("task-status/", views.TaskStatusView.as_view(), name="task_status"),
 ]

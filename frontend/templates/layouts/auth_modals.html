@@ -86,6 +86,23 @@
     </div>
     </div>
 </div>
+<!-- Modal server error -->
+<div class="modal fade" id="server-error-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+            <div class="container-fluid mb-5" style="max-width: 300px;">
+                <div class="row">
+                    <p class="text-center fs-3 mt-5">{% trans "Something went wrong." %}</p>
+                    <p class="text-center mt-4">{% trans "Try again! If you still get an error, report this or try later." %}</p>
+                    <button type="button" class="btn btn-success rounded-pill mt-5 px-4 text-center" data-bs-dismiss="modal">{% trans "OK" %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
 <!-- Modal sign out -->
 <div class="modal fade" id="signout-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -107,4 +124,7 @@
     <span id="validate_email_url" class="js-context" hidden>{% url 'users:validate_email' %}</span>
     <span id="signup_email_url" class="js-context" hidden>{% url 'users:signup_request' %}</span>
     <span id="signin_url" class="js-context" hidden>{% url 'users:signin' %}</span>
+    <script>
+        const taskStatusUrl = '{% url "users:task_status" %}';
+    </script>
 <!-- endcontext -->
