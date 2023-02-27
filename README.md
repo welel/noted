@@ -120,8 +120,6 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 ## 🏗️ Installation
 
-> The instruction actual for: main - hash: 3c82f747432a25bafaad5aa07128b87f0b4e42bc
-
 0. Prerequisites:
 
 - `apt-get install wkhtmltopdf` for PDF files generation.
@@ -130,27 +128,23 @@ Dark mode / code highlight / code full-screen / mobile version.
 1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
 
     To use trigrams in PostgreSQL, you will need to install the `pg_trgm`
-    extension first. Execute the following command from the shell to connect to your
-    database:
-    `psql [db_name]`
-    Then, execute the following command to install the `pg_trgm` extension:
+    extension first. 
+    Execute the following command to install the `pg_trgm` extension inside a database:
     `CREATE EXTENSION pg_trgm;`
 
 2. Clone or download the repository.
    
-3. Create [virtual environment and install requirements](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) from `requirements/local.txt`.
+3. Create and activate [virtual environment and install requirements](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) from `requirements/local.txt` using Python 3.10.
 
-4. Fill `.env.dist` file with required data and rename it to `.env`.
+4. Fill `.env.dist` file with required data and rename it to `.env`. Minimal requirements are `SECRET_KEY` and the database cofiguration (but then the functionality will be limited).
 
 5. Make migrations and migrate with a custom command[1] or via Makefile[2].
 
 ```
+# [1]
 python manage.py makemigrate --settings=core.settings.local
-```
 
-or
-
-```
+# [2]
 make setdb
 ```
 
@@ -164,12 +158,17 @@ CACHES = {
 }
 ```
 
-7. Run the development server.
+7. Set up Celery worker and Celery beat.
+
+8. Run the development server with one of the following commands.
 
 ```
+# [1]
 python manage.py runserver --settings=core.settings.local
-```
 
+# [2]
+make run
+```
 
 </br>
 

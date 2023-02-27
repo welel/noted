@@ -67,7 +67,7 @@ Require script `js/auth.js`
                 {% endif %}
                 </a>
             </li>
-            <li><button id="theme-btn" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
+            <li><button id="theme-btn" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>
@@ -123,7 +123,7 @@ Require script `js/auth.js`
                     {% endif %}
                     </a>
                 </li>
-                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
+                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>

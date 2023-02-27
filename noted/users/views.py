@@ -329,3 +329,15 @@ class FollowUserView(LoginRequiredMixin, View):
             return JsonResponse({"status": "ok"})
 
         return JsonResponse({"status": "error"})
+
+
+@method_decorator(logit(__name__), name="dispatch")
+@method_decorator(ajax_required(type="method"), name="dispatch")
+class ThemeSwitcherView(LoginRequiredMixin, View):
+    def get(self, request):
+        """Handle ajax request for toggling the site color theme."""
+        current_theme = request.user.profile.settings.get("theme")
+        theme = "dark" if current_theme == "ligth" else "ligth"
+        request.user.profile.set_theme(theme)
+        request.user.profile.save()
+        return JsonResponse({"status": "ok", "theme": theme})

@@ -27,6 +27,7 @@ function getStatus(taskID, successModalId) {
       url: taskStatusUrl,
       data: {"task_id": taskID},
       method: 'GET',
+      headers: {"X-Requested-With": "XMLHttpRequest"},
       success: (res) => {
           const taskStatus = res.task_status;
           const taskResult = res.task_result;

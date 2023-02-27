@@ -41,4 +41,7 @@ urlpatterns = [
     path("settings/", views.UpdateUserProfile.as_view(), name="settings"),
     path("follow/", views.FollowUserView.as_view(), name="follow"),
     path("task-status/", views.TaskStatusView.as_view(), name="task_status"),
+    path(
+        "switch-theme/", views.ThemeSwitcherView.as_view(), name="switch_theme"
+    )
 ]
