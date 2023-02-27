@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-28 14:02+0300\n"
+"POT-Creation-Date: 2023-02-27 23:00+0300\n"
 "PO-Revision-Date: 2023-01-14 12:08+0000\n"
 "Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,11 +72,10 @@ msgstr "Начните писать свою запись..."
 msgid "Unfollow"
 msgstr "Отписаться"
 
-#: static/js/theme_switch.js:10 static/js/theme_switch.js:11
-#: static/js/theme_switch.js:26 static/js/theme_switch.js:27
-msgid "Light theme"
-msgstr "Светлая тема"
-
-#: static/js/theme_switch.js:16 static/js/theme_switch.js:17
+#: static/js/theme_switch.js:18 static/js/theme_switch.js:19
 msgid "Dark theme"
 msgstr "Тёмная тема"
+
+#: static/js/theme_switch.js:25 static/js/theme_switch.js:26
+msgid "Light theme"
+msgstr "Светлая тема"

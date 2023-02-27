@@ -13,4 +13,4 @@ def theme(user_theme: Literal["ligth", "dark"]) -> str:
         theme_path = settings.LIGTH_THEME_PATH
     else:
         theme_path = settings.DARK_THEME_PATH
-    return "{}/{}".format(settings.STATIC_URL, theme_path)
+    return "{}{}".format(settings.STATIC_URL, theme_path)
