@@ -1,6 +1,8 @@
 <!doctype html>
 <!-- Root template for all templates -->
 {% load static %}
+{% load settingstags %}
+
 <html {% block itemscope %}{% endblock %}>
 <head>
     <title>{% block title %}NoteD.{% endblock %}</title>
@@ -8,10 +10,11 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,maximum-scale=1">
     {% block extra_meta %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" integrity="sha512-oHDEc8Xed4hiW6CxD7qjbnI+B07vDdX7hEPTvn9pSZO1bcRqHp8mj9pyr+8RVC2GmtEfI2Bi9Ke9Ass0as+zpg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link id="color-theme" rel="stylesheet" href="{% static 'css/ligth_theme.css' %}">
+    <link id="color-theme" rel="stylesheet" href="{{ user.profile.settings.theme|theme }}">
     {% block extra_head %}{% endblock %}
 </head>
 {% comment %} <body class="pb-5"> {% endcomment %}
@@ -59,6 +62,7 @@
 
     {% block main %}{% endblock %}
     
+    <a id="switch-theme-url" href="{% url 'users:switch_theme' %}" hidden></a>
     <a id="css-light-theme-url" href="{% static 'css/ligth_theme.css' %}" hidden></a>
     <a id="css-dark-theme-url" href="{% static 'css/dark_theme.css' %}" hidden></a>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

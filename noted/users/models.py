@@ -183,6 +183,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return name
 
 
+def default_profile_settings():
+    return {"theme": "ligth",}
+
+
 class UserProfile(models.Model):
     """Additional fields for the :models:`User` model.
 
@@ -190,6 +194,7 @@ class UserProfile(models.Model):
         location: Simple text to indicate user's location (country, city, etc.)
             at the discretion of the user.
         socials: JSON with links to user's social media ({"social_name":"link"})
+        settings: JSON with profile+user settings.
     """
 
     user = models.OneToOneField(
@@ -208,6 +213,9 @@ class UserProfile(models.Model):
     location = models.CharField(_("Location"), max_length=40, blank=True)
     socials = models.JSONField(
         _("Social Media Links"), blank=True, default=default_social_media_json
+    )
+    settings = models.JSONField(
+        _("Settings"), blank=True, default=default_profile_settings
     )
     tags = TaggableManager(
         through=UnicodeTaggedItem,
@@ -248,6 +256,11 @@ class UserProfile(models.Model):
     def is_socials(self) -> bool:
         """Checks does an user have social media."""
         return self.twitter or self.facebook or self.github
+    
+    def set_theme(self, theme: Literal["ligth", "dark"]):
+        if theme not in ("ligth", "dark"):
+            raise KeyError("Available themes: light, dark.")
+        self.settings["theme"] = theme
 
 
 class FollowingManager(models.Manager):

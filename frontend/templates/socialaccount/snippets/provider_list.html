@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+
+<div class="container-fluid d-flex justify-content-center">
+  <div class="row mt-3" style="max-width: 250px;">
+
+{% for provider in socialaccount_providers %}
+{% if provider.id == "openid" %}
+{% for brand in provider.get_brands %}
+<li>
+  <a title="{{brand.name}}" 
+     class="socialaccount_provider {{provider.id}} {{brand.id}}" 
+     href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+     >{{brand.name}}</a>
+</li>
+{% endfor %}
+{% endif %}
+  <a title="{{provider.name}}"
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
+     type="button"
+     class="btn btn-outline-dark rounded-pill mt-3 social-sign-red socialaccount_provider {{provider.id}}">
+  {% blocktrans with name=provider.name %}Sign in with {{ name }}{% endblocktrans %}
+  </a>
+{% endfor %}
+
+  </div>
+</div>
