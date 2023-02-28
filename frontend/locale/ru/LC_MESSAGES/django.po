@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 23:09+0300\n"
-"PO-Revision-Date: 2023-02-27 20:13+0000\n"
-"Last-Translator: Anonymous User <pavel.loginov.dev@gmail.com>\n"
+"POT-Creation-Date: 2023-02-28 13:37+0300\n"
+"PO-Revision-Date: 2023-02-28 10:42+0000\n"
+"Last-Translator: Anonymous User <qq@qq.qq>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -257,9 +257,6 @@ msgid "User Accounts"
 msgstr "Аккаунты пользователя"
 
 #: noted/users/auth.py:21
-#| msgid ""
-#| "You already registered. If you didn't register, request              for "
-#| "another link!"
 msgid ""
 "You already registered or the URL link is invalid. If you didn't register, "
 "request for another link!"
@@ -268,7 +265,6 @@ msgstr ""
 "регистрации."
 
 #: noted/users/auth.py:25
-#| msgid "You already changed email. If you didn't, make request again!"
 msgid ""
 "You already changed email or the URL link is invalid. If you didn't, make "
 "request again!"
@@ -284,14 +280,10 @@ msgstr ""
 "зарегистрировались через сторонний сервис."
 
 #: noted/users/auth.py:32
-#| msgid "The email successfully changed."
 msgid "The email was successfully changed."
 msgstr "Электронная почта успешно изменена."
 
 #: noted/users/auth.py:34
-#| msgid ""
-#| "Sorry, but we could not find a user account with"
-#| "                             that email."
 msgid "Sorry, but we could not find a user account with that email."
 msgstr "Очень жаль, но мы не можем найти пользователя с таким email'ом."
 
@@ -339,8 +331,8 @@ msgstr "Сохранить все мои публичные записи ано�
 msgid "Delete all my notes and delete account."
 msgstr "Удалить аккаунт и все записи."
 
-#: noted/users/models.py:108 templates/layouts/auth_modals.html:37
-#: templates/layouts/auth_modals.html:60
+#: noted/users/models.py:108 templates/account/login.html:41
+#: templates/layouts/auth_modals.html:37 templates/layouts/auth_modals.html:60
 #: templates/users/profile_settings.html:52
 msgid "Email"
 msgstr "Электронная почта"
@@ -421,12 +413,10 @@ msgid "Tag subscriptions"
 msgstr "Подписки на теги"
 
 #: noted/users/models.py:315
-#| msgid "Sign Up"
 msgid "Sign Up Token"
 msgstr "Токен Регистрации"
 
 #: noted/users/models.py:316
-#| msgid "Change Email"
 msgid "Change Email Token"
 msgstr "Токен Изменения Email"
 
@@ -440,7 +430,6 @@ msgid "Max size of file is {limit_kb} KB."
 msgstr "Максимальный размер файла {limit_kb} KB."
 
 #: noted/users/validators.py:36
-#| msgid "username"
 msgid "Bad username type."
 msgstr "Плохой тип имени пользователя."
 
@@ -485,7 +474,6 @@ msgid "Username should contain less than 200 symbols."
 msgstr "Имя пользователя должно состоять не более чем из 200 символов."
 
 #: noted/users/views.py:157 noted/users/views.py:187 noted/users/views.py:203
-#| msgid "Token"
 msgid "Token Error"
 msgstr "Токен Ошибки"
 
@@ -661,6 +649,69 @@ msgstr ""
 msgid "In case you forgot, your username is %(username)s."
 msgstr "Ваше имя пользователя - %(username)s."
 
+#: templates/account/login.html:6 templates/account/login.html:11
+#: templates/account/login.html:50 templates/layouts/navigation.html:47
+msgid "Sign In"
+msgstr "Вход"
+
+#: templates/account/login.html:16
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"/\">sign up</a>\n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+"Войдите на сайт через один\n"
+"из доступных сервисов. Или, <a href=\"/\">зарегистрируйтесь</a>\n"
+"на %(site_name)s:"
+
+#: templates/account/login.html:28
+#| msgid "Sign in with email"
+msgid "Sign in with email:"
+msgstr "Вход через email"
+
+#: templates/account/login.html:35
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"<a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+"Если вы ещё не зарегистрировались, тогда\n"
+"<a href=\"%(signup_url)s\">зарегистрируйтесь</a> для начала."
+
+#: templates/account/login.html:43 templates/layouts/auth_modals.html:39
+#: templates/users/profile_settings.html:81 templates/users/signup.html:44
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/account/login.html:45
+msgid "Remember me"
+msgstr "Запомнить меня"
+
+#: templates/account/login.html:53 templates/account/password_change.html:33
+msgid "Forgot Password?"
+msgstr "Забыли пароль?"
+
+#: templates/account/login.html:54 templates/layouts/auth_modals.html:19
+msgid "No account?"
+msgstr "Нет аккаунта?"
+
+#: templates/account/login.html:54 templates/layouts/auth_modals.html:19
+msgid "Create one."
+msgstr "Тогда создайте."
+
+#: templates/account/login.html:55 templates/layouts/auth_modals.html:20
+#: templates/layouts/auth_modals.html:43
+msgid "By signing in, you agree to our "
+msgstr "Входя на сайт, вы соглашаетесь с нашей "
+
+#: templates/account/login.html:55 templates/layouts/auth_modals.html:20
+#: templates/layouts/auth_modals.html:43 templates/layouts/auth_modals.html:65
+#: templates/layouts/sidebar/footer.html:10 templates/privacy_policy.html:7
+#: templates/privacy_policy.html:17
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
 #: templates/account/password_change.html:5
 #: templates/account/password_change.html:8
 #: templates/account/password_change.html:32
@@ -696,10 +747,6 @@ msgstr "Новый пароль"
 #: templates/account/password_change.html:31
 msgid "New Password (again)"
 msgstr "Новый пароль (повторите)"
-
-#: templates/account/password_change.html:33
-msgid "Forgot Password?"
-msgstr "Забыли пароль?"
 
 #: templates/account/password_reset.html:16
 msgid ""
@@ -1168,25 +1215,6 @@ msgstr "Вход через Yandex"
 msgid "Sign in with Email"
 msgstr "Вход по email"
 
-#: templates/layouts/auth_modals.html:19
-msgid "No account?"
-msgstr "Нет аккаунта?"
-
-#: templates/layouts/auth_modals.html:19
-msgid "Create one."
-msgstr "Тогда создайте."
-
-#: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
-msgid "By signing in, you agree to our "
-msgstr "Входя на сайт, вы соглашаетесь с нашей "
-
-#: templates/layouts/auth_modals.html:20 templates/layouts/auth_modals.html:43
-#: templates/layouts/auth_modals.html:65
-#: templates/layouts/sidebar/footer.html:10 templates/privacy_policy.html:7
-#: templates/privacy_policy.html:17
-msgid "Privacy Policy"
-msgstr "Политика конфиденциальности"
-
 #: templates/layouts/auth_modals.html:35
 msgid "Sign in with email"
 msgstr "Вход через email"
@@ -1195,11 +1223,6 @@ msgstr "Вход через email"
 msgid ""
 "Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
-
-#: templates/layouts/auth_modals.html:39
-#: templates/users/profile_settings.html:81 templates/users/signup.html:44
-msgid "Password"
-msgstr "Пароль"
 
 #: templates/layouts/auth_modals.html:42 templates/layouts/auth_modals.html:64
 #: templates/layouts/auth_modals.html:115
@@ -1269,10 +1292,6 @@ msgstr "Главная"
 #: templates/layouts/navigation.html:39
 msgid "Write note"
 msgstr "Создать запись"
-
-#: templates/layouts/navigation.html:47
-msgid "Sign In"
-msgstr "Вход"
 
 #: templates/layouts/navigation.html:70 templates/layouts/navigation.html:126
 msgid "Dark theme"
@@ -1681,6 +1700,12 @@ msgstr ""
 "электронной почты привязанный к этому аккаунту уже существует на NoteD. "
 "Пожалуйста, войдите с помощью существующей электронной почты или "
 "зарегистрируйте новую. "
+
+#: templates/socialaccount/snippets/provider_list.html:25
+#, python-format
+#| msgid "Sign in with Yandex"
+msgid "Sign in with %(name)s"
+msgstr "Вход через %(name)s"
 
 #: templates/tags/tag_details.html:8
 msgid "The notes about"
