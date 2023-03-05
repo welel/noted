@@ -9,8 +9,8 @@ register = template.Library()
 
 @register.filter
 def theme(user_theme: Literal["ligth", "dark"]) -> str:
-    if user_theme == "ligth":
-        theme_path = settings.LIGTH_THEME_PATH
-    else:
+    if user_theme == "dark":
         theme_path = settings.DARK_THEME_PATH
+    else:
+        theme_path = settings.LIGTH_THEME_PATH
     return "{}{}".format(settings.STATIC_URL, theme_path)

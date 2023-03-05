@@ -101,6 +101,12 @@ hr {
     border-color: var(--dr-sl);
     color: var(--dr-cl);
 }
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+.modal-content {
+    border: 1px solid #404040 !important;
+}
 
 
 /* SIGNUP */
@@ -139,6 +145,15 @@ hr {
 }
 .source-table-row:hover {
     background-color: #ececec;
+}
+.bootstrap-tagsinput input {
+    background-color: #222831;
+}
+.CodeMirror-cursor {
+    border-left: 1px solid #a5a7ab !important;
+}
+.bootstrap-tagsinput {
+    border: solid 1px #393e46 !important;
 }
 
 /* TABS */

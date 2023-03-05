@@ -110,6 +110,12 @@
     background-color: rgb(21, 130, 255) !important;
     border-color: black !important;
 }
+.btn-close {
+    filter: invert(0) grayscale(100%) brightness(200%);
+}
+.modal-content {
+    border: none !important;
+}
 
 
 /* SIGNUP */
@@ -139,6 +145,15 @@
 }
 .source-table-row:hover {
     background-color: #ececec;
+}
+.bootstrap-tagsinput input {
+    background-color: #fff;
+}
+.CodeMirror-cursor {
+    border-left: 1px solid #222831 !important;
+}
+.bootstrap-tagsinput {
+    border: solid 1px #ced4da !important;
 }
 
 

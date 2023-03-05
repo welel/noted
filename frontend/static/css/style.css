@@ -166,6 +166,10 @@ h1, h2, h3, h4, h5, h6 {
 #draft-btn:hover {
     background-color: var(--bs-gray-400);
 }
+.bootstrap-tagsinput input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
 
 
 /* SEARCH */

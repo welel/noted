@@ -76,3 +76,12 @@ function setInvalid(element, feedback, message) {
     element.classList.remove('is-valid');
     element.classList.add('is-invalid');
 }
+
+
+// Set timeout for bootstrap alerts (3 sec)
+setTimeout(() => { 
+    var alerts = document.getElementsByClassName("alert");
+    for (var i = 0; i < alerts.length; i++) {
+        alerts.item(i).style.display = "none";
+    }
+ }, 3000);
