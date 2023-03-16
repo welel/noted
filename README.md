@@ -122,6 +122,9 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 0. Prerequisites:
 
+- `sudo apt install g++`
+- `sudo apt install build-essential`
+- `apt install libpq-dev python3-dev`
 - `apt-get install wkhtmltopdf` for PDF files generation.
 - `apt-get -y install gettext` for translation.
 

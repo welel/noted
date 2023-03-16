@@ -25,3 +25,4 @@ dev/
 mypy.ini
 .mypy_cache/
 celerybeat-schedule.db
+celerybeat-schedule
