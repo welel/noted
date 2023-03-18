@@ -3,7 +3,7 @@ import os
 from celery import Celery
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.prodaction")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
 
 app = Celery("core")
 

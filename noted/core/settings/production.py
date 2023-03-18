@@ -1,4 +1,4 @@
-"""The project settings for the prodaction."""
+"""The project settings for the production."""
 
 from .base import *
 
