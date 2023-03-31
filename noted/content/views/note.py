@@ -40,7 +40,6 @@ from django.views.generic.edit import DeleteView
 
 from actions import base as act
 from actions.models import Action
-from common import logging as log
 from common.cache import cache_queryset
 from common.decorators import ajax_required
 from content.forms import NoteForm
@@ -457,13 +456,14 @@ def download_note(request, filetype: str, slug: str):
     file = note.generate_file_to_response(filetype=filetype)
     if not file or (note.draft and request.user != note.author):
         logger.error(
-            log.VIEW_LOG_TEMPLATE.format(
-                view=download_note.__name__,
-                user=request.user,
-                method=request.method,
-                path=request.path,
-            )
-            + "Can't generate a file."
+            # TODO: Change on `LogMessage``
+            # log.VIEW_LOG_TEMPLATE.format(
+            #     view=download_note.__name__,
+            #     user=request.user,
+            #     method=request.method,
+            #     path=request.path,
+            # )
+            "Can't generate a file."
         )
         return HttpResponseBadRequest()
     response = HttpResponse(

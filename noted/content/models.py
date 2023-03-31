@@ -239,6 +239,7 @@ class Note(models.Model):
         )
         if image:
             return image.get("src")
+        return None
 
     def generate_md_file(self) -> io.BytesIO:
         """Generates .md file of the note."""

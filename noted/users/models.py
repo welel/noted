@@ -256,7 +256,7 @@ class UserProfile(models.Model):
     @property
     def is_socials(self) -> bool:
         """Checks does an user have social media."""
-        return self.twitter or self.facebook or self.github
+        return bool(self.twitter or self.facebook or self.github)
 
     def set_theme(self, theme: Literal["ligth", "dark"]):
         if theme not in ("ligth", "dark"):
@@ -325,7 +325,7 @@ class AuthToken(models.Model):
 
     @classmethod
     def get_from_str(
-        cls, token: str, type: Literal["sn", "cm"]
+        cls, token: str, type: Literal["cm", "su"]
     ) -> "AuthToken":
         """Gets a token from database by the token string and the type."""
         return cls.objects.get(token=token, type=type)

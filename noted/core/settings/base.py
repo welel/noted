@@ -336,5 +336,5 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"
 
 # Profile settings
-LIGTH_THEME_PATH="css/ligth_theme.css"
-DARK_THEME_PATH="css/dark_theme.css"
+LIGTH_THEME_PATH = "css/ligth_theme.css"
+DARK_THEME_PATH = "css/dark_theme.css"

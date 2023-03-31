@@ -27,7 +27,7 @@ class MarkdownField(SimpleMDEField):
 
     """
 
-    def __init__(self, *args, rendered_field: str = None, **kwargs):
+    def __init__(self, *args, rendered_field: str | None = None, **kwargs):
         self.rendered_field = rendered_field
         super().__init__(*args, **kwargs)
 

@@ -3,7 +3,7 @@
 import functools
 import logging
 import traceback
-from typing import Callable, Type
+from typing import Callable, Type, Optional
 
 from django.http import HttpRequest
 from django.views import View
@@ -18,8 +18,8 @@ class LogMessage:
         error: Type[Exception],
         func: Callable,
         *args,
-        class_view: Type[View] = None,
-        request: Type[HttpRequest] = None,
+        class_view: Optional[Type[View]] = None,
+        request: Optional[Type[HttpRequest]] = None,
         **kwargs,
     ):
         self.error = error
