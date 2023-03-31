@@ -3,21 +3,20 @@ from pathlib import Path
 from unittest import skip
 from unittest.mock import Mock
 
-
 import django
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.signing import TimestampSigner
-from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.utils import timezone
 
 from .models import AuthToken, Following
 from .validators import (
-    validate_image,
-    validate_username,
     validate_full_name,
+    validate_image,
     validate_social_username,
+    validate_username,
 )
 
 
@@ -296,9 +295,7 @@ class AuthTokenTest(TestCase):
         signup_token = AuthToken.objects.create(
             token="abc123", type=AuthToken.SIGNUP
         )
-        change_email_token = AuthToken.objects.create(
-            token="def456", type=AuthToken.CHANGE_EMAIL
-        )
+        AuthToken.objects.create(token="def456", type=AuthToken.CHANGE_EMAIL)
 
         # Test that we can get a token with the correct type and token string
         retrieved_token = AuthToken.get_from_str(

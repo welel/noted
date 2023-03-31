@@ -7,4 +7,4 @@ class TagsConfig(AppConfig):
     verbose_name = _("Tags")
 
     def ready(self):
-        import tags.signals
+        import tags.signals  # noqa: F401

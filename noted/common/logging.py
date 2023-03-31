@@ -3,12 +3,10 @@
 import functools
 import logging
 import traceback
-from typing import Callable, Dict, Type
+from typing import Callable, Type
 
-from django.db import transaction
 from django.http import HttpRequest
 from django.views import View
-from django.views.generic.base import View
 
 
 request_logger = logging.getLogger("django.request")
@@ -42,7 +40,8 @@ class LogMessage:
 
         message.append(
             "Function name: {func_name}\nError message: {error_message}\n"
-            "Args: {args}\nKwargs: {kwargs}\nTraceback: \n{traceback}\n".format(
+            "Args: {args}\nKwargs: {kwargs}\nTraceback: \n"
+            "{traceback}\n".format(
                 func_name=self.function.__name__,
                 error_message=str(self.error),
                 args=str(self.args),

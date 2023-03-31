@@ -4,11 +4,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
 from .models import User, UserProfile
-from .validators import validate_full_name, validate_social_username, validate_username
+from .validators import (
+    validate_full_name,
+    validate_social_username,
+    validate_username,
+)
 
 
 class SignupForm(UserCreationForm):
-
     full_name = forms.CharField(
         max_length=50,
         min_length=3,

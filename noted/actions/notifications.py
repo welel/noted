@@ -23,11 +23,12 @@ RECIPIENTS_GETTERS = {
 
 
 def get_recipients(actor, verb: str, target) -> Union[User, List[User], None]:
-    """Retrieves the recipients of an action based on the actor, verb and target.
+    """Retrieves the recipients of an action based on the actor, verb, target.
 
     This function takes in three arguments: `actor`, `verb`, and `target`.
     The `actor` and `target` arguments are instances of an object, whereas
-    the `verb` argument is a string representing the action taken by the `actor`.
+    the `verb` argument is a string representing the action taken by
+    the `actor`.
 
     It returns `None` if the recipient function is not found.
 
@@ -50,7 +51,7 @@ def get_recipients(actor, verb: str, target) -> Union[User, List[User], None]:
 
 
 def create_notification(actor, verb: str, target) -> None:
-    """Creates a notification based on the actor, verb, and target of an action.
+    """Creates a notification based on the actor, verb, target of an action.
 
     Args:
         actor (Object): An instance of an object representing the actor of

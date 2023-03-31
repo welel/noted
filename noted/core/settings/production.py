@@ -1,8 +1,8 @@
 """The project settings for the production."""
 
-from .base import *
-
 from celery.schedules import crontab
+
+from .base import *
 
 
 DEBUG = False

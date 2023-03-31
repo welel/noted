@@ -10,7 +10,6 @@ from django.views.generic import DetailView, ListView
 
 from actions import base as act
 from actions.models import Action
-from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note
 

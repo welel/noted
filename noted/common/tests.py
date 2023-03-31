@@ -6,7 +6,7 @@ from content.models import Source
 from users.models import User
 
 from .decorators import ajax_required
-from .text import generate_unique_slug, transcript_ru2en, is_latin
+from .text import generate_unique_slug, is_latin, transcript_ru2en
 
 
 class Tests(TestCase):

@@ -1,4 +1,5 @@
 import datetime
+import unittest
 
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -133,9 +134,10 @@ class NoteModelTest(TestCase):
         self.assertEqual(html[:6], "<html>")
         self.assertEqual(html[-7:], "</html>")
 
+    @unittest.skip("Promblem with CentOS PDF libraries.")
     def test_pdf_file(self):
         file = self.note.generate_pdf_file()
-        pdf = file.read()
+        pdf = file.read()  # noqa: F841
         # How to decode?
         pass
 
@@ -201,7 +203,7 @@ class NoteModelTest(TestCase):
         self.note.body_raw = "s" * 5000
         self.assertEqual(self.note.min_read, 5)
 
-    def test_manager_public(self):
+    def test_manager_personal(self):
         personal = Note.objects.personal(self.author)
         self.assertIn(self.note, personal)
         self.assertIn(self.note_draft, personal)

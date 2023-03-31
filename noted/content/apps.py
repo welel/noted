@@ -8,6 +8,6 @@ class ContentConfig(AppConfig):
     verbose_name = _("Content")
 
     def ready(self):
-        import content.signals
+        import content.signals  # noqa: F401
 
         return super().ready()

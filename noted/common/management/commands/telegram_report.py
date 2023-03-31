@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
-import os
-import requests
 import logging
+import os
+from datetime import datetime, timedelta
+
+import requests
 
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
@@ -63,7 +64,8 @@ class Command(BaseCommand):
         return report.format(
             "\n".join(
                 [
-                    f"<code>{user.username}</code> - {user.date_joined.strftime('%H:%M')}"
+                    f"<code>{user.username}</code> - "
+                    "{user.date_joined.strftime('%H:%M')}"
                     for user in new_users
                 ]
             )

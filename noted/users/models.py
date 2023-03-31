@@ -184,7 +184,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 def default_profile_settings():
-    return {"theme": "ligth",}
+    return {"theme": "ligth"}
 
 
 class UserProfile(models.Model):
@@ -193,7 +193,8 @@ class UserProfile(models.Model):
     Fields:
         location: Simple text to indicate user's location (country, city, etc.)
             at the discretion of the user.
-        socials: JSON with links to user's social media ({"social_name":"link"})
+        socials: JSON with links to user's social media
+            ({"social_name":"link"})
         settings: JSON with profile+user settings.
     """
 
@@ -256,7 +257,7 @@ class UserProfile(models.Model):
     def is_socials(self) -> bool:
         """Checks does an user have social media."""
         return self.twitter or self.facebook or self.github
-    
+
     def set_theme(self, theme: Literal["ligth", "dark"]):
         if theme not in ("ligth", "dark"):
             raise KeyError("Available themes: light, dark.")

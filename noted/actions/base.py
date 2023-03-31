@@ -1,4 +1,4 @@
-"""This module defines a constants representing various actions that a user can take.
+"""This module defines action constants that a user can take.
 
 """
 NEW = "new"

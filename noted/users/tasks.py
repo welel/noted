@@ -1,6 +1,6 @@
 from celery import shared_task
 
-from .auth import send_signup_email, send_changeemail_email
+from .auth import send_changeemail_email, send_signup_email
 
 
 @shared_task()
@@ -18,7 +18,7 @@ def send_signup_email_task(email: str) -> bool:
 
 @shared_task()
 def send_changeemail_email_task(email: str) -> bool:
-    """Asynchronously sends a change-email email to the specified email address.
+    """Asynchronously sends a change-email to the specified email address.
 
     Args:
         email: The email address to send the change-email email to.

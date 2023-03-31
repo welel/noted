@@ -1,10 +1,8 @@
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import DetailView
 
-from common import logging as log
 from common.decorators import ajax_required
 from content.models import Note, Source
 

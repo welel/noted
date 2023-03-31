@@ -100,9 +100,8 @@ def send_email(
         return True
     except smtplib.SMTPException as e:
         logger.error(
-            "There was an error sending an email to {}: {}\nOn subject: {}".format(
-                email_to, str(e), subject
-            )
+            "There was an error sending an email to "
+            "{}: {}\nOn subject: {}".format(email_to, str(e), subject)
         )
         return False
 
@@ -209,8 +208,10 @@ def unsign_email(token: AuthToken) -> Email:
     except BadSignature as error:
         log_message = LogMessage(error, unsign_email, token)
         logger.error(
-            f"User have problems with changing email signature: token id {token.pk}\n"
-            + str(log_message)
+            "User have problems with changing email signature: "
+            "token id {token_pk}\n{message}".format(
+                token_pk=token.pk, message=log_message
+            )
         )
         return Email(error=_("Bad Signature"))
     return Email(email=email)

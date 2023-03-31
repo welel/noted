@@ -64,7 +64,7 @@ def markdown_to_html(text: str) -> Tuple[str, bool]:
         if response.status_code == 200:
             check_remainig_api_ratelimit(response)
             return response.text, True
-    except requests.exceptions.ConnectionError as erorr:
+    except requests.exceptions.ConnectionError:
         logger.error(
             "Markdown API request is failed:\n" + traceback.format_exc()
         )

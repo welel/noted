@@ -20,5 +20,5 @@ def full_url(path: str) -> str:
 
 @register.filter
 def min_required(min: str) -> str:
-    """Returns the time required CEO tag for `schemas.org` for input minutes."""
+    """Returns the time required CEO tag for schemas.org for input minutes."""
     return f"PT{min}M"

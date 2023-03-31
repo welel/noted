@@ -81,14 +81,14 @@ class TokenizedEmailView(ABC, View):
 
 
 class SignupEmailView(TokenizedEmailView):
-    """Send sing up email to a client with the link to the sign up form."""
+    """Send sing up email to a user with the link to the sign up form."""
 
     def get_send_email_task(self) -> Callable:
         return send_signup_email_task
 
 
 class ChangeemailEmailView(TokenizedEmailView):
-    """Send change email message to a client with the link to the change view."""
+    """Send change email message to a user with the link to the change view."""
 
     def get_send_email_task(self) -> Callable:
         return send_changeemail_email_task
@@ -98,7 +98,7 @@ class ChangeemailEmailView(TokenizedEmailView):
 @method_decorator(ajax_required(type="method"), name="dispatch")
 class EmailExistanceCheckView(View):
     def get(self, request):
-        """Check if a user with a given email already exists in the database."""
+        """Check if a user with a given email already exists in the DB."""
         email = request.GET.get("email")
         response = {
             "is_taken": EmailAddress.objects.filter(email=email).exists()
@@ -111,7 +111,7 @@ class EmailExistanceCheckView(View):
 @method_decorator(ajax_required(type="method"), name="dispatch")
 class UsernameExistanceCheckView(View):
     def get(self, request):
-        """Check if a user with a given username already exists in the database."""
+        """Check if a user with a given username already exists in the DB."""
         username = request.GET.get("username")
         username = "@" + username if username else None
         try:
@@ -147,7 +147,9 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
     token_miss_error = MESSAGES["ce_token_miss"]
 
     def get(self, request, token: str):
-        """Handles change email request (works by the link from an email message).
+        """Handles change email request.
+
+        Works by the link from an email message.
 
         Args:
             token: A unique token of a client for chaning email.
@@ -157,7 +159,8 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
             context = {"title": _("Token Error"), "message": error}
             return render(request, "error.html", context)
 
-        # You can't change your email if you signed up via a third paty service.
+        # You can't change your email
+        # if you signed up via a third paty service.
         if EmailAddress.objects.filter(email=email).exists():
             msg.add_message(request, msg.WARNING, MESSAGES["signed_social"])
             return redirect(reverse("users:settings"))

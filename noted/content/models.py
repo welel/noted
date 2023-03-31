@@ -256,7 +256,10 @@ class Note(models.Model):
             http-equiv='content-type' /></head><body>"
         output += f"<h1>{self.title}</h1>\n"
         if self.source and self.source.link:
-            output += f"<p>Source: <a href='{self.source.link}'>{self.source.title}</a></p>\n"
+            output += str(
+                f"<p>Source: <a href='{self.source.link}'>"
+                "{self.source.title}</a></p>\n"
+            )
         elif self.source:
             output += f"<p>Source: {self.source.title}</p>\n"
         output += self.body_html + "</body></html>"
@@ -352,7 +355,11 @@ class Note(models.Model):
 
     @property
     def is_modified(self) -> bool:
-        """Return true if the note was edited on a date other than the day it was created."""
+        """Shows if was modified another day.
+
+        Return true if the note was edited on a date other than the day
+        it was created.
+        """
         return self.created.date() != self.modified.date()
 
     @property

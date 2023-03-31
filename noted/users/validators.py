@@ -37,7 +37,7 @@ def validate_username(username: str) -> None:
     if 5 > len(username) or len(username) > 150:
         raise ValidationError(
             _(
-                f"Username should contain less than 150 symbols \
+                "Username should contain less than 150 symbols \
                     and more than 4."
             )
         )
