@@ -7,88 +7,113 @@
     color: black !important;
     background-color: rgb(150, 150, 150) !important;
 }
+
 .tag {
     color: black !important;
     background-color: rgb(231, 231, 231) !important;
     transition: 0.4s ease;
 }
+
 .tag:hover {
     background-color: rgb(199, 199, 199) !important;
 }
+
 .source-title:hover {
     color: black !important;
 }
+
 .note-stat:hover {
     background-color: rgb(240, 240, 240);
 }
+
 .color-grey {
     color: rgb(145, 144, 144);
 }
+
 .github-h:hover {
     color: rgb(0, 0, 0);
 }
+
 .google-h:hover {
     color: rgb(199, 0, 0);
 }
+
 .telegram-h:hover {
     color: rgb(0, 119, 255);
 }
+
 .twitter-h:hover {
     color: rgb(0, 119, 255);
 }
+
 .whatsapp-h:hover {
     color: rgb(23, 172, 23);
 }
+
 .link-h:hover {
-    color:black;
+    color: black;
 }
+
 /* Source type badges */
 .bg-source-0 {
     background-color: rgb(213, 213, 213) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-1 {
     background-color: rgb(200, 93, 93) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-2 {
     background-color: rgb(107, 234, 139) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-3 {
     background-color: rgb(150, 200, 255) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-4 {
     background-color: rgb(185, 143, 227) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-5 {
     background-color: rgb(100, 235, 255) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-6 {
     background-color: rgb(232, 222, 76) !important;
     transition: 0.4s ease;
 }
+
 .bg-source-0:hover {
     background-color: rgba(153, 153, 153, 0.8) !important;
 }
+
 .bg-source-1:hover {
     background-color: rgba(243, 4, 4, 0.8) !important;
 }
+
 .bg-source-2:hover {
     background-color: rgba(23, 252, 80, 0.8) !important;
 }
+
 .bg-source-3:hover {
     background-color: rgba(58, 153, 255, 0.8) !important;
 }
+
 .bg-source-4:hover {
     background-color: rgba(149, 43, 255, 0.8) !important;
 }
+
 .bg-source-5:hover {
     background-color: rgba(4, 222, 255, 0.8) !important;
 }
+
 .bg-source-6:hover {
     background-color: rgba(255, 239, 18, 0.8) !important;
 }
@@ -100,19 +125,23 @@
     background-color: rgb(255, 72, 72) !important;
     border-color: black !important;
 }
+
 #signin .social-sign-black:hover {
     color: white !important;
     background-color: black !important;
     border-color: black !important;
 }
+
 #signin .social-sign-blue:hover {
     color: white !important;
     background-color: rgb(21, 130, 255) !important;
     border-color: black !important;
 }
+
 .btn-close {
     filter: invert(0) grayscale(100%) brightness(200%);
 }
+
 .modal-content {
     border: none !important;
 }
@@ -128,9 +157,11 @@
 #left-nav {
     border: 1px solid #c6c7c8;
 }
+
 .nav-item i {
     color: #757575;
 }
+
 .nav-item i:hover {
     color: black;
 }
@@ -140,18 +171,23 @@
 #md-syntax-table {
     border: 1px solid rgb(223, 223, 223);
 }
+
 #md-syntax-table tr {
     border-bottom: 1px solid rgb(206, 206, 206) !important;
 }
+
 .source-table-row:hover {
     background-color: #ececec;
 }
+
 .bootstrap-tagsinput input {
     background-color: #fff;
 }
+
 .CodeMirror-cursor {
     border-left: 1px solid #222831 !important;
 }
+
 .bootstrap-tagsinput {
     border: solid 1px #ced4da !important;
 }
@@ -159,23 +195,28 @@
 
 /* TABS */
 #myTab .nav-item {
-    border-bottom: 1px solid rgba(0,0,0,0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
+
 #myTab .nav-item:hover {
     color: black;
     border-bottom: 1px solid black;
 }
+
 #myTab button {
-    border-bottom: 1px solid rgba(0,0,0,0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
+
 #myTab button.active {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     border-bottom: 1px solid black;
     color: rgb(36, 36, 36) !important;
 }
+
 #myTab button.active:hover {
     color: black !important;
 }
+
 #myTab button:hover {
     color: black !important;
 }

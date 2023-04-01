@@ -2,14 +2,18 @@ from typing import List, Union
 
 from notifications.signals import notify
 
+from django.contrib.auth import get_user_model
 from django.utils.functional import SimpleLazyObject
 
 from content.models import Note
 from tags.models import UnicodeTag, get_tag_followers
-from users.models import Following, User
+from users.models import Following
+from users.models import User as UserType
 
 from .base import CREATE, FOLLOW, LIKE
 
+
+User = get_user_model()
 
 RECIPIENTS_GETTERS = {
     (User, FOLLOW, User): lambda _, followed_user: followed_user,
@@ -22,7 +26,9 @@ RECIPIENTS_GETTERS = {
 }
 
 
-def get_recipients(actor, verb: str, target) -> Union[User, List[User], None]:
+def get_recipients(
+    actor, verb: str, target
+) -> Union[UserType, List[UserType], None]:
     """Retrieves the recipients of an action based on the actor, verb, target.
 
     This function takes in three arguments: `actor`, `verb`, and `target`.

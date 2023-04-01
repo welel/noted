@@ -3,7 +3,7 @@
 import functools
 import logging
 import traceback
-from typing import Callable, Type, Optional
+from typing import Callable, Optional, Type, Union
 
 from django.http import HttpRequest
 from django.views import View
@@ -15,7 +15,7 @@ request_logger = logging.getLogger("django.request")
 class LogMessage:
     def __init__(
         self,
-        error: Type[Exception],
+        error: Union[Exception, Type[Exception]],
         func: Callable,
         *args,
         class_view: Optional[Type[View]] = None,
@@ -71,7 +71,11 @@ class LoggerDecorator:
         return wrapper
 
     def get_log_message(
-        self, error: Exception, func: Callable, *args, **kwargs
+        self,
+        error: Union[Exception, Type[Exception]],
+        func: Callable,
+        *args,
+        **kwargs,
     ) -> str:
         # If Class Based View
         if (

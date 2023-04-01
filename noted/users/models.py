@@ -1,5 +1,5 @@
 import json
-from typing import Literal
+from enum import Enum
 
 from taggit.managers import TaggableManager
 
@@ -187,6 +187,11 @@ def default_profile_settings():
     return {"theme": "ligth"}
 
 
+class UITheme(str, Enum):
+    LIGTH = "ligth"
+    DARK = "dark"
+
+
 class UserProfile(models.Model):
     """Additional fields for the :models:`User` model.
 
@@ -258,9 +263,7 @@ class UserProfile(models.Model):
         """Checks does an user have social media."""
         return bool(self.twitter or self.facebook or self.github)
 
-    def set_theme(self, theme: Literal["ligth", "dark"]):
-        if theme not in ("ligth", "dark"):
-            raise KeyError("Available themes: light, dark.")
+    def set_theme(self, theme: UITheme):
         self.settings["theme"] = theme
 
 
@@ -302,6 +305,11 @@ class Following(models.Model):
         return f"{self.follower} follows {self.followed}"
 
 
+class TokenType(str, Enum):
+    SIGNUP = "sn"
+    CHANGE_EMAIL = "cm"
+
+
 class AuthToken(models.Model):
     """A token used for authentication, sign up and change email process.
 
@@ -310,11 +318,9 @@ class AuthToken(models.Model):
 
     """
 
-    SIGNUP = "sn"
-    CHANGE_EMAIL = "cm"
     TYPES = (
-        (SIGNUP, _("Sign Up Token")),
-        (CHANGE_EMAIL, _("Change Email Token")),
+        (TokenType.SIGNUP, _("Sign Up Token")),
+        (TokenType.CHANGE_EMAIL, _("Change Email Token")),
     )
     token = models.CharField(_("Token"), max_length=255, unique=True)
     created = models.DateTimeField(_("Created"), auto_now_add=True)
@@ -324,8 +330,6 @@ class AuthToken(models.Model):
         return "{token} ({type})".format(token=self.token, type=self.type)
 
     @classmethod
-    def get_from_str(
-        cls, token: str, type: Literal["cm", "su"]
-    ) -> "AuthToken":
+    def get_from_str(cls, token: str, type: TokenType) -> "AuthToken":
         """Gets a token from database by the token string and the type."""
         return cls.objects.get(token=token, type=type)

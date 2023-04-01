@@ -8,6 +8,7 @@
     src: local('Open Sans Regular'), local('OpenSans-Regular'), url('./github/open-sans-v17-latin-ext_latin-regular.woff2') format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* open-sans-italic - latin-ext_latin */
 @font-face {
     font-family: 'Open Sans';
@@ -16,16 +17,18 @@
     src: local('Open Sans Italic'), local('OpenSans-Italic'), url('./github/open-sans-v17-latin-ext_latin-italic.woff2') format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* open-sans-700 - latin-ext_latin */
 @font-face {
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: bold;
-    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('./github/open-sans-v17-latin-ext_latin-700.woff2') format('woff2'); 
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('./github/open-sans-v17-latin-ext_latin-700.woff2') format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-  /* open-sans-700italic - latin-ext_latin */
-  @font-face {
+
+/* open-sans-700italic - latin-ext_latin */
+@font-face {
     font-family: 'Open Sans';
     font-style: italic;
     font-weight: bold;
@@ -34,10 +37,15 @@
 }
 
 body {
-    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 700;
 }
 
@@ -46,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .anchor:target {
-    background-color: #ffa;
+    background-color: #439b00;
 }
 
 
@@ -55,30 +63,36 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     background-image: url("https://uploads-ssl.webflow.com/62e3ee10882dc50bcae8d07a/631a5d4631d4c55a475f3e34_noise-50.png"), linear-gradient(#003d79, #3e9f88);
 }
+
 .header-wrapper i {
     background-color: rgba(15, 142, 47, 0.7);
     padding: 5px 12px 5px 12px;
     border-radius: 15px;
 }
+
 .section-wrapper {
     width: 100%;
     border-top: 1px solid black;
     border-bottom: 1px solid #e6e3e3;
 }
+
 #header-title {
-	margin-top: 170px;
-	font-size: 6rem;
-	background: -webkit-linear-gradient(90deg, #149c7d, #98d36a);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+    margin-top: 170px;
+    font-size: 6rem;
+    background: -webkit-linear-gradient(90deg, #149c7d, #98d36a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
 .header-card {
     border-radius: 20px;
     overflow: hidden;
 }
+
 .header-card-red {
     background-image: url("https://uploads-ssl.webflow.com/62e3ee10882dc50bcae8d07a/631a5d4631d4c55a475f3e34_noise-50.png"), linear-gradient(90deg, #b05f3d, #b93d3e);
 }
+
 .header-card-dark {
     background-color: #002e35;
     background-image: url("https://uploads-ssl.webflow.com/62e3ee10882dc50bcae8d07a/631a5d4631d4c55a475f3e34_noise-50.png");
@@ -88,21 +102,26 @@ h1, h2, h3, h4, h5, h6 {
     .header-title {
         font-size: 4.5rem !important;
     }
+
     .header-p {
         font-size: 1.4rem !important;
     }
 }
+
 @media (max-width: 650px) {
     #header-title {
         margin-top: 100px !important;
     }
+
     .header-title {
         font-size: 3rem !important;
     }
+
     .header-p {
         font-size: 1.1rem !important;
     }
 }
+
 @media (max-width: 768px) {
     #search-screenshot {
         margin-top: 40px !important;
@@ -115,6 +134,7 @@ h1, h2, h3, h4, h5, h6 {
 .badge {
     font-weight: 400;
 }
+
 .tag {
     font-size: 0.8rem;
 }
@@ -132,20 +152,24 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: space-between;
     align-items: center;
 }
+
 @media (max-height: 400px) {
     #left-nav i {
         font-size: 0.8rem !important;
     }
 }
+
 #myTab .nav-item {
     position: relative;
     top: 1px;
     transition: 0.4s ease;
 }
+
 #myTab button {
     border: none;
     transition: 0.4s ease;
 }
+
 #myTab button:hover {
     border: none;
 }
@@ -157,15 +181,19 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 7px;
     padding: 5px;
 }
+
 #md-syntax-table tr {
     border-bottom-width: 1px;
 }
+
 #draft-btn {
     background-color: var(--bs-gray-200);
 }
+
 #draft-btn:hover {
     background-color: var(--bs-gray-400);
 }
+
 .bootstrap-tagsinput input:focus {
     border: none !important;
     box-shadow: none !important;
@@ -175,7 +203,7 @@ h1, h2, h3, h4, h5, h6 {
 /* SEARCH */
 @media (max-width: 750px) {
     #source-add-note-btn {
-        font-size: 0.7rem !important; 
+        font-size: 0.7rem !important;
     }
 }
 
@@ -184,7 +212,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
     .note-cover-image {
         height: 56px !important;
-        width: 80px !important; 
+        width: 80px !important;
     }
 }
 
@@ -202,70 +230,88 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     line-height: 21px;
 }
+
 #note-body code {
     color: #009339;
     background-color: azure;
     padding: 5px;
     border-radius: 5px;
 }
+
 #note-body pre code {
     background-color: var(--bs-dark) !important;
     color: whitesmoke;
 }
+
 .highlight {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 pre button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	background-color: #888;
-	color: white;
-	padding: 7px 15px;
-	font-size: 17px;
-	opacity: 0.8;
-	border-radius: 0px 15px 0px 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #888;
+    color: white;
+    padding: 7px 15px;
+    font-size: 17px;
+    opacity: 0.8;
+    border-radius: 0px 15px 0px 15px;
     border: 0px;
     display: none;
 }
+
 pre:hover button {
     display: flex;
 }
 
 /* headers */
-#note-body h1, #note-body h2, #note-body h3, #note-body h4 {
+#note-body h1,
+#note-body h2,
+#note-body h3,
+#note-body h4 {
     margin-top: 3.14rem !important;
 }
-#note-body h5, #note-body h6 {
+
+#note-body h5,
+#note-body h6 {
     margin-top: 2.8rem !important;
 }
-#note-body h1 + p,
-#note-body h2 + p,
-#note-body h3 + p,
-#note-body h4 + p,
-#note-body h5 + p,
-#note-body h6 + p {
+
+#note-body h1+p,
+#note-body h2+p,
+#note-body h3+p,
+#note-body h4+p,
+#note-body h5+p,
+#note-body h6+p {
     margin-top: 0.5rem !important;
 }
+
 #note-body h1 {
     font-size: 32px;
 }
+
 #note-body h2 {
     font-size: 30px;
 }
+
 #note-body h3 {
     font-size: 28px;
 }
+
 #note-body h4 {
     font-size: 26px;
 }
+
 #note-body h5 {
     font-size: 24px;
 }
+
 #note-body h6 {
     font-size: 22px;
 }
+
 /* paragraphs */
 #note-body p {
     margin-top: 1.8rem;
@@ -283,15 +329,17 @@ pre:hover button {
 
 /* tables */
 #note-body table {
-	display: block;
-	width: auto;
+    display: block;
+    width: auto;
     padding: 0px;
 }
+
 #note-body th {
     padding: 0.5rem;
     background-color: azure;
     border: 1px solid #b9b9b9;
 }
+
 #note-body td {
     padding: 0.5rem;
     border: 1px solid #b9b9b9;
@@ -308,54 +356,69 @@ pre:hover button {
     #note-body p {
         font-size: 18px !important;
     }
+
     #note-body h1 {
         font-size: 30px;
     }
+
     #note-body h2 {
         font-size: 28px;
     }
+
     #note-body h3 {
         font-size: 26px;
     }
+
     #note-body h4 {
         font-size: 24px;
     }
+
     #note-body h5 {
         font-size: 22px;
     }
+
     #note-body h6 {
         font-size: 20px;
     }
+
     #note-body ul {
         font-size: 18px !important;
-    } 
+    }
 }
 
 @media (max-width: 768px) {
     #note-body p {
         font-size: 16px !important;
     }
+
     #note-body h1 {
         font-size: 29px;
     }
+
     #note-body h2 {
         font-size: 27px;
     }
+
     #note-body h3 {
         font-size: 25px;
     }
+
     #note-body h4 {
         font-size: 23px;
     }
+
     #note-body h5 {
         font-size: 21px;
     }
+
     #note-body h6 {
         font-size: 19px;
     }
+
     #note-body ul {
         font-size: 16px !important;
-    } 
+    }
+
     #note-body pre {
         font-size: 14px;
     }

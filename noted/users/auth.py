@@ -3,7 +3,7 @@
 """
 import logging
 import smtplib
-from typing import Literal, NamedTuple, Optional
+from typing import NamedTuple, Optional
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -13,7 +13,7 @@ from django.utils.translation import gettext as _
 
 from common.logging import LogMessage
 
-from .models import AuthToken
+from .models import AuthToken, TokenType
 
 
 MESSAGES = {
@@ -50,7 +50,7 @@ class StringToken(NamedTuple):
     """String representation of a token."""
 
     token: str
-    type: Literal["su", "cm"]
+    type: TokenType
 
 
 class TokenData(NamedTuple):

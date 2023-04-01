@@ -1,6 +1,6 @@
 import json
 import logging
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 from typing import Callable, Type
 
 from allauth.account.models import EmailAddress
@@ -33,7 +33,7 @@ from .forms import (
     UserProfileForm,
     validate_username,
 )
-from .models import AuthToken, Following, User
+from .models import AuthToken, Following, TokenType, UITheme, User
 from .tasks import send_changeemail_email_task, send_signup_email_task
 
 
@@ -61,14 +61,15 @@ class TaskStatusView(View):
 class TokenizedEmailView(ABC, View):
     """An abstract view class for sending tokenized emails to a user."""
 
-    @abstractclassmethod
-    def get_send_email_task(self) -> Callable:
+    @staticmethod
+    @abstractmethod
+    def get_send_email_task() -> Callable:
         """Returns a task for sending emails.
 
         The task should take one positional argument - email (str),
         which is an addressee.
         """
-        ...
+        raise NotImplementedError
 
     def post(self, request):
         email = json.load(request).get("email")
@@ -83,14 +84,16 @@ class TokenizedEmailView(ABC, View):
 class SignupEmailView(TokenizedEmailView):
     """Send sing up email to a user with the link to the sign up form."""
 
-    def get_send_email_task(self) -> Callable:
+    @staticmethod
+    def get_send_email_task() -> Callable:
         return send_signup_email_task
 
 
 class ChangeemailEmailView(TokenizedEmailView):
     """Send change email message to a user with the link to the change view."""
 
-    def get_send_email_task(self) -> Callable:
+    @staticmethod
+    def get_send_email_task() -> Callable:
         return send_changeemail_email_task
 
 
@@ -126,19 +129,21 @@ class UsernameExistanceCheckView(View):
 
 
 class TokenMixin:
-    token_type: str
+    token_type: TokenType
     token_miss_error: str
 
     def get_token_data(self, token: str) -> TokenData:
-        token = get_token(StringToken(token=token, type=self.token_type))
-        if not token:
+        string_token_representation = get_token(
+            StringToken(token=token, type=self.token_type)
+        )
+        if not string_token_representation:
             return TokenData(error=self.token_miss_error)
 
-        email, error = unsign_email(token)
+        email, error = unsign_email(string_token_representation)
         if error:
             return TokenData(error=error)
 
-        return TokenData(token=token, email=email)
+        return TokenData(token=string_token_representation, email=email)
 
 
 @method_decorator(logit(__name__), name="dispatch")
@@ -154,8 +159,8 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
         Args:
             token: A unique token of a client for chaning email.
         """
-        token, email, error = self.get_token_data(token)
-        if error:
+        token_instance, email, error = self.get_token_data(token)
+        if error or not token_instance:
             context = {"title": _("Token Error"), "message": error}
             return render(request, "error.html", context)
 
@@ -167,7 +172,7 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
         with atomic():
             request.user.email = email
             request.user.save()
-            token.delete()
+            token_instance.delete()
         msg.add_message(request, msg.INFO, MESSAGES["email_changed"])
         return redirect(reverse("content:home"))
 
@@ -175,7 +180,7 @@ class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
 @method_decorator(logit(__name__), name="dispatch")
 class SignupView(TokenMixin, View):
     template_name = "users/signup.html"
-    token_type = AuthToken.SIGNUP
+    token_type = TokenType.SIGNUP
     token_miss_error = MESSAGES["su_token_miss"]
 
     def get(self, request, token: str):
@@ -185,9 +190,9 @@ class SignupView(TokenMixin, View):
             token: A unique token of a client for registration.
         """
         context = {"token": token}
-        __, __, error = self.get_token_data(token)
-        if error:
-            context = {"title": _("Token Error"), "message": error}
+        token_data = self.get_token_data(token)
+        if token_data.error:
+            context = {"title": _("Token Error"), "message": token_data.error}
             return render(request, "error.html", context)
 
         form = SignupForm()
@@ -201,9 +206,9 @@ class SignupView(TokenMixin, View):
             token: A unique token of a client for registration.
         """
         context = {"token": token}
-        token, email, error = self.get_token_data(token)
-        if error:
-            context = {"title": _("Token Error"), "message": error}
+        token_instance, email, error = self.get_token_data(token)
+        if error or not token_instance:
+            context = {"title": _("Token Error"), "message": error or ""}
             return render(request, "error.html", context)
 
         form = SignupForm(request.POST)
@@ -213,7 +218,7 @@ class SignupView(TokenMixin, View):
                 user.email = email
                 user.is_active = True
                 user.save()
-                token.delete()
+                token_instance.delete()
             login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
             return redirect(reverse("content:home"))
         else:
@@ -340,7 +345,9 @@ class ThemeSwitcherView(LoginRequiredMixin, View):
     def get(self, request):
         """Handle ajax request for toggling the site color theme."""
         current_theme = request.user.profile.settings.get("theme")
-        theme = "dark" if current_theme == "ligth" else "ligth"
+        theme = (
+            UITheme.DARK if current_theme == UITheme.LIGTH else UITheme.LIGTH
+        )
         request.user.profile.set_theme(theme)
         request.user.profile.save()
         return JsonResponse({"status": "ok", "theme": theme})
