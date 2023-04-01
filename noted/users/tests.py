@@ -11,7 +11,7 @@ from django.core.signing import TimestampSigner
 from django.test import Client, TestCase
 from django.utils import timezone
 
-from .models import AuthToken, Following
+from .models import AuthToken, Following, TokenType
 from .validators import (
     validate_full_name,
     validate_image,
@@ -62,7 +62,7 @@ class URLTests(TestCase):
     def test_signup_good_token(self):
         signer = TimestampSigner()
         stoken = signer.sign("some@email.qq")
-        token = AuthToken.objects.create(token=stoken, type=AuthToken.SIGNUP)
+        token = AuthToken.objects.create(token=stoken, type=TokenType.SIGNUP)
         response = self.ajax_client.get(f"/en/users/signup/{token.token}/")
         self.assertEqual(response.context.get("error"), None)
         self.assertEqual(response.status_code, 200)
@@ -288,32 +288,32 @@ class FollowingModelTest(TestCase):
 
 class AuthTokenTest(TestCase):
     def test_auth_token_str(self):
-        token = AuthToken.objects.create(token="abc123", type=AuthToken.SIGNUP)
+        token = AuthToken.objects.create(token="abc123", type=TokenType.SIGNUP)
         self.assertEqual(str(token), f"{token.token} ({token.type})")
 
     def test_auth_token_get_from_str(self):
         signup_token = AuthToken.objects.create(
-            token="abc123", type=AuthToken.SIGNUP
+            token="abc123", type=TokenType.SIGNUP
         )
-        AuthToken.objects.create(token="def456", type=AuthToken.CHANGE_EMAIL)
+        AuthToken.objects.create(token="def456", type=TokenType.CHANGE_EMAIL)
 
         # Test that we can get a token with the correct type and token string
         retrieved_token = AuthToken.get_from_str(
-            signup_token.token, AuthToken.SIGNUP
+            signup_token.token, TokenType.SIGNUP
         )
         self.assertEqual(retrieved_token, signup_token)
 
         # Test that we can't get a token with the wrong type
         with self.assertRaises(AuthToken.DoesNotExist):
-            AuthToken.get_from_str(signup_token.token, AuthToken.CHANGE_EMAIL)
+            AuthToken.get_from_str(signup_token.token, TokenType.CHANGE_EMAIL)
 
         # Test that we can't get a token with the wrong token string
         with self.assertRaises(AuthToken.DoesNotExist):
-            AuthToken.get_from_str("wrong_token_string", AuthToken.SIGNUP)
+            AuthToken.get_from_str("wrong_token_string", TokenType.SIGNUP)
 
     def test_auth_token_auto_now_add(self):
         now = timezone.now()
-        token = AuthToken.objects.create(token="abc123", type=AuthToken.SIGNUP)
+        token = AuthToken.objects.create(token="abc123", type=TokenType.SIGNUP)
         self.assertLessEqual(
             token.created - now, timezone.timedelta(seconds=1)
         )

@@ -26,3 +26,4 @@ mypy.ini
 .mypy_cache/
 celerybeat-schedule.db
 celerybeat-schedule
+.mypy_cache

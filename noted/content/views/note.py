@@ -123,7 +123,7 @@ class WelcomeNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        trends = cache_queryset(259200)(Note.objects.popular)()[:6]
+        trends = cache_queryset(259200)(Note.objects.popular_for_last_month)()
         for i, trend in enumerate(trends):
             context[f"trend_{i+1}"] = trend
         context["tags"] = cache_queryset(259200)(get_top_tags)(12)
@@ -150,7 +150,7 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
 
     template_name = "index.html"
     login_url = "content:welcome"
-    redirect_field_name = "content:home"
+    redirect_field_name = None
 
     def get_queryset(self):
         return super().get_ordered_queryset().filter(draft=False)

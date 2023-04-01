@@ -148,7 +148,7 @@ class TokenMixin:
 
 @method_decorator(logit(__name__), name="dispatch")
 class ChangeEmailView(LoginRequiredMixin, TokenMixin, View):
-    token_type = AuthToken.CHANGE_EMAIL
+    token_type = TokenType.CHANGE_EMAIL
     token_miss_error = MESSAGES["ce_token_miss"]
 
     def get(self, request, token: str):
@@ -246,7 +246,10 @@ class SigninView(View):
                 {"code": "badpass", "error_message": MESSAGES["wrong_pass"]}
             )
         login(request, user, backend=settings.AUTHENTICATION_BACKENDS[0])
-        redirect_url = request.headers.get("referer", reverse("content:home"))
+        referer = request.headers.get("referer", "")
+        redirect_url = (
+            referer if "welcome" not in referer else reverse("content:home")
+        )
         return JsonResponse({"code": "success", "redirect_url": redirect_url})
 
 

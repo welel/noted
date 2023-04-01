@@ -250,7 +250,7 @@
             <div class="row" style="max-width: 200px; text-align: left;">
                 <a href="{% url 'content:download_note' filetype='md' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-md"></i> MarkDown</a>
                 <a href="{% url 'content:download_note' filetype='html' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-html"></i> HTML</a>
-                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</a>
+                <a href="{% url 'content:download_note' filetype='pdf' slug=note.slug %}" type="button" class="btn btn-outline-dark rounded-pill mt-3 social-sign-black disabled" style="width: 200px; text-align: left;"><i class="bi bi-filetype-pdf"></i> PDF</a>
             </div>
         </div>
     </div>

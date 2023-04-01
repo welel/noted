@@ -13,6 +13,7 @@ MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 CACHES = {
     "default": {
+        # "BACKEND": "common.cache.RedisDummyCache",
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": get_env_variable("REDIS_LOCATION"),
         "OPTIONS": {

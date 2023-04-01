@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.postgres.search import (
     SearchHeadline,
     SearchQuery,
@@ -7,6 +9,7 @@ from django.contrib.postgres.search import (
 )
 from django.db import models
 from django.db.models import Count, Q, QuerySet
+from django.utils import timezone
 
 from users.models import User
 
@@ -70,6 +73,26 @@ class NoteManager(models.Manager):
     def popular(self) -> QuerySet:
         """Query public notes ordered by number of views."""
         return self.optimize().filter(draft=False).order_by("-views")
+
+    def popular_for_last_month(self, number: int = 6) -> QuerySet:
+        """Query public notes ordered by number of views for last month+.
+
+        Query public notes ordered by number of views for last month.
+        If a resulting queryset less than `number` then add the missing number
+        of popular entries (for all time) to the beginning.
+        """
+        last_month = timezone.now() - timedelta(weeks=4)
+        notes_for_last_month = (
+            self.optimize()
+            .filter(draft=False, created__gt=last_month)
+            .order_by("-views")[:number]
+        )
+        if len(notes_for_last_month) == number:
+            return notes_for_last_month
+        return (
+            self.popular()[: number - len(notes_for_last_month)]
+            | notes_for_last_month
+        )
 
     def most_liked(self) -> QuerySet:
         """Query public notes ordered by number of likes."""
