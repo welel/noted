@@ -14,6 +14,9 @@
 <div class="container" style="max-width: 700px;">
 <h1>{% trans "Notifications" %}</h1>
 <div class="mt-5">
+{% if not notifications %}
+    <p class="text-secondary">{% trans "You don't have new notifications." %}
+{% endif %}
 {% for notification in notifications %}
 <div id="notice-{{ notification.slug }}" class="row mt-2">
     <!-- Condition `and notification.target.title and notification.actor.full_name` to separate notes from tags -->

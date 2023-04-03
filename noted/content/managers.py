@@ -1,4 +1,5 @@
 from datetime import timedelta
+from itertools import chain
 
 from django.contrib.postgres.search import (
     SearchHeadline,
@@ -74,7 +75,7 @@ class NoteManager(models.Manager):
         """Query public notes ordered by number of views."""
         return self.optimize().filter(draft=False).order_by("-views")
 
-    def popular_for_last_month(self, number: int = 6) -> QuerySet:
+    def popular_for_last_month(self, number: int = 100) -> QuerySet:
         """Query public notes ordered by number of views for last month+.
 
         Query public notes ordered by number of views for last month.
@@ -82,16 +83,21 @@ class NoteManager(models.Manager):
         of popular entries (for all time) to the beginning.
         """
         last_month = timezone.now() - timedelta(weeks=4)
+        notes_for_last_month_num = (
+            self.optimize().filter(draft=False, created__gt=last_month).count()
+        )
         notes_for_last_month = (
             self.optimize()
             .filter(draft=False, created__gt=last_month)
-            .order_by("-views")[:number]
+            .order_by("-views")
         )
-        if len(notes_for_last_month) == number:
+        if notes_for_last_month_num >= number:
             return notes_for_last_month
-        return (
-            self.popular()[: number - len(notes_for_last_month)]
-            | notes_for_last_month
+        return tuple(
+            chain(
+                notes_for_last_month,
+                self.popular().filter(created__lt=last_month),
+            )
         )
 
     def most_liked(self) -> QuerySet:

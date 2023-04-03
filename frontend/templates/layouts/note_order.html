@@ -4,8 +4,8 @@
     <i class="bi bi-filter"></i>
 </button>
 <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="?order=popular"><i class="bi bi-hearts"></i> {% trans "Popular" %}</a></li>
     <li><a class="dropdown-item" href="?order=-datetime_created"><i class="bi bi-sort-down"></i> {% trans "Recent" %}</a></li>
-    <li><a class="dropdown-item" href="?order=views"><i class="bi bi-sort-down-alt"></i> {% trans "Popular" %}</a></li>
+    <li><a class="dropdown-item" href="?order=views"><i class="bi bi-sort-down-alt"></i> {% trans "Most views" %}</a></li>
     <li><a class="dropdown-item" href="?order=likes"><i class="bi bi-hearts"></i> {% trans "Most liked" %}</a></li>
-    {% comment %} <li><a class="dropdown-item" href="#"><i class="bi bi-wechat"></i> {% trans "Most commented" %}</a></li> {% endcomment %}
 </ul> 

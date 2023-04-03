@@ -68,7 +68,10 @@ class NoteList(ListView):
 
     """
 
+    # To add new sorting method add a method to the dict
+    # and to the template `layouts/note_order.html`
     SORTING_FUNCS_MAPPING = {
+        "popular": Note.objects.popular_for_last_month,
         "-datetime_created": Note.objects.by_created,
         "views": Note.objects.popular,
         "likes": Note.objects.most_liked,
@@ -80,7 +83,7 @@ class NoteList(ListView):
 
     def get_ordering(self) -> str:
         """Gets a `order` option from GET params and returns it."""
-        return self.request.GET.get("order", default="-datetime_created")
+        return self.request.GET.get("order", default="popular")
 
     def get_ordered_queryset(self) -> QuerySet:
         """Orders a queryset by a order option."""
@@ -123,13 +126,16 @@ class WelcomeNoteList(NoteList):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["source_types"] = dict(Source.TYPES)
-        trends = cache_queryset(259200)(Note.objects.popular_for_last_month)()
+        trends = cache_queryset(259200)(Note.objects.popular_for_last_month)(
+            number=6
+        )
         for i, trend in enumerate(trends):
             context[f"trend_{i+1}"] = trend
         context["tags"] = cache_queryset(259200)(get_top_tags)(12)
         return context
 
 
+@method_decorator(cache_page(60 * 2), name="dispatch")
 class PublicNoteList(LoginRequiredMixin, NoteList):
     """Display a list of :model:`Note` available for every one.
 
@@ -153,7 +159,7 @@ class PublicNoteList(LoginRequiredMixin, NoteList):
     redirect_field_name = None
 
     def get_queryset(self):
-        return super().get_ordered_queryset().filter(draft=False)
+        return super().get_ordered_queryset()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -197,6 +203,10 @@ class ProfileNoteList(NoteList):
         if request.user.is_authenticated and request.user.slug == slug:
             return redirect("content:personal_notes", *args, **kwargs)
         return super().get(request, slug, *args, **kwargs)
+
+    def get_ordering(self) -> str:
+        """Gets a `order` option from GET params and returns it."""
+        return self.request.GET.get("order", default="-datetime_created")
 
     def get_queryset(self):
         username = User.unslugify(self.kwargs.get("slug"))
@@ -245,6 +255,10 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
     def get_queryset(self):
         return super().get_ordered_queryset().filter(author=self.request.user)
+
+    def get_ordering(self) -> str:
+        """Gets a `order` option from GET params and returns it."""
+        return self.request.GET.get("order", default="-datetime_created")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

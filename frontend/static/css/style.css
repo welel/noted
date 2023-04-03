@@ -57,6 +57,12 @@ h6 {
     background-color: #439b00;
 }
 
+/* Rule for html {zoom: .9;} compatibility, scales modal background fade */
+.modal-backdrop {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+}
+
 
 /* WELCOME PAGE */
 .header-wrapper {
@@ -77,7 +83,7 @@ h6 {
 }
 
 #header-title {
-    margin-top: 170px;
+    margin-top: 120px;
     font-size: 6rem;
     background: -webkit-linear-gradient(90deg, #149c7d, #98d36a);
     -webkit-background-clip: text;
@@ -150,7 +156,8 @@ h6 {
     top: 0;
     left: 0;
     width: 90px;
-    height: 100vh;
+    /* height: 100vh; Changed on following line for html zoom compatibility */
+    height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
