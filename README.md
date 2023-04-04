@@ -124,9 +124,9 @@ Dark mode / code highlight / code full-screen / mobile version.
 
 - `sudo apt install g++`
 - `sudo apt install build-essential`
-- `apt install libpq-dev python3-dev`
-- `apt-get install wkhtmltopdf` for PDF files generation.
-- `apt-get -y install gettext` for translation.
+- `sudo apt install libpq-dev python3-dev python3-pip python3.10-venv`
+- `sudo apt install wkhtmltopdf` for PDF files generation.
+- `sudo apt install gettext` for translation.
 
 1. [Install PostgreSQL](https://www.postgresql.org/download/) and create new database.
 
