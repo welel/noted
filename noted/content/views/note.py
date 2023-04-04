@@ -71,7 +71,6 @@ class NoteList(ListView):
     # To add new sorting method add a method to the dict
     # and to the template `layouts/note_order.html`
     SORTING_FUNCS_MAPPING = {
-        "popular": Note.objects.popular_for_last_month,
         "-datetime_created": Note.objects.by_created,
         "views": Note.objects.popular,
         "likes": Note.objects.most_liked,
