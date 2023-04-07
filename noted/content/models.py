@@ -26,6 +26,10 @@ from .fields import MarkdownField, RenderedMarkdownField
 from .managers import NoteManager, SourceManager
 
 
+MAX_NOTE_PREVIEW_TEXT_LEN = 300
+MAX_NOTE_IMAGE_URL_LEN = 1000
+
+
 class Source(models.Model):
     """An information source.
 
@@ -120,6 +124,10 @@ class Note(models.Model):
         bookmarked: A m2m field for bookmarks for user.
         tags: Tags of a note (max tags - 3, max length - 24 symbols).
         lang: Language body text code (detects via `polyglot`)
+        weight: A value that represents the appearance and significance
+                of the note.
+        preview_text: First 300 chars of content (appears if summary is None).
+        image_url: A URL of first image in content or None.
 
     """
 
@@ -207,6 +215,13 @@ class Note(models.Model):
     lang = models.CharField(
         _("Language"), max_length=2, choices=LANGS, default=ER
     )
+    weight = models.SmallIntegerField(_("Weight"), default=0)
+    preview_text = models.CharField(
+        _("Preview text"), max_length=MAX_NOTE_PREVIEW_TEXT_LEN, default=""
+    )
+    image_url = models.URLField(
+        _("Image URL"), max_length=MAX_NOTE_IMAGE_URL_LEN, null=True
+    )
     objects = NoteManager()
 
     class Meta:
@@ -218,28 +233,44 @@ class Note(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = generate_unique_slug(self, latin=True)
+        self._populate_preview_text()
+        self._populate_image_url()
+        self._calculate_weight()
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
 
-    def get_preview_text(self, num_chars: int = 300) -> str:
-        """The body preview text for a note."""
-        return "".join(
+    def _calculate_weight(self):
+        """Calculates note's weight depends on note's content."""
+        self.weight += 10 if self.lang != self.ER else 0
+        self.weight += 5 if self.source else 0
+        self.weight += 5 if self.image_url else 0
+        self.weight += 3 if self.summary else 0
+        self.weight += 1 if self.pin else 0
+        # TODO: Figure out how to count it too.
+        #       You cant count it before saving.
+        # self.weight += 3 if self.tags.first() else 0
+        # self.weight += self.likes.count()
+        # self.weight += self.bookmarks.count()
+
+    def _populate_preview_text(self):
+        """Populates the body preview text of a note ot `preview_text`."""
+        self.preview_text = "".join(
             BeautifulSoup(self.body_html, features="html.parser").findAll(
                 text=True
             )
-        )[:num_chars]
+        )[:MAX_NOTE_PREVIEW_TEXT_LEN]
 
-    @property
-    def first_image_url(self) -> Optional[str]:
-        """First image `src` from the body text."""
+    def _populate_image_url(self):
+        """Populates first image `src` from the body text to `image_url`."""
         image = BeautifulSoup(self.body_html, features="html.parser").find(
             name="img"
         )
-        if image:
-            return image.get("src")
-        return None
+        if image and len(image) < MAX_NOTE_IMAGE_URL_LEN:
+            self.image_url = image.get("src")
+        else:
+            self.image_url = None
 
     def generate_md_file(self) -> io.BytesIO:
         """Generates .md file of the note."""

@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row">
-        {% if note.first_image_url %}
+        {% if note.image_url %}
         <div class="col-md-10 col-9">
         {% endif %}
         <div class="row mt-2 mb-0">
@@ -47,14 +47,14 @@
                 {% if note.summary %}
                     {{ note.summary }}
                 {% else %}
-                    {{ note.get_preview_text|truncatechars:140 }}
+                    {{ note.preview_text|truncatechars:140 }}
                 {% endif %}
             </a>
         </div>
-        {% if note.first_image_url %}
+        {% if note.image_url %}
         </div>
         <div class="col-md-2 col-3">
-            <img class="note-cover-image" align="right" src="{{ note.first_image_url }}" alt=" " style="object-fit: cover;" width="112px;" height="112px;"/>
+            <img class="note-cover-image" align="right" src="{{ note.image_url }}" alt=" " style="object-fit: cover;" width="112px;" height="112px;"/>
         </div>
         {% endif %}
     </div>

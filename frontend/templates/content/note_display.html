@@ -17,7 +17,7 @@
 {% if note.draft %}
 <meta name="robots" content="noindex" />
 {% endif %}
-{% with summary=note.summary tags=note.tags.all source=note.source image=note.first_image_url %}
+{% with summary=note.summary tags=note.tags.all source=note.source image=note.image_url %}
 {% if summary or source %}
     <meta name="description" content="{% if summary %}{{ summary }}{% elif source %}{% trans "Summary on " %}{{ source.title }}{% endif %}">
 {% endif %}
@@ -56,7 +56,7 @@
         <div class="col-lg-8 col-12 mx-lg-0 mx-2">
             <article class="container-fluid" style="max-width: 700px;" itemscope itemtype="https://schema.org/Blog">
                 <!-- Meta -->
-                {% with image_url=note.first_image_url summary=note.summary %}
+                {% with image_url=note.image_url summary=note.summary %}
                 {% if image_url %}
                     <link itemprop="thumbnailUrl" href="{{ image_url }}" src="{{ image_url }}" />
                     <meta itemprop="image" src="{{ image_url }}" />
@@ -66,7 +66,7 @@
                 <meta itemprop="timeRequired" content="{{ note.min_read|min_required }}">
                 <link itemprop="identifier" href="{{ note.get_absolute_url|full_url }}">
                 <meta itemprop="dateCreated" datetime="{{ note.created|date:"Y-m-d" }}">
-                <meta itemprop="description"  content="{% if summary %}{{ summary }}{% else %}{{ note.get_preview_text }}{% endif %}">
+                <meta itemprop="description"  content="{% if summary %}{{ summary }}{% else %}{{ note.preview_text }}{% endif %}">
                 {% endwith %}
                 <!-- End Meta -->
                 <div class="row d-flex justify-content-between">

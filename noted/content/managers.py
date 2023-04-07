@@ -71,6 +71,12 @@ class NoteManager(models.Manager):
         """Query public notes ordered by number of views."""
         return self.optimize().filter(draft=False).order_by("-views")
 
+    def relevant(self) -> QuerySet:
+        """Query public notes ordered by notes weight and date."""
+        return (
+            self.optimize().filter(draft=False).order_by("-weight", "-created")
+        )
+
     def most_liked(self) -> QuerySet:
         """Query public notes ordered by number of likes."""
         return (

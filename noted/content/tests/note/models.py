@@ -113,14 +113,17 @@ class NoteModelTest(TestCase):
         self.assertIsNotNone(self.note.get_absolute_url())
 
     def test_preview_text(self):
-        self.assertEqual(self.note.get_preview_text(3), "Hel")
+        self.note.body_html = "<h1>Hello world</h1>"
+        self.note.save()
+        self.assertEqual(self.note.preview_text[:3], "Hel")
 
-    def test_first_image_url_none(self):
-        self.assertIsNone(self.note.first_image_url)
+    def test_image_url_none(self):
+        self.assertIsNone(self.note.image_url)
 
-    def test_first_image_url(self):
+    def test_image_url(self):
         self.note_only_title.body_html = '<img src="image_url" />'
-        self.assertEqual(self.note_only_title.first_image_url, "image_url")
+        self.note_only_title.save()
+        self.assertEqual(self.note_only_title.image_url, "image_url")
 
     def test_md_file(self):
         file = self.note.generate_md_file()

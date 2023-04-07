@@ -57,6 +57,7 @@ class NoteList(ListView):
     Uses as a superclass for other specific notes listings.
 
     Notes order options (provides through a GET param `order`):
+        `relevant`: Sorted by note's weight.
         `-datetime_created`: From newest to oldest by publish date.
         `views`: From the most viewed to the least.
         `likes`: From the most liked to the least.
@@ -71,6 +72,7 @@ class NoteList(ListView):
     # To add new sorting method add a method to the dict
     # and to the template `layouts/note_order.html`
     SORTING_FUNCS_MAPPING = {
+        "relevant": Note.objects.relevant,
         "-datetime_created": Note.objects.by_created,
         "views": Note.objects.popular,
         "likes": Note.objects.most_liked,
@@ -82,7 +84,7 @@ class NoteList(ListView):
 
     def get_ordering(self) -> str:
         """Gets a `order` option from GET params and returns it."""
-        return self.request.GET.get("order", default="-datetime_created")
+        return self.request.GET.get("order", default="relevant")
 
     def get_ordered_queryset(self) -> QuerySet:
         """Orders a queryset by a order option."""
@@ -245,6 +247,10 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 
     def get_queryset(self):
         return super().get_ordered_queryset().filter(author=self.request.user)
+
+    def get_ordering(self) -> str:
+        """Gets a `order` option from GET params and returns it."""
+        return self.request.GET.get("order", default="-datetime_created")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
