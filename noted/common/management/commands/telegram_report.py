@@ -1,11 +1,11 @@
+from datetime import datetime, timedelta
 import logging
 import os
-from datetime import datetime, timedelta
+import pytz
 
 import requests
 
 from django.core.management.base import BaseCommand, CommandError
-from django.utils import timezone
 
 from content.models import Note
 from users.models import User
@@ -28,16 +28,15 @@ class Command(BaseCommand):
             )
 
     def handle(self, *args, **options):
-        last_day = timezone.now() - timedelta(days=1)
-        last_day_start = datetime(
-            last_day.year, last_day.month, last_day.day, tzinfo=last_day.tzinfo
-        )
+        current_time = datetime.now(pytz.timezone("Europe/Moscow"))
+        last_day_start = current_time - timedelta(days=1)
 
         new_users = self._get_users_report(date_joined__gt=last_day_start)
         new_notes = self._get_notes_report(created__gt=last_day_start)
 
-        report = "<i>Report {}</i>\n\n{}{}".format(
-            last_day.strftime("%m/%d/%Y"),
+        report = "<i>Report {} - {}</i>\n\n{}{}".format(
+            last_day_start.strftime("%d/%m"),
+            current_time.strftime("%d/%m"),
             new_users + "\n\n" if new_users else "No new users.\n\n",
             new_notes + "\n\n" if new_notes else "No new notes.\n\n",
         )
@@ -65,7 +64,7 @@ class Command(BaseCommand):
             "\n".join(
                 [
                     f"<code>{user.username}</code> - "
-                    "{user.date_joined.strftime('%H:%M')}"
+                    f"{user.date_joined.strftime('%H:%M')}"
                     for user in new_users
                 ]
             )

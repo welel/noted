@@ -13,7 +13,7 @@
 </div>
 <div class="row">
     <button class="btn btn-link text-decoration-none fs-6 link-h color-grey d-flex" data-bs-toggle="modal" data-bs-target="#followers-modal">
-        <span id="followers-counter">{{ followers|length }}</span>&nbsp;{% trans "Followers" %}
+        <span id="followers-counter">{{ followers_count }}</span>&nbsp;{% trans "Followers" %}
     </button>
 </div>
 <!-- Modal: followers-->
@@ -34,8 +34,8 @@
                             {% if user.profile.bio %}<div class="text-secondary">{{ user.profile.bio }}</div>{% endif %}
                         </div>
                         <div class="col-lg-2 col">
-                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn" user-id="{{ user.id }}" action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
-                                {% if request.user in user.followers.all %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
+                            <button type="button" class="btn btn-outline-success rounded-pill follow-btn" user-id="{{ user.id }}" action="{% if request.user in user.get_follower %}unfollow{% else %}follow{% endif %}">
+                                {% if request.user in user.get_follower %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
                             </button>
                         </div>
                     </div>
@@ -82,4 +82,5 @@
         <a href="{% url 'users:settings' %}" class="btn btn-sm btn-success rounded-pill" >{% trans "Edit profile" %}</a>
     </div>
 </div>
+<link id="follow-url" href="{% url 'users:follow' %}">
 <script type="text/javascript" src="{% static 'js/profile_list.js' %}"></script>

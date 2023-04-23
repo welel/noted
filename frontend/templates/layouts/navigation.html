@@ -5,7 +5,9 @@ Require script `js/auth.js`
 {% load static %}
 {% load i18n %}
 {% load socialaccount %}
+{% load settingstags %}
 <!-- Left navigation -->
+{% with profile=user.profile profile_settings=user.profile.settings %}
 <nav id="left-nav" class="d-lg-flex d-none">
     <div class="mt-4">
         <a class="navbar-brand" href="{% url 'content:home' %}">
@@ -52,7 +54,7 @@ Require script `js/auth.js`
     {% else %}
         <li class="nav-item dropdown" style="list-style-type: none;">
             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ request.user.profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="34" height="34">
+            <img src="{{ profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="34" height="34">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
             <li><a href="{% url 'content:personal_notes' %}" class="dropdown-item" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
@@ -67,7 +69,7 @@ Require script `js/auth.js`
                 {% endif %}
                 </a>
             </li>
-            <li><button id="theme-btn" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
+            <li><button id="theme-btn" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{{ profile_settings.theme|print_theme }}</span></button></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>
@@ -108,7 +110,7 @@ Require script `js/auth.js`
     {% else %}
         <li class="nav-item btn-group dropup" style="list-style-type: none;">
             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ request.user.profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="30" height="30">
+            <img src="{{ profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="30" height="30">
             </a>
             <ul class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark">
                 <li><a class="dropdown-item" href="{% url 'content:personal_notes' %}"><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
@@ -123,7 +125,7 @@ Require script `js/auth.js`
                     {% endif %}
                     </a>
                 </li>
-                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{% trans "Dark theme" %}</span></button></li>
+                <li><button id="theme-btn-2" class="btn btn-link dropdown-item" onclick="themeSwitch();" ><i class="bi bi-brightness-high-fill px-2 theme-btn-cl"></i><span>{{ profile_settings.theme|print_theme }}</span></button></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#signout-modal"><i class="bi bi-box-arrow-left px-2"></i>{% trans "Sign Out" %}</a></li>
             </ul>
@@ -131,5 +133,5 @@ Require script `js/auth.js`
     {% endif %}
     </ul>
 </nav>
-
+{% endwith %}
 {% include 'layouts/auth_modals.html' %}

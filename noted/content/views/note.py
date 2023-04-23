@@ -28,7 +28,12 @@ from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, QuerySet
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -218,6 +223,7 @@ class ProfileNoteList(NoteList):
         context["sidenotes"] = cache_queryset(259200)(Note.objects.popular)()[
             :5
         ]
+        context["followers_count"] = user.followers.count()
         context["followers"] = [
             contact.follower
             for contact in Following.objects.filter(followed=user)
@@ -265,6 +271,13 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
                 "sidenotes": cache_queryset(259200)(Note.objects.popular)()[
                     :5
                 ],
+                "followers_count": self.request.user.followers.count(),
+                "followers": [
+                    contact.follower
+                    for contact in Following.objects.filter(
+                        followed=self.request.user
+                    )
+                ],
             }
         )
         return context
@@ -273,7 +286,7 @@ class PersonalNotesView(LoginRequiredMixin, NoteList):
 class NoteDraftMixin:
     """Manages saving of a note based on pressed button (publish or draft).
 
-    The form has 2 butons - publish, draft. If the draft button was pressed
+    The form has 2 buttons: publish, draft. If the draft button was pressed
     the `draft` note field sets as True, else as False.
     """
 
@@ -286,8 +299,18 @@ class NoteDraftMixin:
         return super().post(request, *args, **kwargs)
 
 
+class NoteSaveMixin:
+    """A mixin for calling a post save note method."""
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        self.object = form.save()
+        self.object.post_save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
 @method_decorator(login_required, name="dispatch")
-class NoteCreateView(NoteDraftMixin, CreateView):
+class NoteCreateView(NoteDraftMixin, NoteSaveMixin, CreateView):
     """Handels the note create form."""
 
     model = Note
@@ -321,17 +344,17 @@ class NoteCreateView(NoteDraftMixin, CreateView):
 
     def get_initial(self):
         initial = super().get_initial()
-        source_slug = self.request.GET.get("source")
-        tag_slug = self.request.GET.get("tag")
-        if source_slug:
+        if source_slug := self.request.GET.get("source"):
             initial = self.add_initial_source(source_slug, initial)
-        if tag_slug:
+        if tag_slug := self.request.GET.get("tag"):
             initial = self.add_initial_tag(tag_slug, initial)
         return initial
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        self.object = form.save()
+        self.object.post_save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 @method_decorator(login_required, name="dispatch")
@@ -353,7 +376,7 @@ class NoteForkView(NoteCreateView):
 
 
 @method_decorator(login_required, name="dispatch")
-class NoteUpdateView(NoteDraftMixin, UpdateView):
+class NoteUpdateView(NoteDraftMixin, NoteSaveMixin, UpdateView):
     model = Note
     form_class = NoteForm
     template_name = "content/note_create.html"
@@ -426,9 +449,11 @@ def like_note(request, slug):
     note = get_object_or_404(Note, slug=slug)
     if request.user in note.likes.all():
         note.likes.remove(request.user)
+        note.post_save()
         return JsonResponse({"liked": False})
     else:
         note.likes.add(request.user)
+        note.post_save()
         Action.objects.create_action(request.user, act.LIKE, note, notify=True)
         return JsonResponse({"liked": True})
 
@@ -442,9 +467,11 @@ def bookmark_note(request, slug):
     # cache.delete_pattern("*PublicNoteList*")
     if request.user in note.bookmarks.all():
         note.bookmarks.remove(request.user)
+        note.post_save()
         return JsonResponse({"bookmarked": False})
     else:
         note.bookmarks.add(request.user)
+        note.post_save()
         Action.objects.create_action(request.user, act.BOOKMARK, note)
         return JsonResponse({"bookmarked": True})
 

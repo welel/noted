@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <button class="btn btn-link text-decoration-none fs-6 link-h color-grey d-flex" data-bs-toggle="modal" data-bs-target="#followers-modal">
-        <span id="followers-counter">{{ followers|length }}</span>&nbsp;{% trans "Followers" %}
+        <span id="followers-counter">{{ followers_count }}</span>&nbsp;{% trans "Followers" %}
     </button>
     <span class="text-secondary">
         {{ total_user_likes }} {% trans "Reputation" %}
@@ -76,10 +76,14 @@
 {% endif %}
 <div class="row mt-3">
     <div class="d-grid gap-2 d-md-block">
+        {% if note.author != request.user %}
         <button id="follow-btn" class="btn btn-success rounded-pill {% if not request.user.is_authenticated %}disabled{% endif %}" type="button" user-id={{ user.id }} action="{% if request.user in followers %}unfollow{% else %}follow{% endif %}">
             {% if request.user in followers %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
         </button>
         <button class="btn btn-success rounded-pill ms-2" type="button" disabled><i class="bi bi-envelope-plus"></i></button>
+        {% else %}
+        <a href="{% url 'users:settings' %}" class="btn btn-sm btn-success rounded-pill" >{% trans "Edit profile" %}</a>
+        {% endif %}
     </div>
     <link id="follow-url" href="{% url 'users:follow' %}">
 </div>

@@ -25,3 +25,5 @@ createsuperuser: env/bin/python noted/core/settings/local.py noted/manage.py
 test: env/bin/python noted/core/settings/local.py noted/manage.py
 	./env/bin/python noted/manage.py test actions common content core tags users --settings=core.settings.test
 
+tg_report: env/bin/python noted/core/settings/local.py noted/manage.py
+	./env/bin/python noted/manage.py telegram_report --settings=core.settings.local
