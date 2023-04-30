@@ -18,9 +18,8 @@ RUN set -eux; \
 RUN chmod 700 /noted/logs/logs_report.sh
 
 # Install requirements and clean all cache
-COPY requirements/production.txt /noted/requirements.txt
-RUN pip install -r /noted/requirements.txt \
-    && rm /noted/requirements.txt \
+RUN pip install -r /noted/requirements/production.txt \
+    && rm -rf /noted/requirements \
     && apt-get update \
     && apt-get -y install wkhtmltopdf \
     && apt-get -y autoclean

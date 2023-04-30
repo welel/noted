@@ -1,6 +1,5 @@
 env/
 docs/
-requirements/
 .env.dist
 .gitignore
 __pycache__/
