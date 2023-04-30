@@ -15,7 +15,7 @@ request_logger = logging.getLogger("django.request")
 class LogMessage:
     def __init__(
         self,
-        error: Union[Exception, Type[Exception]],
+        error: Union[Exception, Type[Exception], str],
         func: Callable,
         *args,
         class_view: Optional[Type[View]] = None,

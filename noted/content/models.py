@@ -235,14 +235,11 @@ class Note(models.Model):
             self.slug = generate_unique_slug(self, latin=True)
         self._populate_preview_text()
         self._populate_image_url()
+        self._calculate_weight()
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("content:note", args=[self.slug])
-
-    def post_save(self):
-        self._calculate_weight()
-        self.save()
 
     def _calculate_weight(self):
         """Calculates note's weight depends on note's content."""
@@ -253,9 +250,10 @@ class Note(models.Model):
         self.weight += 3 if self.summary else 0
         self.weight += 2 if 3 < self.min_read < 8 else 0
         self.weight += 1 if self.pin else 0
-        self.weight += 3 if self.tags.first() else 0
-        self.weight += self.likes.count() * 2
-        self.weight += self.bookmarks.count() * 3
+        # TODO: Find a way to implement this logic.
+        # self.weight += 3 if self.tags.first() else 0
+        # self.weight += self.likes.count() * 2
+        # self.weight += self.bookmarks.count() * 3
 
     def _populate_preview_text(self):
         """Populates the body preview text of a note ot `preview_text`."""

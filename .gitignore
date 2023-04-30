@@ -27,3 +27,4 @@ mypy.ini
 celerybeat-schedule.db
 celerybeat-schedule
 .mypy_cache
+.log_size

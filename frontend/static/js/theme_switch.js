@@ -12,8 +12,8 @@ function switchTheme() {
         method: 'GET',
         headers: {"X-Requested-With": "XMLHttpRequest"},
         success: (res) => {
-            if (res.status === "ok" && res.theme === "ligth") {
-                console.log("set ligth");
+            if (res.status === "ok" && res.theme === "light") {
+                console.log("set light");
                 styleLink.href = lightThemeUrl.href;
                 themeBtn.lastElementChild.innerText = gettext('Dark theme');
                 themeBtn2.lastElementChild.innerText = gettext('Dark theme');
@@ -41,27 +41,3 @@ themeBtn.onclick = (event) => {
     switchTheme();
 }
 themeBtn2.onclick = themeBtn.onclick;
-
-// themeBtn.onclick = (event) => {
-//     if (styleLink.href == lightThemeUrl.href) {
-//         styleLink.href = darkThemeUrl.href;
-//         themeBtn.lastElementChild.innerText = gettext('Light theme');
-//         themeBtn2.lastElementChild.innerText = gettext('Light theme');
-//         $(".theme-btn-cl").attr("class", "bi bi-brightness-high px-2 theme-btn-cl");
-//         localStorage.setItem('theme', darkThemeUrl.href);
-//     } else {
-//         styleLink.href = lightThemeUrl.href;
-//         themeBtn.lastElementChild.innerText = gettext('Dark theme');
-//         themeBtn2.lastElementChild.innerText = gettext('Dark theme');
-//         $(".theme-btn-cl").attr("class", "bi bi-brightness-high px-2 theme-btn-cl");
-//         localStorage.setItem('theme', lightThemeUrl.href);
-//     }
-// }
-// themeBtn2.onclick = themeBtn.onclick;
-// const theme = localStorage.getItem('theme');
-// if (theme == darkThemeUrl.href) {
-//     styleLink.href = darkThemeUrl.href;
-//     themeBtn.lastElementChild.innerText = gettext('Light theme');
-//     themeBtn2.lastElementChild.innerText = gettext('Light theme');
-//     $(".theme-btn-cl").attr("class", "bi bi-brightness-high px-2 theme-btn-cl");
-// }

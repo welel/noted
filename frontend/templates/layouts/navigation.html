@@ -54,7 +54,7 @@ Require script `js/auth.js`
     {% else %}
         <li class="nav-item dropdown" style="list-style-type: none;">
             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="34" height="34">
+            <img src="{{ request.user.profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="34" height="34">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
             <li><a href="{% url 'content:personal_notes' %}" class="dropdown-item" ><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>
@@ -79,7 +79,7 @@ Require script `js/auth.js`
 </nav>
 
 <!-- Mobile bottom navigation -->
-<nav class="navbar fixed-bottom bg-dark nav-ligth d-lg-none d-inline">
+<nav class="navbar fixed-bottom bg-dark nav-light d-lg-none d-inline">
     <ul class="navbar-nav d-flex flex-row w-100 justify-content-around">
     <li class="nav-item px-2">
         <a class="nav-link" href="{% url 'content:home' %}">
@@ -110,7 +110,7 @@ Require script `js/auth.js`
     {% else %}
         <li class="nav-item btn-group dropup" style="list-style-type: none;">
             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="30" height="30">
+            <img src="{{ request.user.profile.avatar.url }}" class="rounded-circle" alt="{{ request.user.full_name }} avatar" width="30" height="30">
             </a>
             <ul class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark">
                 <li><a class="dropdown-item" href="{% url 'content:personal_notes' %}"><i class="bi bi-person-circle px-2"></i>{% trans "Profile" %}</a></li>

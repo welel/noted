@@ -47,6 +47,7 @@ from actions import base as act
 from actions.models import Action
 from common.cache import cache_queryset
 from common.decorators import ajax_required
+from common.logging import LogMessage
 from content.forms import NoteForm
 from content.models import Note, Source
 from tags.models import get_top_tags
@@ -193,7 +194,7 @@ class ProfileNoteList(NoteList):
         pins: User's pins (note list).
         sidenotes: A recommended note list.
         followers: User's followers.
-        total_user_likes:Total like number of all user's notes.
+        total_user_likes: Total like number of all user's notes.
 
     **Template**
         :template:`frontend/templates/content/note_list_profile.html`
@@ -305,7 +306,6 @@ class NoteSaveMixin:
     def form_valid(self, form):
         form.instance.author = self.request.user
         self.object = form.save()
-        self.object.post_save()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -353,7 +353,6 @@ class NoteCreateView(NoteDraftMixin, NoteSaveMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         self.object = form.save()
-        self.object.post_save()
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -413,6 +412,11 @@ class NoteDetailsView(DetailView):
         note = super().get_object()
         if note and self.request.user != note.author:
             Note.objects.filter(pk=note.pk).update(views=F("views") + 1)
+        self.extra_context = {"followers_count": note.author.followers.count()}
+        self.extra_context["followers"] = [
+            contact.follower
+            for contact in Following.objects.filter(followed=note.author)
+        ]
         return note
 
 
@@ -449,11 +453,9 @@ def like_note(request, slug):
     note = get_object_or_404(Note, slug=slug)
     if request.user in note.likes.all():
         note.likes.remove(request.user)
-        note.post_save()
         return JsonResponse({"liked": False})
     else:
         note.likes.add(request.user)
-        note.post_save()
         Action.objects.create_action(request.user, act.LIKE, note, notify=True)
         return JsonResponse({"liked": True})
 
@@ -464,14 +466,11 @@ def like_note(request, slug):
 def bookmark_note(request, slug):
     """Adds/removes a note to/from user's bookmarks."""
     note = get_object_or_404(Note, slug=slug)
-    # cache.delete_pattern("*PublicNoteList*")
     if request.user in note.bookmarks.all():
         note.bookmarks.remove(request.user)
-        note.post_save()
         return JsonResponse({"bookmarked": False})
     else:
         note.bookmarks.add(request.user)
-        note.post_save()
         Action.objects.create_action(request.user, act.BOOKMARK, note)
         return JsonResponse({"bookmarked": True})
 
@@ -489,14 +488,9 @@ def download_note(request, filetype: str, slug: str):
     file = note.generate_file_to_response(filetype=filetype)
     if not file or (note.draft and request.user != note.author):
         logger.error(
-            # TODO: Change on `LogMessage``
-            # log.VIEW_LOG_TEMPLATE.format(
-            #     view=download_note.__name__,
-            #     user=request.user,
-            #     method=request.method,
-            #     path=request.path,
-            # )
-            "Can't generate a file."
+            LogMessage(
+                "Can't generate a file.", download_note, request=request
+            )
         )
         return HttpResponseBadRequest()
     response = HttpResponse(

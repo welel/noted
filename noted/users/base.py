@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class UITheme(str, Enum):
-    LIGTH = "ligth"
+    LIGHT = "light"
     DARK = "dark"
 
 
@@ -21,4 +21,4 @@ def default_social_media_json():
 
 
 def default_profile_settings():
-    return {"theme": UITheme.LIGTH}
+    return {"theme": UITheme.LIGHT}

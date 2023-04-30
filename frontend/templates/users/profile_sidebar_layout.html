@@ -14,9 +14,9 @@
     <button class="btn btn-link text-decoration-none fs-6 link-h color-grey d-flex" data-bs-toggle="modal" data-bs-target="#followers-modal">
         <span id="followers-counter">{{ followers_count }}</span>&nbsp;{% trans "Followers" %}
     </button>
-    <span class="text-secondary">
+    {% comment %} <span class="text-secondary">
         {{ total_user_likes }} {% trans "Reputation" %}
-    </span>
+    </span> {% endcomment %}
 </div>
 <!-- Modal: followers-->
 <div class="modal fade" id="followers-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">

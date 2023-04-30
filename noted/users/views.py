@@ -349,7 +349,7 @@ class ThemeSwitcherView(LoginRequiredMixin, View):
         """Handle ajax request for toggling the site color theme."""
         current_theme = request.user.profile.settings.get("theme")
         theme = (
-            UITheme.DARK if current_theme == UITheme.LIGTH else UITheme.LIGTH
+            UITheme.DARK if current_theme == UITheme.LIGHT else UITheme.LIGHT
         )
         request.user.profile.set_theme(theme)
         request.user.profile.save()

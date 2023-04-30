@@ -182,66 +182,116 @@ LOGGING = {
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
         },
+        "file_django_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/django.log"),
+            level="WARNING",
+        ),
+        "file_request_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/request.log"),
+            level="DEBUG",
+        ),
+        "file_sql_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/sql.log"),
+            level="WARNING",
+        ),
+        "file_exceptions_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/exceptions.log"),
+            level="WARNING",
+        ),
+        "file_emails_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/emails.log"),
+            level="INFO",
+        ),
+        "file_markdown_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/markdown.log"),
+            level="INFO",
+        ),
+        "file_users_views_debug": dict(
+            FILE_HANDLER,
+            filename=PROJECT_DIR.joinpath("logs/debug/users_views.log"),
+            level="INFO",
+        ),
         "file_django": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/django.log"),
-            level="WARNING",
+            level="ERROR",
         ),
         "file_request": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/request.log"),
-            level="DEBUG",
+            level="ERROR",
         ),
         "file_sql": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/sql.log"),
-            level="WARNING",
+            level="ERROR",
         ),
         "file_exceptions": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/exceptions.log"),
-            level="WARNING",
+            level="ERROR",
         ),
         "file_emails": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/emails.log"),
-            level="INFO",
+            level="ERROR",
         ),
         "file_markdown": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/markdown.log"),
-            level="INFO",
+            level="ERROR",
         ),
         "file_users_views": dict(
             FILE_HANDLER,
             filename=PROJECT_DIR.joinpath("logs/users_views.log"),
-            level="INFO",
+            level="ERROR",
         ),
     },
     "loggers": {
-        "django": {"handlers": ["file_django"], "level": "WARNING"},
+        "django": {
+            "handlers": ["file_django", "file_django_debug"],
+            "level": "WARNING",
+        },
         "django.request": {
-            "handlers": ["file_request", "mail_admins"],
+            "handlers": ["file_request", "file_request_debug", "mail_admins"],
             "level": "DEBUG",
         },
         "django.db.backends": {
-            "handlers": ["file_sql", "mail_admins"],
+            "handlers": ["file_sql", "file_sql_debug", "mail_admins"],
             "level": "WARNING",
         },
         "exceptions": {
-            "handlers": ["file_exceptions", "mail_admins"],
+            "handlers": [
+                "file_exceptions",
+                "file_exceptions_debug",
+                "mail_admins",
+            ],
             "level": "WARNING",
         },
         "emails": {
-            "handlers": ["file_emails", "mail_admins"],
+            "handlers": ["file_emails", "file_emails_debug", "mail_admins"],
             "level": "INFO",
         },
         "markdown": {
-            "handlers": ["file_markdown", "mail_admins"],
+            "handlers": [
+                "file_markdown",
+                "file_markdown_debug",
+                "mail_admins",
+            ],
             "level": "INFO",
         },
         "users.views": {
-            "handlers": ["file_users_views", "mail_admins"],
+            "handlers": [
+                "file_users_views",
+                "file_users_views_debug",
+                "mail_admins",
+            ],
             "level": "INFO",
         },
     },
@@ -336,5 +386,5 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_TAGS_FROM_STRING = "tags.utils.custom_tag_string"
 
 # Profile settings
-LIGTH_THEME_PATH = "css/ligth_theme.css"
+LIGHT_THEME_PATH = "css/light_theme.css"
 DARK_THEME_PATH = "css/dark_theme.css"
