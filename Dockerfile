@@ -22,4 +22,5 @@ RUN pip install -r /noted/requirements/production.txt \
     && rm -rf /noted/requirements \
     && apt-get update \
     && apt-get -y install wkhtmltopdf \
+    && apt-get -y install ncat
     && apt-get -y autoclean
