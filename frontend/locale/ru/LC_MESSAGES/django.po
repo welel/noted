@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-30 10:05+0300\n"
-"PO-Revision-Date: 2023-04-23 08:32+0000\n"
+"POT-Creation-Date: 2023-05-11 22:06+0300\n"
+"PO-Revision-Date: 2023-05-11 19:14+0000\n"
 "Last-Translator: Anonymous User <pavel.loginov.dev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
 #: templates/about.html:7 templates/about.html:18
@@ -35,26 +33,26 @@ msgstr ""
 
 #: templates/about.html:22
 msgid ""
-"Our mission is to provide a simple and intuitive way for individuals to find "
-"notes and summaries on different topics and for specific sources of "
+"Our mission is to provide a simple and intuitive way for individuals to find"
+" notes and summaries on different topics and for specific sources of "
 "information. And to help people to keep track of their thoughts and ideas "
 "and share them public. We believe that sharing and disseminating knowledge "
 "and information is important and beneficial."
 msgstr ""
 "Наша миссия состоит в том, чтобы предоставить людям простой и интуитивно "
 "понятный способ находить заметки и конспекты по различным темам и для "
-"определенных источников информации. И помогать людям записывать свои мысли и "
-"идеи и делиться ими с людьми. Мы считаем, что делиться и распространять "
+"определенных источников информации. И помогать людям записывать свои мысли и"
+" идеи и делиться ими с людьми. Мы считаем, что делиться и распространять "
 "знания и информацию важно и полезно."
 
 #: templates/about.html:24
 msgid ""
-"Founded in 2022, NoteD. Behind the scenes, our dedicated team of developers, "
-"consisting of just two highly skilled individuals, works tirelessly to bring "
-"you a seamless and reliable user experience. Our platform is designed to be "
-"easy to use, while still offering powerful features such as the ability to "
-"create both public and private notes (drafts), tag and search functionality, "
-"and the ability to share notes with others."
+"Founded in 2022, NoteD. Behind the scenes, our dedicated team of developers,"
+" consisting of just two highly skilled individuals, works tirelessly to "
+"bring you a seamless and reliable user experience. Our platform is designed "
+"to be easy to use, while still offering powerful features such as the "
+"ability to create both public and private notes (drafts), tag and search "
+"functionality, and the ability to share notes with others."
 msgstr ""
 "Основан в 2022 году. За кулисами сервис создает команда, состоящая всего из "
 "двух квалифицированных специалистов. Команда неустанно работает над тем, "
@@ -85,8 +83,8 @@ msgid ""
 "Easily build upon the work of others by copying and editing notes to suit "
 "your needs."
 msgstr ""
-"Легко развивайте записи других, пользователей копируя и редактируя заметки в "
-"соответствии с вашими потребностями."
+"Легко развивайте записи других, пользователей копируя и редактируя заметки в"
+" соответствии с вашими потребностями."
 
 #: templates/about.html:31
 msgid ""
@@ -162,15 +160,11 @@ msgstr "Изменить Пароль"
 
 #: templates/account/email/password_reset_key_message.html:6
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"button below to reset your password."
+"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the button below to reset your password."
 msgstr ""
-"Вы получили это электронное письмо, потому что вы или кто-то другой "
-"запросили пароль для вашей учетной записи пользователя.\n"
-"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите "
-"кнопку ниже, чтобы сбросить пароль."
+"Вы получили это электронное письмо, потому что вы или кто-то другой запросили пароль для вашей учетной записи пользователя.\n"
+"Его можно смело игнорировать, если вы не запрашивали сброс пароля. Нажмите кнопку ниже, чтобы сбросить пароль."
 
 #: templates/account/email/password_reset_key_message.html:9
 msgid "Reset password"
@@ -303,8 +297,8 @@ msgstr "Новый пароль (повторите)"
 
 #: templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
 msgstr ""
 "Забыли свой пароль? Введите адрес электронной почты внизу, и мы вышлем вам "
 "электронное письмо  с инструкцией для сброса пароля. "
@@ -316,7 +310,8 @@ msgstr "Изменить Пароль"
 #: templates/account/password_reset.html:24
 msgid "Please contact us if you have any trouble resetting your password."
 msgstr ""
-"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом пароля."
+"Пожалуйста, свяжитесь с нами, если у вас возникли проблемы со сбросом "
+"пароля."
 
 #: templates/account/password_reset_from_key.html:8
 msgid "Bad Token"
@@ -326,14 +321,15 @@ msgstr "Испорченный Токен"
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
 "Ссылка для смены пароля не рабочая, возможно она была уже использована. "
 "Пожалуйста, запросите <a href=\"%(passwd_reset_url)s\">новую ссылку</a>."
 
 #: templates/actions/notifications.html:9
-#: templates/actions/notifications.html:15 templates/layouts/navigation.html:25
+#: templates/actions/notifications.html:15
+#: templates/layouts/navigation.html:25
 msgid "Notifications"
 msgstr "Уведомления"
 
@@ -382,7 +378,8 @@ msgstr "Новая запись"
 msgid "Add source"
 msgstr "Добавить источник"
 
-#: templates/content/note_create.html:50 templates/content/note_create.html:101
+#: templates/content/note_create.html:50
+#: templates/content/note_create.html:101
 msgid "Source"
 msgstr "Источник"
 
@@ -504,10 +501,10 @@ msgstr "Где знания доступны"
 
 #: templates/content/note_display.html:84
 #: templates/content/note_list_layout.html:15
-#: templates/layouts/sidebar/more_from_noted.html:16 templates/welcome.html:135
-#: templates/welcome.html:169 templates/welcome.html:203
-#: templates/welcome.html:239 templates/welcome.html:273
-#: templates/welcome.html:307
+#: templates/layouts/sidebar/more_from_noted.html:16
+#: templates/welcome.html:135 templates/welcome.html:169
+#: templates/welcome.html:203 templates/welcome.html:239
+#: templates/welcome.html:273 templates/welcome.html:307
 msgid "Anonymous"
 msgstr "Анонимно"
 
@@ -517,10 +514,10 @@ msgstr "Опубликовано"
 
 #: templates/content/note_display.html:103
 #: templates/content/note_list_layout.html:20
-#: templates/layouts/sidebar/more_from_noted.html:20 templates/welcome.html:143
-#: templates/welcome.html:177 templates/welcome.html:211
-#: templates/welcome.html:247 templates/welcome.html:281
-#: templates/welcome.html:315
+#: templates/layouts/sidebar/more_from_noted.html:20
+#: templates/welcome.html:143 templates/welcome.html:177
+#: templates/welcome.html:211 templates/welcome.html:247
+#: templates/welcome.html:281 templates/welcome.html:315
 msgid "Updated"
 msgstr "Обновлен"
 
@@ -692,7 +689,8 @@ msgstr "Регистрация почти закончена."
 msgid ""
 "Click the link below to confirm your email and finish changing your NoteD "
 "email."
-msgstr "Перейдите по ссылке внизу, чтобы подтвердить ваш новый email на NoteD."
+msgstr ""
+"Перейдите по ссылке внизу, чтобы подтвердить ваш новый email на NoteD."
 
 #: templates/emails/change_email.html:9 templates/emails/change_email.txt:8
 #: templates/emails/signup_email.html:9 templates/emails/signup_email.txt:8
@@ -731,10 +729,10 @@ msgid ""
 "and use of your personal information in accordance with its terms. Our "
 "Privacy Policy can be found at"
 msgstr ""
-"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также "
-"со сбором, хранением и использованием вашей личной информации в соответствии "
-"с ее условиями. С нашей Политикой конфиденциальности можно ознакомиться по "
-"адресу"
+"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также"
+" со сбором, хранением и использованием вашей личной информации в "
+"соответствии с ее условиями. С нашей Политикой конфиденциальности можно "
+"ознакомиться по адресу"
 
 #: templates/emails/signup_email.txt:15
 msgid ""
@@ -742,10 +740,10 @@ msgid ""
 "and use of your personal information in accordance with its terms. Our "
 "Privacy Policy can be found at "
 msgstr ""
-"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также "
-"со сбором, хранением и использованием вашей личной информации в соответствии "
-"с ее условиями. С нашей Политикой конфиденциальности можно ознакомиться по "
-"адресу"
+"Регистрируясь, вы соглашаетесь с нашей Политикой конфиденциальности, а также"
+" со сбором, хранением и использованием вашей личной информации в "
+"соответствии с ее условиями. С нашей Политикой конфиденциальности можно "
+"ознакомиться по адресу"
 
 #: templates/error.html:24 templates/layouts/sidebar/footer.html:8
 #: templates/welcome.html:26
@@ -801,7 +799,8 @@ msgid "Sign in with email"
 msgstr "Вход через email"
 
 #: templates/layouts/auth_modals.html:36
-msgid "Enter the email address associated with your account and your password."
+msgid ""
+"Enter the email address associated with your account and your password."
 msgstr "Введите email адрес привязанный к вашему аккаунту и пароль."
 
 #: templates/layouts/auth_modals.html:42 templates/layouts/auth_modals.html:64
@@ -858,8 +857,8 @@ msgstr "Что-то пошло не так."
 #: templates/layouts/auth_modals.html:98
 msgid "Try again! If you still get an error, report this or try later."
 msgstr ""
-"Попробуйте ещё. Если вы всё равно получаете ошибку, сообщите нам, пожалуйста "
-"или попробуйте позже."
+"Попробуйте ещё. Если вы всё равно получаете ошибку, сообщите нам, пожалуйста"
+" или попробуйте позже."
 
 #: templates/layouts/auth_modals.html:114
 msgid "Are you sure you want to sign out?"
@@ -912,8 +911,8 @@ msgstr "Типы источников"
 #: templates/privacy_policy.html:19
 msgid ""
 "At NoteD, we take the privacy of our users very seriously. We understand "
-"that the information you entrust to us is personal and sensitive, and we are "
-"committed to protecting it. This Privacy Policy explains how we collect, "
+"that the information you entrust to us is personal and sensitive, and we are"
+" committed to protecting it. This Privacy Policy explains how we collect, "
 "use, and protect your personal information when you use our website and "
 "services."
 msgstr ""
@@ -930,17 +929,17 @@ msgstr "Сбор и Использование Информации:"
 
 #: templates/privacy_policy.html:23
 msgid ""
-"When you use our website, we collect certain information from you, including "
-"your name, email address, and any other information you choose to provide. "
+"When you use our website, we collect certain information from you, including"
+" your name, email address, and any other information you choose to provide. "
 "We use this information to provide you with the services you request and to "
 "improve our website and services. We may also use this information to "
-"contact you in the future to provide you with information about our products "
-"and services or to ask for your feedback."
+"contact you in the future to provide you with information about our products"
+" and services or to ask for your feedback."
 msgstr ""
 "Когда вы используете наш веб-сайт, мы получаем от вас определенную "
 "информацию, включая ваше имя, адрес электронной почты и любую другую "
-"информацию, которую вы решите предоставить. Мы используем эту информацию для "
-"предоставления запрашиваемых вами услуг и улучшения нашего веб-сайта и "
+"информацию, которую вы решите предоставить. Мы используем эту информацию для"
+" предоставления запрашиваемых вами услуг и улучшения нашего веб-сайта и "
 "услуг. Мы также можем использовать эту информацию, чтобы связаться с вами в "
 "будущем, чтобы предоставить вам информацию о наших продуктах и услугах или "
 "запросить от вас обратную информацию."
@@ -949,8 +948,8 @@ msgstr ""
 msgid ""
 "We also use third-party services such as Google and Yandex metric tags to "
 "collect information about the usage of our website, including which pages "
-"are visited, how often, and for how long. This depersonalized information is "
-"used to help us understand how our website is being used and to improve it."
+"are visited, how often, and for how long. This depersonalized information is"
+" used to help us understand how our website is being used and to improve it."
 msgstr ""
 "Мы также используем сторонние сервисы, такие как метрические теги Google и "
 "Яндекс, для сбора информации об использовании нашего веб-сайта, в том числе "
@@ -991,8 +990,8 @@ msgid ""
 "following information is collected and mapped to a locally created account:"
 msgstr ""
 "NoteD не связывает эти данные с конкретным пользователем. В дополнение к "
-"информации об IP-адресе/браузере, полученной от анонимных посетителей сайта, "
-"другая информация собирается и сохраняется, когда пользователи "
+"информации об IP-адресе/браузере, полученной от анонимных посетителей сайта,"
+" другая информация собирается и сохраняется, когда пользователи "
 "регистрируются и входят в систему для просмотра и создания контента. В "
 "частности, следующая информация собирается и сопоставляется с локально "
 "созданной учетной записью:"
@@ -1038,9 +1037,9 @@ msgid ""
 "account or share your information with any other party without your express "
 "consent."
 msgstr ""
-"Мы используем службы аутентификации allauth - GitHub, Google и Яндекс, чтобы "
-"вы могли войти на наш веб-сайт, используя свои существующие учетные записи. "
-"Когда вы входите в систему с помощью этих служб, мы можем собирать "
+"Мы используем службы аутентификации allauth - GitHub, Google и Яндекс, чтобы"
+" вы могли войти на наш веб-сайт, используя свои существующие учетные записи."
+" Когда вы входите в систему с помощью этих служб, мы можем собирать "
 "определенную информацию из вашей учетной записи, например ваше имя и адрес "
 "электронной почты. Мы никогда не будем публиковать информацию в вашей "
 "учетной записи или передавать вашу информацию какой-либо другой стороне без "
@@ -1112,8 +1111,8 @@ msgstr "адрес электронной почты по умолчанию д�
 
 #: templates/privacy_policy.html:75
 msgid ""
-"ID of an authorized user in Yandex. It is formed on the Yandex side based on "
-"the client_id and user_id pair"
+"ID of an authorized user in Yandex. It is formed on the Yandex side based on"
+" the client_id and user_id pair"
 msgstr ""
 "ID авторизованного пользователя в Яндекс. Формируется на стороне Яндекса на "
 "основе пары client_id и user_id"
@@ -1211,8 +1210,8 @@ msgstr "Безопасность:"
 #: templates/privacy_policy.html:111
 msgid ""
 "We use a variety of security measures to protect your personal information, "
-"including encryption and secure servers. However, please note that no method "
-"of transmitting or storing data is completely secure. We cannot guarantee "
+"including encryption and secure servers. However, please note that no method"
+" of transmitting or storing data is completely secure. We cannot guarantee "
 "the absolute security of your personal information."
 msgstr ""
 "Мы используем различные меры безопасности для защиты вашей личной "
@@ -1232,10 +1231,10 @@ msgid ""
 "concerns about your personal information or this Privacy Policy, please "
 "contact us at "
 msgstr ""
-"Вы можете получить доступ, изменить и удалить свою личную информацию в любое "
-"время, войдя в свою учетную запись на нашем веб-сайте. Если у вас есть какие-"
-"либо вопросы или опасения по поводу вашей личной информации или настоящей "
-"Политики конфиденциальности, свяжитесь с нами по адресу "
+"Вы можете получить доступ, изменить и удалить свою личную информацию в любое"
+" время, войдя в свою учетную запись на нашем веб-сайте. Если у вас есть "
+"какие-либо вопросы или опасения по поводу вашей личной информации или "
+"настоящей Политики конфиденциальности, свяжитесь с нами по адресу "
 
 #: templates/privacy_policy.html:117
 msgid "Changes to this Privacy Policy"
@@ -1245,8 +1244,8 @@ msgstr "Изменения в Политике конфиденциальнос�
 msgid ""
 "We may update this Privacy Policy from time to time. If we make any changes "
 "to this policy, we will post the updated policy on this page and indicate "
-"the date it was last updated. Your continued use of our website and services "
-"constitutes your acceptance of any changes to this policy."
+"the date it was last updated. Your continued use of our website and services"
+" constitutes your acceptance of any changes to this policy."
 msgstr ""
 "Мы можем время от времени обновлять настоящую Политику конфиденциальности. "
 "Если мы внесем какие-либо изменения в эту политику, мы опубликуем "
@@ -1267,8 +1266,8 @@ msgid ""
 "If you have any questions or concerns about this Privacy Policy or our "
 "handling of your personal information, please contact us at "
 msgstr ""
-"Если у вас есть какие-либо вопросы или опасения по поводу настоящей Политики "
-"конфиденциальности или обработки нами вашей личной информации, свяжитесь с "
+"Если у вас есть какие-либо вопросы или опасения по поводу настоящей Политики"
+" конфиденциальности или обработки нами вашей личной информации, свяжитесь с "
 "нами по адресу "
 
 #: templates/socialaccount/authentication_error.html:5
@@ -1279,7 +1278,8 @@ msgstr "Ошибка при входе через социальную сеть"
 #: templates/socialaccount/authentication_error.html:10
 msgid ""
 "An error occurred while attempting to login via your social network account."
-msgstr "Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
+msgstr ""
+"Возникла ошибка при попытке входа в аккаунт с помощью социальной сети."
 
 #: templates/socialaccount/signup.html:5
 msgid "Signup"
@@ -1293,8 +1293,7 @@ msgstr "Регистрация"
 #, python-format
 msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
-"  %(site_name)s. The email associated with your account already exists on "
-"NoteD. Please login with your existing email or register with a new one."
+"  %(site_name)s. The email associated with your account already exists on NoteD. Please login with your existing email or register with a new one."
 msgstr ""
 "Вы пытаетесь зарегистрироваться на сайте через %(provider_name)s. Адрес "
 "электронной почты привязанный к этому аккаунту уже существует на NoteD. "
@@ -1508,9 +1507,9 @@ msgstr "Делитесь своими записями"
 
 #: templates/welcome.html:78
 msgid ""
-"Easily create private, public, and anonymous notes and help others by adding "
-"sources and tags. Make information discoverable and accessible to all. Start "
-"now!"
+"Easily create private, public, and anonymous notes and help others by adding"
+" sources and tags. Make information discoverable and accessible to all. "
+"Start now!"
 msgstr ""
 "Легко создавайте личные, публичные и анонимные записи и помогайте другим "
 "находить их, добавляя источники и теги. Сделайте информацию доступной для "
@@ -1563,8 +1562,8 @@ msgstr "Markdown редактор"
 
 #: templates/welcome.html:102
 msgid ""
-"Elevate your note-taking experience with our powerful markdown editor. Enjoy "
-"features like preview, split editing, full-screen editing, and hotkeys. "
+"Elevate your note-taking experience with our powerful markdown editor. Enjoy"
+" features like preview, split editing, full-screen editing, and hotkeys. "
 "Start writing now!"
 msgstr ""
 "Ведите записи с помощью нашего функционального Markdown редактора. "
@@ -1579,6 +1578,33 @@ msgstr "записи набирающие популярность"
 #: templates/welcome.html:334
 msgid "Discover more of what matters to you"
 msgstr "Узнайте больше о том, что важно для вас"
+
+msgid "Other"
+msgstr "Другой"
+
+msgid "Book"
+msgstr "Книга"
+
+msgid "Course"
+msgstr "Курс"
+
+msgid "Video"
+msgstr "Видео"
+
+msgid "Article"
+msgstr "Статья"
+
+msgid "Lecture"
+msgstr "Лекция"
+
+msgid "Tutorial"
+msgstr "Руководство"
+
+msgid "Dark theme"
+msgstr "Тёмная тема"
+
+msgid "Light theme"
+msgstr "Светлая тема"
 
 #~ msgid "Reputation"
 #~ msgstr "Репутация"
@@ -1620,27 +1646,6 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "Length of {i+1} tag should be                             less than 25 "
 #~ "symbols."
 #~ msgstr "Длинна тегов не должны превышать 25 символов."
-
-#~ msgid "Other"
-#~ msgstr "Другой"
-
-#~ msgid "Book"
-#~ msgstr "Книга"
-
-#~ msgid "Course"
-#~ msgstr "Курс"
-
-#~ msgid "Video"
-#~ msgstr "Видео"
-
-#~ msgid "Article"
-#~ msgstr "Статья"
-
-#~ msgid "Lecture"
-#~ msgstr "Лекция"
-
-#~ msgid "Tutorial"
-#~ msgstr "Руководство"
 
 #~ msgid "External link"
 #~ msgstr "Внешняя ссылка"
@@ -1698,12 +1703,11 @@ msgstr "Узнайте больше о том, что важно для вас"
 
 #~ msgid ""
 #~ "Add tags. Separate tags by using \"Enter\" or comma.\n"
-#~ "        You can add maximum 3 tags, and length of tags should be less "
-#~ "than 25\n"
+#~ "        You can add maximum 3 tags, and length of tags should be less than 25\n"
 #~ "        symbols."
 #~ msgstr ""
-#~ "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". "
-#~ "Вы можете добавить не более 3 тегов с именем длинной до 25 символов. "
+#~ "Добавите теги. Теги разделяются запятыми или нажатием клавиши \"Enter\". Вы "
+#~ "можете добавить не более 3 тегов с именем длинной до 25 символов. "
 
 #~ msgid "Language"
 #~ msgstr "Язык"
@@ -1742,8 +1746,8 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ msgstr "Аккаунты пользователя"
 
 #~ msgid ""
-#~ "You already registered or the URL link is invalid. If you didn't "
-#~ "register, request for another link!"
+#~ "You already registered or the URL link is invalid. If you didn't register, "
+#~ "request for another link!"
 #~ msgstr ""
 #~ "Вы уже зарегистрировались. Если нет, то запросите новую ссылку для "
 #~ "регистрации."
@@ -1752,12 +1756,11 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "You already changed email or the URL link is invalid. If you didn't, make "
 #~ "request again!"
 #~ msgstr ""
-#~ "Вы уже изменили адрес электронной почты. Если нет, то запросите новую "
-#~ "ссылку для смены."
+#~ "Вы уже изменили адрес электронной почты. Если нет, то запросите новую ссылку"
+#~ " для смены."
 
 #~ msgid ""
-#~ "You can't change your email because you signed up via a third paty "
-#~ "service."
+#~ "You can't change your email because you signed up via a third paty service."
 #~ msgstr ""
 #~ "Вы не можете менять адрес электронной почты, потому что вы "
 #~ "зарегистрировались через сторонний сервис."
@@ -1784,11 +1787,11 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ msgstr "Плохая подпись"
 
 #~ msgid ""
-#~ "Full Name should contain only latin letters, and                    "
-#~ "should include no more than 3 words"
+#~ "Full Name should contain only latin letters, and                    should "
+#~ "include no more than 3 words"
 #~ msgstr ""
-#~ "Полное имя должно содержать только латинские буквы и состоять не более "
-#~ "чем из 3 слов."
+#~ "Полное имя должно содержать только латинские буквы и состоять не более чем "
+#~ "из 3 слов."
 
 #~ msgid "Full Name should contain only latin letters."
 #~ msgstr "Полное имя должно содержать только латинские буквы."
@@ -1804,12 +1807,12 @@ msgstr "Узнайте больше о том, что важно для вас"
 
 #~ msgid ""
 #~ "Username should include only latin letters, digits and dots.             "
-#~ "Username can't start and end with a dot or don't contain "
-#~ "letters.             Digits can be added only at the end."
+#~ "Username can't start and end with a dot or don't contain letters."
+#~ "             Digits can be added only at the end."
 #~ msgstr ""
-#~ "Имя пользователя должно состоять только из латинских букв, цифр и точек. "
-#~ "Имя пользователя не может начинаться с цифры или точки, не может "
-#~ "заканчиваться точкой. Цифры могут быть добавлены только в самом конце."
+#~ "Имя пользователя должно состоять только из латинских букв, цифр и точек. Имя"
+#~ " пользователя не может начинаться с цифры или точки, не может заканчиваться "
+#~ "точкой. Цифры могут быть добавлены только в самом конце."
 
 #~ msgid "Your name appear around NoteD where you post or do actions."
 #~ msgstr "Ваше имя видно пользователям на сайте."
@@ -1852,8 +1855,8 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ msgstr "Плохой тип имени пользователя."
 
 #~ msgid ""
-#~ "Username should contain less than 150 symbols                     and "
-#~ "more than 4."
+#~ "Username should contain less than 150 symbols                     and more "
+#~ "than 4."
 #~ msgstr ""
 #~ "Имя пользователя должно состоять менее чем из 150 символов и более чем 4."
 
@@ -1865,8 +1868,8 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "next to each other. Digits can be added only at the end."
 #~ msgstr ""
 #~ "Имя пользователя не может начинаться с точки или заканчиваться ею. Нельзя "
-#~ "ставить две точки подряд. Цифры разрешается добавлять только в самом "
-#~ "конце имени."
+#~ "ставить две точки подряд. Цифры разрешается добавлять только в самом конце "
+#~ "имени."
 
 #~ msgid "Full name can't be empty."
 #~ msgstr "Поле имени не может быть пустым."
@@ -1886,9 +1889,6 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ msgid "Token Error"
 #~ msgstr "Токен Ошибки"
 
-#~ msgid "Dark theme"
-#~ msgstr "Тёмная тема"
-
 #~ msgid "Popular"
 #~ msgstr "Популярные"
 
@@ -1902,9 +1902,9 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "своими записями с остальными на любые темы."
 
 #~ msgid ""
-#~ "Create private, public and anonymous notes. Help people and add the "
-#~ "source of information (book, article, etc.) to your note and tags so that "
-#~ "others can easily find it."
+#~ "Create private, public and anonymous notes. Help people and add the source "
+#~ "of information (book, article, etc.) to your note and tags so that others "
+#~ "can easily find it."
 #~ msgstr ""
 #~ "Создавайте личные, публичные и анонимные записи. Помогайте людям и "
 #~ "добавляйте источник информации (книгу, статью и т. д.) к своим заметкам и "
@@ -1924,8 +1924,8 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "Start creating a note based on other people's notes. Copy the note to "
 #~ "yourself and edit as you wish."
 #~ msgstr ""
-#~ "Создавайте заметки на основе заметок других людей. Скопируйте заметку "
-#~ "себе и редактируйте как пожелаете."
+#~ "Создавайте заметки на основе заметок других людей. Скопируйте заметку себе и"
+#~ " редактируйте как пожелаете."
 
 #~ msgid "Search sources"
 #~ msgstr "Ищите источники"
@@ -1934,13 +1934,13 @@ msgstr "Узнайте больше о том, что важно для вас"
 #~ "Search for the desired source and find existing notes on this source. For "
 #~ "example: find a book and view all notes related to it."
 #~ msgstr ""
-#~ "Ищите нужный источник и найдёте все существующие заметки на этот "
-#~ "источник. Например: найдите книгу и увидите все заметки, связанные с ней."
+#~ "Ищите нужный источник и найдёте все существующие заметки на этот источник. "
+#~ "Например: найдите книгу и увидите все заметки, связанные с ней."
 
 #~ msgid "Download notes in markdown, html and pdf formats or bookmark notes."
 #~ msgstr ""
-#~ "Скачивайте заметки в форматах markdown, html и pdf или добавляйте заметки "
-#~ "в закладки своего профиля."
+#~ "Скачивайте заметки в форматах markdown, html и pdf или добавляйте заметки в "
+#~ "закладки своего профиля."
 
 #~ msgid "Subscribe to interesting topics and people."
 #~ msgstr "Подписывайтесь на интересующие темы и людей."
