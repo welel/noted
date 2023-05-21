@@ -8,7 +8,7 @@ Require script `js/auth.js`
 {% load settingstags %}
 <!-- Left navigation -->
 {% with profile=user.profile profile_settings=user.profile.settings %}
-<nav id="left-nav" class="d-lg-flex d-none">
+<nav id="left-nav" class="d-lg-flex d-none h-100">
     <div class="mt-4">
         <a class="navbar-brand" href="{% url 'content:home' %}">
             <img src="{% static 'img/logo.png' %}" alt="NoteD logo" width="34" height="34">
