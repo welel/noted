@@ -171,7 +171,7 @@
 }
 
 
-/* NOTE CREATE */
+/* NOTE CREATE & EDITOR */
 #md-syntax-table {
     border: 1px solid rgb(223, 223, 223);
 }
@@ -194,6 +194,19 @@
 
 .bootstrap-tagsinput {
     border: solid 1px #ced4da !important;
+}
+
+.editor-preview-active, .editor-preview-active-side {
+    background-color: white !important;    
+}
+
+.editor-preview-side {
+    border: 1px solid #ddd;
+}
+
+.editor-toolbar a {
+    background: #fcfcfc;
+    border-color: #95a5a6;
 }
 
 

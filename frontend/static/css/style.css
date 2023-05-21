@@ -211,6 +211,14 @@ h6 {
     box-shadow: none !important;
 }
 
+.editor-toolbar.fullscreen::before {
+    background: none !important;
+}
+
+.editor-toolbar.fullscreen::after {
+    background: none !important;
+}
+
 
 /* SEARCH */
 @media (max-width: 750px) {
