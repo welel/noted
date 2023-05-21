@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-11 22:06+0300\n"
-"PO-Revision-Date: 2023-05-11 19:14+0000\n"
+"POT-Creation-Date: 2023-05-21 21:11+0300\n"
+"PO-Revision-Date: 2023-05-21 18:14+0000\n"
 "Last-Translator: Anonymous User <pavel.loginov.dev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -354,6 +354,16 @@ msgstr "назад"
 msgid "See the note"
 msgstr "Смотреть запись"
 
+#: templates/actions/notifications.html:39
+msgid "Mark as read"
+msgstr "Отметить прочитанным"
+
+#: templates/actions/notifications.html:42
+#: templates/content/note_display.html:133
+#: templates/content/note_display.html:207
+msgid "Delete"
+msgstr "Удалить"
+
 #: templates/actions/notifications.html:56
 msgid "a new note has been created with the tag you are following"
 msgstr "создана новая заметка с тегом, на который вы подписаны"
@@ -389,7 +399,7 @@ msgstr "Тип источника"
 
 #: templates/content/note_create.html:60
 msgid "Sources of information from which you take the note."
-msgstr "Источники информации, с которого вы берете запись."
+msgstr "Источник информации, с которого вы берете запись."
 
 #: templates/content/note_create.html:69
 msgid "Add Link"
@@ -536,11 +546,6 @@ msgstr "Прикреплен"
 msgid "Edit"
 msgstr "Редактировать"
 
-#: templates/content/note_display.html:133
-#: templates/content/note_display.html:207
-msgid "Delete"
-msgstr "Удалить"
-
 #: templates/content/note_display.html:138
 #: templates/content/note_display.html:212
 msgid "Download"
@@ -571,7 +576,7 @@ msgstr "Скачать Запись"
 
 #: templates/content/note_list_layout.html:63
 msgid "Save"
-msgstr "Сохраняйте"
+msgstr "Сохранить"
 
 #: templates/content/note_list_layout.html:72 templates/welcome.html:146
 #: templates/welcome.html:180 templates/welcome.html:214
@@ -1579,32 +1584,35 @@ msgstr "записи набирающие популярность"
 msgid "Discover more of what matters to you"
 msgstr "Узнайте больше о том, что важно для вас"
 
-msgid "Other"
-msgstr "Другой"
+#~ msgid "Other"
+#~ msgstr "Другой"
 
-msgid "Book"
-msgstr "Книга"
+#~ msgid "Book"
+#~ msgstr "Книга"
 
-msgid "Course"
-msgstr "Курс"
+#~ msgid "Course"
+#~ msgstr "Курс"
 
-msgid "Video"
-msgstr "Видео"
+#~ msgid "Video"
+#~ msgstr "Видео"
 
-msgid "Article"
-msgstr "Статья"
+#~ msgid "Article"
+#~ msgstr "Статья"
 
-msgid "Lecture"
-msgstr "Лекция"
+#~ msgid "Lecture"
+#~ msgstr "Лекция"
 
-msgid "Tutorial"
-msgstr "Руководство"
+#~ msgid "Tutorial"
+#~ msgstr "Руководство"
 
-msgid "Dark theme"
-msgstr "Тёмная тема"
+#~ msgid "Dark theme"
+#~ msgstr "Тёмная тема"
 
-msgid "Light theme"
-msgstr "Светлая тема"
+#~ msgid "Light theme"
+#~ msgstr "Светлая тема"
+
+#~ msgid "Description in 100 characters."
+#~ msgstr "Описание в 100 символов."
 
 #~ msgid "Reputation"
 #~ msgstr "Репутация"
@@ -1623,9 +1631,6 @@ msgstr "Светлая тема"
 
 #~ msgid "Source link"
 #~ msgstr "Ссылка на источник"
-
-#~ msgid "Description in 100 characters."
-#~ msgstr "Описание в 100 символов."
 
 #~ msgid "Source Description"
 #~ msgstr "Описание источника"
