@@ -2,6 +2,10 @@
     background-color: #e6e6e6;
 }
 
+.anchor:target {
+    background-color: #1fff3740;
+}
+
 /* BADGES & TAGS */
 .badge-h:hover {
     color: black !important;

@@ -20,6 +20,10 @@ hr {
     opacity: 1;
 }
 
+.anchor:target {
+    background-color: #1fff3717;
+}
+
 
 /* BADGES & TAGS */
 .badge-h:hover {

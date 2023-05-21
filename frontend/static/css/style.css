@@ -54,7 +54,8 @@ h6 {
 }
 
 .anchor:target {
-    background-color: #439b00;
+    border-radius: 23px;
+    padding-left: 9px;
 }
 
 /* Rule for html {zoom: .9;} compatibility, scales modal background fade */
