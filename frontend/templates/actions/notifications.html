@@ -36,10 +36,10 @@
             <a class="text-decoration-none" href="{{ notification.target.get_absolute_url }}">{% trans "See the note" %}</a>
             {% if notification.unread %}
             <button id="read-btn-{{ notification.slug }}" class="btn btn-link pe-0 ms-4" onclick="readNotice({{ notification.slug }})">
-                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as read"></i>
+                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Mark as read" %}"></i>
             </button>
             {% endif %}
-            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Delete" %}">
                 <i class="bi bi-trash3 color-grey google-h"></i>
             </button>
         </div>
@@ -62,10 +62,10 @@
             <a class="text-decoration-none" href="{{ notification.target.get_absolute_url }}">{% trans "See the note" %}</a>
             {% if notification.unread %}
             <button id="read-btn-{{ notification.slug }}" class="btn btn-link pe-0 ms-4" onclick="readNotice({{ notification.slug }})">
-                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as read"></i>
+                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Mark as read" %}"></i>
             </button>
             {% endif %}
-            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Delete" %}">
                 <i class="bi bi-trash3 color-grey google-h"></i>
             </button>
         </div>
@@ -84,10 +84,10 @@
             <a class="text-decoration-none" href="{{ notification.actor.get_absolute_url }}">{% trans "See the profile" %}</a>
             {% if notification.unread %}
             <button id="read-btn-{{ notification.slug }}" class="btn btn-link pe-0 ms-4" onclick="readNotice({{ notification.slug }})">
-                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as read"></i>
+                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Mark as read" %}"></i>
             </button>
             {% endif %}
-            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Delete" %}">
                 <i class="bi bi-trash3 color-grey google-h"></i>
             </button>
         </div>
@@ -109,10 +109,10 @@
             <a class="text-decoration-none" href="{{ notification.target.get_absolute_url }}">{% trans "See the note" %}</a>
             {% if notification.unread %}
             <button id="read-btn-{{ notification.slug }}" class="btn btn-link pe-0 ms-4" onclick="readNotice({{ notification.slug }})">
-                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as read"></i>
+                <i class="bi bi-check-lg color-grey github-h" style="font-size: 1.3rem;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Mark as read" %}"></i>
             </button>
             {% endif %}
-            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+            <button class="btn btn-link ps-1" onclick="deleteNotice({{ notification.slug }})" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% trans "Delete" %}">
                 <i class="bi bi-trash3 color-grey google-h"></i>
             </button>
         </div>

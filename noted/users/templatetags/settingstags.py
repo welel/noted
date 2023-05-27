@@ -23,5 +23,5 @@ def theme(user_theme: Literal[UITheme.DARK, UITheme.LIGHT]) -> str:
 def print_theme(user_theme: Literal[UITheme.DARK, UITheme.LIGHT]) -> str:
     """Returns a label for the theme toggler."""
     if user_theme == UITheme.DARK:
-        return _("{} theme".format(UITheme.LIGHT.capitalize()))
-    return _("{} theme".format(UITheme.DARK.capitalize()))
+        return _("Light theme")
+    return _("Dark theme")

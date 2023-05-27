@@ -20,6 +20,10 @@ hr {
     opacity: 1;
 }
 
+.anchor:target {
+    background-color: #1fff3717;
+}
+
 
 /* BADGES & TAGS */
 .badge-h:hover {
@@ -293,4 +297,20 @@ hr {
     background-color: var(--dr-bg);
     color: var(--dr-cl);
     border-color: var(--dr-sl);
+}
+
+.editor-preview-active, .editor-preview-active-side {
+    background-color: var(--dr-bg) !important;    
+}
+
+.editor-preview-side {
+    border: 1px solid var(--dr-sl) !important;
+}
+
+.editor-toolbar a { 
+    background: var(--dr-bg) !important; 
+}
+
+.editor-toolbar a.active {
+    border-color: var(--dr-sl) !important;
 }

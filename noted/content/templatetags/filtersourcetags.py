@@ -1,5 +1,6 @@
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy
 
 from content.models import Source
 
@@ -27,6 +28,7 @@ SOURCE_ICONS = {
 @register.filter
 def icon(source_code, size: str = "1rem", background_alpha: str = "1"):
     """Transform `source_code` to HTML icon of a source."""
+    print(gettext_lazy(Source.make_type_readable(source_code)))
     if source_code not in SOURCE_ICONS:
         return ""
     icon = ICON_TEMPLATE.format(
@@ -34,14 +36,15 @@ def icon(source_code, size: str = "1rem", background_alpha: str = "1"):
         size=size,
         rgb=SOURCE_ICONS[source_code]["color"],
         bg_alpha=background_alpha,
-        tooltip=Source.make_type_readable(source_code),
+        tooltip=gettext_lazy(Source.make_type_readable(source_code)),
     )
     return mark_safe(icon)
 
 
 @register.filter
-def readabletype(source_code: str):
+def readabletype(source_code: str) -> str | None:
     """Transform `source_code` to a human readable source name."""
     if source_code not in [s[0] for s in Source.TYPES]:
         return ""
-    return Source.make_type_readable(source_code)
+    print(gettext_lazy(Source.make_type_readable(source_code)))
+    return gettext_lazy(Source.make_type_readable(source_code))

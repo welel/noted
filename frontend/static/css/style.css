@@ -54,7 +54,8 @@ h6 {
 }
 
 .anchor:target {
-    background-color: #439b00;
+    border-radius: 23px;
+    padding-left: 9px;
 }
 
 /* Rule for html {zoom: .9;} compatibility, scales modal background fade */
@@ -208,6 +209,14 @@ h6 {
 .bootstrap-tagsinput input:focus {
     border: none !important;
     box-shadow: none !important;
+}
+
+.editor-toolbar.fullscreen::before {
+    background: none !important;
+}
+
+.editor-toolbar.fullscreen::after {
+    background: none !important;
 }
 
 
