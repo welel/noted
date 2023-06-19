@@ -18,8 +18,6 @@
 
 This website helps to create personal notes, share them public, search for notes on a specific information source or interesting topics and save them, follow users and be followed by others. The project was created for my educational purposes, but has a practical application.
 
-**Link on the website:** https://welel-noted.site/
-
 </br>
 
 ## 🔍 About
